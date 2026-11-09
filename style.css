@@ -392,3 +392,221 @@ footer {
         width: 100%;
     }
 }
+
+/* =====================================
+   BBB11 - HE THONG QUAN LY
+   ===================================== */
+
+/* MENU PHÂN NHÓM */
+
+.menu-heading {
+    color: #ffdc00;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 18px 10px 8px;
+    border-bottom: 1px solid #765039;
+    margin-bottom: 8px;
+}
+
+/* MENU ĐANG ĐƯỢC CHỌN */
+
+.sidebar button.active {
+    background: linear-gradient(90deg, #a51b00, #671000);
+    border-left: 4px solid #ffdc00;
+}
+
+/* THỐNG KÊ QUẢN TRỊ */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border-bottom: 4px solid #b32300;
+    box-shadow: 0 3px 12px #0001;
+}
+
+.stat-card i {
+    font-size: 27px;
+    color: #a51b00;
+    margin-bottom: 12px;
+}
+
+.stat-card h3 {
+    font-size: 25px;
+    color: #8e1600;
+    margin: 8px 0;
+}
+
+.stat-card p {
+    font-size: 12px;
+    color: #777;
+}
+
+/* THANH CÔNG CỤ */
+
+.management-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.management-toolbar input,
+.management-toolbar select {
+    flex: 1;
+    min-width: 150px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+/* BẢNG QUẢN LÝ */
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background: white;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.table-wrapper table {
+    min-width: 650px;
+}
+
+.table-wrapper th {
+    background: #761400;
+    white-space: nowrap;
+}
+
+.table-wrapper td {
+    font-size: 13px;
+}
+
+.table-wrapper tr:hover {
+    background: #fff8e9;
+}
+
+/* NÚT CHỨC NĂNG */
+
+.btn-add {
+    background: #287a36;
+    color: white;
+    padding: 11px 16px;
+    border: none;
+    border-radius: 6px;
+}
+
+.btn-edit {
+    background: #d18a00;
+    color: white;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.btn-delete {
+    background: #a51b00;
+    color: white;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+/* TRẠNG THÁI */
+
+.status {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    background: #e5f5e5;
+    color: #287a36;
+}
+
+.status.inactive {
+    background: #ffe7e7;
+    color: #a51b00;
+}
+
+/* FORM QUẢN LÝ */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.form-actions {
+    margin-top: 15px;
+}
+
+/* THẺ THÔNG BÁO */
+
+.notice-card {
+    background: #fff8e9;
+    border-left: 5px solid #e0ad00;
+    padding: 16px;
+    margin: 12px 0;
+    border-radius: 6px;
+}
+
+/* TRANG CÁ NHÂN */
+
+.profile-card {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.profile-avatar {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background: #8e1600;
+    color: #ffdc00;
+    display: grid;
+    place-items: center;
+    font-size: 30px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 1000px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 600px) {
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-card {
+        flex-direction: column;
+        text-align: center;
+    }
+}
