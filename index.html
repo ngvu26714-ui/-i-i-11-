@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BBB11 - Đại đội 11</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">
+        <div class="logo-icon">
+            <i class="fa-solid fa-star"></i>
+        </div>
+        <div>
+            <h2>BBB11 - ĐẠI ĐỘI 11</h2>
+            <p>HỆ THỐNG GIÁO DỤC CHÍNH TRỊ</p>
+        </div>
+    </div>
+
+    <div class="user">
+        <span id="userName">KHÁCH TRUY CẬP</span>
+        <button onclick="logout()">Đăng xuất</button>
+    </div>
+</header>
+
+<section class="banner">
+    <h1>BBB11 - ĐẠI ĐỘI 11</h1>
+    <h2>HỆ THỐNG GIÁO DỤC CHÍNH TRỊ</h2>
+    <p>TRUNG THÀNH - DŨNG CẢM - VƯỢT MỌI KHÓ KHĂN - LIÊN TỤC LẬP CÔNG -DUYỆT NGỤY - THẮNG MỸ</p>
+</section>
+
+<div class="container">
+
+    <aside class="sidebar">
+        <h3><i class="fa-solid fa-bars"></i> DANH MỤC</h3>
+
+        <button onclick="showHome()">
+            <i class="fa-solid fa-house"></i> Trang chủ
+        </button>
+
+        <button onclick="showPage('manual')">
+            <i class="fa-solid fa-star"></i> Cẩm nang người lính
+        </button>
+
+        <button onclick="showPage('resolution')">
+            <i class="fa-solid fa-book"></i> Học tập nghị quyết
+        </button>
+
+        <button onclick="showPage('news')">
+            <i class="fa-solid fa-newspaper"></i> Đọc báo và nghe tin
+        </button>
+
+        <button onclick="showPage('music')">
+            <i class="fa-solid fa-music"></i> Kho tàng âm nhạc
+        </button>
+
+        <button onclick="showPage('quiz')">
+            <i class="fa-solid fa-clipboard-check"></i> Kiểm tra trắc nghiệm
+        </button>
+
+        <button onclick="showPage('education')">
+            <i class="fa-solid fa-book-open"></i> Giáo dục chính trị
+        </button>
+
+        <button onclick="showPage('bac')">
+            <i class="fa-solid fa-sun"></i> Lời Bác Hồ dạy
+        </button>
+
+        <button onclick="showPage('question')">
+            <i class="fa-solid fa-circle-question"></i> Mỗi tuần một câu hỏi
+        </button>
+
+        <button onclick="showPage('score')">
+            <i class="fa-solid fa-chart-column"></i> Chấm điểm thi đua
+        </button>
+
+        <button onclick="showPage('ranking')">
+            <i class="fa-solid fa-trophy"></i> Bảng tin thi đua
+        </button>
+    </aside>
+
+    <main class="content">
+
+        <div id="homePage">
+            <h2 class="section-title">
+                <i class="fa-solid fa-house"></i>
+                HỆ THỐNG CHỨC NĂNG
+            </h2>
+
+            <div class="dashboard">
+
+                <div class="card red" onclick="showPage('manual')">
+                    <i class="fa-solid fa-star"></i>
+                    <h3>CẨM NANG NGƯỜI LÍNH</h3>
+                    <p>Tài liệu học tập</p>
+                </div>
+
+                <div class="card orange" onclick="showPage('resolution')">
+                    <i class="fa-solid fa-book"></i>
+                    <h3>HỌC TẬP NGHỊ QUYẾT</h3>
+                    <p>Văn kiện và tài liệu</p>
+                </div>
+
+                <div class="card purple" onclick="showPage('news')">
+                    <i class="fa-solid fa-newspaper"></i>
+                    <h3>ĐỌC BÁO VÀ NGHE TIN</h3>
+                    <p>Thời sự - Tin tức</p>
+                </div>
+
+                <div class="card green" onclick="showPage('music')">
+                    <i class="fa-solid fa-music"></i>
+                    <h3>KHO TÀNG ÂM NHẠC</h3>
+                    <p>Bài hát truyền thống</p>
+                </div>
+
+                <div class="card blue" onclick="showPage('quiz')">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                    <h3>KIỂM TRA TRẮC NGHIỆM</h3>
+                    <p>Kiểm tra kiến thức</p>
+                </div>
+
+                <div class="card teal" onclick="showPage('education')">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>GIÁO DỤC CHÍNH TRỊ</h3>
+                    <p>Tài liệu giáo dục</p>
+                </div>
+
+                <div class="card red" onclick="showPage('bác')">
+                    <i class="fa-solid fa-sun"></i>
+                    <h3>LỜI BÁC HỒ DẠY</h3>
+                    <p>Học tập và làm theo</p>
+                </div>
+
+                <div class="card orange" onclick="showPage('question')">
+                    <i class="fa-solid fa-question"></i>
+                    <h3>MỖI TUẦN MỘT CÂU HỎI</h3>
+                    <p>Hỏi đáp kiến thức</p>
+                </div>
+
+                <div class="card purple" onclick="showPage('score')">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <h3>CHẤM ĐIỂM THI ĐUA</h3>
+                    <p>Thống kê điểm</p>
+                </div>
+
+                <div class="card dark" onclick="showPage('ranking')">
+                    <i class="fa-solid fa-trophy"></i>
+                    <h3>BẢNG TIN THI ĐUA</h3>
+                    <p>Thành tích đơn vị</p>
+                </div>
+
+            </div>
+        </div>
+
+        <section id="functionPage" class="hidden">
+            <button class="back-button" onclick="showHome()">
+                <i class="fa-solid fa-arrow-left"></i> Quay lại
+            </button>
+            <div id="pageContent"></div>
+        </section>
+
+    </main>
+</div>
+
+<footer>
+    BBB11 - ĐẠI ĐỘI 11 | TRUNG THÀNH - DŨNG CẢM - VƯỢT MỌI KHÓ KHĂN - LIÊN TỤC LẬP CÔNG -DUYỆT NGỤY THẮNG MỸ
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>

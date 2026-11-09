@@ -1,0 +1,394 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f3f3;
+    color: #292929;
+}
+
+/* HEADER */
+.header {
+    min-height: 75px;
+    background: linear-gradient(90deg, #350700, #8b1600, #350700);
+    border-bottom: 3px solid #ffcc00;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 30px;
+    color: white;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    background: #ffdb00;
+    color: #a00000;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+}
+
+.logo h2 {
+    color: #ffdf00;
+    font-size: 19px;
+}
+
+.logo p {
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 12px;
+}
+
+button {
+    cursor: pointer;
+}
+
+.user button {
+    padding: 10px 16px;
+    background: #ffda00;
+    border: none;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+/* BANNER */
+.banner {
+    text-align: center;
+    padding: 38px 15px;
+    color: #ffdf00;
+    background:
+        radial-gradient(circle, #a93600, #650900, #260500);
+    border-bottom: 5px solid #e8b600;
+}
+
+.banner h1 {
+    font-size: 35px;
+    text-shadow: 0 0 15px orange;
+}
+
+.banner h2 {
+    color: white;
+    margin: 12px 0;
+    font-size: 22px;
+}
+
+.banner p {
+    font-size: 13px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+/* BỐ CỤC */
+.container {
+    display: flex;
+    min-height: 650px;
+}
+
+/* MENU TRÁI */
+.sidebar {
+    width: 255px;
+    flex-shrink: 0;
+    background: #28110b;
+    color: white;
+    padding: 20px 12px;
+}
+
+.sidebar h3 {
+    color: #ffdc00;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #765039;
+}
+
+.sidebar button {
+    width: 100%;
+    text-align: left;
+    border: none;
+    color: white;
+    background: transparent;
+    padding: 13px 10px;
+    border-radius: 7px;
+    margin-bottom: 5px;
+    font-size: 13px;
+}
+
+.sidebar button i {
+    width: 25px;
+    color: #ffcf00;
+}
+
+.sidebar button:hover {
+    background: #9b260d;
+}
+
+/* NỘI DUNG */
+.content {
+    flex: 1;
+    padding: 30px;
+    min-width: 0;
+}
+
+.section-title {
+    color: #8c1500;
+    margin-bottom: 25px;
+    border-left: 5px solid #dba500;
+    padding-left: 12px;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.card {
+    min-height: 175px;
+    padding: 20px 12px;
+    color: white;
+    border-radius: 13px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 5px 15px #0002;
+    transition: .3s;
+}
+
+.card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 8px 20px #0004;
+}
+
+.card i {
+    font-size: 35px;
+    margin-bottom: 17px;
+}
+
+.card h3 {
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.card p {
+    font-size: 12px;
+}
+
+.red { background: linear-gradient(135deg,#ed3030,#970000); }
+.orange { background: linear-gradient(135deg,#ff9a00,#d64a00); }
+.purple { background: linear-gradient(135deg,#8336ac,#43136a); }
+.green { background: linear-gradient(135deg,#639d43,#315a20); }
+.blue { background: linear-gradient(135deg,#4973cb,#19377c); }
+.teal { background: linear-gradient(135deg,#1ba89b,#00665b); }
+.dark { background: linear-gradient(135deg,#565656,#222); }
+
+/* CÁC TRANG CHỨC NĂNG */
+.hidden {
+    display: none !important;
+}
+
+.back-button {
+    background: #8e1600;
+    color: white;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 7px;
+    margin-bottom: 25px;
+}
+
+.page-box {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px #0001;
+}
+
+.page-box h2 {
+    color: #8e1600;
+    margin-bottom: 20px;
+}
+
+.page-box h3 {
+    margin: 15px 0 8px;
+    color: #8e1600;
+}
+
+.page-box p {
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
+
+.page-box input,
+.page-box textarea,
+.page-box select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: Arial;
+}
+
+.page-box textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.action-button {
+    background: #a51b00;
+    color: white;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 6px;
+    margin: 8px 5px 8px 0;
+}
+
+.action-button:hover {
+    background: #d52a00;
+}
+
+.list-item {
+    background: #fff8e9;
+    border-left: 4px solid #e5ae00;
+    padding: 15px;
+    margin: 12px 0;
+    border-radius: 5px;
+}
+
+.list-item a {
+    color: #a31d00;
+}
+
+.question {
+    background: #fff9ed;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.question label {
+    display: block;
+    padding: 9px 0;
+    cursor: pointer;
+}
+
+.result {
+    margin-top: 15px;
+    padding: 15px;
+    background: #e8f7e8;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: white;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background: #8e1600;
+    color: white;
+}
+
+footer {
+    background: #260800;
+    color: #ffdb00;
+    text-align: center;
+    padding: 18px;
+    font-size: 12px;
+}
+
+/* ĐIỆN THOẠI */
+@media(max-width: 850px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .sidebar button {
+        width: 48%;
+        display: inline-block;
+    }
+
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .content {
+        padding: 15px;
+    }
+}
+
+@media(max-width: 500px) {
+    .header {
+        padding: 10px;
+    }
+
+    .logo h2 {
+        font-size: 13px;
+    }
+
+    .user {
+        display: none;
+    }
+
+    .banner h1 {
+        font-size: 24px;
+    }
+
+    .banner h2 {
+        font-size: 16px;
+    }
+
+    .banner p {
+        font-size: 10px;
+        letter-spacing: 0;
+    }
+
+    .dashboard {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .card {
+        min-height: 145px;
+    }
+
+    .card h3 {
+        font-size: 11px;
+    }
+
+    .sidebar button {
+        width: 100%;
+    }
+}
