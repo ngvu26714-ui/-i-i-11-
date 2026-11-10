@@ -4,131 +4,127 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BBB11 - Đại đội 11</title>
-
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
 
-<header class="header">
-    <div class="logo">
-        <div class="logo-icon">
-            <i class="fa-solid fa-star"></i>
-        </div>
-        <div>
-            <h2>BBB11 - ĐẠI ĐỘI 11</h2>
-            <p>HỆ THỐNG GIÁO DỤC CHÍNH TRỊ</p>
-        </div>
-    </div>
+<div class="app">
 
-    <div class="user">
-        <span id="userName">KHÁCH TRUY CẬP</span>
-        <button onclick="logout()">Đăng xuất</button>
-    </div>
-</header>
-
-<section class="banner">
-    <h1>BBB11 - ĐẠI ĐỘI 11</h1>
-    <h2>HỆ THỐNG GIÁO DỤC CHÍNH TRỊ</h2>
-    <p>TRUNG THÀNH - DŨNG CẢM - VƯỢT MỌI KHÓ KHĂN - LIÊN TỤC LẬP CÔNG -DUYỆT NGỤY - THẮNG MỸ</p>
-</section>
-
-<div class="container">
-
+    <!-- SIDEBAR -->
     <aside class="sidebar">
-        <h3><i class="fa-solid fa-bars"></i> DANH MỤC</h3>
-        
-<div class="menu-heading">QUẢN TRỊ HỆ THỐNG</div>
+        <h2 class="sidebar-title">
+            <i class="fa-solid fa-bars"></i> DANH MỤC
+        </h2>
 
-<button onclick="showPage('admin')">
-    <i class="fa-solid fa-gauge-high"></i>
-    Bảng điều khiển
-</button>
+        <div class="menu-heading">QUẢN TRỊ HỆ THỐNG</div>
 
-<button onclick="showPage('members')">
-    <i class="fa-solid fa-users"></i>
-    Quản lý thành viên
-</button>
+        <button class="menu-btn" onclick="showPage('admin')">
+            <i class="fa-solid fa-gauge-high"></i> Bảng điều khiển
+        </button>
 
-<button onclick="showPage('accounts')">
-    <i class="fa-solid fa-user-shield"></i>
-    Quản lý tài khoản
-</button>
+        <button class="menu-btn" onclick="showPage('members')">
+            <i class="fa-solid fa-users"></i> Quản lý thành viên
+        </button>
 
-<button onclick="showPage('attendance')">
-    <i class="fa-solid fa-calendar-check"></i>
-    Quản lý điểm danh
-</button>
+        <button class="menu-btn" onclick="showPage('accounts')">
+            <i class="fa-solid fa-user-shield"></i> Quản lý tài khoản
+        </button>
 
-<button onclick="showPage('activities')">
-    <i class="fa-solid fa-calendar-days"></i>
-    Quản lý hoạt động
-</button>
+        <button class="menu-btn" onclick="showPage('attendance')">
+            <i class="fa-solid fa-calendar-check"></i> Quản lý điểm danh
+        </button>
 
-<button onclick="showPage('reports')">
-    <i class="fa-solid fa-chart-column"></i>
-    Báo cáo thống kê
-</button>
+        <button class="menu-btn" onclick="showPage('activities')">
+            <i class="fa-solid fa-calendar-days"></i> Quản lý hoạt động
+        </button>
 
-<div class="menu-heading">HỌC TẬP VÀ RÈN LUYỆN</div>
+        <button class="menu-btn" onclick="showPage('reports')">
+            <i class="fa-solid fa-chart-column"></i> Báo cáo thống kê
+        </button>
 
+        <div class="menu-heading">HỌC TẬP VÀ RÈN LUYỆN</div>
 
-        <button onclick="showHome()">
+        <button class="menu-btn" onclick="showHome()">
             <i class="fa-solid fa-house"></i> Trang chủ
         </button>
 
-        <button onclick="showPage('manual')">
+        <button class="menu-btn" onclick="showPage('manual')">
             <i class="fa-solid fa-star"></i> Cẩm nang người lính
         </button>
 
-        <button onclick="showPage('resolution')">
+        <button class="menu-btn" onclick="showPage('resolution')">
             <i class="fa-solid fa-book"></i> Học tập nghị quyết
         </button>
 
-        <button onclick="showPage('news')">
+        <button class="menu-btn" onclick="showPage('news')">
             <i class="fa-solid fa-newspaper"></i> Đọc báo và nghe tin
         </button>
 
-        <button onclick="showPage('music')">
+        <button class="menu-btn" onclick="showPage('music')">
             <i class="fa-solid fa-music"></i> Kho tàng âm nhạc
         </button>
 
-        <button onclick="showPage('quiz')">
+        <button class="menu-btn" onclick="showPage('quiz')">
             <i class="fa-solid fa-clipboard-check"></i> Kiểm tra trắc nghiệm
         </button>
 
-        <button onclick="showPage('education')">
+        <button class="menu-btn" onclick="showPage('education')">
             <i class="fa-solid fa-book-open"></i> Giáo dục chính trị
         </button>
 
-        <button onclick="showPage('bac')">
+        <button class="menu-btn" onclick="showPage('bac')">
             <i class="fa-solid fa-sun"></i> Lời Bác Hồ dạy
         </button>
 
-        <button onclick="showPage('question')">
+        <button class="menu-btn" onclick="showPage('question')">
             <i class="fa-solid fa-circle-question"></i> Mỗi tuần một câu hỏi
         </button>
 
-        <button onclick="showPage('score')">
+        <button class="menu-btn" onclick="showPage('score')">
             <i class="fa-solid fa-chart-column"></i> Chấm điểm thi đua
         </button>
 
-        <button onclick="showPage('ranking')">
+        <button class="menu-btn" onclick="showPage('ranking')">
             <i class="fa-solid fa-trophy"></i> Bảng tin thi đua
         </button>
     </aside>
 
-    <main class="content">
+    <!-- MAIN -->
+    <main class="main-content">
 
-        <div id="homePage">
-            <h2 class="section-title">
-                <i class="fa-solid fa-house"></i>
-                HỆ THỐNG CHỨC NĂNG
-            </h2>
+        <header class="top-header">
+            <div class="logo">
+                <i class="fa-solid fa-star"></i>
+                <div>
+                    <h2>BBB11 - ĐẠI ĐỘI 11</h2>
+                    <p>HỆ THỐNG GIÁO DỤC CHÍNH TRỊ</p>
+                </div>
+            </div>
 
-            <div class="dashboard">
+            <div class="user">
+                <span id="userName">KHÁCH TRUY CẬP</span>
+                <button onclick="logout()">Đăng xuất</button>
+            </div>
+        </header>
+
+        <!-- TRANG CHỦ -->
+        <section id="homePage">
+
+            <div class="welcome">
+                <h1>
+                    <i class="fa-solid fa-house"></i>
+                    BBB11 - ĐẠI ĐỘI 11
+                </h1>
+
+                <h2>Xin chào: <span id="welcomeName">KHÁCH TRUY CẬP</span></h2>
+
+                <h3>HỆ THỐNG CHỨC NĂNG</h3>
+            </div>
+
+            <div class="card-grid">
 
                 <div class="card red" onclick="showPage('manual')">
                     <i class="fa-solid fa-star"></i>
@@ -166,7 +162,7 @@
                     <p>Tài liệu giáo dục</p>
                 </div>
 
-                <div class="card red" onclick="showPage('bác')">
+                <div class="card red" onclick="showPage('bac')">
                     <i class="fa-solid fa-sun"></i>
                     <h3>LỜI BÁC HỒ DẠY</h3>
                     <p>Học tập và làm theo</p>
@@ -191,21 +187,27 @@
                 </div>
 
             </div>
-        </div>
-
-        <section id="functionPage" class="hidden">
-            <button class="back-button" onclick="showHome()">
-                <i class="fa-solid fa-arrow-left"></i> Quay lại
-            </button>
-            <div id="pageContent"></div>
         </section>
+
+        <!-- TRANG CHỨC NĂNG -->
+        <section id="functionPage" class="hidden">
+
+            <button class="back-button" onclick="showHome()">
+                <i class="fa-solid fa-arrow-left"></i>
+                Quay lại trang chủ
+            </button>
+
+            <div id="pageContent"></div>
+
+        </section>
+
+        <footer>
+            BBB11 - ĐẠI ĐỘI 11 |
+            TRUNG THÀNH - DŨNG CẢM - VƯỢT MỌI KHÓ KHĂN - LIÊN TỤC LẬP CÔNG
+        </footer>
 
     </main>
 </div>
-
-<footer>
-    BBB11 - ĐẠI ĐỘI 11 | TRUNG THÀNH - DŨNG CẢM - VƯỢT MỌI KHÓ KHĂN - LIÊN TỤC LẬP CÔNG -DUYỆT NGỤY THẮNG MỸ
-</footer>
 
 <script src="script.js"></script>
 
