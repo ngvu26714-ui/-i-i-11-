@@ -202,8 +202,16 @@ button {
 .dark { background: linear-gradient(135deg,#565656,#222); }
 
 /* CÁC TRANG CHỨC NĂNG */
+
 .hidden {
     display: none !important;
+}
+
+/* Hiển thị con trỏ khi bấm */
+.menu-btn,
+.card,
+.back-button {
+    cursor: pointer;
 }
 
 .back-button {
@@ -608,5 +616,468 @@ footer {
     .profile-card {
         flex-direction: column;
         text-align: center;
+    }
+}
+.manual-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.manual-item {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.manual-item:hover {
+    transform: translateY(-4px);
+}
+
+.manual-item i {
+    font-size: 30px;
+    color: #b71c1c;
+    margin-bottom: 10px;
+}
+
+.manual-item h3 {
+    font-size: 16px;
+    color: #333;
+}
+
+.manual-item p {
+    font-size: 13px;
+    color: #666;
+}
+
+@media(max-width: 500px) {
+    .manual-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    color: #333;
+}
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 344px;
+    min-width: 260px;
+    background: #2b110b;
+    color: white;
+    padding: 20px 16px;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar-title {
+    color: #ffcc00;
+    font-size: 24px;
+    padding: 12px;
+    border-bottom: 1px solid #73503d;
+    margin-bottom: 20px;
+}
+
+.menu-heading {
+    color: #ffcc00;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 13px;
+    margin-top: 8px;
+    border-bottom: 1px solid #73503d;
+}
+
+.menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    padding: 15px 13px;
+    margin: 2px 0;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 15px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.menu-btn i {
+    color: #ffcc00;
+    width: 22px;
+    font-size: 17px;
+}
+
+/* MAIN */
+.main-content {
+    flex: 1;
+    min-width: 0;
+    padding: 20px 35px;
+    display: flex;
+    flex-direction: column;
+    background: #f2f2f2;
+}
+
+/* HEADER */
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #d5a900;
+    margin-bottom: 28px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #98200b;
+}
+
+.logo > i {
+    font-size: 32px;
+    color: #d5a900;
+}
+
+.logo h2 {
+    font-size: 22px;
+}
+
+.logo p {
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 4px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.user button {
+    background: #98200b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+/* WELCOME */
+.welcome {
+    border-left: 6px solid #d5a900;
+    padding-left: 16px;
+    margin-bottom: 25px;
+    color: #98200b;
+}
+
+.welcome h1 {
+    font-size: 48px;
+    margin-bottom: 4px;
+}
+
+.welcome h2 {
+    font-size: 29px;
+    margin-bottom: 2px;
+}
+
+.welcome h3 {
+    font-size: 25px;
+}
+
+/* CARD GRID */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.card {
+    height: 205px;
+    border-radius: 17px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    padding: 15px 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.14);
+    transition: 0.2s;
+}
+
+.card i {
+    font-size: 43px;
+    margin-bottom: 16px;
+}
+
+.card h3 {
+    font-size: 15px;
+    margin-bottom: 9px;
+}
+
+.card p {
+    font-size: 14px;
+}
+
+/* MÀU SẮC GIỐNG ẢNH */
+.red {
+    background: linear-gradient(120deg, #f52c30, #a90000);
+}
+
+.orange {
+    background: linear-gradient(120deg, #ff9900, #e65300);
+}
+
+.purple {
+    background: linear-gradient(120deg, #8737aa, #4d126d);
+}
+
+.green {
+    background: linear-gradient(120deg, #659e43, #315d24);
+}
+
+.blue {
+    background: linear-gradient(120deg, #4c79d0, #173c87);
+}
+
+.teal {
+    background: linear-gradient(120deg, #19aa9b, #00776c);
+}
+
+.dark {
+    background: linear-gradient(120deg, #424242, #151515);
+}
+
+/* FUNCTION PAGE */
+.hidden {
+    display: none !important;
+}
+
+.back-button {
+    padding: 10px 16px;
+    background: #98200b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+#pageContent {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    min-height: 280px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+#pageContent h1 {
+    color: #98200b;
+    margin-bottom: 18px;
+    font-size: 25px;
+}
+
+#pageContent p {
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+/* FOOTER */
+footer {
+    margin-top: auto;
+    padding: 22px 5px 5px;
+    text-align: center;
+    color: #8d1d0b;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+    .sidebar {
+        width: 260px;
+        min-width: 230px;
+    }
+
+    .main-content {
+        padding: 18px;
+    }
+
+    .welcome h1 {
+        font-size: 38px;
+    }
+
+    .card-grid {
+        gap: 15px;
+    }
+
+    .card {
+        height: 185px;
+    }
+}
+
+@media (max-width: 700px) {
+    .app {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+        max-height: 350px;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .top-header {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .welcome h1 {
+        font-size: 30px;
+    }
+
+    .welcome h2 {
+        font-size: 23px;
+    }
+
+    .welcome h3 {
+        font-size: 19px;
+    }
+
+    .card {
+        height: 165px;
+    }
+
+    .card h3 {
+        font-size: 13px;
+    }
+}
+
+
+
+/* BBB11 - BO SUNG GIAO DIEN QUAN LY */
+
+#pageContent {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    min-height: 280px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+
+#pageContent .page-box {
+    box-shadow: none;
+    padding: 0;
+}
+
+#pageContent input,
+#pageContent select,
+#pageContent textarea {
+    width: 100%;
+    padding: 11px;
+    margin: 7px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+#pageContent button {
+    cursor: pointer;
+}
+
+#pageContent .action-button {
+    background: #98200b;
+    color: white;
+    border: 0;
+    border-radius: 6px;
+    padding: 10px 15px;
+    margin: 5px 4px 5px 0;
+}
+
+#pageContent .btn-delete {
+    background: #a51b00;
+    color: white;
+    border: 0;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+#pageContent .btn-edit {
+    background: #d18a00;
+    color: white;
+    border: 0;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+#pageContent .table-wrapper {
+    overflow-x: auto;
+}
+
+#pageContent table {
+    min-width: 600px;
+}
+
+#pageContent .notice-card {
+    background: #fff8e9;
+    border-left: 5px solid #d5a900;
+    padding: 15px;
+    margin: 12px 0;
+}
+
+#pageContent .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+#pageContent .stat-card {
+    background: #fff8e9;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+@media(max-width:700px) {
+    #pageContent {
+        padding: 15px;
+    }
+
+    #pageContent .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
