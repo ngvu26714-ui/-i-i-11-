@@ -324,10 +324,29 @@ function adminPage() {
         "Tổng quan hệ thống quản lý Đại đội 11.");
 }
 
+
 function accountsPage() {
-    return taoTrang("QUẢN LÝ TÀI KHOẢN",
-        "Khu vực quản lý tài khoản người dùng.");
+    return `
+        <div class="page-box">
+
+            <h2>QUẢN LÝ TÀI KHOẢN BBB11</h2>
+
+            <p>Danh sách tài khoản thành viên Đại đội 11.</p>
+
+            <button class="action-button"
+                onclick="hienThiTaiKhoan()">
+                TẢI DANH SÁCH TÀI KHOẢN
+            </button>
+
+            <div id="danhSachTaiKhoan">
+                <p>Nhấn nút để tải danh sách.</p>
+            </div>
+
+        </div>
+    `;
 }
+
+
 
 function attendancePage() {
     return taoTrang("QUẢN LÝ ĐIỂM DANH",
@@ -354,10 +373,190 @@ function resolutionPage() {
         "Văn kiện và tài liệu học tập.");
 }
 
+
 function newsPage() {
-    return taoTrang("ĐỌC BÁO VÀ NGHE TIN",
-        "Chuyên mục thời sự và tin tức.");
+    return `
+        <div class="page-box">
+            <h2>ĐỌC BÁO VÀ NGHE TIN</h2>
+
+            <p>
+                Kho liên kết báo chí, thời sự và các chương trình nghe tin.
+            </p>
+
+            <div class="list-item">
+                <h3>THÊM ĐƯỜNG LINK BÁO ĐIỆN TỬ</h3>
+
+                <input id="newsTitle"
+                    type="text"
+                    placeholder="Tên báo hoặc nội dung tin tức">
+
+                <input id="newsUrl"
+                    type="url"
+                    placeholder="Dán đường link báo tại đây">
+
+                <button class="action-button"
+                    onclick="themLienKetBao('bao')">
+                    THÊM LINK BÁO
+                </button>
+            </div>
+
+            <div class="list-item">
+                <h3>THÊM LINK NGHE TIN</h3>
+
+                <input id="audioTitle"
+                    type="text"
+                    placeholder="Tên chương trình nghe tin">
+
+                <input id="audioUrl"
+                    type="url"
+                    placeholder="Dán link MP3 hoặc âm thanh">
+
+                <button class="action-button"
+                    onclick="themLienKetBao('audio')">
+                    THÊM LINK NGHE TIN
+                </button>
+            </div>
+
+            <h3> DANH SÁCH BÁO ĐIỆN TỬ </h3>
+            <div id="newsList"></div>
+
+            <h3> DANH SÁCH NGHE TIN </h3>
+            <div id="audioList"></div>
+        </div>
+    `;
 }
+
+// ĐỌC DỮ LIỆU
+function layLienKetBao() {
+    try {
+        return JSON.parse(
+            localStorage.getItem("bbb11_news") || "[]"
+        );
+    } catch {
+        return [];
+    }
+}
+
+// KIỂM TRA LINK
+function kiemTraURL(url) {
+    try {
+        const parsed = new URL(url);
+
+        return parsed.protocol === "https:" ||
+               parsed.protocol === "http:";
+    } catch {
+        return false;
+    }
+}
+
+// THÊM LINK
+function themLienKetBao(loai) {
+    const laAudio = loai === "audio";
+
+    const title = document.getElementById(
+        laAudio ? "audioTitle" : "newsTitle"
+    ).value.trim();
+
+    const url = document.getElementById(
+        laAudio ? "audioUrl" : "newsUrl"
+    ).value.trim();
+
+    if (!title || !url) {
+        alert("Vui lòng nhập tên và đường link!");
+        return;
+    }
+
+    if (!kiemTraURL(url)) {
+        alert("Đường link không hợp lệ!");
+        return;
+    }
+
+    const danhSach = layLienKetBao();
+
+    danhSach.push({
+        id: Date.now().toString(),
+        title,
+        url,
+        type: loai
+    });
+
+    localStorage.setItem(
+        "bbb11_news",
+        JSON.stringify(danhSach)
+    );
+
+    alert("Đã thêm liên kết thành công!");
+
+    showPage("news");
+}
+
+// HIỂN THỊ DANH SÁCH
+function hienThiLienKetBao() {
+    const danhSach = layLienKetBao();
+
+    const newsList = document.getElementById("newsList");
+    const audioList = document.getElementById("audioList");
+
+    if (!newsList || !audioList) return;
+
+    const bao = danhSach.filter(item => item.type === "bao");
+    const audio = danhSach.filter(item => item.type === "audio");
+
+    newsList.innerHTML = bao.length
+        ? bao.map(item => `
+            <div class="list-item">
+                <h3>${escapeHTML(item.title)}</h3>
+
+                <a href="${escapeHTML(item.url)}"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    MỞ TRANG BÁO
+                </a>
+
+                <button class="btn-delete"
+                    onclick="xoaLienKetBao('${item.id}')">
+                    Xóa
+                </button>
+            </div>
+        `).join("")
+        : "<p>Chưa có đường link báo.</p>";
+
+    audioList.innerHTML = audio.length
+        ? audio.map(item => `
+            <div class="list-item">
+                <h3>${escapeHTML(item.title)}</h3>
+
+                <a href="${escapeHTML(item.url)}"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    MỞ NGHE TIN
+                </a>
+
+                <button class="btn-delete"
+                    onclick="xoaLienKetBao('${item.id}')">
+                    Xóa
+                </button>
+            </div>
+        `).join("")
+        : "<p>Chưa có đường link nghe tin.</p>";
+}
+
+// XÓA LINK
+function xoaLienKetBao(id) {
+    if (!confirm("Bạn có chắc muốn xóa liên kết này?")) return;
+
+    const danhSach = layLienKetBao().filter(
+        item => item.id !== id
+    );
+
+    localStorage.setItem(
+        "bbb11_news",
+        JSON.stringify(danhSach)
+    );
+
+    showPage("news");
+}
+
 
 function musicPage() {
     return taoTrang("KHO TÀNG ÂM NHẠC",
