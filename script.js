@@ -363,6 +363,11 @@ function reportsPage() {
         "Khu vực tổng hợp báo cáo và thống kê.");
 }
 
+function manualPage() {
+    return taoTrang("CẨM NANG NGƯỜI LÍNH",
+        "Tài liệu học tập và rèn luyện.");
+}
+
 
 function resolutionPage() {
     return `
@@ -531,13 +536,9 @@ function xoaTaiLieuNghiQuyet(id) {
     );
 
     showPage("resolution");
-};
 }
 
-function resolutionPage() {
-    return taoTrang("HỌC TẬP NGHỊ QUYẾT",
-        "Văn kiện và tài liệu học tập.");
-}
+
 
 
 function newsPage() {
