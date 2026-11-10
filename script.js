@@ -93,13 +93,31 @@ function showPage(page) {
         news: newsPage,
         music: musicPage,
         quiz: quizPage,
+        gallery: galleryPage,
         education: educationPage,
         bac: bacPage,
         question: questionPage,
         score: scorePage,
         ranking: rankingPage
     };
+    if (page === "music") {
+    hienThiKhoNhac();
+}
+if (page === "activities") {
+    hienThiHoatDong();
+}
+if (page === "admin") {
+    capNhatBangDieuKhien();
+}
+if (page === "reports") {
+    const input = document.getElementById("reportMonth");
 
+    if (input) {
+        input.value = new Date().toISOString().slice(0, 7);
+    }
+
+    capNhatBaoCao();
+}
     if (typeof pages[page] !== "function") {
         content.innerHTML = "<h2>Chức năng chưa được xây dựng.</h2>";
     } else {
@@ -127,23 +145,34 @@ function showPage(page) {
 
     activeButton?.classList.add("active");
 
-    if (page === "members") hienThiThanhVien();
-    if (page === "accounts") hienThiTaiKhoan();
+    if (page === "members")    hienThiThanhVien();
+    if (page === "accounts")   hienThiTaiKhoan();
     if (page === "attendance") hienThiDiemDanh();
     if (page === "activities") hienThiHoatDong();
-    if (page === "score") hienThiDiemThiDua();
-    if (page === "ranking") hienThiNganHangQuiz();
-    if (page === "ranking") hienThiLichSuQuiz();
-    if (page === "ranking") hienThiBangXepHang();
-    if (page === "ranking") hienThiBangXepHang();
-    if (page === "question") {
-    hienThiCauHoiTuan();
+    if (page === "score")      hienThiDiemThiDua();
+    if (page === "ranking")    hienThiNganHangQuiz();
+    if (page === "ranking")    hienThiLichSuQuiz();
+    if (page === "ranking")    hienThiBangXepHang();
+    if (page === "ranking")    hienThiBangXepHang();
+    if (page === "question")   hienThiCauHoiTuan();
+    if (page === "attendance") {
+    const dateInput = document.getElementById("attendanceDate");
+
+    if (dateInput) {
+        dateInput.value = new Date().toLocaleDateString("en-CA");
+    }
+
+    taiDanhSachDiemDanh();
+    hienThiThongKeDiemDanh();
+    hienThiLichSuDiemDanh();
+}
+    
 }
     if (page === "quiz") {
     
 }
 
-}
+
 
 // ======================================
 // 5. BẢO VỆ DỮ LIỆU HIỂN THỊ
@@ -329,10 +358,111 @@ function taoTrang(tieuDe, moTa) {
     `;
 }
 
+
 function adminPage() {
-    return taoTrang("BẢNG ĐIỀU KHIỂN",
-        "Tổng quan hệ thống quản lý Đại đội 11.");
+    return `
+        <div class="page-box">
+
+            <h2>BẢNG ĐIỀU KHIỂN QUẢN TRỊ BBB11</h2>
+
+            <p>Tổng quan tình hình quản lý Đại đội 11.</p>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <i class="fa-solid fa-users"></i>
+                    <h3 id="adminMembers">0</h3>
+                    <p>Tổng thành viên</p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <h3 id="adminPresent">0</h3>
+                    <p>Có mặt hôm nay</p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <h3 id="adminActivities">0</h3>
+                    <p>Tổng hoạt động</p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fa-solid fa-music"></i>
+                    <h3 id="adminMusic">0</h3>
+                    <p>Bài hát</p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fa-solid fa-book"></i>
+                    <h3 id="adminQuestions">0</h3>
+                    <p>Câu hỏi tuần</p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fa-solid fa-trophy"></i>
+                    <h3 id="adminScores">0</h3>
+                    <p>Lượt chấm thi đua</p>
+                </div>
+
+            </div>
+
+            <h3>THÔNG TIN HỆ THỐNG</h3>
+
+            <div class="notice-card">
+                <p>Hệ thống: BBB11 - ĐẠI ĐỘI 11</p>
+                <p>Trạng thái: Đang hoạt động</p>
+                <p id="adminDate"></p>
+            </div>
+
+            <button class="action-button"
+                onclick="capNhatBangDieuKhien()">
+                LÀM MỚI THỐNG KÊ
+            </button>
+
+        </div>
+    `;
 }
+
+// CẬP NHẬT THỐNG KÊ QUẢN TRỊ
+function capNhatBangDieuKhien() {
+
+    const members = docDuLieu("bbb11_thanhvien");
+    const attendance = docDuLieu("bbb11_attendance");
+    const activities = docDuLieu("bbb11_activities");
+    const music = docDuLieu("bbb11_music");
+    const questions = docDuLieu("bbb11_questions");
+    const scores = docDuLieu("bbb11_scores");
+
+    const today = new Date().toLocaleDateString("en-CA");
+
+    const todayAttendance = attendance.filter(
+        item => item.date === today
+    );
+
+    const present = todayAttendance.filter(
+        item => item.status === "present"
+    ).length;
+
+    const setValue = (id, value) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+    };
+
+    setValue("adminMembers", members.length);
+    setValue("adminPresent", present);
+    setValue("adminActivities", activities.length);
+    setValue("adminMusic", music.length);
+    setValue("adminQuestions", questions.length);
+    setValue("adminScores", scores.length);
+
+    setValue(
+        "adminDate",
+        "Ngày cập nhật: " + new Date().toLocaleDateString("vi-VN")
+    );
+}
+
+
 
 
 function accountsPage() {
@@ -359,19 +489,733 @@ function accountsPage() {
 
 
 function attendancePage() {
-    return taoTrang("QUẢN LÝ ĐIỂM DANH",
-        "Khu vực theo dõi tình hình điểm danh.");
+    return `
+        <div class="page-box">
+
+            <h2>QUẢN LÝ ĐIỂM DANH BBB11</h2>
+
+            <p>Theo dõi quân số và tình hình tham gia của Đại đội 11.</p>
+
+            <div class="list-item">
+                <h3>ĐIỂM DANH THÀNH VIÊN</h3>
+
+                <label>Ngày điểm danh:</label>
+                <input type="date" id="attendanceDate">
+
+                <button class="action-button"
+                    onclick="taiDanhSachDiemDanh()">
+                    TẢI DANH SÁCH THÀNH VIÊN
+                </button>
+
+                <div id="attendanceMembers"></div>
+
+                <button class="action-button"
+                    onclick="luuDiemDanh()">
+                    LƯU ĐIỂM DANH
+                </button>
+            </div>
+
+            <h3>THỐNG KÊ QUÂN SỐ</h3>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3 id="attTotal">0</h3>
+                    <p>Tổng thành viên</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3 id="attPresent">0</h3>
+                    <p>Có mặt</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3 id="attAbsent">0</h3>
+                    <p>Vắng mặt</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3 id="attLeave">0</h3>
+                    <p>Nghỉ phép / công tác</p>
+                </div>
+            </div>
+
+            <h3>LỊCH SỬ ĐIỂM DANH</h3>
+
+            <input type="date"
+                id="attendanceHistoryDate"
+                onchange="hienThiLichSuDiemDanh()">
+
+            <div id="attendanceHistory"></div>
+
+        </div>
+    `;
 }
+
+// LẤY DANH SÁCH THÀNH VIÊN
+function layThanhVienDiemDanh() {
+    return docDuLieu("bbb11_thanhvien");
+}
+
+// LẤY DỮ LIỆU ĐIỂM DANH
+function layDuLieuDiemDanh() {
+    return docDuLieu("bbb11_attendance");
+}
+
+// TẢI DANH SÁCH
+function taiDanhSachDiemDanh() {
+
+    const khung = document.getElementById("attendanceMembers");
+    const date = document.getElementById("attendanceDate").value;
+
+    if (!date) {
+        alert("Vui lòng chọn ngày điểm danh!");
+        return;
+    }
+
+    const members = layThanhVienDiemDanh();
+
+    if (!members.length) {
+        khung.innerHTML = "<p>Chưa có thành viên. Hãy thêm thành viên trước.</p>";
+        return;
+    }
+
+    const oldData = layDuLieuDiemDanh().filter(
+        item => item.date === date
+    );
+
+    khung.innerHTML = members.map(member => {
+
+        const old = oldData.find(
+            item => item.code === member.maSo
+        );
+
+        return `
+            <div class="list-item">
+
+                <strong>${escapeHTML(member.hoTen)}</strong>
+
+                <p>Mã số: ${escapeHTML(member.maSo)}</p>
+
+                <select class="attendance-status"
+                    data-code="${escapeHTML(member.maSo)}"
+                    data-name="${escapeHTML(member.hoTen)}">
+
+                    <option value="present"
+                        ${old?.status === "present" ? "selected" : ""}>
+                        Có mặt
+                    </option>
+
+                    <option value="absent"
+                        ${old?.status === "absent" ? "selected" : ""}>
+                        Vắng mặt
+                    </option>
+
+                    <option value="leave"
+                        ${old?.status === "leave" ? "selected" : ""}>
+                        Nghỉ phép
+                    </option>
+
+                    <option value="duty"
+                        ${old?.status === "duty" ? "selected" : ""}>
+                        Đi công tác
+                    </option>
+
+                </select>
+
+                <input class="attendance-note"
+                    data-code="${escapeHTML(member.maSo)}"
+                    placeholder="Lý do / ghi chú"
+                    value="${escapeHTML(old?.note || "")}">
+
+            </div>
+        `;
+    }).join("");
+}
+
+// LƯU ĐIỂM DANH
+function luuDiemDanh() {
+
+    const date = document.getElementById("attendanceDate").value;
+
+    if (!date) {
+        alert("Vui lòng chọn ngày!");
+        return;
+    }
+
+    const statuses = document.querySelectorAll(
+        ".attendance-status"
+    );
+
+    if (!statuses.length) {
+        alert("Vui lòng tải danh sách thành viên trước!");
+        return;
+    }
+
+    const danhSach = layDuLieuDiemDanh().filter(
+        item => item.date !== date
+    );
+
+    statuses.forEach(select => {
+
+        const code = select.dataset.code;
+
+        const note = [...document.querySelectorAll(".attendance-note")]
+            .find(input => input.dataset.code === code)?.value.trim() || "";
+
+        danhSach.push({
+            id: date + "_" + code,
+            date,
+            code,
+            name: select.dataset.name,
+            status: select.value,
+            note,
+            updatedAt: new Date().toISOString()
+        });
+    });
+
+    localStorage.setItem(
+        "bbb11_attendance",
+        JSON.stringify(danhSach)
+    );
+
+    alert("Đã lưu điểm danh thành công!");
+
+    hienThiThongKeDiemDanh();
+    hienThiLichSuDiemDanh();
+}
+
+// THỐNG KÊ
+function hienThiThongKeDiemDanh() {
+
+    const date = document.getElementById("attendanceDate")?.value;
+
+    if (!date) return;
+
+    const members = layThanhVienDiemDanh();
+
+    const records = layDuLieuDiemDanh().filter(
+        item => item.date === date
+    );
+
+    const count = status =>
+        records.filter(item => item.status === status).length;
+
+    document.getElementById("attTotal").textContent = members.length;
+
+    document.getElementById("attPresent").textContent =
+        count("present");
+
+    document.getElementById("attAbsent").textContent =
+        count("absent");
+
+    document.getElementById("attLeave").textContent =
+        count("leave") + count("duty");
+}
+
+// LỊCH SỬ
+function hienThiLichSuDiemDanh() {
+
+    const khung = document.getElementById("attendanceHistory");
+
+    if (!khung) return;
+
+    const date = document.getElementById(
+        "attendanceHistoryDate"
+    ).value;
+
+    let records = layDuLieuDiemDanh();
+
+    if (date) {
+        records = records.filter(item => item.date === date);
+    }
+
+    records.sort((a, b) => b.date.localeCompare(a.date));
+
+    khung.innerHTML = records.length
+        ? records.map(item => `
+            <div class="list-item">
+
+                <strong>${escapeHTML(item.name)}</strong>
+
+                <p>Mã số: ${escapeHTML(item.code)}</p>
+
+                <p>Ngày: ${escapeHTML(item.date)}</p>
+
+                <p>Trạng thái:
+                    ${({
+                        present: "Có mặt",
+                        absent: "Vắng mặt",
+                        leave: "Nghỉ phép",
+                        duty: "Đi công tác"
+                    })[item.status] || "Chưa xác định"}
+                </p>
+
+                <p>Ghi chú: ${escapeHTML(item.note)}</p>
+
+            </div>
+        `).join("")
+        : "<p>Chưa có lịch sử điểm danh.</p>";
+}
+
+
 
 function activitiesPage() {
-    return taoTrang("QUẢN LÝ HOẠT ĐỘNG",
-        "Khu vực quản lý các hoạt động của đơn vị.");
+    return `
+        <div class="page-box">
+
+            <h2>QUẢN LÝ HOẠT ĐỘNG BBB11</h2>
+
+            <p>
+                Quản lý kế hoạch, lịch sinh hoạt,
+                học tập và hoạt động của Đại đội 11.
+            </p>
+
+            <div class="notice-card">
+                <h3>THÔNG TIN HOẠT ĐỘNG</h3>
+                <p>Theo dõi và quản lý các hoạt động của đơn vị.</p>
+            </div>
+
+            <h3>THÊM HOẠT ĐỘNG MỚI</h3>
+
+            <div class="list-item">
+
+                <input id="actName"
+                    placeholder="Tên hoạt động">
+
+                <select id="actCategory">
+                    <option value="Học tập">Học tập</option>
+                    <option value="Huấn luyện">Huấn luyện</option>
+                    <option value="Sinh hoạt">Sinh hoạt</option>
+                    <option value="Thi đua">Thi đua</option>
+                    <option value="Công tác">Công tác</option>
+                    <option value="Khác">Khác</option>
+                </select>
+
+                <label>Ngày tổ chức:</label>
+                <input type="date" id="actDate">
+
+                <label>Giờ tổ chức:</label>
+                <input type="time" id="actTime">
+
+                <input id="actLocation"
+                    placeholder="Địa điểm tổ chức">
+
+                <input id="actLeader"
+                    placeholder="Người phụ trách">
+
+                <textarea id="actDescription"
+                    placeholder="Nội dung hoạt động"></textarea>
+
+                <select id="actStatus">
+                    <option value="Sắp diễn ra">Sắp diễn ra</option>
+                    <option value="Đang thực hiện">Đang thực hiện</option>
+                    <option value="Đã hoàn thành">Đã hoàn thành</option>
+                    <option value="Đã hủy">Đã hủy</option>
+                </select>
+
+                <button class="action-button"
+                    onclick="themHoatDong()">
+                    THÊM HOẠT ĐỘNG
+                </button>
+
+            </div>
+
+            <h3>DANH SÁCH HOẠT ĐỘNG</h3>
+
+            <input id="actSearch"
+                placeholder="Tìm kiếm hoạt động..."
+                oninput="hienThiHoatDong()">
+
+            <select id="actFilter"
+                onchange="hienThiHoatDong()">
+                <option value="all">Tất cả hoạt động</option>
+                <option value="Học tập">Học tập</option>
+                <option value="Huấn luyện">Huấn luyện</option>
+                <option value="Sinh hoạt">Sinh hoạt</option>
+                <option value="Thi đua">Thi đua</option>
+                <option value="Công tác">Công tác</option>
+                <option value="Khác">Khác</option>
+            </select>
+
+            <div id="activityList"></div>
+
+        </div>
+    `;
 }
 
-function reportsPage() {
-    return taoTrang("BÁO CÁO THỐNG KÊ",
-        "Khu vực tổng hợp báo cáo và thống kê.");
+// LẤY DỮ LIỆU
+function layDanhSachHoatDong() {
+    return docDuLieu("bbb11_activities");
 }
+
+// LƯU DỮ LIỆU
+function luuDanhSachHoatDong(data) {
+    luuDuLieu("bbb11_activities", data);
+}
+
+// THÊM HOẠT ĐỘNG
+function themHoatDong() {
+
+    const name = document.getElementById("actName").value.trim();
+    const category = document.getElementById("actCategory").value;
+    const date = document.getElementById("actDate").value;
+    const time = document.getElementById("actTime").value;
+    const location = document.getElementById("actLocation").value.trim();
+    const leader = document.getElementById("actLeader").value.trim();
+    const description = document.getElementById("actDescription").value.trim();
+    const status = document.getElementById("actStatus").value;
+
+    if (!name || !date) {
+        alert("Vui lòng nhập tên và ngày hoạt động!");
+        return;
+    }
+
+    const danhSach = layDanhSachHoatDong();
+
+    danhSach.push({
+        id: Date.now().toString(),
+        name,
+        category,
+        date,
+        time,
+        location,
+        leader,
+        description,
+        status,
+        createdAt: new Date().toISOString()
+    });
+
+    luuDanhSachHoatDong(danhSach);
+
+    alert("Đã thêm hoạt động thành công!");
+
+    showPage("activities");
+}
+
+// HIỂN THỊ HOẠT ĐỘNG
+function hienThiHoatDong() {
+
+    const khung = document.getElementById("activityList");
+
+    if (!khung) return;
+
+    const keyword = (
+        document.getElementById("actSearch")?.value || ""
+    ).toLowerCase().trim();
+
+    const category = document.getElementById("actFilter")?.value || "all";
+
+    const danhSach = layDanhSachHoatDong()
+        .filter(item => {
+
+            const matchKeyword =
+                String(item.name || "").toLowerCase().includes(keyword) ||
+                String(item.location || "").toLowerCase().includes(keyword) ||
+                String(item.leader || "").toLowerCase().includes(keyword);
+
+            const matchCategory =
+                category === "all" || item.category === category;
+
+            return matchKeyword && matchCategory;
+        })
+        .sort((a, b) => {
+            return (a.date || "").localeCompare(b.date || "");
+        });
+
+    if (!danhSach.length) {
+        khung.innerHTML = "<p>Chưa có hoạt động phù hợp.</p>";
+        return;
+    }
+
+    khung.innerHTML = danhSach.map(item => `
+
+        <div class="list-item">
+
+            <h3>${escapeHTML(item.name)}</h3>
+
+            <p>Thể loại: ${escapeHTML(item.category)}</p>
+
+            <p>Ngày: ${escapeHTML(item.date)}</p>
+
+            <p>Giờ: ${escapeHTML(item.time || "Chưa xác định")}</p>
+
+            <p>Địa điểm: ${escapeHTML(item.location || "Chưa cập nhật")}</p>
+
+            <p>Người phụ trách: ${escapeHTML(item.leader || "Chưa cập nhật")}</p>
+
+            <p>Nội dung: ${escapeHTML(item.description || "Không có")}</p>
+
+            <p>Trạng thái:
+                <strong>${escapeHTML(item.status)}</strong>
+            </p>
+
+            <button class="btn-edit"
+                onclick="suaHoatDong('${item.id}')">
+                SỬA
+            </button>
+
+            <button class="btn-delete"
+                onclick="xoaHoatDong('${item.id}')">
+                XÓA
+            </button>
+
+        </div>
+
+    `).join("");
+}
+
+// SỬA HOẠT ĐỘNG
+function suaHoatDong(id) {
+
+    const danhSach = layDanhSachHoatDong();
+
+    const item = danhSach.find(x => x.id === id);
+
+    if (!item) return;
+
+    const name = prompt("Tên hoạt động:", item.name);
+    if (name === null) return;
+
+    const date = prompt("Ngày tổ chức (YYYY-MM-DD):", item.date);
+    if (date === null) return;
+
+    const time = prompt("Giờ tổ chức:", item.time || "");
+    if (time === null) return;
+
+    const location = prompt("Địa điểm:", item.location || "");
+    if (location === null) return;
+
+    const leader = prompt("Người phụ trách:", item.leader || "");
+    if (leader === null) return;
+
+    if (!name.trim() || !date.trim()) {
+        alert("Tên và ngày hoạt động không được để trống!");
+        return;
+    }
+
+    item.name = name.trim();
+    item.date = date.trim();
+    item.time = time.trim();
+    item.location = location.trim();
+    item.leader = leader.trim();
+
+    luuDanhSachHoatDong(danhSach);
+
+    alert("Đã cập nhật hoạt động!");
+
+    showPage("activities");
+}
+
+// XÓA HOẠT ĐỘNG
+function xoaHoatDong(id) {
+
+    if (!confirm("Bạn có chắc chắn muốn xóa hoạt động này?")) {
+        return;
+    }
+
+    const danhSach = layDanhSachHoatDong().filter(
+        item => item.id !== id
+    );
+
+    luuDanhSachHoatDong(danhSach);
+
+    hienThiHoatDong();
+}
+
+
+function reportsPage() {
+    return `
+        <div class="page-box">
+
+            <h2>BÁO CÁO THỐNG KÊ BBB11</h2>
+
+            <p>Tổng hợp tình hình quản lý và hoạt động Đại đội 11.</p>
+
+            <div class="list-item">
+                <h3>THỜI GIAN BÁO CÁO</h3>
+
+                <label>Chọn tháng:</label>
+                <input type="month" id="reportMonth"
+                    onchange="capNhatBaoCao()">
+
+                <button class="action-button"
+                    onclick="capNhatBaoCao()">
+                    XEM BÁO CÁO
+                </button>
+
+                <button class="action-button"
+                    onclick="xuatBaoCaoCSV()">
+                    XUẤT BÁO CÁO EXCEL
+                </button>
+            </div>
+
+            <h3>KẾT QUẢ THỐNG KÊ</h3>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <h3 id="reportMembers">0</h3>
+                    <p>Tổng thành viên</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3 id="reportActivities">0</h3>
+                    <p>Hoạt động trong tháng</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3 id="reportPresent">0</h3>
+                    <p>Lượt có mặt</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3 id="reportAbsent">0</h3>
+                    <p>Lượt vắng mặt</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3 id="reportLeave">0</h3>
+                    <p>Lượt nghỉ phép</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3 id="reportDuty">0</h3>
+                    <p>Lượt đi công tác</p>
+                </div>
+
+            </div>
+
+            <h3>CHI TIẾT ĐIỂM DANH</h3>
+
+            <div id="reportAttendance"></div>
+
+            <h3>HOẠT ĐỘNG TRONG THÁNG</h3>
+
+            <div id="reportActivityList"></div>
+
+        </div>
+    `;
+}
+
+// CẬP NHẬT BÁO CÁO
+function capNhatBaoCao() {
+
+    const monthInput = document.getElementById("reportMonth");
+
+    if (!monthInput) return;
+
+    const month = monthInput.value;
+
+    if (!month) return;
+
+    const members = docDuLieu("bbb11_thanhvien");
+    const attendance = docDuLieu("bbb11_attendance");
+    const activities = docDuLieu("bbb11_activities");
+
+    const records = attendance.filter(
+        item => String(item.date || "").startsWith(month)
+    );
+
+    const monthlyActivities = activities.filter(
+        item => String(item.date || "").startsWith(month)
+    );
+
+    const count = status =>
+        records.filter(item => item.status === status).length;
+
+    const setValue = (id, value) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+    };
+
+    setValue("reportMembers", members.length);
+    setValue("reportActivities", monthlyActivities.length);
+    setValue("reportPresent", count("present"));
+    setValue("reportAbsent", count("absent"));
+    setValue("reportLeave", count("leave"));
+    setValue("reportDuty", count("duty"));
+
+    const attendanceBox =
+        document.getElementById("reportAttendance");
+
+    attendanceBox.innerHTML = records.length
+        ? records.map(item => `
+            <div class="list-item">
+                <strong>${escapeHTML(item.name)}</strong>
+                <p>Ngày: ${escapeHTML(item.date)}</p>
+                <p>Mã số: ${escapeHTML(item.code)}</p>
+                <p>Trạng thái: ${escapeHTML(item.status)}</p>
+                <p>Ghi chú: ${escapeHTML(item.note || "")}</p>
+            </div>
+        `).join("")
+        : "<p>Chưa có dữ liệu điểm danh trong tháng.</p>";
+
+    const activityBox =
+        document.getElementById("reportActivityList");
+
+    activityBox.innerHTML = monthlyActivities.length
+        ? monthlyActivities.map(item => `
+            <div class="list-item">
+                <h3>${escapeHTML(item.name)}</h3>
+                <p>Ngày: ${escapeHTML(item.date)}</p>
+                <p>Địa điểm: ${escapeHTML(item.location || "")}</p>
+                <p>Trạng thái: ${escapeHTML(item.status || "")}</p>
+            </div>
+        `).join("")
+        : "<p>Chưa có hoạt động trong tháng.</p>";
+}
+
+// XUẤT BÁO CÁO CSV
+function xuatBaoCaoCSV() {
+
+    const month = document.getElementById("reportMonth")?.value;
+
+    if (!month) {
+        alert("Vui lòng chọn tháng báo cáo!");
+        return;
+    }
+
+    const records = docDuLieu("bbb11_attendance").filter(
+        item => String(item.date || "").startsWith(month)
+    );
+
+    if (!records.length) {
+        alert("Không có dữ liệu điểm danh để xuất!");
+        return;
+    }
+
+    const rows = [
+        ["Ngày", "Mã số", "Họ tên", "Trạng thái", "Ghi chú"],
+        ...records.map(item => [
+            item.date,
+            item.code,
+            item.name,
+            item.status,
+            item.note || ""
+        ])
+    ];
+
+    const csv = "\uFEFF" + rows.map(row =>
+        row.map(value =>
+            '"' + String(value ?? "").replace(/"/g, '""') + '"'
+        ).join(",")
+    ).join("\r\n");
+
+    const blob = new Blob([csv], {
+        type: "text/csv;charset=utf-8;"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "BBB11_BaoCao_" + month + ".csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+
 
 
 function manualPage() {
@@ -901,10 +1745,228 @@ function xoaLienKetBao(id) {
 }
 
 
+
 function musicPage() {
-    return taoTrang("KHO TÀNG ÂM NHẠC",
-        "Kho bài hát truyền thống.");
+    return `
+        <div class="page-box">
+
+            <h2>🎵 KHO TÀNG ÂM NHẠC BBB11</h2>
+
+            <p>
+                Kho âm nhạc truyền thống, các ca khúc
+                cách mạng và bài hát sinh hoạt tập thể.
+            </p>
+
+            <div class="notice-card">
+                <h3>🎖️ ÂM NHẠC ĐẠI ĐỘI 11</h3>
+                <p>
+                    Âm nhạc góp phần xây dựng đời sống tinh thần,
+                    đoàn kết và động viên cán bộ, chiến sĩ.
+                </p>
+            </div>
+
+            <h3>THÊM BÀI HÁT</h3>
+
+            <div class="list-item">
+
+                <input id="musicTitle"
+                    placeholder="Tên bài hát">
+
+                <input id="musicArtist"
+                    placeholder="Tên ca sĩ / nhạc sĩ">
+
+                <select id="musicCategory">
+                    <option value="Nhạc cách mạng">Nhạc cách mạng</option>
+                    <option value="Nhạc truyền thống">Nhạc truyền thống</option>
+                    <option value="Nhạc quân đội">Nhạc quân đội</option>
+                    <option value="Nhạc sinh hoạt">Nhạc sinh hoạt</option>
+                    <option value="Khác">Khác</option>
+                </select>
+
+                <input id="musicAudio"
+                    placeholder="Đường dẫn file MP3">
+
+                <input id="musicYoutube"
+                    placeholder="Đường dẫn YouTube (nếu có)">
+
+                <button class="action-button"
+                    onclick="themBaiHat()">
+                    THÊM BÀI HÁT
+                </button>
+
+            </div>
+
+            <h3>DANH SÁCH ÂM NHẠC</h3>
+
+            <input id="musicSearch"
+                placeholder="Tìm kiếm bài hát..."
+                oninput="hienThiKhoNhac()">
+
+            <select id="musicFilter"
+                onchange="hienThiKhoNhac()">
+                <option value="all">Tất cả thể loại</option>
+                <option value="Nhạc cách mạng">Nhạc cách mạng</option>
+                <option value="Nhạc truyền thống">Nhạc truyền thống</option>
+                <option value="Nhạc quân đội">Nhạc quân đội</option>
+                <option value="Nhạc sinh hoạt">Nhạc sinh hoạt</option>
+                <option value="Khác">Khác</option>
+            </select>
+
+            <div id="musicList"></div>
+
+        </div>
+    `;
 }
+
+// LẤY DANH SÁCH BÀI HÁT
+function layDanhSachNhac() {
+    try {
+        const data = JSON.parse(
+            localStorage.getItem("bbb11_music") || "[]"
+        );
+
+        return Array.isArray(data) ? data : [];
+    } catch {
+        return [];
+    }
+}
+
+// LƯU DANH SÁCH
+function luuDanhSachNhac(data) {
+    localStorage.setItem(
+        "bbb11_music",
+        JSON.stringify(data)
+    );
+}
+
+// THÊM BÀI HÁT
+function themBaiHat() {
+
+    const title = document.getElementById("musicTitle").value.trim();
+    const artist = document.getElementById("musicArtist").value.trim();
+    const category = document.getElementById("musicCategory").value;
+    const audio = document.getElementById("musicAudio").value.trim();
+    const youtube = document.getElementById("musicYoutube").value.trim();
+
+    if (!title || (!audio && !youtube)) {
+        alert("Vui lòng nhập tên bài hát và link MP3 hoặc YouTube!");
+        return;
+    }
+
+    if (audio && !/^https?:\/\//i.test(audio)) {
+        alert("Link MP3 phải bắt đầu bằng http:// hoặc https://");
+        return;
+    }
+
+    if (youtube && !/^https?:\/\//i.test(youtube)) {
+        alert("Link YouTube không hợp lệ!");
+        return;
+    }
+
+    const danhSach = layDanhSachNhac();
+
+    danhSach.push({
+        id: Date.now().toString(),
+        title,
+        artist,
+        category,
+        audio,
+        youtube,
+        createdAt: new Date().toISOString()
+    });
+
+    luuDanhSachNhac(danhSach);
+
+    alert("Đã thêm bài hát!");
+
+    showPage("music");
+}
+
+// HIỂN THỊ KHO NHẠC
+function hienThiKhoNhac() {
+
+    const khung = document.getElementById("musicList");
+
+    if (!khung) return;
+
+    const keyword = (
+        document.getElementById("musicSearch")?.value || ""
+    ).toLowerCase().trim();
+
+    const category = document.getElementById("musicFilter")?.value || "all";
+
+    const danhSach = layDanhSachNhac().filter(item => {
+
+        const matchKeyword =
+            String(item.title).toLowerCase().includes(keyword) ||
+            String(item.artist).toLowerCase().includes(keyword);
+
+        const matchCategory =
+            category === "all" || item.category === category;
+
+        return matchKeyword && matchCategory;
+    });
+
+    if (!danhSach.length) {
+        khung.innerHTML = "<p>Chưa có bài hát phù hợp.</p>";
+        return;
+    }
+
+    khung.innerHTML = danhSach.map(item => `
+
+        <div class="list-item">
+
+            <h3>🎵 ${escapeHTML(item.title)}</h3>
+
+            <p>Ca sĩ: ${escapeHTML(item.artist || "Chưa cập nhật")}</p>
+
+            <p>Thể loại: ${escapeHTML(item.category)}</p>
+
+            ${item.audio ? `
+                <audio controls preload="none"
+                    style="width:100%;margin:12px 0;">
+                    <source src="${escapeHTML(item.audio)}">
+                    Trình duyệt không hỗ trợ phát nhạc.
+                </audio>
+            ` : ""}
+
+            ${item.youtube ? `
+                <p>
+                    <a href="${escapeHTML(item.youtube)}"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        ▶ XEM VIDEO YOUTUBE
+                    </a>
+                </p>
+            ` : ""}
+
+            <button class="btn-delete"
+                onclick="xoaBaiHat('${item.id}')">
+                XÓA BÀI HÁT
+            </button>
+
+        </div>
+
+    `).join("");
+}
+
+// XÓA BÀI HÁT
+function xoaBaiHat(id) {
+
+    if (!confirm("Bạn có chắc muốn xóa bài hát này?")) {
+        return;
+    }
+
+    const danhSach = layDanhSachNhac().filter(
+        item => item.id !== id
+    );
+
+    luuDanhSachNhac(danhSach);
+
+    hienThiKhoNhac();
+}
+
+
 
 
 function quizPage() {
@@ -1888,15 +2950,594 @@ function traLoiCauHoiTuan(id) {
 
 
 
+
 function scorePage() {
-    return taoTrang("CHẤM ĐIỂM THI ĐUA",
-        "Khu vực theo dõi điểm thi đua.");
+    return `
+        <div class="page-box">
+            <h2>CHẤM ĐIỂM THI ĐUA BBB11</h2>
+
+            <p>
+                Theo dõi, đánh giá kết quả rèn luyện
+                và thi đua của cán bộ, chiến sĩ Đại đội 11.
+            </p>
+
+            <div class="list-item">
+                <h3>NHẬP ĐIỂM THI ĐUA</h3>
+
+                <input id="scoreName"
+                    placeholder="Họ và tên thành viên">
+
+                <input id="scoreCode"
+                    placeholder="Mã số thành viên">
+
+                <input id="scoreWeek"
+                    type="week">
+
+                <select id="scoreType">
+                    <option value="plus">Điểm cộng</option>
+                    <option value="minus">Điểm trừ</option>
+                </select>
+
+                <input id="scoreValue"
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="0.5"
+                    placeholder="Số điểm">
+
+                <textarea id="scoreReason"
+                    placeholder="Lý do cộng hoặc trừ điểm..."></textarea>
+
+                <button class="action-button"
+                    onclick="themDiemThiDua()">
+                    LƯU KẾT QUẢ
+                </button>
+            </div>
+
+            <div class="list-item">
+                <h3>TÌM KIẾM THÀNH VIÊN</h3>
+
+                <input id="scoreSearch"
+                    placeholder="Nhập tên hoặc mã số..."
+                    oninput="hienThiDiemThiDua()">
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fa-solid fa-users"></i>
+                    <h3 id="scoreTotalMembers">0</h3>
+                    <p>Thành viên</p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fa-solid fa-plus"></i>
+                    <h3 id="scoreTotalPlus">0</h3>
+                    <p>Tổng điểm cộng</p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fa-solid fa-minus"></i>
+                    <h3 id="scoreTotalMinus">0</h3>
+                    <p>Tổng điểm trừ</p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <h3 id="scoreTotalResult">0</h3>
+                    <p>Điểm ròng</p>
+                </div>
+            </div>
+
+            <h3>DANH SÁCH KẾT QUẢ THI ĐUA</h3>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Họ và tên</th>
+                            <th>Mã số</th>
+                            <th>Điểm cộng</th>
+                            <th>Điểm trừ</th>
+                            <th>Điểm ròng</th>
+                            <th>Chi tiết</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="scoreTableBody"></tbody>
+                </table>
+            </div>
+
+            <h3>LỊCH SỬ CHẤM ĐIỂM</h3>
+
+            <div id="scoreHistory"></div>
+        </div>
+    `;
 }
 
-function rankingPage() {
-    return taoTrang("BẢNG TIN THI ĐUA",
-        "Thành tích thi đua của đơn vị.");
+// LẤY DỮ LIỆU
+function layDuLieuDiem() {
+    try {
+        const data = JSON.parse(
+            localStorage.getItem("bbb11_scores") || "[]"
+        );
+
+        return Array.isArray(data) ? data : [];
+    } catch {
+        return [];
+    }
 }
+
+// LƯU DỮ LIỆU
+function luuDuLieuDiem(data) {
+    localStorage.setItem(
+        "bbb11_scores",
+        JSON.stringify(data)
+    );
+}
+
+// THÊM ĐIỂM THI ĐUA
+function themDiemThiDua() {
+    const name = document
+        .getElementById("scoreName").value.trim();
+
+    const code = document
+        .getElementById("scoreCode").value.trim();
+
+    const week = document
+        .getElementById("scoreWeek").value;
+
+    const type = document
+        .getElementById("scoreType").value;
+
+    const value = Number(
+        document.getElementById("scoreValue").value
+    );
+
+    const reason = document
+        .getElementById("scoreReason").value.trim();
+
+    if (!name || !code || !week || !reason) {
+        alert("Vui lòng nhập đầy đủ thông tin!");
+        return;
+    }
+
+    if (!Number.isFinite(value) || value <= 0 || value > 100) {
+        alert("Số điểm phải lớn hơn 0 và không quá 100!");
+        return;
+    }
+
+    const danhSach = layDuLieuDiem();
+
+    danhSach.push({
+        id: Date.now().toString(),
+        name,
+        code,
+        week,
+        type,
+        value,
+        reason,
+        date: new Date().toLocaleString("vi-VN")
+    });
+
+    luuDuLieuDiem(danhSach);
+
+    alert("Đã lưu điểm thi đua!");
+
+    showPage("score");
+}
+
+// TÍNH ĐIỂM
+function tinhTongDiem(danhSach) {
+    const ketQua = {};
+
+    danhSach.forEach(item => {
+        if (!ketQua[item.code]) {
+            ketQua[item.code] = {
+                name: item.name,
+                code: item.code,
+                plus: 0,
+                minus: 0
+            };
+        }
+
+        if (item.type === "plus") {
+            ketQua[item.code].plus += Number(item.value);
+        } else {
+            ketQua[item.code].minus += Number(item.value);
+        }
+    });
+
+    return Object.values(ketQua).map(item => ({
+        ...item,
+        total: item.plus - item.minus
+    }));
+}
+
+// HIỂN THỊ KẾT QUẢ
+function hienThiDiemThiDua() {
+    const tbody = document.getElementById("scoreTableBody");
+
+    if (!tbody) return;
+
+    const keyword = (
+        document.getElementById("scoreSearch")?.value || ""
+    ).toLowerCase().trim();
+
+    const allScores = layDuLieuDiem();
+
+    const members = tinhTongDiem(allScores);
+
+    const filtered = members.filter(item =>
+        item.name.toLowerCase().includes(keyword) ||
+        item.code.toLowerCase().includes(keyword)
+    );
+
+    const plus = allScores
+        .filter(item => item.type === "plus")
+        .reduce((sum, item) => sum + Number(item.value), 0);
+
+    const minus = allScores
+        .filter(item => item.type === "minus")
+        .reduce((sum, item) => sum + Number(item.value), 0);
+
+    document.getElementById("scoreTotalMembers").textContent =
+        members.length;
+
+    document.getElementById("scoreTotalPlus").textContent =
+        plus;
+
+    document.getElementById("scoreTotalMinus").textContent =
+        minus;
+
+    document.getElementById("scoreTotalResult").textContent =
+        plus - minus;
+
+    tbody.innerHTML = filtered.length
+        ? filtered.map((item, index) => `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${escapeHTML(item.name)}</td>
+                <td>${escapeHTML(item.code)}</td>
+                <td>${item.plus}</td>
+                <td>${item.minus}</td>
+                <td><strong>${item.total}</strong></td>
+                <td>
+                    <button class="btn-edit"
+                        onclick="xemLichSuDiem('${item.code}')">
+                        XEM
+                    </button>
+                </td>
+            </tr>
+        `).join("")
+        : `<tr><td colspan="7">Chưa có dữ liệu thi đua.</td></tr>`;
+
+    hienThiLichSuDiem();
+}
+
+// XEM LỊCH SỬ
+function xemLichSuDiem(code) {
+    const danhSach = layDuLieuDiem().filter(
+        item => item.code === code
+    );
+
+    const khung = document.getElementById("scoreHistory");
+
+    if (!khung) return;
+
+    khung.innerHTML = danhSach.map(item => `
+        <div class="list-item">
+            <h3>${escapeHTML(item.name)}</h3>
+
+            <p>Tuần: ${escapeHTML(item.week)}</p>
+
+            <p>
+                Loại:
+                ${item.type === "plus" ? "Điểm cộng" : "Điểm trừ"}
+            </p>
+
+            <p>Số điểm: ${item.value}</p>
+
+            <p>Lý do: ${escapeHTML(item.reason)}</p>
+
+            <p>Ngày ghi nhận: ${escapeHTML(item.date)}</p>
+
+            <button class="btn-delete"
+                onclick="xoaDiemThiDua('${item.id}')">
+                XÓA
+            </button>
+        </div>
+    `).join("");
+
+    khung.scrollIntoView({ behavior: "smooth" });
+}
+
+// HIỂN THỊ LỊCH SỬ TẤT CẢ
+function hienThiLichSuDiem() {
+    const khung = document.getElementById("scoreHistory");
+
+    if (!khung) return;
+
+    const danhSach = layDuLieuDiem();
+
+    if (!danhSach.length) {
+        khung.innerHTML = "<p>Chưa có lịch sử chấm điểm.</p>";
+        return;
+    }
+
+    khung.innerHTML = danhSach.slice().reverse().map(item => `
+        <div class="list-item">
+            <strong>${escapeHTML(item.name)}</strong>
+
+            <p>Mã số: ${escapeHTML(item.code)}</p>
+            <p>Tuần: ${escapeHTML(item.week)}</p>
+
+            <p>
+                ${item.type === "plus" ? "Điểm cộng" : "Điểm trừ"}:
+                ${item.value}
+            </p>
+
+            <p>Lý do: ${escapeHTML(item.reason)}</p>
+            <p>Ngày: ${escapeHTML(item.date)}</p>
+
+            <button class="btn-delete"
+                onclick="xoaDiemThiDua('${item.id}')">
+                XÓA
+            </button>
+        </div>
+    `).join("");
+}
+
+// XÓA ĐIỂM
+function xoaDiemThiDua(id) {
+    if (!confirm("Bạn có chắc muốn xóa bản ghi này?")) return;
+
+    const danhSach = layDuLieuDiem().filter(
+        item => item.id !== id
+    );
+
+    luuDuLieuDiem(danhSach);
+
+    showPage("score");
+}
+
+
+
+function rankingPage() {
+    return `
+        <div class="page-box">
+
+            <h2>🏆 BẢNG TIN THI ĐUA BBB11</h2>
+
+            <p>
+                Bảng tổng hợp thành tích thi đua
+                của cán bộ, chiến sĩ Đại đội 11.
+            </p>
+
+            <div class="notice-card">
+                <h3>THI ĐUA - KHEN THƯỞNG</h3>
+                <p>
+                    Đoàn kết, thi đua, quyết tâm hoàn thành
+                    tốt mọi nhiệm vụ được giao.
+                </p>
+            </div>
+
+            <div class="management-toolbar">
+
+                <select id="rankingWeek"
+                    onchange="hienThiBangXepHang()">
+                    <option value="all">Tất cả các tuần</option>
+                </select>
+
+                <input id="rankingSearch"
+                    placeholder="Tìm kiếm thành viên..."
+                    oninput="hienThiBangXepHang()">
+
+                <button class="action-button"
+                    onclick="hienThiBangXepHang()">
+                    LÀM MỚI
+                </button>
+
+            </div>
+
+            <h3>🏅 TOP 3 THÀNH VIÊN XUẤT SẮC</h3>
+
+            <div id="rankingTop"
+                class="stats-grid">
+            </div>
+
+            <h3>📊 BẢNG XẾP HẠNG THI ĐUA</h3>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hạng</th>
+                            <th>Họ và tên</th>
+                            <th>Mã số</th>
+                            <th>Điểm cộng</th>
+                            <th>Điểm trừ</th>
+                            <th>Điểm ròng</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="rankingTable">
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="rankingSummary"
+                class="notice-card">
+            </div>
+
+        </div>
+    `;
+}
+
+// LẤY DỮ LIỆU ĐIỂM
+function layDuLieuXepHang() {
+    try {
+        const data = JSON.parse(
+            localStorage.getItem("bbb11_scores") || "[]"
+        );
+
+        return Array.isArray(data) ? data : [];
+    } catch {
+        return [];
+    }
+}
+
+// TÍNH ĐIỂM XẾP HẠNG
+function tinhXepHang(week = "all") {
+
+    const danhSach = layDuLieuXepHang();
+
+    const duLieu = week === "all"
+        ? danhSach
+        : danhSach.filter(item => item.week === week);
+
+    const ketQua = {};
+
+    duLieu.forEach(item => {
+
+        if (!ketQua[item.code]) {
+            ketQua[item.code] = {
+                name: item.name,
+                code: item.code,
+                plus: 0,
+                minus: 0
+            };
+        }
+
+        if (item.type === "plus") {
+            ketQua[item.code].plus += Number(item.value);
+        } else {
+            ketQua[item.code].minus += Number(item.value);
+        }
+    });
+
+    return Object.values(ketQua)
+        .map(item => ({
+            ...item,
+            total: item.plus - item.minus
+        }))
+        .sort((a, b) =>
+            b.total - a.total ||
+            a.name.localeCompare(b.name, "vi")
+        );
+}
+
+// HIỂN THỊ BẢNG XẾP HẠNG
+function hienThiBangXepHang() {
+
+    const table = document.getElementById("rankingTable");
+    const top = document.getElementById("rankingTop");
+    const summary = document.getElementById("rankingSummary");
+
+    if (!table || !top || !summary) return;
+
+    const week = document.getElementById("rankingWeek")?.value || "all";
+
+    const keyword = (
+        document.getElementById("rankingSearch")?.value || ""
+    ).toLowerCase().trim();
+
+    const danhSach = tinhXepHang(week);
+
+    const filtered = danhSach.filter(item =>
+        item.name.toLowerCase().includes(keyword) ||
+        item.code.toLowerCase().includes(keyword)
+    );
+
+    // TOP 3
+    const medals = ["🥇", "🥈", "🥉"];
+
+    const top3 = danhSach.slice(0, 3);
+
+    top.innerHTML = top3.length
+        ? top3.map((item, index) => `
+            <div class="stat-card">
+                <h3>${medals[index]} HẠNG ${index + 1}</h3>
+
+                <h4>${escapeHTML(item.name)}</h4>
+
+                <p>Mã số: ${escapeHTML(item.code)}</p>
+
+                <h3>${item.total} điểm</h3>
+            </div>
+        `).join("")
+        : "<p>Chưa có dữ liệu xếp hạng.</p>";
+
+    // BẢNG XẾP HẠNG
+    table.innerHTML = filtered.length
+        ? filtered.map((item, index) => `
+            <tr>
+                <td>
+                    <strong>${danhSach.indexOf(item) + 1}</strong>
+                </td>
+
+                <td>${escapeHTML(item.name)}</td>
+
+                <td>${escapeHTML(item.code)}</td>
+
+                <td>${item.plus}</td>
+
+                <td>${item.minus}</td>
+
+                <td>
+                    <strong>${item.total}</strong>
+                </td>
+            </tr>
+        `).join("")
+        : `<tr>
+            <td colspan="6">Chưa có dữ liệu phù hợp.</td>
+        </tr>`;
+
+    // TỔNG HỢP
+    const tongDiem = danhSach.reduce(
+        (sum, item) => sum + item.total, 0
+    );
+
+    summary.innerHTML = `
+        <h3>THỐNG KÊ THI ĐUA</h3>
+
+        <p>Tổng số thành viên: ${danhSach.length}</p>
+
+        <p>Tổng điểm ròng: ${tongDiem}</p>
+
+        <p>Thời gian thống kê:
+            ${week === "all"
+                ? "Tất cả các tuần"
+                : escapeHTML(week)}
+        </p>
+    `;
+}
+
+// KHỞI TẠO BỘ LỌC TUẦN
+function khoiTaoLocXepHang() {
+
+    const select = document.getElementById("rankingWeek");
+
+    if (!select) return;
+
+    const danhSach = layDuLieuXepHang();
+
+    const weeks = [...new Set(
+        danhSach.map(item => item.week).filter(Boolean)
+    )].sort().reverse();
+
+    select.innerHTML = `
+        <option value="all">Tất cả các tuần</option>
+        ${weeks.map(week => `
+            <option value="${escapeHTML(week)}">
+                ${escapeHTML(week)}
+            </option>
+        `).join("")}
+    `;
+
+    hienThiBangXepHang();
+}
+
 
 // ======================================
 // 9. CÁC HÀM TẠM CHO TRANG QUẢN LÝ
@@ -1918,3 +3559,322 @@ document.addEventListener("DOMContentLoaded", function() {
 
     console.log("BBB11: Khởi động thành công!");
 });
+
+function galleryPage() {
+    return `
+        <div class="page-box gallery-page">
+
+            <h2>
+                <i class="fa-solid fa-images"></i>
+                THƯ VIỆN HÌNH ẢNH BBB11
+            </h2>
+
+            <p>
+                Lưu giữ những hình ảnh, hoạt động và thành tích
+                của Đại đội 11.
+            </p>
+
+            <div class="gallery-upload">
+
+                <h3>ĐĂNG TẢI HÌNH ẢNH HOẠT ĐỘNG</h3>
+
+                <label>Tên hoạt động</label>
+                <input id="galleryTitle"
+                    type="text"
+                    placeholder="Ví dụ: Hoạt động thể thao Đại đội 11">
+
+                <label>Ngày tổ chức</label>
+                <input id="galleryDate" type="date">
+
+                <label>Nội dung mô tả</label>
+                <textarea id="galleryDescription"
+                    placeholder="Nhập nội dung hoạt động..."></textarea>
+
+                <label>Chọn hình ảnh</label>
+                <input id="galleryFile"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    onchange="previewGalleryImage()">
+
+                <div id="galleryPreview"></div>
+
+                <button class="action-button"
+                    onclick="uploadGalleryImage()">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    TẢI ẢNH LÊN
+                </button>
+
+            </div>
+
+            <h3 class="gallery-heading">
+                HÌNH ẢNH HOẠT ĐỘNG ĐƠN VỊ
+            </h3>
+
+            <div id="galleryList" class="gallery-grid">
+                <p>Đang tải hình ảnh...</p>
+            </div>
+
+        </div>
+    `;
+}
+
+
+// XEM TRƯỚC HÌNH ẢNH
+function previewGalleryImage() {
+
+    const file = document.getElementById("galleryFile")?.files[0];
+    const preview = document.getElementById("galleryPreview");
+
+    if (!preview) return;
+
+    if (!file) {
+        preview.innerHTML = "";
+        return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+        alert("Vui lòng chọn file hình ảnh!");
+        return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+        alert("Ảnh không được vượt quá 5MB!");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+        preview.innerHTML = `
+            <img src="${event.target.result}"
+                alt="Ảnh xem trước"
+                style="width:100%;max-width:350px;
+                border-radius:10px;margin-top:15px;">
+        `;
+    };
+
+    reader.readAsDataURL(file);
+}
+
+
+// TẢI ẢNH LÊN SUPABASE
+async function uploadGalleryImage() {
+
+    const title = document.getElementById("galleryTitle").value.trim();
+    const date = document.getElementById("galleryDate").value;
+    const description = document.getElementById("galleryDescription").value.trim();
+    const file = document.getElementById("galleryFile").files[0];
+
+    if (!title || !date || !file) {
+        alert("Vui lòng nhập tên hoạt động, ngày và chọn ảnh!");
+        return;
+    }
+
+    if (!file.type.match(/^image\/(jpeg|png|webp)$/)) {
+        alert("Chỉ chấp nhận ảnh JPG, PNG hoặc WEBP!");
+        return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+        alert("Ảnh tối đa 5MB!");
+        return;
+    }
+
+    if (typeof supabase === "undefined") {
+        alert("Chưa kết nối Supabase!");
+        return;
+    }
+
+    const button = document.querySelector(
+        ".gallery-upload .action-button"
+    );
+
+    button.disabled = true;
+    button.textContent = "ĐANG TẢI ẢNH...";
+
+    try {
+        const { data: authData, error: authError } =
+            await supabase.auth.getUser();
+
+        if (authError || !authData.user) {
+            throw new Error("Bạn cần đăng nhập để tải ảnh!");
+        }
+
+        const userId = authData.user.id;
+
+        const extension = file.name.split(".").pop().toLowerCase();
+        const filePath =
+            userId + "/" + Date.now() + "." + extension;
+
+        const { error: uploadError } =
+            await supabase.storage
+                .from("bbb11-images")
+                .upload(filePath, file, {
+                    contentType: file.type,
+                    upsert: false
+                });
+
+        if (uploadError) throw uploadError;
+
+        const { error: insertError } =
+            await supabase
+                .from("bbb11_gallery")
+                .insert([{
+                    title: title,
+                    description: description,
+                    activity_date: date,
+                    image_path: filePath,
+                    created_by: userId
+                }]);
+
+        if (insertError) {
+            await supabase.storage
+                .from("bbb11-images")
+                .remove([filePath]);
+
+            throw insertError;
+        }
+
+        alert("Đăng tải hình ảnh thành công!");
+
+        showPage("gallery");
+
+    } catch (error) {
+        console.error("Lỗi tải ảnh:", error);
+        alert("Không thể tải ảnh: " + error.message);
+
+    } finally {
+        button.disabled = false;
+        button.innerHTML =
+            '<i class="fa-solid fa-cloud-arrow-up"></i> TẢI ẢNH LÊN';
+    }
+}
+
+
+// HIỂN THỊ THƯ VIỆN
+async function loadGallery() {
+
+    const container = document.getElementById("galleryList");
+
+    if (!container) return;
+
+    try {
+        const { data, error } = await supabase
+            .from("bbb11_gallery")
+            .select("*")
+            .order("created_at", { ascending: false });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            container.innerHTML =
+                "<p>Chưa có hình ảnh hoạt động nào.</p>";
+            return;
+        }
+
+        const images = await Promise.all(
+            data.map(async item => {
+
+                const { data: imageData, error: imageError } =
+                    await supabase.storage
+                        .from("bbb11-images")
+                        .createSignedUrl(item.image_path, 3600);
+
+                return {
+                    ...item,
+                    imageUrl: imageError ? "" : imageData.signedUrl
+                };
+            })
+        );
+
+        container.innerHTML = images.map(item => `
+            <div class="gallery-card">
+
+                ${
+                    item.imageUrl
+                    ? `<img src="${escapeHTML(item.imageUrl)}"
+                        alt="${escapeHTML(item.title)}"
+                        loading="lazy">`
+                    : `<div class="gallery-no-image">
+                        Không tải được ảnh
+                       </div>`
+                }
+
+                <div class="gallery-info">
+
+                    <h3>${escapeHTML(item.title)}</h3>
+
+                    <p>
+                        <i class="fa-solid fa-calendar"></i>
+                        ${escapeHTML(item.activity_date || "")}
+                    </p>
+
+                    <p>${escapeHTML(item.description || "")}</p>
+
+                    <button class="action-button"
+                        onclick="viewGalleryImage('${escapeHTML(item.id)}')">
+                        XEM ẢNH
+                    </button>
+
+                </div>
+
+            </div>
+        `).join("");
+
+    } catch (error) {
+        console.error(error);
+        container.innerHTML =
+            "<p>Không thể tải thư viện. Hãy kiểm tra kết nối Supabase và quyền truy cập.</p>";
+    }
+}
+
+
+// XEM ẢNH LỚN
+async function viewGalleryImage(id) {
+
+    const { data, error } = await supabase
+        .from("bbb11_gallery")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+    if (error || !data) {
+        alert("Không tìm thấy hình ảnh!");
+        return;
+    }
+
+    const { data: imageData, error: imageError } =
+        await supabase.storage
+            .from("bbb11-images")
+            .createSignedUrl(data.image_path, 3600);
+
+    if (imageError) {
+        alert("Không thể mở hình ảnh!");
+        return;
+    }
+
+    const content = document.getElementById("pageContent");
+
+    content.innerHTML = `
+        <div class="page-box">
+            <button class="back-button"
+                onclick="showPage('gallery')">
+                <i class="fa-solid fa-arrow-left"></i>
+                Quay lại thư viện
+            </button>
+
+            <h2>${escapeHTML(data.title)}</h2>
+
+            <p>Ngày tổ chức: ${escapeHTML(data.activity_date || "")}</p>
+
+            <img src="${escapeHTML(imageData.signedUrl)}"
+                alt="${escapeHTML(data.title)}"
+                style="width:100%;max-height:650px;
+                object-fit:contain;border-radius:12px;">
+
+            <p style="margin-top:15px;">
+                ${escapeHTML(data.description || "")}
+            </p>
+        </div>
+    `;
+}
