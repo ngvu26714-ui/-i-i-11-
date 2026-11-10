@@ -104,3 +104,4 @@ async function taoHoSoTaiKhoan(id, hoTen, maSo) {
 }
 
 console.log("BBB11: Đã tải module quản lý tài khoản!");
+
