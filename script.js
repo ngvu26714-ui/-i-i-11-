@@ -363,9 +363,175 @@ function reportsPage() {
         "Khu vực tổng hợp báo cáo và thống kê.");
 }
 
-function manualPage() {
-    return taoTrang("CẨM NANG NGƯỜI LÍNH",
-        "Tài liệu học tập và rèn luyện.");
+
+function resolutionPage() {
+    return `
+        <div class="page-box">
+            <h2>HỌC TẬP NGHỊ QUYẾT</h2>
+
+            <p>
+                Kho tài liệu học tập nghị quyết của Đại đội 11.
+            </p>
+
+            <div class="list-item">
+                <h3>THÊM TÀI LIỆU</h3>
+
+                <input id="resolutionTitle"
+                    placeholder="Tên tài liệu">
+
+                <select id="resolutionCategory">
+                    <option value="Nghị quyết">Nghị quyết</option>
+                    <option value="Chỉ thị">Chỉ thị</option>
+                    <option value="Văn kiện">Văn kiện</option>
+                    <option value="Tài liệu học tập">Tài liệu học tập</option>
+                    <option value="Khác">Khác</option>
+                </select>
+
+                <input id="resolutionUrl"
+                    type="url"
+                    placeholder="Dán link PDF, Word hoặc website">
+
+                <button class="action-button"
+                    onclick="themTaiLieuNghiQuyet()">
+                    THÊM TÀI LIỆU
+                </button>
+            </div>
+
+            <div class="list-item">
+                <h3>TÌM KIẾM TÀI LIỆU</h3>
+
+                <input id="resolutionSearch"
+                    placeholder="Nhập tên tài liệu..."
+                    oninput="hienThiTaiLieuNghiQuyet()">
+            </div>
+
+            <h3>DANH SÁCH TÀI LIỆU</h3>
+
+            <div id="resolutionList">
+                Đang tải tài liệu...
+            </div>
+        </div>
+    `;
+}
+
+// LẤY DỮ LIỆU
+function layTaiLieuNghiQuyet() {
+    try {
+        return JSON.parse(
+            localStorage.getItem("bbb11_resolution") || "[]"
+        );
+    } catch {
+        return [];
+    }
+}
+
+// KIỂM TRA ĐƯỜNG LINK
+function kiemTraLinkNghiQuyet(url) {
+    try {
+        const parsed = new URL(url);
+
+        return ["https:", "http:"].includes(parsed.protocol);
+    } catch {
+        return false;
+    }
+}
+
+// THÊM TÀI LIỆU
+function themTaiLieuNghiQuyet() {
+    const title = document
+        .getElementById("resolutionTitle").value.trim();
+
+    const category = document
+        .getElementById("resolutionCategory").value;
+
+    const url = document
+        .getElementById("resolutionUrl").value.trim();
+
+    if (!title || !url) {
+        alert("Vui lòng nhập tên và đường link tài liệu!");
+        return;
+    }
+
+    if (!kiemTraLinkNghiQuyet(url)) {
+        alert("Đường link không hợp lệ!");
+        return;
+    }
+
+    const danhSach = layTaiLieuNghiQuyet();
+
+    danhSach.push({
+        id: Date.now().toString(),
+        title,
+        category,
+        url,
+        createdAt: new Date().toISOString()
+    });
+
+    localStorage.setItem(
+        "bbb11_resolution",
+        JSON.stringify(danhSach)
+    );
+
+    alert("Đã thêm tài liệu thành công!");
+
+    showPage("resolution");
+}
+
+// HIỂN THỊ TÀI LIỆU
+function hienThiTaiLieuNghiQuyet() {
+    const khung = document.getElementById("resolutionList");
+
+    if (!khung) return;
+
+    const keyword = (
+        document.getElementById("resolutionSearch")?.value || ""
+    ).toLowerCase().trim();
+
+    const danhSach = layTaiLieuNghiQuyet().filter(item =>
+        item.title.toLowerCase().includes(keyword) ||
+        item.category.toLowerCase().includes(keyword)
+    );
+
+    if (!danhSach.length) {
+        khung.innerHTML = "<p>Chưa có tài liệu phù hợp.</p>";
+        return;
+    }
+
+    khung.innerHTML = danhSach.map(item => `
+        <div class="list-item">
+            <h3>${escapeHTML(item.title)}</h3>
+
+            <p>Phân loại: ${escapeHTML(item.category)}</p>
+
+            <a href="${escapeHTML(item.url)}"
+               target="_blank"
+               rel="noopener noreferrer">
+                📖 MỞ TÀI LIỆU
+            </a>
+
+            <button class="btn-delete"
+                onclick="xoaTaiLieuNghiQuyet('${item.id}')">
+                XÓA
+            </button>
+        </div>
+    `).join("");
+}
+
+// XÓA TÀI LIỆU
+function xoaTaiLieuNghiQuyet(id) {
+    if (!confirm("Bạn có chắc muốn xóa tài liệu này?")) return;
+
+    const danhSach = layTaiLieuNghiQuyet().filter(
+        item => item.id !== id
+    );
+
+    localStorage.setItem(
+        "bbb11_resolution",
+        JSON.stringify(danhSach)
+    );
+
+    showPage("resolution");
+};
 }
 
 function resolutionPage() {
