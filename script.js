@@ -135,6 +135,9 @@ if (page === "reports") {
     home.classList.add("hidden");
     functionPage.classList.remove("hidden");
 
+if (page === "gallery") {
+    loadGallery();
+}
     document.querySelectorAll(".menu-btn").forEach(btn => {
         btn.classList.remove("active");
     });
@@ -145,7 +148,6 @@ if (page === "reports") {
 
     activeButton?.classList.add("active");
 
-    if (page === "members")    hienThiThanhVien();
     if (page === "accounts")   hienThiTaiKhoan();
     if (page === "attendance") hienThiDiemDanh();
     if (page === "activities") hienThiHoatDong();
@@ -3694,7 +3696,7 @@ async function uploadGalleryImage() {
 
     try {
         const { data: authData, error: authError } =
-            await supabase.auth.getUser();
+            await supabaseClient.auth.getUser();
 
         if (authError || !authData.user) {
             throw new Error("Bạn cần đăng nhập để tải ảnh!");
@@ -3707,7 +3709,7 @@ async function uploadGalleryImage() {
             userId + "/" + Date.now() + "." + extension;
 
         const { error: uploadError } =
-            await supabase.storage
+            await supabaseClient.storage
                 .from("bbb11-images")
                 .upload(filePath, file, {
                     contentType: file.type,
@@ -3716,8 +3718,8 @@ async function uploadGalleryImage() {
 
         if (uploadError) throw uploadError;
 
-        const { error: insertError } =
-            await supabase
+       const { error: insertError } =
+    await supabaseClient
                 .from("bbb11_gallery")
                 .insert([{
                     title: title,
@@ -3728,7 +3730,7 @@ async function uploadGalleryImage() {
                 }]);
 
         if (insertError) {
-            await supabase.storage
+            await supabaseClient.storage
                 .from("bbb11-images")
                 .remove([filePath]);
 
@@ -3759,7 +3761,7 @@ async function loadGallery() {
     if (!container) return;
 
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from("bbb11_gallery")
             .select("*")
             .order("created_at", { ascending: false });
@@ -3776,7 +3778,7 @@ async function loadGallery() {
             data.map(async item => {
 
                 const { data: imageData, error: imageError } =
-                    await supabase.storage
+                    await supabaseClient.storage
                         .from("bbb11-images")
                         .createSignedUrl(item.image_path, 3600);
 
@@ -3844,7 +3846,7 @@ async function viewGalleryImage(id) {
     }
 
     const { data: imageData, error: imageError } =
-        await supabase.storage
+        await supabaseClient.storage
             .from("bbb11-images")
             .createSignedUrl(data.image_path, 3600);
 
