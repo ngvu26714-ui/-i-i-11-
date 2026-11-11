@@ -10,6 +10,52 @@
 </head>
 
 <body>
+    
+<!-- MÀN HÌNH ĐĂNG NHẬP BBB11 -->
+<div id="loginPage" class="login-container">
+
+    <div class="app hidden"></div>
+
+        <div class="login-logo">
+            <i class="fa-solid fa-star"></i>
+            <h1>BBB11</h1>
+            <h3>ĐẠI ĐỘI 11</h3>
+        </div>
+
+        <p>HỆ THỐNG QUẢN LÝ ĐẠI ĐỘI</p>
+
+        <form onsubmit="event.preventDefault(); dangNhap();">
+
+            <input
+    type="email"
+    id="loginEmail"
+    placeholder="Địa chỉ Email"
+    autocomplete="username"
+    required
+>
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Mật khẩu"
+                autocomplete="current-password"
+                required
+            >
+
+            <button type="submit">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                ĐĂNG NHẬP
+            </button>
+
+        </form>
+
+        <p class="login-footer">
+            BBB11 - ĐẠI ĐỘI 11
+        </p>
+
+    </div>
+</div>
+
 
 <div class="app">
 
@@ -201,6 +247,10 @@
         <!-- TRANG CHỨC NĂNG -->
         <section id="functionPage" class="hidden">
 
+
+            
+
+
             <button class="back-button" onclick="showHome()">
                 <i class="fa-solid fa-arrow-left"></i>
                 Quay lại trang chủ
@@ -225,5 +275,3 @@
 <script src="account.js"></script>
 
 <script src="script.js"></script>
-</body>
-</html>
