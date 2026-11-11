@@ -1,107 +1,231 @@
 
 "use strict";
 
-// BBB11 - QUẢN LÝ TÀI KHOẢN
+// ======================================
+// BBB11 - SUPABASE AUTHENTICATION
+// ADMIN & CHIEN SI
+// ======================================
 
-async function kiemTraQuanTri() {
-    const { data: { user }, error } =
-        await supabaseClient.auth.getUser();
+let bbb11CurrentUser = null;
+let bbb11CurrentRole = null;
 
-    if (error || !user) {
-        throw new Error("Bạn cần đăng nhập!");
+// Các trang chỉ ADMIN được sử dụng
+const ADMIN_PAGES = [
+    "admin",
+    "members",
+    "accounts",
+    "attendance",
+    "activities",
+    "reports",
+    "score"
+];
+
+// ======================================
+// 1. HIỂN THỊ GIAO DIỆN
+// ======================================
+
+function hienThiGiaoDienDaDangNhap(profile) {
+
+    const loginPage = document.getElementById("loginPage");
+    const app = document.querySelector(".app");
+
+    if (loginPage) loginPage.classList.add("hidden");
+    if (app) app.classList.remove("hidden");
+
+    const ten = profile.email || "Người dùng BBB11";
+
+    const userName = document.getElementById("userName");
+    const welcomeName = document.getElementById("welcomeName");
+
+    if (userName) {
+        userName.textContent =
+            ten + " (" + profile.role.toUpperCase() + ")";
     }
+
+    if (welcomeName) welcomeName.textContent = ten;
+
+    // Lưu trạng thái giao diện
+    sessionStorage.setItem("bbb11_login", JSON.stringify({
+        id: profile.id,
+        ten: ten,
+        email: profile.email,
+        role: profile.role
+    }));
+
+    // Ẩn chức năng quản trị đối với chiến sĩ
+    document.querySelectorAll(".menu-btn").forEach(button => {
+
+        const page = button.getAttribute("onclick")
+            ?.match(/showPage\('([^']+)'\)/)?.[1];
+
+        if (page && ADMIN_PAGES.includes(page)) {
+            button.style.display =
+                profile.role === "admin" ? "" : "none";
+        }
+    });
+}
+
+// ======================================
+// 2. ĐĂNG NHẬP
+// ======================================
+
+async function dangNhap() {
+
+    const email = document
+        .getElementById("loginEmail")
+        ?.value.trim().toLowerCase();
+
+    const password = document
+        .getElementById("loginPassword")
+        ?.value;
+
+    if (!email || !password) {
+        alert("Vui lòng nhập Email và mật khẩu!");
+        return;
+    }
+
+    try {
+
+        const { data, error } =
+            await supabaseClient.auth.signInWithPassword({
+                email,
+                password
+            });
+
+        if (error) {
+            alert("Đăng nhập thất bại: " + error.message);
+            return;
+        }
+
+        // Lấy quyền từ bảng profiles
+        const { data: profile, error: profileError } =
+            await supabaseClient
+                .from("profiles")
+                .select("id, email, role")
+                .eq("id", data.user.id)
+                .single();
+
+        if (profileError || !profile) {
+
+            await supabaseClient.auth.signOut();
+
+            alert("Không tìm thấy hồ sơ hoặc quyền truy cập!");
+
+            return;
+        }
+
+        if (!["admin", "chien_si"].includes(profile.role)) {
+
+            await supabaseClient.auth.signOut();
+
+            alert("Tài khoản không có quyền sử dụng BBB11!");
+
+            return;
+        }
+
+        bbb11CurrentUser = data.user;
+        bbb11CurrentRole = profile.role;
+
+        hienThiGiaoDienDaDangNhap(profile);
+
+        alert("Đăng nhập BBB11 thành công!");
+
+        if (profile.role === "admin") {
+            showPage("admin");
+        } else {
+            showHome();
+        }
+
+    } catch (error) {
+
+        console.error("BBB11 Login Error:", error);
+
+        alert("Lỗi kết nối: " + error.message);
+    }
+}
+
+// ======================================
+// 3. ĐĂNG XUẤT
+// ======================================
+
+async function logout() {
+
+    const confirmLogout = confirm(
+        "Bạn có chắc chắn muốn đăng xuất BBB11?"
+    );
+
+    if (!confirmLogout) return;
+
+    const { error } = await supabaseClient.auth.signOut();
+
+    if (error) {
+        alert("Không thể đăng xuất: " + error.message);
+        return;
+    }
+
+    bbb11CurrentUser = null;
+    bbb11CurrentRole = null;
+
+    sessionStorage.removeItem("bbb11_login");
+
+    location.reload();
+}
+
+// ======================================
+// 4. KIỂM TRA PHIÊN ĐĂNG NHẬP
+// ======================================
+
+async function khoiTaoDangNhapBBB11() {
+
+    const loginPage = document.getElementById("loginPage");
+    const app = document.querySelector(".app");
+
+    if (loginPage) loginPage.classList.remove("hidden");
+    if (app) app.classList.add("hidden");
+
+    const { data, error } =
+        await supabaseClient.auth.getSession();
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    const session = data.session;
+
+    if (!session) return;
 
     const { data: profile, error: profileError } =
         await supabaseClient
             .from("profiles")
-            .select("vai_tro, trang_thai")
-            .eq("id", user.id)
+            .select("id, email, role")
+            .eq("id", session.user.id)
             .single();
 
     if (profileError || !profile ||
-        profile.vai_tro !== "admin" ||
-        profile.trang_thai !== "active") {
-        throw new Error("Bạn không có quyền quản trị!");
+        !["admin", "chien_si"].includes(profile.role)) {
+
+        await supabaseClient.auth.signOut();
+        return;
     }
 
-    return user;
+    bbb11CurrentUser = session.user;
+    bbb11CurrentRole = profile.role;
+
+    hienThiGiaoDienDaDangNhap(profile);
+
+    showHome();
 }
 
-// HIỂN THỊ TÀI KHOẢN
+// ======================================
+// 5. KHỞI ĐỘNG BBB11
+// ======================================
 
-async function hienThiTaiKhoan() {
-    const khung = document.getElementById("danhSachTaiKhoan");
+document.addEventListener("DOMContentLoaded", () => {
 
-    if (!khung) return;
+    khoiTaoDangNhapBBB11().catch(error => {
+        console.error("Lỗi khởi động BBB11:", error);
+    });
 
-    khung.innerHTML = "Đang tải dữ liệu...";
-
-    try {
-        await kiemTraQuanTri();
-
-        const { data, error } = await supabaseClient
-            .from("profiles")
-            .select("id, ho_ten, ma_so, vai_tro, trang_thai, created_at")
-            .order("created_at", { ascending: false });
-
-        if (error) throw error;
-
-        if (!data || data.length === 0) {
-            khung.innerHTML = "<p>Chưa có tài khoản nào.</p>";
-            return;
-        }
-
-        khung.innerHTML = data.map(tk => `
-            <div class="list-item">
-                <h3>${escapeHTML(tk.ho_ten)}</h3>
-
-                <p>Mã số: ${escapeHTML(tk.ma_so || "")}</p>
-
-                <p>Vai trò:
-                    ${tk.vai_tro === "admin"
-                        ? "Quản trị viên"
-                        : "Thành viên"}
-                </p>
-
-                <p>Trạng thái:
-                    ${tk.trang_thai === "active"
-                        ? "Đang hoạt động"
-                        : "Đã khóa"}
-                </p>
-            </div>
-        `).join("");
-
-    } catch (error) {
-        khung.innerHTML =
-            `<p>${escapeHTML(error.message)}</p>`;
-    }
-}
-
-// TẠO HỒ SƠ TÀI KHOẢN
-// Chỉ tạo hồ sơ cho UID đã được xác thực.
-// Không tự tạo quyền admin từ trình duyệt.
-
-async function taoHoSoTaiKhoan(id, hoTen, maSo) {
-    await kiemTraQuanTri();
-
-    if (!id || !hoTen.trim()) {
-        throw new Error("Thiếu thông tin tài khoản!");
-    }
-
-    const { error } = await supabaseClient
-        .from("profiles")
-        .insert({
-            id: id,
-            ho_ten: hoTen.trim(),
-            ma_so: maSo.trim() || null,
-            vai_tro: "member",
-            trang_thai: "active"
-        });
-
-    if (error) throw error;
-
-    return true;
-}
-
-console.log("BBB11: Đã tải module quản lý tài khoản!");
+});
 
