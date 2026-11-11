@@ -2,14 +2,12 @@
 "use strict";
 
 // ======================================
-// BBB11 - SUPABASE AUTHENTICATION
-// ADMIN & CHIEN SI
+// BBB11 - AUTHENTICATION
 // ======================================
 
 let bbb11CurrentUser = null;
 let bbb11CurrentRole = null;
 
-// Các trang chỉ ADMIN được sử dụng
 const ADMIN_PAGES = [
     "admin",
     "members",
@@ -21,7 +19,7 @@ const ADMIN_PAGES = [
 ];
 
 // ======================================
-// 1. HIỂN THỊ GIAO DIỆN
+// HIỂN THỊ GIAO DIỆN
 // ======================================
 
 function hienThiGiaoDienDaDangNhap(profile) {
@@ -38,21 +36,21 @@ function hienThiGiaoDienDaDangNhap(profile) {
     const welcomeName = document.getElementById("welcomeName");
 
     if (userName) {
-        userName.textContent =
-            ten + " (" + profile.role.toUpperCase() + ")";
+        userName.textContent = ten + " (" + profile.role + ")";
     }
 
-    if (welcomeName) welcomeName.textContent = ten;
+    if (welcomeName) {
+        welcomeName.textContent = ten;
+    }
 
-    // Lưu trạng thái giao diện
     sessionStorage.setItem("bbb11_login", JSON.stringify({
         id: profile.id,
-        ten: ten,
+        ten,
         email: profile.email,
         role: profile.role
     }));
 
-    // Ẩn chức năng quản trị đối với chiến sĩ
+    // Phân quyền menu
     document.querySelectorAll(".menu-btn").forEach(button => {
 
         const page = button.getAttribute("onclick")
@@ -66,13 +64,49 @@ function hienThiGiaoDienDaDangNhap(profile) {
 }
 
 // ======================================
-// 2. ĐĂNG NHẬP
+// LẤY HỒ SƠ
+// ======================================
+
+async function layHoSoBBB11(userId) {
+
+    const { data, error } = await supabaseClient
+        .from("profiles")
+        .select("id, email, role")
+        .eq("id", userId)
+        .maybeSingle();
+
+    if (error) {
+        console.error("Lỗi lấy profiles:", error);
+        throw error;
+    }
+
+    if (!data) {
+        throw new Error("Không tìm thấy hồ sơ trong profiles.");
+    }
+
+    const role = String(data.role || "")
+        .trim()
+        .toLowerCase();
+
+    if (!["admin", "chien_si"].includes(role)) {
+        throw new Error("Role không hợp lệ: " + role);
+    }
+
+    return {
+        ...data,
+        role
+    };
+}
+
+// ======================================
+// ĐĂNG NHẬP
 // ======================================
 
 async function dangNhap() {
 
+    // HTML hiện tại sử dụng loginUsername
     const email = document
-        .getElementById("loginEmail")
+        .getElementById("loginUsername")
         ?.value.trim().toLowerCase();
 
     const password = document
@@ -80,7 +114,7 @@ async function dangNhap() {
         ?.value;
 
     if (!email || !password) {
-        alert("Vui lòng nhập Email và mật khẩu!");
+        alert("Vui lòng nhập email và mật khẩu!");
         return;
     }
 
@@ -97,31 +131,7 @@ async function dangNhap() {
             return;
         }
 
-        // Lấy quyền từ bảng profiles
-        const { data: profile, error: profileError } =
-            await supabaseClient
-                .from("profiles")
-                .select("id, email, role")
-                .eq("id", data.user.id)
-                .single();
-
-        if (profileError || !profile) {
-
-            await supabaseClient.auth.signOut();
-
-            alert("Không tìm thấy hồ sơ hoặc quyền truy cập!");
-
-            return;
-        }
-
-        if (!["admin", "chien_si"].includes(profile.role)) {
-
-            await supabaseClient.auth.signOut();
-
-            alert("Tài khoản không có quyền sử dụng BBB11!");
-
-            return;
-        }
+        const profile = await layHoSoBBB11(data.user.id);
 
         bbb11CurrentUser = data.user;
         bbb11CurrentRole = profile.role;
@@ -138,28 +148,28 @@ async function dangNhap() {
 
     } catch (error) {
 
-        console.error("BBB11 Login Error:", error);
+        console.error("BBB11 LOGIN ERROR:", error);
 
-        alert("Lỗi kết nối: " + error.message);
+        await supabaseClient.auth.signOut();
+
+        alert("Không thể xác nhận quyền truy cập: " + error.message);
     }
 }
 
 // ======================================
-// 3. ĐĂNG XUẤT
+// ĐĂNG XUẤT
 // ======================================
 
 async function logout() {
 
-    const confirmLogout = confirm(
-        "Bạn có chắc chắn muốn đăng xuất BBB11?"
-    );
-
-    if (!confirmLogout) return;
+    if (!confirm("Bạn có chắc chắn muốn đăng xuất?")) {
+        return;
+    }
 
     const { error } = await supabaseClient.auth.signOut();
 
     if (error) {
-        alert("Không thể đăng xuất: " + error.message);
+        alert("Lỗi đăng xuất: " + error.message);
         return;
     }
 
@@ -172,7 +182,7 @@ async function logout() {
 }
 
 // ======================================
-// 4. KIỂM TRA PHIÊN ĐĂNG NHẬP
+// KIỂM TRA PHIÊN
 // ======================================
 
 async function khoiTaoDangNhapBBB11() {
@@ -187,44 +197,48 @@ async function khoiTaoDangNhapBBB11() {
         await supabaseClient.auth.getSession();
 
     if (error) {
-        console.error(error);
+        console.error("Lỗi phiên:", error);
         return;
     }
 
-    const session = data.session;
+    if (!data.session) return;
 
-    if (!session) return;
+    try {
 
-    const { data: profile, error: profileError } =
-        await supabaseClient
-            .from("profiles")
-            .select("id, email, role")
-            .eq("id", session.user.id)
-            .single();
+        const profile = await layHoSoBBB11(
+            data.session.user.id
+        );
 
-    if (profileError || !profile ||
-        !["admin", "chien_si"].includes(profile.role)) {
+        bbb11CurrentUser = data.session.user;
+        bbb11CurrentRole = profile.role;
+
+        hienThiGiaoDienDaDangNhap(profile);
+
+        if (profile.role === "admin") {
+            showPage("admin");
+        } else {
+            showHome();
+        }
+
+    } catch (error) {
+
+        console.error("Lỗi xác nhận hồ sơ:", error);
 
         await supabaseClient.auth.signOut();
-        return;
+
+        if (loginPage) loginPage.classList.remove("hidden");
+        if (app) app.classList.add("hidden");
     }
-
-    bbb11CurrentUser = session.user;
-    bbb11CurrentRole = profile.role;
-
-    hienThiGiaoDienDaDangNhap(profile);
-
-    showHome();
 }
 
 // ======================================
-// 5. KHỞI ĐỘNG BBB11
+// KHỞI ĐỘNG
 // ======================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
     khoiTaoDangNhapBBB11().catch(error => {
-        console.error("Lỗi khởi động BBB11:", error);
+        console.error("BBB11 INIT ERROR:", error);
     });
 
 });
