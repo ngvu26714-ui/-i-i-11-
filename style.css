@@ -1180,3 +1180,107 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* =================================
+   GIAO DIỆN ĐĂNG NHẬP BBB11
+================================= */
+
+.login-container {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #063b25, #08734a);
+}
+
+.login-container.hidden {
+    display: none;
+}
+
+.login-box {
+    width: 380px;
+    max-width: 100%;
+    padding: 35px;
+    background: #fff;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 15px 45px rgba(0,0,0,.3);
+    box-sizing: border-box;
+}
+
+.login-logo i {
+    font-size: 45px;
+    color: #b58b24;
+}
+
+.login-logo h1 {
+    color: #08734a;
+    font-size: 40px;
+    margin: 10px 0 0;
+}
+
+.login-logo h3 {
+    color: #b58b24;
+    margin: 5px 0 20px;
+}
+
+.login-box > p {
+    color: #555;
+    font-size: 13px;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 14px;
+    margin: 9px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+.login-box input:focus {
+    outline: none;
+    border-color: #08734a;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    background: #08734a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-box button:hover {
+    background: #064d32;
+}
+
+.login-footer {
+    margin-top: 25px;
+    color: #888;
+}
+.hidden {
+    display: none !important;
+}
+
+#loginPage {
+    display: flex;
+}
+
+#loginPage.hidden {
+    display: none !important;
+}
+
+.app.hidden {
+    display: none !important;
+}
