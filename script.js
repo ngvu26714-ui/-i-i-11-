@@ -172,39 +172,36 @@ if (page === "gallery") {
     if (page === "ranking")    hienThiLichSuQuiz();
     if (page === "ranking")    hienThiBangXepHang();
     if (page === "ranking")    hienThiBangXepHang();
-    if (page === "question")   hienThiCauHoiTuan();
-    if (page === "attendance") {
-    const dateInput = document.getElementById("attendanceDate");
+}
 
-    if (dateInput) {
-        dateInput.value = new Date().toLocaleDateString("en-CA");
+// XỬ LÝ NỘI DUNG THEO TRANG
+function xuLyTrang(page) {
+
+    if (page === "question") {
+        hienThiCauHoiTuan();
     }
 
-    taiDanhSachDiemDanh();
-    hienThiThongKeDiemDanh();
-    hienThiLichSuDiemDanh();
-}
-    
-}
+    if (page === "attendance") {
+
+        const dateInput =
+            document.getElementById("attendanceDate");
+
+        if (dateInput) {
+            dateInput.value =
+                new Date().toLocaleDateString("en-CA");
+        }
+
+        taiDanhSachDiemDanh();
+        hienThiThongKeDiemDanh();
+        hienThiLichSuDiemDanh();
+    }
+
     if (page === "quiz") {
-    
+
+        // Giữ nguyên chức năng xử lý quiz hiện tại
+    }
 }
 
-
-
-// ======================================
-// 5. BẢO VỆ DỮ LIỆU HIỂN THỊ
-// ======================================
-
-function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, char => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-    })[char]);
-}
 
 // ======================================
 // 6. ĐĂNG XUẤT
@@ -3614,6 +3611,7 @@ function galleryPage() {
                     onclick="uploadGalleryImage()">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                     TẢI ẢNH LÊN
+
                 </button>
 
             </div>
@@ -3632,45 +3630,144 @@ function galleryPage() {
 
 
 // XEM TRƯỚC HÌNH ẢNH
-function previewGalleryImage() {
 
-    const file = document.getElementById("galleryFile")?.files[0];
-    const preview = document.getElementById("galleryPreview");
+// TẢI ẢNH LÊN SUPABASE
+async function uploadGalleryImage() {
 
-    if (!preview) return;
-
-    if (!file) {
-        preview.innerHTML = "";
+    // SỬ DỤNG SUPABASE CLIENT ĐÃ KHỞI TẠO
+    if (typeof supabaseClient === "undefined") {
+        alert("Chưa kết nối Supabase!");
         return;
     }
 
-    if (!file.type.startsWith("image/")) {
-        alert("Vui lòng chọn file hình ảnh!");
+    const title = document.getElementById("galleryTitle").value.trim();
+    const date = document.getElementById("galleryDate").value;
+    const description = document.getElementById("galleryDescription").value.trim();
+    const file = document.getElementById("galleryFile").files[0];
+
+    if (!title || !date || !file) {
+        alert("Vui lòng nhập tên hoạt động, ngày và chọn ảnh!");
+        return;
+    }
+
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+        alert("Chỉ chấp nhận ảnh JPG, PNG hoặc WEBP!");
         return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-        alert("Ảnh không được vượt quá 5MB!");
+        alert("Ảnh tối đa 5MB!");
         return;
     }
 
-    const reader = new FileReader();
+    const button = document.querySelector(
+        ".gallery-upload .action-button"
+    );
 
-    reader.onload = function(event) {
-        preview.innerHTML = `
-            <img src="${event.target.result}"
-                alt="Ảnh xem trước"
-                style="width:100%;max-width:350px;
-                border-radius:10px;margin-top:15px;">
-        `;
-    };
+    if (button) {
+        button.disabled = true;
+        button.textContent = "ĐANG TẢI ẢNH...";
+    }
 
-    reader.readAsDataURL(file);
+    let filePath = null;
+
+    try {
+
+        // KIỂM TRA ĐĂNG NHẬP
+        const { data: authData, error: authError } =
+            await supabaseClient.auth.getUser();
+
+        if (authError) throw authError;
+
+        if (!authData.user) {
+            throw new Error("Bạn cần đăng nhập để tải ảnh!");
+        }
+
+        const userId = authData.user.id;
+
+        // TẠO ĐƯỜNG DẪN ẢNH
+        const extension = file.name.split(".").pop().toLowerCase();
+
+        filePath = userId + "/" + Date.now() + "." + extension;
+
+        // TẢI ẢNH VÀO BUCKET GALLERY
+        const { data: uploadData, error: uploadError } =
+            await supabaseClient.storage
+                .from("gallery")
+                .upload(filePath, file, {
+                    cacheControl: "3600",
+                    upsert: false,
+                    contentType: file.type
+                });
+
+        if (uploadError) throw uploadError;
+
+        // LẤY URL ẢNH CÔNG KHAI
+        const { data: urlData } =
+            supabaseClient.storage
+                .from("gallery")
+                .getPublicUrl(uploadData.path);
+
+        // LƯU THÔNG TIN VÀO DATABASE
+        const { error: insertError } =
+            await supabaseClient
+                .from("bbb11_gallery")
+                .insert([{
+                    title: title,
+                    description: description,
+                    activity_date: date,
+                    image_url: urlData.publicUrl
+                }]);
+
+        if (insertError) throw insertError;
+
+        alert("ĐĂNG TẢI HÌNH ẢNH BBB11 THÀNH CÔNG!");
+
+        // XÓA DỮ LIỆU FORM
+        document.getElementById("galleryTitle").value = "";
+        document.getElementById("galleryDate").value = "";
+        document.getElementById("galleryDescription").value = "";
+        document.getElementById("galleryFile").value = "";
+        document.getElementById("galleryPreview").innerHTML = "";
+
+        // TẢI LẠI THƯ VIỆN
+        await loadGalleryImages();
+
+    } catch (error) {
+
+        console.error("LỖI TẢI ẢNH:", error);
+
+        // NẾU LƯU DATABASE THẤT BẠI, XÓA ẢNH VỪA UPLOAD
+        if (filePath) {
+            const { error: removeError } =
+                await supabaseClient.storage
+                    .from("gallery")
+                    .remove([filePath]);
+
+            if (removeError) {
+                console.error("Không thể xóa ảnh lỗi:", removeError);
+            }
+        }
+
+        alert("Không thể tải ảnh: " + error.message);
+
+    } finally {
+
+        if (button) {
+            button.disabled = false;
+            button.innerHTML =
+                '<i class="fa-solid fa-cloud-arrow-up"></i> TẢI ẢNH LÊN';
+        }
+    }
 }
 
 
 // TẢI ẢNH LÊN SUPABASE
 async function uploadGalleryImage() {
+    const supabaseClient = window.supabase.createClient(
+    "https://etbczslniaqsivyogdpw.supabase.co",
+    "sb_publishable_dWdnGOcGfzXYTzGzl2AATA_tvHpg8aH"
+);
 
     const title = document.getElementById("galleryTitle").value.trim();
     const date = document.getElementById("galleryDate").value;
@@ -3720,13 +3817,11 @@ async function uploadGalleryImage() {
 
         const { error: uploadError } =
             await supabaseClient.storage
-                .from("bbb11-images")
-                .upload(filePath, file, {
-                    contentType: file.type,
-                    upsert: false
-                });
 
-        if (uploadError) throw uploadError;
+    .from("gallery")
+    .upload(fileName, file);
+                         
+    if (uploadError) throw uploadError;
 
        const { error: insertError } =
     await supabaseClient
