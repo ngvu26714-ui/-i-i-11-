@@ -72,6 +72,22 @@ function showHome() {
 // ======================================
 
 function showPage(page) {
+    
+    // KIỂM TRA QUYỀN TRUY CẬP BBB11
+
+    if (!bbb11CurrentUser || !bbb11CurrentRole) {
+        alert("Vui lòng đăng nhập trước!");
+        return;
+    }
+
+    if (
+        ADMIN_PAGES.includes(page) &&
+        bbb11CurrentRole !== "admin"
+    ) {
+        alert("Bạn không có quyền truy cập chức năng quản trị!");
+        return;
+    }
+
     const home = document.getElementById("homePage");
     const functionPage = document.getElementById("functionPage");
     const content = document.getElementById("pageContent");
@@ -194,12 +210,6 @@ function escapeHTML(value) {
 // 6. ĐĂNG XUẤT
 // ======================================
 
-function logout() {
-    if (!confirm("Bạn có muốn đăng xuất không?")) return;
-
-    sessionStorage.removeItem("bbb11_login");
-    showHome();
-}
 
 // ======================================
 // 7. QUẢN LÝ THÀNH VIÊN
@@ -3880,3 +3890,6 @@ async function viewGalleryImage(id) {
         </div>
     `;
 }
+document.addEventListener("DOMContentLoaded", async function() {
+    await kiemTraDangNhap();
+});
