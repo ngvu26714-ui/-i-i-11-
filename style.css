@@ -5,11 +5,7 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background: #f3f3f3;
-    color: #292929;
-}
+
 
 /* HEADER */
 .header {
@@ -662,17 +658,8 @@ footer {
 }
 
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-body {
-    font-family: Arial, sans-serif;
-    background: #f2f2f2;
-    color: #333;
-}
+
 
 .app {
     display: flex;
