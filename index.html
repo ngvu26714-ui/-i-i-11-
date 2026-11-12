@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+    <link rel="icon" href="data:,">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cBB11 - Đại đội 11</title>
@@ -12,9 +13,14 @@
 <body>
     
 <!-- MÀN HÌNH ĐĂNG NHẬP BBB11 -->
+
 <div id="loginPage" class="login-container">
 
-    <div class="app hidden"></div>
+    <div class="login-logo">
+        <i class="fa-solid fa-star"></i>
+        <h1>cBB11</h1>
+        <h3>ĐẠI ĐỘI 11</h3>
+    </div>
 
         <div class="login-logo">
             <i class="fa-solid fa-star"></i>
@@ -111,7 +117,7 @@
             <i class="fa-solid fa-star"></i> Cẩm nang người lính
         </button>
 
-        <button class="menu-btn" onclick="showPage('resolution')">
+      <button class="menu-btn" onclick="showPage('resolution')">
             <i class="fa-solid fa-book"></i> Học tập nghị quyết
         </button>
 
@@ -165,6 +171,7 @@
                 <button onclick="logout()">Đăng xuất</button>
             </div>
         </header>
+
 
         <!-- TRANG CHỦ -->
         <section id="homePage">
@@ -247,12 +254,7 @@
 
         <!-- TRANG CHỨC NĂNG -->
         <section id="functionPage" class="hidden">
-
-
-            
-
-
-            <button class="back-button" onclick="showHome()">
+         <button class="back-button" onclick="showHome()">
                 <i class="fa-solid fa-arrow-left"></i>
                 Quay lại trang chủ
             </button>
