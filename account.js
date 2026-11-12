@@ -1,6 +1,4 @@
 
-"use strict";
-
 // ======================================
 // BBB11 - AUTHENTICATION
 // ======================================
@@ -242,5 +240,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
 
 
