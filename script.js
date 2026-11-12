@@ -1,4 +1,26 @@
 
+// ======================================
+// HÀM BẢO MẬT HIỂN THỊ HTML BBB11
+// ======================================
+
+window.escapeHTML = function(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function(char) {
+        const entities = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+        };
+
+        return entities[char];
+    });
+};
+
+function escapeHTML(value) {
+    return window.escapeHTML(value);
+}
+
 "use strict";
 
 // ======================================
@@ -70,11 +92,9 @@ function showHome() {
 // ======================================
 // 4. ĐIỀU HƯỚNG CÁC CHỨC NĂNG
 // ======================================
-
 function showPage(page) {
-    
-    // KIỂM TRA QUYỀN TRUY CẬP BBB11
 
+    // KIỂM TRA QUYỀN
     if (!bbb11CurrentUser || !bbb11CurrentRole) {
         alert("Vui lòng đăng nhập trước!");
         return;
@@ -97,6 +117,7 @@ function showPage(page) {
         return;
     }
 
+    // DANH SÁCH CÁC TRANG
     const pages = {
         admin: adminPage,
         members: membersPage,
@@ -107,102 +128,100 @@ function showPage(page) {
         manual: manualPage,
         resolution: resolutionPage,
         news: newsPage,
-        music: musicPage,
         quiz: quizPage,
-        gallery: galleryPage,
         education: educationPage,
         bac: bacPage,
         question: questionPage,
         score: scorePage,
         ranking: rankingPage
     };
-    if (page === "music") {
-    hienThiKhoNhac();
+// KIỂM TRA VÀ HIỂN THỊ TRANG
+if (typeof pages[page] !== "function") {
+    content.innerHTML = "<h2>Chức năng chưa được xây dựng.</h2>";
+} else {
+    try {
+       
+        content.innerHTML = pages[page]();
+        if (page === "bac") {
+    hienThiLoiBac();
 }
-if (page === "activities") {
-    hienThiHoatDong();
-}
-if (page === "admin") {
-    capNhatBangDieuKhien();
-}
-if (page === "reports") {
-    const input = document.getElementById("reportMonth");
+content.innerHTML = pages[page]();
+home.classList.add("hidden");
+functionPage.classList.remove("hidden");
 
-    if (input) {
-        input.value = new Date().toISOString().slice(0, 7);
-    }
-
-    capNhatBaoCao();
+if (page === "resolution") {
+    hienThiTaiLieuNghiQuyet();
 }
-    if (typeof pages[page] !== "function") {
-        content.innerHTML = "<h2>Chức năng chưa được xây dựng.</h2>";
-    } else {
-        try {
-            content.innerHTML = pages[page]();
-        } catch (error) {
-            console.error(error);
-            content.innerHTML = `
+
+    } catch (error) {
+        console.error("Lỗi tải trang:", error);
+
+        content.innerHTML = `
+            <div class="page-box">
                 <h2>Lỗi tải chức năng</h2>
                 <p>${escapeHTML(error.message)}</p>
-            `;
-        }
+            </div>
+        `;
     }
+}
 
+home.classList.add("hidden");
+functionPage.classList.remove("hidden");
+
+    // HIỂN THỊ GIAO DIỆN
     home.classList.add("hidden");
     functionPage.classList.remove("hidden");
 
-if (page === "gallery") {
-    loadGallery();
-}
-    document.querySelectorAll(".menu-btn").forEach(btn => {
-        btn.classList.remove("active");
-    });
+    // CẬP NHẬT CÁC CHỨC NĂNG
+    if (page === "admin") {
+        capNhatBangDieuKhien();
+    }
 
-    const activeButton = document.querySelector(
-        `.menu-btn[onclick="showPage('${page}')"]`
-    );
+    if (page === "reports") {
+        const input = document.getElementById("reportMonth");
 
-    activeButton?.classList.add("active");
+        if (input) {
+            input.value = new Date().toISOString().slice(0, 7);
+        }
 
-    if (page === "accounts")   hienThiTaiKhoan();
-    if (page === "attendance") hienThiDiemDanh();
-    if (page === "activities") hienThiHoatDong();
-    if (page === "score")      hienThiDiemThiDua();
-    if (page === "ranking")    hienThiNganHangQuiz();
-    if (page === "ranking")    hienThiLichSuQuiz();
-    if (page === "ranking")    hienThiBangXepHang();
-    if (page === "ranking")    hienThiBangXepHang();
-}
+        capNhatBaoCao();
+    }
 
-// XỬ LÝ NỘI DUNG THEO TRANG
-function xuLyTrang(page) {
+    if (page === "gallery") {
+        loadGallery();
+    }
 
-    if (page === "question") {
-        hienThiCauHoiTuan();
+    if (page === "resolution") {
+        // Danh sách nghị quyết đã hiển thị trực tiếp
+        // Không cần tìm kiếm hoặc thêm tài liệu.
+    }
+
+    if (page === "accounts") {
+        hienThiTaiKhoan();
     }
 
     if (page === "attendance") {
-
-        const dateInput =
-            document.getElementById("attendanceDate");
-
-        if (dateInput) {
-            dateInput.value =
-                new Date().toLocaleDateString("en-CA");
-        }
-
-        taiDanhSachDiemDanh();
-        hienThiThongKeDiemDanh();
-        hienThiLichSuDiemDanh();
+        xuLyTrang("attendance");
     }
 
-    if (page === "quiz") {
-
-        // Giữ nguyên chức năng xử lý quiz hiện tại
+    if (page === "activities") {
+        hienThiHoatDong();
     }
-}
 
+    if (page === "score") {
+        hienThiDiemThiDua();
+    }
 
+    if (page === "ranking") {
+        hienThiNganHangQuiz();
+        hienThiLichSuQuiz();
+        hienThiBangXepHang();
+    }
+
+    if (page === "question") {
+        xuLyTrang("question");
+ }
+ };
 // ======================================
 // 6. ĐĂNG XUẤT
 // ======================================
@@ -296,6 +315,8 @@ function hienThiThanhVien() {
     }
 
     noiDung.innerHTML = danhSach.map(tv => `
+        <button
+</button>
         <div class="list-item">
             <h3>${escapeHTML(tv.hoTen)}</h3>
             <p>Mã số: ${escapeHTML(tv.maSo)}</p>
@@ -1396,588 +1417,193 @@ function xoaCamNang(id) {
 }
 
 
-
-
 function resolutionPage() {
     return `
         <div class="page-box">
-            <h2>HỌC TẬP NGHỊ QUYẾT</h2>
 
-            <p>
-                Kho tài liệu học tập nghị quyết của Đại đội 11.
-            </p>
+            <h2>📚 HỌC TẬP NGHỊ QUYẾT</h2>
 
-            <div class="list-item">
-                <h3>THÊM TÀI LIỆU</h3>
+            <div class="notice-card">
+                <h3>📖 DANH SÁCH NGHỊ QUYẾT</h3>
 
-                <input id="resolutionTitle"
-                    placeholder="Tên tài liệu">
-
-                <select id="resolutionCategory">
-                    <option value="Nghị quyết">Nghị quyết</option>
-                    <option value="Chỉ thị">Chỉ thị</option>
-                    <option value="Văn kiện">Văn kiện</option>
-                    <option value="Tài liệu học tập">Tài liệu học tập</option>
-                    <option value="Khác">Khác</option>
-                </select>
-
-                <input id="resolutionUrl"
-                    type="url"
-                    placeholder="Dán link PDF, Word hoặc website">
-
-                <button class="action-button"
-                    onclick="themTaiLieuNghiQuyet()">
-                    THÊM TÀI LIỆU
-                </button>
+                <p>
+                    Nội dung tóm tắt phục vụ học tập.
+                    Vui lòng mở nguồn tham khảo để đối chiếu
+                    với văn bản chính thức.
+                </p>
             </div>
 
-            <div class="list-item">
-                <h3>TÌM KIẾM TÀI LIỆU</h3>
+            <div id="resolutionList"></div>
 
-                <input id="resolutionSearch"
-                    placeholder="Nhập tên tài liệu..."
-                    oninput="hienThiTaiLieuNghiQuyet()">
-            </div>
-
-            <h3>DANH SÁCH TÀI LIỆU</h3>
-
-            <div id="resolutionList">
-                Đang tải tài liệu...
-            </div>
         </div>
     `;
 }
-
-// LẤY DỮ LIỆU
-function layTaiLieuNghiQuyet() {
-    try {
-        return JSON.parse(
-            localStorage.getItem("bbb11_resolution") || "[]"
-        );
-    } catch {
-        return [];
-    }
-}
-
-// KIỂM TRA ĐƯỜNG LINK
-function kiemTraLinkNghiQuyet(url) {
-    try {
-        const parsed = new URL(url);
-
-        return ["https:", "http:"].includes(parsed.protocol);
-    } catch {
-        return false;
-    }
-}
-
-// THÊM TÀI LIỆU
-function themTaiLieuNghiQuyet() {
-    const title = document
-        .getElementById("resolutionTitle").value.trim();
-
-    const category = document
-        .getElementById("resolutionCategory").value;
-
-    const url = document
-        .getElementById("resolutionUrl").value.trim();
-
-    if (!title || !url) {
-        alert("Vui lòng nhập tên và đường link tài liệu!");
-        return;
-    }
-
-    if (!kiemTraLinkNghiQuyet(url)) {
-        alert("Đường link không hợp lệ!");
-        return;
-    }
-
-    const danhSach = layTaiLieuNghiQuyet();
-
-    danhSach.push({
-        id: Date.now().toString(),
-        title,
-        category,
-        url,
-        createdAt: new Date().toISOString()
-    });
-
-    localStorage.setItem(
-        "bbb11_resolution",
-        JSON.stringify(danhSach)
-    );
-
-    alert("Đã thêm tài liệu thành công!");
-
-    showPage("resolution");
-}
-
-// HIỂN THỊ TÀI LIỆU
-function hienThiTaiLieuNghiQuyet() {
-    const khung = document.getElementById("resolutionList");
-
-    if (!khung) return;
-
-    const keyword = (
-        document.getElementById("resolutionSearch")?.value || ""
-    ).toLowerCase().trim();
-
-    const danhSach = layTaiLieuNghiQuyet().filter(item =>
-        item.title.toLowerCase().includes(keyword) ||
-        item.category.toLowerCase().includes(keyword)
-    );
-
-    if (!danhSach.length) {
-        khung.innerHTML = "<p>Chưa có tài liệu phù hợp.</p>";
-        return;
-    }
-
-    khung.innerHTML = danhSach.map(item => `
-        <div class="list-item">
-            <h3>${escapeHTML(item.title)}</h3>
-
-            <p>Phân loại: ${escapeHTML(item.category)}</p>
-
-            <a href="${escapeHTML(item.url)}"
-               target="_blank"
-               rel="noopener noreferrer">
-                📖 MỞ TÀI LIỆU
-            </a>
-
-            <button class="btn-delete"
-                onclick="xoaTaiLieuNghiQuyet('${item.id}')">
-                XÓA
-            </button>
-        </div>
-    `).join("");
-}
-
-// XÓA TÀI LIỆU
-function xoaTaiLieuNghiQuyet(id) {
-    if (!confirm("Bạn có chắc muốn xóa tài liệu này?")) return;
-
-    const danhSach = layTaiLieuNghiQuyet().filter(
-        item => item.id !== id
-    );
-
-    localStorage.setItem(
-        "bbb11_resolution",
-        JSON.stringify(danhSach)
-    );
-
-    showPage("resolution");
-}
-
-
 
 
 function newsPage() {
     return `
         <div class="page-box">
-            <h2>ĐỌC BÁO VÀ NGHE TIN</h2>
 
-            <p>
-                Kho liên kết báo chí, thời sự và các chương trình nghe tin.
-            </p>
+            <h2>📰 TRANG ĐỌC BÁO ĐIỆN TỬ</h2>
+            <p>Đọc báo trực tiếp trong phần mềm</p>
 
-            <div class="list-item">
-                <h3>THÊM ĐƯỜNG LINK BÁO ĐIỆN TỬ</h3>
-
-                <input id="newsTitle"
-                    type="text"
-                    placeholder="Tên báo hoặc nội dung tin tức">
-
-                <input id="newsUrl"
-                    type="url"
-                    placeholder="Dán đường link báo tại đây">
+            <div class="news-tabs">
 
                 <button class="action-button"
-                    onclick="themLienKetBao('bao')">
-                    THÊM LINK BÁO
+                    onclick="moBaoDienTu('nhandan')">
+                    NHÂN DÂN
                 </button>
-            </div>
-
-            <div class="list-item">
-                <h3>THÊM LINK NGHE TIN</h3>
-
-                <input id="audioTitle"
-                    type="text"
-                    placeholder="Tên chương trình nghe tin">
-
-                <input id="audioUrl"
-                    type="url"
-                    placeholder="Dán link MP3 hoặc âm thanh">
 
                 <button class="action-button"
-                    onclick="themLienKetBao('audio')">
-                    THÊM LINK NGHE TIN
+                    onclick="moBaoDienTu('qdnd')">
+                    QUÂN ĐỘI
                 </button>
+
+                <button class="action-button"
+                    onclick="moBaoDienTu('cand')">
+                    CÔNG AN
+                </button>
+
+                <button class="action-button"
+                    onclick="moBaoDienTu('tuoitre')">
+                    TUỔI TRẺ
+                </button>
+
             </div>
 
-            <h3> DANH SÁCH BÁO ĐIỆN TỬ </h3>
-            <div id="newsList"></div>
-
-            <h3> DANH SÁCH NGHE TIN </h3>
-            <div id="audioList"></div>
-        </div>
-    `;
-}
-
-// ĐỌC DỮ LIỆU
-function layLienKetBao() {
-    try {
-        return JSON.parse(
-            localStorage.getItem("bbb11_news") || "[]"
-        );
-    } catch {
-        return [];
-    }
-}
-
-// KIỂM TRA LINK
-function kiemTraURL(url) {
-    try {
-        const parsed = new URL(url);
-
-        return parsed.protocol === "https:" ||
-               parsed.protocol === "http:";
-    } catch {
-        return false;
-    }
-}
-
-// THÊM LINK
-function themLienKetBao(loai) {
-    const laAudio = loai === "audio";
-
-    const title = document.getElementById(
-        laAudio ? "audioTitle" : "newsTitle"
-    ).value.trim();
-
-    const url = document.getElementById(
-        laAudio ? "audioUrl" : "newsUrl"
-    ).value.trim();
-
-    if (!title || !url) {
-        alert("Vui lòng nhập tên và đường link!");
-        return;
-    }
-
-    if (!kiemTraURL(url)) {
-        alert("Đường link không hợp lệ!");
-        return;
-    }
-
-    const danhSach = layLienKetBao();
-
-    danhSach.push({
-        id: Date.now().toString(),
-        title,
-        url,
-        type: loai
-    });
-
-    localStorage.setItem(
-        "bbb11_news",
-        JSON.stringify(danhSach)
-    );
-
-    alert("Đã thêm liên kết thành công!");
-
-    showPage("news");
-}
-
-// HIỂN THỊ DANH SÁCH
-function hienThiLienKetBao() {
-    const danhSach = layLienKetBao();
-
-    const newsList = document.getElementById("newsList");
-    const audioList = document.getElementById("audioList");
-
-    if (!newsList || !audioList) return;
-
-    const bao = danhSach.filter(item => item.type === "bao");
-    const audio = danhSach.filter(item => item.type === "audio");
-
-    newsList.innerHTML = bao.length
-        ? bao.map(item => `
             <div class="list-item">
-                <h3>${escapeHTML(item.title)}</h3>
+                <h3 id="tenBaoDangDoc">
+                    BÁO NHÂN DÂN
+                </h3>
 
-                <a href="${escapeHTML(item.url)}"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    MỞ TRANG BÁO
-                </a>
-
-                <button class="btn-delete"
-                    onclick="xoaLienKetBao('${item.id}')">
-                    Xóa
+                <button class="action-button"
+                    onclick="taiLaiBao()">
+                    ↻ TẢI LẠI BÁO
                 </button>
-            </div>
-        `).join("")
-        : "<p>Chưa có đường link báo.</p>";
 
-    audioList.innerHTML = audio.length
-        ? audio.map(item => `
-            <div class="list-item">
-                <h3>${escapeHTML(item.title)}</h3>
+                <iframe
+                    id="khungDocBao"
+                    src="https://nhandan.vn/"
+                    style="
+                        width:100%;
+                        height:750px;
+                        border:1px solid #ccc;
+                        border-radius:8px;
+                        background:white;
+                    "
+                    loading="lazy"
+                    referrerpolicy="no-referrer">
+                </iframe>
 
-                <a href="${escapeHTML(item.url)}"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    MỞ NGHE TIN
-                </a>
-
-                <button class="btn-delete"
-                    onclick="xoaLienKetBao('${item.id}')">
-                    Xóa
-                </button>
-            </div>
-        `).join("")
-        : "<p>Chưa có đường link nghe tin.</p>";
-}
-
-// XÓA LINK
-function xoaLienKetBao(id) {
-    if (!confirm("Bạn có chắc muốn xóa liên kết này?")) return;
-
-    const danhSach = layLienKetBao().filter(
-        item => item.id !== id
-    );
-
-    localStorage.setItem(
-        "bbb11_news",
-        JSON.stringify(danhSach)
-    );
-
-    showPage("news");
-}
-
-
-
-function musicPage() {
-    return `
-        <div class="page-box">
-
-            <h2>🎵 KHO TÀNG ÂM NHẠC BBB11</h2>
-
-            <p>
-                Kho âm nhạc truyền thống, các ca khúc
-                cách mạng và bài hát sinh hoạt tập thể.
-            </p>
-
-            <div class="notice-card">
-                <h3>🎖️ ÂM NHẠC ĐẠI ĐỘI 11</h3>
-                <p>
-                    Âm nhạc góp phần xây dựng đời sống tinh thần,
-                    đoàn kết và động viên cán bộ, chiến sĩ.
+                <p style="font-size:13px;color:#777">
+                    Nếu báo không hiển thị do chính sách bảo mật
+                    của trang báo, bạn có thể sử dụng nút
+                    mở trang chính thức bên dưới.
                 </p>
-            </div>
-
-            <h3>THÊM BÀI HÁT</h3>
-
-            <div class="list-item">
-
-                <input id="musicTitle"
-                    placeholder="Tên bài hát">
-
-                <input id="musicArtist"
-                    placeholder="Tên ca sĩ / nhạc sĩ">
-
-                <select id="musicCategory">
-                    <option value="Nhạc cách mạng">Nhạc cách mạng</option>
-                    <option value="Nhạc truyền thống">Nhạc truyền thống</option>
-                    <option value="Nhạc quân đội">Nhạc quân đội</option>
-                    <option value="Nhạc sinh hoạt">Nhạc sinh hoạt</option>
-                    <option value="Khác">Khác</option>
-                </select>
-
-                <input id="musicAudio"
-                    placeholder="Đường dẫn file MP3">
-
-                <input id="musicYoutube"
-                    placeholder="Đường dẫn YouTube (nếu có)">
 
                 <button class="action-button"
-                    onclick="themBaiHat()">
-                    THÊM BÀI HÁT
+                    onclick="moTrangBaoNgoai()">
+                    MỞ TRANG BÁO CHÍNH THỨC
                 </button>
-
             </div>
 
-            <h3>DANH SÁCH ÂM NHẠC</h3>
+            <h2>🎧 NGHE TIN VÀ PHÁT THANH</h2>
 
-            <input id="musicSearch"
-                placeholder="Tìm kiếm bài hát..."
-                oninput="hienThiKhoNhac()">
+            <div class="list-item">
+                <h3>Đài Tiếng nói Việt Nam - VOV</h3>
 
-            <select id="musicFilter"
-                onchange="hienThiKhoNhac()">
-                <option value="all">Tất cả thể loại</option>
-                <option value="Nhạc cách mạng">Nhạc cách mạng</option>
-                <option value="Nhạc truyền thống">Nhạc truyền thống</option>
-                <option value="Nhạc quân đội">Nhạc quân đội</option>
-                <option value="Nhạc sinh hoạt">Nhạc sinh hoạt</option>
-                <option value="Khác">Khác</option>
-            </select>
+                <iframe
+                    src="https://vov.vn/"
+                    style="width:100%;height:500px;border:1px solid #ccc"
+                    loading="lazy">
+                </iframe>
 
-            <div id="musicList"></div>
+                <a href="https://vov.vn/"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Truy cập VOV
+                </a>
+            </div>
 
         </div>
     `;
 }
 
-// LẤY DANH SÁCH BÀI HÁT
-function layDanhSachNhac() {
-    try {
-        const data = JSON.parse(
-            localStorage.getItem("bbb11_music") || "[]"
-        );
 
-        return Array.isArray(data) ? data : [];
-    } catch {
-        return [];
+// DANH SÁCH BÁO ĐIỆN TỬ
+const danhSachBaoDienTu = {
+    nhandan: {
+        ten: "BÁO NHÂN DÂN",
+        url: "https://nhandan.vn/"
+    },
+
+    qdnd: {
+        ten: "BÁO QUÂN ĐỘI NHÂN DÂN",
+        url: "https://www.qdnd.vn/"
+    },
+
+    cand: {
+        ten: "BÁO CÔNG AN NHÂN DÂN",
+        url: "https://cand.com.vn/"
+    },
+
+    tuoitre: {
+        ten: "BÁO TUỔI TRẺ",
+        url: "https://tuoitre.vn/"
     }
+};
+
+
+// BÁO ĐANG ĐƯỢC CHỌN
+let baoDangChon = "nhandan";
+
+
+// CHUYỂN BÁO TRONG KHUNG ĐỌC
+function moBaoDienTu(loai) {
+
+    const bao = danhSachBaoDienTu[loai];
+
+    if (!bao) return;
+
+    baoDangChon = loai;
+
+    const khung = document.getElementById("khungDocBao");
+    const tieuDe = document.getElementById("tenBaoDangDoc");
+
+    if (!khung || !tieuDe) return;
+
+    tieuDe.innerText = bao.ten;
+
+    khung.src = bao.url;
 }
 
-// LƯU DANH SÁCH
-function luuDanhSachNhac(data) {
-    localStorage.setItem(
-        "bbb11_music",
-        JSON.stringify(data)
+
+// TẢI LẠI BÁO
+function taiLaiBao() {
+
+    const bao = danhSachBaoDienTu[baoDangChon];
+
+    const khung = document.getElementById("khungDocBao");
+
+    if (!bao || !khung) return;
+
+    khung.src = bao.url;
+}
+
+
+// MỞ TRANG BÁO CHÍNH THỨC
+function moTrangBaoNgoai() {
+
+    const bao = danhSachBaoDienTu[baoDangChon];
+
+    if (!bao) return;
+
+    window.open(
+        bao.url,
+        "_blank",
+        "noopener,noreferrer"
     );
 }
-
-// THÊM BÀI HÁT
-function themBaiHat() {
-
-    const title = document.getElementById("musicTitle").value.trim();
-    const artist = document.getElementById("musicArtist").value.trim();
-    const category = document.getElementById("musicCategory").value;
-    const audio = document.getElementById("musicAudio").value.trim();
-    const youtube = document.getElementById("musicYoutube").value.trim();
-
-    if (!title || (!audio && !youtube)) {
-        alert("Vui lòng nhập tên bài hát và link MP3 hoặc YouTube!");
-        return;
-    }
-
-    if (audio && !/^https?:\/\//i.test(audio)) {
-        alert("Link MP3 phải bắt đầu bằng http:// hoặc https://");
-        return;
-    }
-
-    if (youtube && !/^https?:\/\//i.test(youtube)) {
-        alert("Link YouTube không hợp lệ!");
-        return;
-    }
-
-    const danhSach = layDanhSachNhac();
-
-    danhSach.push({
-        id: Date.now().toString(),
-        title,
-        artist,
-        category,
-        audio,
-        youtube,
-        createdAt: new Date().toISOString()
-    });
-
-    luuDanhSachNhac(danhSach);
-
-    alert("Đã thêm bài hát!");
-
-    showPage("music");
-}
-
-// HIỂN THỊ KHO NHẠC
-function hienThiKhoNhac() {
-
-    const khung = document.getElementById("musicList");
-
-    if (!khung) return;
-
-    const keyword = (
-        document.getElementById("musicSearch")?.value || ""
-    ).toLowerCase().trim();
-
-    const category = document.getElementById("musicFilter")?.value || "all";
-
-    const danhSach = layDanhSachNhac().filter(item => {
-
-        const matchKeyword =
-            String(item.title).toLowerCase().includes(keyword) ||
-            String(item.artist).toLowerCase().includes(keyword);
-
-        const matchCategory =
-            category === "all" || item.category === category;
-
-        return matchKeyword && matchCategory;
-    });
-
-    if (!danhSach.length) {
-        khung.innerHTML = "<p>Chưa có bài hát phù hợp.</p>";
-        return;
-    }
-
-    khung.innerHTML = danhSach.map(item => `
-
-        <div class="list-item">
-
-            <h3>🎵 ${escapeHTML(item.title)}</h3>
-
-            <p>Ca sĩ: ${escapeHTML(item.artist || "Chưa cập nhật")}</p>
-
-            <p>Thể loại: ${escapeHTML(item.category)}</p>
-
-            ${item.audio ? `
-                <audio controls preload="none"
-                    style="width:100%;margin:12px 0;">
-                    <source src="${escapeHTML(item.audio)}">
-                    Trình duyệt không hỗ trợ phát nhạc.
-                </audio>
-            ` : ""}
-
-            ${item.youtube ? `
-                <p>
-                    <a href="${escapeHTML(item.youtube)}"
-                       target="_blank"
-                       rel="noopener noreferrer">
-                        ▶ XEM VIDEO YOUTUBE
-                    </a>
-                </p>
-            ` : ""}
-
-            <button class="btn-delete"
-                onclick="xoaBaiHat('${item.id}')">
-                XÓA BÀI HÁT
-            </button>
-
-        </div>
-
-    `).join("");
-}
-
-// XÓA BÀI HÁT
-function xoaBaiHat(id) {
-
-    if (!confirm("Bạn có chắc muốn xóa bài hát này?")) {
-        return;
-    }
-
-    const danhSach = layDanhSachNhac().filter(
-        item => item.id !== id
-    );
-
-    luuDanhSachNhac(danhSach);
-
-    hienThiKhoNhac();
-}
-
-
-
-
 function quizPage() {
     return `
         <div class="page-box">
@@ -2512,160 +2138,120 @@ function xoaBaiHocChinhTri(id) {
 
 
 
+
+// ==========================================
+// THƯ VIỆN LỜI BÁC HỒ DẠY BBB11
+// ==========================================
+
+
+const danhSachLoiBacBBB11 = [
+    {
+        title: "Quân đội ta trung với Đảng, hiếu với dân",
+        content: "Quân đội nhân dân Việt Nam phải luôn tuyệt đối trung thành với Đảng, với Tổ quốc và nhân dân; sẵn sàng chiến đấu, hy sinh vì độc lập, tự do của Tổ quốc, vì hạnh phúc của nhân dân.",
+        source: "Tư tưởng Hồ Chí Minh về Quân đội nhân dân Việt Nam"
+    },
+    {
+        title: "Nhiệm vụ của quân đội",
+        content: "Quân đội phải tích cực tham gia lao động sản xuất, góp phần xây dựng đất nước, đồng thời luôn sẵn sàng chiến đấu bảo vệ Tổ quốc.",
+        source: "Tư tưởng Hồ Chí Minh về xây dựng Quân đội"
+    },
+    {
+        title: "Đoàn kết là sức mạnh",
+        content: "Đoàn kết, đoàn kết, đại đoàn kết. Thành công, thành công, đại thành công.",
+        source: "Hồ Chí Minh"
+    },
+    {
+        title: "Cần, kiệm, liêm, chính, chí công vô tư",
+        content: "Mỗi cán bộ, chiến sĩ cần thường xuyên rèn luyện đạo đức, lối sống trong sạch, giản dị, chống chủ nghĩa cá nhân.",
+        source: "Tư tưởng Hồ Chí Minh"
+    },
+    {
+        title: "Thi đua yêu nước",
+        content: "Thi đua là yêu nước, yêu nước thì phải thi đua. Những người thi đua là những người yêu nước nhất.",
+        source: "Lời kêu gọi thi đua ái quốc (1948)"
+    },
+    {
+        title: "Học tập suốt đời",
+        content: "Học hỏi là một việc phải tiếp tục suốt đời. Suốt đời phải gắn liền lý luận với công tác thực tế.",
+        source: "Tư tưởng Hồ Chí Minh về học tập"
+    },
+    {
+        title: "Giữ gìn kỷ luật",
+        content: "Cán bộ, chiến sĩ phải nghiêm chỉnh chấp hành kỷ luật, giữ gìn đoàn kết, thống nhất trong đơn vị.",
+        source: "Tư tưởng Hồ Chí Minh về xây dựng quân đội"
+    },
+    {
+        title: "Đoàn kết quân dân",
+        content: "Quân đội phải gắn bó mật thiết với nhân dân, tôn trọng và giúp đỡ nhân dân, bảo vệ nhân dân.",
+        source: "Tư tưởng Hồ Chí Minh"
+    },
+    {
+        title: "Rèn luyện đạo đức cách mạng",
+        content: "Người cách mạng phải có đạo đức cách mạng làm nền tảng, phải thường xuyên tu dưỡng và rèn luyện.",
+        source: "Tác phẩm Đạo đức cách mạng (1958)"
+    },
+    {
+        title: "Tinh thần trách nhiệm",
+        content: "Mỗi cán bộ, chiến sĩ cần nêu cao tinh thần trách nhiệm, tận tụy với công việc, hoàn thành tốt nhiệm vụ được giao.",
+        source: "Tư tưởng Hồ Chí Minh"
+    }
+];
+
 function bacPage() {
     return `
         <div class="page-box">
-            <h2>LỜI BÁC HỒ DẠY</h2>
-
+            <h2>☀️ LỜI BÁC HỒ DẠY</h2>
             <p>
                 Học tập và làm theo tư tưởng, đạo đức,
                 phong cách Hồ Chí Minh.
             </p>
 
-            <div class="list-item">
-                <h3>THÊM LỜI BÁC HỒ DẠY</h3>
-
-                <input id="bacTitle"
-                    placeholder="Tên chủ đề">
-
-                <textarea id="bacContent"
-                    placeholder="Nhập nội dung lời dạy..."></textarea>
-
-                <input id="bacSource"
-                    placeholder="Nguồn tài liệu (không bắt buộc)">
-
-                <button class="action-button"
-                    onclick="themLoiBac()">
-                    THÊM NỘI DUNG
-                </button>
-            </div>
-
-            <div class="list-item">
-                <h3>TÌM KIẾM</h3>
-
-                <input id="bacSearch"
-                    placeholder="Nhập từ khóa..."
-                    oninput="hienThiLoiBac()">
-            </div>
-
-            <h3>DANH SÁCH NỘI DUNG</h3>
-
             <div id="bacList">
-                Đang tải dữ liệu...
+                ${danhSachLoiBacBBB11.map((item, index) => `
+                    <div class="list-item">
+                        <h3>${index + 1}. ${escapeHTML(item.title)}</h3>
+                        <p>${escapeHTML(item.content)}</p>
+                        <small>
+                            Nguồn: ${escapeHTML(item.source)}
+                        </small>
+                    </div>
+                `).join("")}
             </div>
         </div>
     `;
 }
 
-// LẤY DỮ LIỆU
-function layDanhSachLoiBac() {
-    try {
-        const data = JSON.parse(
-            localStorage.getItem("bbb11_bac") || "[]"
-        );
+// ==========================================
+// HIỂN THỊ TẤT CẢ NỘI DUNG
+// ==========================================
 
-        return Array.isArray(data) ? data : [];
-    } catch {
-        return [];
-    }
-}
-
-// THÊM NỘI DUNG
-function themLoiBac() {
-    const title = document
-        .getElementById("bacTitle").value.trim();
-
-    const content = document
-        .getElementById("bacContent").value.trim();
-
-    const source = document
-        .getElementById("bacSource").value.trim();
-
-    if (!title || !content) {
-        alert("Vui lòng nhập chủ đề và nội dung!");
-        return;
-    }
-
-    const danhSach = layDanhSachLoiBac();
-
-    danhSach.push({
-        id: Date.now().toString(),
-        title,
-        content,
-        source,
-        createdAt: new Date().toISOString()
-    });
-
-    localStorage.setItem(
-        "bbb11_bac",
-        JSON.stringify(danhSach)
-    );
-
-    alert("Đã thêm nội dung thành công!");
-
-    showPage("bac");
-}
-
-// HIỂN THỊ DANH SÁCH
 function hienThiLoiBac() {
+
     const khung = document.getElementById("bacList");
 
     if (!khung) return;
 
-    const keyword = (
-        document.getElementById("bacSearch")?.value || ""
-    ).toLowerCase().trim();
-
-    const danhSach = layDanhSachLoiBac().filter(item =>
-        item.title.toLowerCase().includes(keyword) ||
-        item.content.toLowerCase().includes(keyword)
-    );
-
-    if (!danhSach.length) {
-        khung.innerHTML = "<p>Chưa có nội dung phù hợp.</p>";
-        return;
-    }
-
-    khung.innerHTML = danhSach.map(item => `
+    khung.innerHTML = danhSachLoiBacBBB11.map((item, index) => `
         <div class="list-item">
-            <h3>${escapeHTML(item.title)}</h3>
 
-            <p>${escapeHTML(item.content)}</p>
+            <h3>${index + 1}. ⭐ ${escapeHTML(item.title)}</h3>
 
-            ${item.source ? `
-                <p>
-                    <strong>Nguồn:</strong>
-                    ${escapeHTML(item.source)}
-                </p>
-            ` : ""}
+            <p style="
+                font-size:16px;
+                line-height:1.8;
+                white-space:pre-line;
+            ">
+                ${escapeHTML(item.content)}
+            </p>
 
-            <button class="btn-delete"
-                onclick="xoaLoiBac('${item.id}')">
-                XÓA
-            </button>
+            <p>
+                <strong>Nguồn tham khảo:</strong>
+                ${escapeHTML(item.source)}
+            </p>
+
         </div>
     `).join("");
 }
-
-// XÓA NỘI DUNG
-function xoaLoiBac(id) {
-    if (!confirm("Bạn có chắc muốn xóa nội dung này?")) {
-        return;
-    }
-
-    const danhSach = layDanhSachLoiBac().filter(
-        item => item.id !== id
-    );
-
-    localStorage.setItem(
-        "bbb11_bac",
-        JSON.stringify(danhSach)
-    );
-
-    showPage("bac");
-}
-
-
 
 
 function questionPage() {
@@ -3562,429 +3148,438 @@ function hienThiBangXepHang() {}
 // 10. KHỞI ĐỘNG
 // ======================================
 
-document.addEventListener("DOMContentLoaded", function() {
-    capNhatThongTinNguoiDung();
-    showHome();
+// ======================================
+// KIỂM TRA ĐĂNG NHẬP BBB11
+// ======================================
 
-    console.log("BBB11: Khởi động thành công!");
+window.kiemTraDangNhap = async function () {
+
+    const loginPage = document.getElementById("loginPage");
+
+    // Lấy ứng dụng chính, không lấy .app bên trong loginPage
+    const app = document.querySelector("body > .app");
+
+    if (!loginPage || !app) {
+        console.error("Không tìm thấy giao diện đăng nhập hoặc ứng dụng!");
+        return;
+    }
+
+    const daDangNhap =
+        typeof bbb11CurrentUser !== "undefined" &&
+        bbb11CurrentUser &&
+        typeof bbb11CurrentRole !== "undefined" &&
+        bbb11CurrentRole;
+
+    if (daDangNhap) {
+        loginPage.classList.add("hidden");
+        app.classList.remove("hidden");
+    } else {
+        loginPage.classList.remove("hidden");
+        app.classList.add("hidden");
+    }
+};
+
+
+// ======================================
+// KHỞI ĐỘNG BBB11
+// ======================================
+
+document.addEventListener("DOMContentLoaded", async function () {
+
+    try {
+        await window.kiemTraDangNhap();
+    } catch (error) {
+        console.error("Lỗi khởi động BBB11:", error);
+    }
+
 });
+// ======================================
+// HỌC TẬP NGHỊ QUYẾT BBB11
+// ======================================
 
-function galleryPage() {
+function resolutionPage() {
+
+    const danhSachNghiQuyet = [
+        {
+            title: "Nghị quyết Đại hội đại biểu toàn quốc lần thứ XIII của Đảng",
+            category: "Văn kiện Đại hội Đảng",
+            url: "https://tulieuvankien.dangcongsan.vn/"
+        },
+        {
+            title: "Nghị quyết số 847-NQ/QUTW về phát huy phẩm chất Bộ đội Cụ Hồ",
+            category: "Nghị quyết Quân ủy Trung ương",
+            url: "https://www.qdnd.vn/"
+        },
+        {
+            title: "Nghị quyết về nhiệm vụ quân sự, quốc phòng",
+            category: "Quân sự - Quốc phòng",
+            url: "https://mod.gov.vn/"
+        },
+        {
+            title: "Văn kiện và nghị quyết của Đảng",
+            category: "Tài liệu chính trị",
+            url: "https://tulieuvankien.dangcongsan.vn/"
+        },
+        {
+            title: "Tài liệu tuyên truyền, giáo dục chính trị trong Quân đội",
+            category: "Giáo dục chính trị",
+            url: "https://www.qdnd.vn/"
+        }
+    ];
+
     return `
-        <div class="page-box gallery-page">
+        <div class="page-box">
 
-            <h2>
-                <i class="fa-solid fa-images"></i>
-                THƯ VIỆN HÌNH ẢNH BBB11
-            </h2>
+            <h2>📚 HỌC TẬP NGHỊ QUYẾT BBB11</h2>
 
             <p>
-                Lưu giữ những hình ảnh, hoạt động và thành tích
-                của Đại đội 11.
+                Kho tài liệu học tập nghị quyết,
+                chỉ thị và văn kiện chính trị dành cho cán bộ,
+                chiến sĩ Đại đội 11.
             </p>
 
-            <div class="gallery-upload">
+            <div class="notice-card">
+                <h3>🎖️ MỤC ĐÍCH HỌC TẬP</h3>
+                <p>
+                    Nâng cao nhận thức chính trị, tư tưởng,
+                    trách nhiệm và ý thức chấp hành nhiệm vụ.
+                </p>
+            </div>
 
-                <h3>ĐĂNG TẢI HÌNH ẢNH HOẠT ĐỘNG</h3>
+            <h3>📖 DANH SÁCH TÀI LIỆU</h3>
 
-                <label>Tên hoạt động</label>
-                <input id="galleryTitle"
-                    type="text"
-                    placeholder="Ví dụ: Hoạt động thể thao Đại đội 11">
+            <div id="resolutionList">
 
-                <label>Ngày tổ chức</label>
-                <input id="galleryDate" type="date">
+                ${danhSachNghiQuyet.map((item, index) => `
+                    <div class="list-item">
 
-                <label>Nội dung mô tả</label>
-                <textarea id="galleryDescription"
-                    placeholder="Nhập nội dung hoạt động..."></textarea>
+                        <h3>
+                            ${index + 1}. ${escapeHTML(item.title)}
+                        </h3>
 
-                <label>Chọn hình ảnh</label>
-                <input id="galleryFile"
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp"
-                    onchange="previewGalleryImage()">
+                        <p>
+                            Phân loại:
+                            ${escapeHTML(item.category)}
+                        </p>
 
-                <div id="galleryPreview"></div>
+                        <a href="${item.url}"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="action-button"
+                           style="display:inline-block;text-decoration:none">
 
-                <button class="action-button"
-                    onclick="uploadGalleryImage()">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                    TẢI ẢNH LÊN
+                            📖 XEM TÀI LIỆU
 
-                </button>
+                        </a>
+
+                    </div>
+                `).join("")}
 
             </div>
 
-            <h3 class="gallery-heading">
-                HÌNH ẢNH HOẠT ĐỘNG ĐƠN VỊ
+        </div>
+    `;
+}
+
+// =============================================
+// KHO HỌC TẬP NGHỊ QUYẾT BBB11
+// =============================================
+
+const danhSachNghiQuyetBBB11 = [
+
+    {
+        title: "Nghị quyết 847-NQ/QUTW",
+        date: "28/12/2021",
+        agency: "Quân ủy Trung ương",
+        description: "Phát huy phẩm chất cao đẹp Bộ đội Cụ Hồ, kiên quyết chống chủ nghĩa cá nhân trong tình hình mới.",
+        content: `
+        NỘI DUNG HỌC TẬP:
+
+        - Giữ gìn và phát huy phẩm chất Bộ đội Cụ Hồ.
+        - Tuyệt đối trung thành với Đảng, Tổ quốc và Nhân dân.
+        - Nêu cao tinh thần trách nhiệm trong thực hiện nhiệm vụ.
+        - Kiên quyết đấu tranh chống chủ nghĩa cá nhân.
+        - Xây dựng đoàn kết nội bộ, chấp hành nghiêm kỷ luật.
+        - Tích cực tu dưỡng, rèn luyện đạo đức, lối sống.
+        `,
+        url: "https://btllang.mod.gov.vn/tin-tuc/tin-tong-hop/12143-toan-quan-quan-triet-va-thuc-hien-hieu-qua-nghi-quyet-so-847-nq-qutw-cua-quan-uy-trung-uong.html"
+    },
+
+    {
+        title: "Nghị quyết 05-NQ/TW",
+        date: "17/01/2022",
+        agency: "Bộ Chính trị",
+        description: "Về tổ chức Quân đội nhân dân Việt Nam giai đoạn 2021–2030 và những năm tiếp theo.",
+        content: `
+        NỘI DUNG HỌC TẬP:
+
+        - Xây dựng Quân đội nhân dân cách mạng, chính quy, tinh nhuệ, hiện đại.
+        - Điều chỉnh tổ chức lực lượng theo hướng tinh, gọn, mạnh.
+        - Nâng cao chất lượng tổng hợp và sức mạnh chiến đấu.
+        - Xây dựng đội ngũ cán bộ đáp ứng yêu cầu nhiệm vụ.
+        - Tăng cường xây dựng chính quy và quản lý kỷ luật.
+        `,
+        url: "https://www.qdnd.vn/vung-buoc-duoi-quan-ky-quyet-thang/su-menh-thoi-binh/xay-dung-quan-doi-nhan-dan-viet-nam-tinh-gon-manh-hien-dai-trong-thoi-ky-moi-807382"
+    },
+
+    {
+        title: "Nghị quyết 1652-NQ/QUTW",
+        date: "20/12/2022",
+        agency: "Quân ủy Trung ương",
+        description: "Về lãnh đạo công tác khoa học quân sự đến năm 2030 và những năm tiếp theo.",
+        content: `
+        NỘI DUNG HỌC TẬP:
+
+        - Nâng cao chất lượng nghiên cứu khoa học quân sự.
+        - Đẩy mạnh ứng dụng khoa học vào thực tiễn.
+        - Phát triển đội ngũ cán bộ nghiên cứu khoa học.
+        - Gắn nghiên cứu với yêu cầu xây dựng Quân đội.
+        `,
+        url: "https://baoquankhu7.vn/dang-uy-quan-su-tphcm-quan-triet-cac-nghi-quyet-cua-quan-uy-trung-uong-1501886898-0032490s36310gs"
+    },
+
+    {
+        title: "Nghị quyết 1656-NQ/QUTW",
+        date: "20/12/2022",
+        agency: "Quân ủy Trung ương",
+        description: "Về lãnh đạo công tác kỹ thuật đến năm 2030 và những năm tiếp theo.",
+        content: `
+        NỘI DUNG HỌC TẬP:
+
+        - Nâng cao chất lượng công tác kỹ thuật quân sự.
+        - Bảo đảm trang bị kỹ thuật cho nhiệm vụ.
+        - Tăng cường quản lý, bảo quản và sử dụng trang bị.
+        - Phát triển đội ngũ cán bộ, nhân viên kỹ thuật.
+        `,
+        url: "https://baoquankhu7.vn/dang-uy-quan-su-tphcm-quan-triet-cac-nghi-quyet-cua-quan-uy-trung-uong-1501886898-0032490s36310gs"
+    },
+
+    {
+        title: "Nghị quyết 1657-NQ/QUTW",
+        date: "20/12/2022",
+        agency: "Quân ủy Trung ương",
+        description: "Về đổi mới công tác giáo dục và đào tạo, đáp ứng yêu cầu nhiệm vụ xây dựng Quân đội trong tình hình mới.",
+        content: `
+        NỘI DUNG HỌC TẬP:
+
+        - Đổi mới nội dung và phương pháp giáo dục, đào tạo.
+        - Nâng cao chất lượng đội ngũ giáo viên, cán bộ quản lý.
+        - Gắn đào tạo với yêu cầu thực tiễn của đơn vị.
+        - Nâng cao chất lượng đào tạo cán bộ.
+        - Xây dựng môi trường giáo dục chính quy, hiện đại.
+        `,
+        url: "https://tapchiqptd.vn/vi/quan-triet-thuc-hien-nghi-quyet/quan-triet-nghi-quyet-so-1657nqqutw-hoc-vien-phong-khong-khong-quan-doi-moi-cong-tac-giao-/22259.html"
+    },
+
+    {
+        title: "Nghị quyết 1658-NQ/QUTW",
+        date: "20/12/2022",
+        agency: "Quân ủy Trung ương",
+        description: "Về công tác hậu cần Quân đội đến năm 2030 và những năm tiếp theo.",
+        content: `
+        NỘI DUNG HỌC TẬP:
+
+        - Nâng cao chất lượng công tác hậu cần.
+        - Bảo đảm đời sống vật chất, tinh thần bộ đội.
+        - Chủ động bảo đảm hậu cần cho các nhiệm vụ.
+        - Quản lý và sử dụng hiệu quả nguồn lực hậu cần.
+        `,
+        url: "https://baoquankhu7.vn/dang-uy-quan-su-tphcm-quan-triet-cac-nghi-quyet-cua-quan-uy-trung-uong-1501886898-0032490s36310gs"
+    },
+
+    {
+        title: "Nghị quyết 1659-NQ/QUTW",
+        date: "20/12/2022",
+        agency: "Quân ủy Trung ương",
+        description: "Về nâng cao chất lượng huấn luyện giai đoạn 2023–2030 và những năm tiếp theo.",
+        content: `
+        NỘI DUNG HỌC TẬP:
+
+        - Nâng cao chất lượng huấn luyện quân sự.
+        - Huấn luyện sát thực tế nhiệm vụ.
+        - Kết hợp huấn luyện quân sự với giáo dục chính trị.
+        - Nâng cao trình độ và khả năng thực hiện nhiệm vụ.
+        - Bảo đảm an toàn trong huấn luyện và diễn tập.
+        `,
+        url: "https://baoquankhu7.vn/dang-uy-quan-su-tphcm-quan-triet-cac-nghi-quyet-cua-quan-uy-trung-uong-1501886898-0032490s36310gs"
+    },
+
+    {
+        title: "Nghị quyết 1661-NQ/QUTW",
+        date: "20/12/2022",
+        agency: "Quân ủy Trung ương",
+        description: "Về lãnh đạo công tác tài chính Quân đội đến năm 2030.",
+        content: `
+        NỘI DUNG HỌC TẬP:
+
+        - Nâng cao hiệu quả quản lý tài chính.
+        - Bảo đảm ngân sách thực hiện nhiệm vụ.
+        - Thực hành tiết kiệm, chống lãng phí.
+        - Tăng cường công khai, minh bạch và kiểm tra tài chính.
+        `,
+        url: "https://baoquankhu7.vn/dang-uy-quan-su-tphcm-quan-triet-cac-nghi-quyet-cua-quan-uy-trung-uong-1501886898-0032490s36310gs"
+    },
+
+    {
+        title: "Nghị quyết 44-NQ/TW",
+        date: "24/11/2023",
+        agency: "Ban Chấp hành Trung ương Đảng",
+        description: "Về Chiến lược bảo vệ Tổ quốc trong tình hình mới.",
+        content: `
+        NỘI DUNG HỌC TẬP:
+
+        - Bảo vệ vững chắc độc lập, chủ quyền và toàn vẹn lãnh thổ.
+        - Bảo vệ Đảng, Nhà nước, Nhân dân và chế độ xã hội chủ nghĩa.
+        - Xây dựng nền quốc phòng toàn dân vững mạnh.
+        - Kết hợp chặt chẽ nhiệm vụ xây dựng và bảo vệ Tổ quốc.
+        - Xây dựng lực lượng vũ trang nhân dân vững mạnh.
+        `,
+        url: "https://truongchinhtrihatinh.gov.vn/uploads/news/2024_08/so-50.pdf"
+    },
+
+    {
+        title: "Nghị quyết 57-NQ/TW",
+        date: "22/12/2024",
+        agency: "Bộ Chính trị",
+        description: "Về đột phá phát triển khoa học, công nghệ, đổi mới sáng tạo và chuyển đổi số quốc gia.",
+        content: `
+        NỘI DUNG HỌC TẬP:
+
+        - Đẩy mạnh phát triển khoa học và công nghệ.
+        - Thúc đẩy đổi mới sáng tạo.
+        - Phát triển hạ tầng số và dữ liệu số.
+        - Nâng cao năng lực chuyển đổi số.
+        - Ứng dụng công nghệ vào quản lý và thực hiện nhiệm vụ.
+        `,
+        url: "https://tulieuvankien.dangcongsan.vn/"
+    },
+
+    {
+        title: "Nghị quyết 3488-NQ/QUTW",
+        date: "29/01/2025",
+        agency: "Quân ủy Trung ương",
+        description: "Về đột phá phát triển khoa học, công nghệ, đổi mới sáng tạo và chuyển đổi số trong Quân đội.",
+        content: `
+        NỘI DUNG HỌC TẬP:
+
+        - Phát triển khoa học và công nghệ trong Quân đội.
+        - Đẩy mạnh đổi mới sáng tạo.
+        - Tăng cường ứng dụng công nghệ số.
+        - Nâng cao năng lực nghiên cứu và làm chủ công nghệ.
+        - Thúc đẩy chuyển đổi số trong các cơ quan, đơn vị.
+        `,
+        url: "https://www.qdnd.vn/giao-duc-khoa-hoc/nha-truong-quan-doi/hoc-vien-quan-y-quan-triet-trien-khai-thuc-hien-nghi-quyet-so-3488-nq-qutw-818493"
+    }
+];
+
+
+// =============================================
+// GIAO DIỆN TRANG NGHỊ QUYẾT
+// =============================================
+
+window.resolutionPage = function() {
+
+    return `
+        <div class="page-box resolution-app">
+
+            <h2>📚 HỌC TẬP NGHỊ QUYẾT BBB11</h2>
+
+            <p>
+                Kho học tập nghị quyết, chỉ thị và văn kiện
+                liên quan đến xây dựng Quân đội nhân dân Việt Nam.
+            </p>
+
+            <div class="notice-card">
+                <h3>🎖️ MỤC ĐÍCH HỌC TẬP</h3>
+                <p>
+                    Nâng cao nhận thức chính trị, trách nhiệm,
+                    phẩm chất đạo đức và ý thức chấp hành kỷ luật
+                    của cán bộ, chiến sĩ.
+                </p>
+            </div>
+
+            <h3>📖 DANH SÁCH NGHỊ QUYẾT</h3>
+
+            <div id="resolutionList"></div>
+
+            <p style="margin-top:20px;color:#777;">
+                Nội dung tóm tắt phục vụ học tập.
+                Vui lòng mở nguồn tham khảo để đối chiếu
+                với văn bản chính thức.
+            </p>
+
+        </div>
+    `;
+};
+
+
+// =============================================
+// HIỂN THỊ TOÀN BỘ NGHỊ QUYẾT
+// =============================================
+
+window.hienThiTaiLieuNghiQuyet = function() {
+
+    const khung = document.getElementById("resolutionList");
+
+    if (!khung) return;
+
+    khung.innerHTML = danhSachNghiQuyetBBB11.map((item, index) => `
+
+        <div class="list-item resolution-card">
+
+            <h3>
+                ${index + 1}. 📘 ${escapeHTML(item.title)}
             </h3>
 
-            <div id="galleryList" class="gallery-grid">
-                <p>Đang tải hình ảnh...</p>
-            </div>
-
-        </div>
-    `;
-}
-
-
-// XEM TRƯỚC HÌNH ẢNH
-
-// TẢI ẢNH LÊN SUPABASE
-async function uploadGalleryImage() {
-
-    // SỬ DỤNG SUPABASE CLIENT ĐÃ KHỞI TẠO
-    if (typeof supabaseClient === "undefined") {
-        alert("Chưa kết nối Supabase!");
-        return;
-    }
-
-    const title = document.getElementById("galleryTitle").value.trim();
-    const date = document.getElementById("galleryDate").value;
-    const description = document.getElementById("galleryDescription").value.trim();
-    const file = document.getElementById("galleryFile").files[0];
-
-    if (!title || !date || !file) {
-        alert("Vui lòng nhập tên hoạt động, ngày và chọn ảnh!");
-        return;
-    }
-
-    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-        alert("Chỉ chấp nhận ảnh JPG, PNG hoặc WEBP!");
-        return;
-    }
-
-    if (file.size > 5 * 1024 * 1024) {
-        alert("Ảnh tối đa 5MB!");
-        return;
-    }
-
-    const button = document.querySelector(
-        ".gallery-upload .action-button"
-    );
-
-    if (button) {
-        button.disabled = true;
-        button.textContent = "ĐANG TẢI ẢNH...";
-    }
-
-    let filePath = null;
-
-    try {
-
-        // KIỂM TRA ĐĂNG NHẬP
-        const { data: authData, error: authError } =
-            await supabaseClient.auth.getUser();
-
-        if (authError) throw authError;
-
-        if (!authData.user) {
-            throw new Error("Bạn cần đăng nhập để tải ảnh!");
-        }
-
-        const userId = authData.user.id;
-
-        // TẠO ĐƯỜNG DẪN ẢNH
-        const extension = file.name.split(".").pop().toLowerCase();
-
-        filePath = userId + "/" + Date.now() + "." + extension;
-
-        // TẢI ẢNH VÀO BUCKET GALLERY
-        const { data: uploadData, error: uploadError } =
-            await supabaseClient.storage
-                .from("gallery")
-                .upload(filePath, file, {
-                    cacheControl: "3600",
-                    upsert: false,
-                    contentType: file.type
-                });
-
-        if (uploadError) throw uploadError;
-
-        // LẤY URL ẢNH CÔNG KHAI
-        const { data: urlData } =
-            supabaseClient.storage
-                .from("gallery")
-                .getPublicUrl(uploadData.path);
-
-        // LƯU THÔNG TIN VÀO DATABASE
-        const { error: insertError } =
-            await supabaseClient
-                .from("bbb11_gallery")
-                .insert([{
-                    title: title,
-                    description: description,
-                    activity_date: date,
-                    image_url: urlData.publicUrl
-                }]);
-
-        if (insertError) throw insertError;
-
-        alert("ĐĂNG TẢI HÌNH ẢNH BBB11 THÀNH CÔNG!");
-
-        // XÓA DỮ LIỆU FORM
-        document.getElementById("galleryTitle").value = "";
-        document.getElementById("galleryDate").value = "";
-        document.getElementById("galleryDescription").value = "";
-        document.getElementById("galleryFile").value = "";
-        document.getElementById("galleryPreview").innerHTML = "";
-
-        // TẢI LẠI THƯ VIỆN
-        await loadGalleryImages();
-
-    } catch (error) {
-
-        console.error("LỖI TẢI ẢNH:", error);
-
-        // NẾU LƯU DATABASE THẤT BẠI, XÓA ẢNH VỪA UPLOAD
-        if (filePath) {
-            const { error: removeError } =
-                await supabaseClient.storage
-                    .from("gallery")
-                    .remove([filePath]);
-
-            if (removeError) {
-                console.error("Không thể xóa ảnh lỗi:", removeError);
-            }
-        }
-
-        alert("Không thể tải ảnh: " + error.message);
-
-    } finally {
-
-        if (button) {
-            button.disabled = false;
-            button.innerHTML =
-                '<i class="fa-solid fa-cloud-arrow-up"></i> TẢI ẢNH LÊN';
-        }
-    }
-}
-
-
-// TẢI ẢNH LÊN SUPABASE
-async function uploadGalleryImage() {
-    const supabaseClient = window.supabase.createClient(
-    "https://etbczslniaqsivyogdpw.supabase.co",
-    "sb_publishable_dWdnGOcGfzXYTzGzl2AATA_tvHpg8aH"
-);
-
-    const title = document.getElementById("galleryTitle").value.trim();
-    const date = document.getElementById("galleryDate").value;
-    const description = document.getElementById("galleryDescription").value.trim();
-    const file = document.getElementById("galleryFile").files[0];
-
-    if (!title || !date || !file) {
-        alert("Vui lòng nhập tên hoạt động, ngày và chọn ảnh!");
-        return;
-    }
-
-    if (!file.type.match(/^image\/(jpeg|png|webp)$/)) {
-        alert("Chỉ chấp nhận ảnh JPG, PNG hoặc WEBP!");
-        return;
-    }
-
-    if (file.size > 5 * 1024 * 1024) {
-        alert("Ảnh tối đa 5MB!");
-        return;
-    }
-
-    if (typeof supabase === "undefined") {
-        alert("Chưa kết nối Supabase!");
-        return;
-    }
-
-    const button = document.querySelector(
-        ".gallery-upload .action-button"
-    );
-
-    button.disabled = true;
-    button.textContent = "ĐANG TẢI ẢNH...";
-
-    try {
-        const { data: authData, error: authError } =
-            await supabaseClient.auth.getUser();
-
-        if (authError || !authData.user) {
-            throw new Error("Bạn cần đăng nhập để tải ảnh!");
-        }
-
-        const userId = authData.user.id;
-
-        const extension = file.name.split(".").pop().toLowerCase();
-        const filePath =
-            userId + "/" + Date.now() + "." + extension;
-
-        const { error: uploadError } =
-            await supabaseClient.storage
-
-    .from("gallery")
-    .upload(fileName, file);
-                         
-    if (uploadError) throw uploadError;
-
-       const { error: insertError } =
-    await supabaseClient
-                .from("bbb11_gallery")
-                .insert([{
-                    title: title,
-                    description: description,
-                    activity_date: date,
-                    image_path: filePath,
-                    created_by: userId
-                }]);
-
-        if (insertError) {
-            await supabaseClient.storage
-                .from("bbb11-images")
-                .remove([filePath]);
-
-            throw insertError;
-        }
-
-        alert("Đăng tải hình ảnh thành công!");
-
-        showPage("gallery");
-
-    } catch (error) {
-        console.error("Lỗi tải ảnh:", error);
-        alert("Không thể tải ảnh: " + error.message);
-
-    } finally {
-        button.disabled = false;
-        button.innerHTML =
-            '<i class="fa-solid fa-cloud-arrow-up"></i> TẢI ẢNH LÊN';
-    }
-}
-
-
-// HIỂN THỊ THƯ VIỆN
-async function loadGallery() {
-
-    const container = document.getElementById("galleryList");
-
-    if (!container) return;
-
-    try {
-        const { data, error } = await supabaseClient
-            .from("bbb11_gallery")
-            .select("*")
-            .order("created_at", { ascending: false });
-
-        if (error) throw error;
-
-        if (!data || data.length === 0) {
-            container.innerHTML =
-                "<p>Chưa có hình ảnh hoạt động nào.</p>";
-            return;
-        }
-
-        const images = await Promise.all(
-            data.map(async item => {
-
-                const { data: imageData, error: imageError } =
-                    await supabaseClient.storage
-                        .from("bbb11-images")
-                        .createSignedUrl(item.image_path, 3600);
-
-                return {
-                    ...item,
-                    imageUrl: imageError ? "" : imageData.signedUrl
-                };
-            })
-        );
-
-        container.innerHTML = images.map(item => `
-            <div class="gallery-card">
-
-                ${
-                    item.imageUrl
-                    ? `<img src="${escapeHTML(item.imageUrl)}"
-                        alt="${escapeHTML(item.title)}"
-                        loading="lazy">`
-                    : `<div class="gallery-no-image">
-                        Không tải được ảnh
-                       </div>`
-                }
-
-                <div class="gallery-info">
-
-                    <h3>${escapeHTML(item.title)}</h3>
-
-                    <p>
-                        <i class="fa-solid fa-calendar"></i>
-                        ${escapeHTML(item.activity_date || "")}
-                    </p>
-
-                    <p>${escapeHTML(item.description || "")}</p>
-
-                    <button class="action-button"
-                        onclick="viewGalleryImage('${escapeHTML(item.id)}')">
-                        XEM ẢNH
-                    </button>
-
-                </div>
-
-            </div>
-        `).join("");
-
-    } catch (error) {
-        console.error(error);
-        container.innerHTML =
-            "<p>Không thể tải thư viện. Hãy kiểm tra kết nối Supabase và quyền truy cập.</p>";
-    }
-}
-
-
-// XEM ẢNH LỚN
-async function viewGalleryImage(id) {
-
-    const { data, error } = await supabase
-        .from("bbb11_gallery")
-        .select("*")
-        .eq("id", id)
-        .single();
-
-    if (error || !data) {
-        alert("Không tìm thấy hình ảnh!");
-        return;
-    }
-
-    const { data: imageData, error: imageError } =
-        await supabaseClient.storage
-            .from("bbb11-images")
-            .createSignedUrl(data.image_path, 3600);
-
-    if (imageError) {
-        alert("Không thể mở hình ảnh!");
-        return;
-    }
-
-    const content = document.getElementById("pageContent");
-
-    content.innerHTML = `
-        <div class="page-box">
-            <button class="back-button"
-                onclick="showPage('gallery')">
-                <i class="fa-solid fa-arrow-left"></i>
-                Quay lại thư viện
-            </button>
-
-            <h2>${escapeHTML(data.title)}</h2>
-
-            <p>Ngày tổ chức: ${escapeHTML(data.activity_date || "")}</p>
-
-            <img src="${escapeHTML(imageData.signedUrl)}"
-                alt="${escapeHTML(data.title)}"
-                style="width:100%;max-height:650px;
-                object-fit:contain;border-radius:12px;">
-
-            <p style="margin-top:15px;">
-                ${escapeHTML(data.description || "")}
+            <p>
+                <strong>Ngày ban hành:</strong>
+                ${escapeHTML(item.date)}
             </p>
+
+            <p>
+                <strong>Cơ quan ban hành:</strong>
+                ${escapeHTML(item.agency)}
+            </p>
+
+            <p>
+                <strong>Trích yếu:</strong>
+                ${escapeHTML(item.description)}
+            </p>
+
+            <details class="resolution-detail">
+                <summary>📖 XEM NỘI DUNG HỌC TẬP</summary>
+
+                <div class="resolution-content">
+                    <pre>${escapeHTML(item.content)}</pre>
+                </div>
+            </details>
+
+            <p style="margin-top:12px;">
+                <a href="${escapeHTML(item.url)}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="action-button"
+                   style="display:inline-block;text-decoration:none;">
+
+                    🔗 MỞ TÀI LIỆU THAM KHẢO
+
+                </a>
+            </p>
+
         </div>
-    `;
-}
-document.addEventListener("DOMContentLoaded", async function() {
-    await kiemTraDangNhap();
+
+    `).join("");
+};
+console.log("BBB11: Đã tải script.js");
+console.log("showPage:", typeof window.showPage);
+console.log("resolutionPage:", typeof window.resolutionPage);
+console.log("hienThiTaiLieuNghiQuyet:",
+    typeof window.hienThiTaiLieuNghiQuyet);
+    // BẮT LỖI PROMISE TOÀN HỆ THỐNG BBB11
+window.addEventListener("unhandledrejection", function(event) {
+    console.error("BBB11 - LỖI PROMISE:", event.reason);
+
+    if (event.reason === undefined) {
+        console.error("Promise bị từ chối nhưng không có thông tin lỗi.");
+    }
 });
