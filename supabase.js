@@ -1,5 +1,4 @@
 
-"use strict";
 
 // ======================================
 // BBB11 - KẾT NỐI SUPABASE
@@ -67,4 +66,3 @@ const supabaseClient = window.supabase.createClient(
 console.log(
     "BBB11: Supabase Client đã khởi tạo thành công!"
 );
-
