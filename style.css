@@ -1271,3 +1271,28 @@ footer {
 .app.hidden {
     display: none !important;
 }
+
+.resolution-card {
+    background: #fff;
+    border-left: 5px solid #a51d24;
+    padding: 18px;
+    margin-bottom: 16px;
+    border-radius: 10px;
+}
+
+.resolution-card h3 {
+    color: #a51d24;
+    margin-bottom: 12px;
+}
+
+.resolution-card p {
+    line-height: 1.7;
+}
+
+.resolution-card .action-button {
+    margin-top: 10px;
+    padding: 10px 16px;
+    background: #a51d24;
+    color: white;
+    border-radius: 6px;
+}
