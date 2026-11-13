@@ -1,4 +1,5 @@
 
+
 "use strict";
 
 // ======================================
@@ -10,8 +11,6 @@
 const SUPABASE_URL =
     "https://etbczslniaqsivyogdpw.supabase.co";
 
-// Chỉ sử dụng Publishable Key
-// Lấy tại Supabase → Project Settings → API Keys
 const SUPABASE_ANON_KEY =
     "sb_publishable_dWdnGOcGfzXYTzGzl2AATA_tvHpg8aH";
 
@@ -31,18 +30,18 @@ if (!window.supabase) {
 
 if (
     !SUPABASE_URL.startsWith("https://") ||
-    SUPABASE_ANON_KEY.includes("DAN_SB_")
+    !SUPABASE_ANON_KEY.startsWith("sb_publishable_")
 ) {
     throw new Error(
-        "BBB11: Vui lòng kiểm tra SUPABASE_URL và API KEY!"
+        "BBB11: Vui lòng kiểm tra URL và Publishable Key!"
     );
 }
 
 // ======================================
-// 4. KHỞI TẠO SUPABASE CLIENT
+// 4. KHỞI TẠO VÀ GÁN CLIENT TOÀN CỤC
 // ======================================
 
-const supabaseClient = window.supabase.createClient(
+window.supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY,
     {
@@ -61,13 +60,13 @@ const supabaseClient = window.supabase.createClient(
 );
 
 // ======================================
-// 5. KIỂM TRA KẾT NỐI
+// 5. KIỂM TRA KHỞI TẠO
 // ======================================
 
 console.log(
-    "BBB11: Supabase Client đã khởi tạo thành công!"
+    "BBB11: Supabase Client đã khởi tạo thành công!",
+    !!window.supabaseClient
 );
-
 
 
 
