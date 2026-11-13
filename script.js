@@ -110,10 +110,6 @@ function showPage(page) {
     const home = document.getElementById("homePage");
     const functionPage = document.getElementById("functionPage");
     const content = document.getElementById("pageContent");
-
-    if (!home || !functionPage || !content) {
-        alert("Không tìm thấy khu vực hiển thị!");
-        return;
     }
 
     // DANH SÁCH CÁC TRANG
