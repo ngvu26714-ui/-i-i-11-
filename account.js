@@ -143,7 +143,7 @@ async function dangNhap() {
         if (profile.role === "admin") {
             showPage("admin");
         } else {
-           showPage('homePage');
+            showHome();
         }
 
     } catch (error) {
