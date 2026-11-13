@@ -3583,3 +3583,393 @@ window.addEventListener("unhandledrejection", function(event) {
         console.error("Promise bị từ chối nhưng không có thông tin lỗi.");
     }
 });
+
+
+/* =============================================
+   GIÁO DỤC CHÍNH TRỊ BBB11
+   Đọc bài trực tiếp trên trang - không cần link
+============================================= */
+
+const danhSachBaiHocChinhTriMacDinh = [
+    {
+        id: "ct-bam-1",
+        title: "Nâng cao bản lĩnh chính trị và trách nhiệm quân nhân",
+        category: "Giáo dục chính trị",
+        description: "Nội dung học tập, thảo luận và liên hệ thực tiễn.",
+        content: `I. MỤC ĐÍCH, YÊU CẦU
+
+Nâng cao nhận thức, ý thức trách nhiệm và tinh thần tự giác của cán bộ, chiến sĩ trong học tập, công tác và thực hiện nhiệm vụ.
+
+II. NỘI DUNG HỌC TẬP
+
+1. Chủ động học tập, nghiên cứu các nội dung giáo dục chính trị theo chương trình và tài liệu chính thống do đơn vị hướng dẫn.
+
+2. Rèn luyện bản lĩnh, giữ vững tinh thần trách nhiệm, bình tĩnh xử lý khó khăn và chấp hành nghiêm quy định của đơn vị.
+
+3. Phát huy đoàn kết nội bộ, tôn trọng, giúp đỡ đồng chí, đồng đội; tích cực khắc phục hạn chế của bản thân.
+
+III. LIÊN HỆ THỰC TIỄN
+
+Mỗi quân nhân xây dựng kế hoạch tự học, tự rèn luyện; gắn nội dung học tập với chức trách, nhiệm vụ được giao.
+
+IV. CÂU HỎI ÔN TẬP
+
+1. Vì sao cần nâng cao bản lĩnh chính trị và trách nhiệm quân nhân?
+2. Mỗi cá nhân cần làm gì để nâng cao ý thức tự giác?
+3. Liên hệ trách nhiệm của bản thân trong thực hiện nhiệm vụ.`,
+        builtin: true
+    },
+    {
+        id: "ct-bam-2",
+        title: "Chấp hành pháp luật, kỷ luật và xây dựng nền nếp chính quy",
+        category: "Pháp luật",
+        description: "Nội dung khái quát phục vụ học tập và liên hệ thực tế.",
+        content: `I. MỤC ĐÍCH
+
+Nâng cao ý thức tự giác chấp hành pháp luật Nhà nước, kỷ luật Quân đội và quy định của đơn vị.
+
+II. NỘI DUNG HỌC TẬP
+
+1. Tìm hiểu và thực hiện đúng các quy định, điều lệnh, điều lệ có liên quan đến chức trách, nhiệm vụ.
+
+2. Duy trì nền nếp ngày, tuần; thực hiện đúng lễ tiết, tác phong quân nhân; quản lý, bảo quản và sử dụng trang bị theo quy định.
+
+3. Chủ động phòng ngừa vi phạm, bảo đảm an toàn trong huấn luyện, công tác và sinh hoạt.
+
+III. LIÊN HỆ THỰC TIỄN
+
+Mỗi quân nhân tự giác tu dưỡng, nghiêm túc tiếp thu góp ý, sửa chữa khuyết điểm và giúp đỡ đồng đội cùng tiến bộ.
+
+IV. CÂU HỎI ÔN TẬP
+
+1. Ý nghĩa của việc chấp hành pháp luật và kỷ luật là gì?
+2. Nêu những việc cần làm để xây dựng nền nếp chính quy.
+3. Bản thân cần làm gì để phòng ngừa vi phạm?`,
+        builtin: true
+    },
+    {
+        id: "ct-bam-3",
+        title: "Phát huy truyền thống Quân đội nhân dân Việt Nam",
+        category: "Truyền thống quân đội",
+        description: "Bài học về truyền thống, trách nhiệm và hành động thiết thực.",
+        content: `I. MỤC ĐÍCH
+
+Bồi dưỡng niềm tự hào, ý thức giữ gìn và phát huy truyền thống Quân đội nhân dân Việt Nam.
+
+II. NỘI DUNG HỌC TẬP
+
+1. Quân đội nhân dân Việt Nam được thành lập ngày 22 tháng 12 năm 1944. Quá trình xây dựng, chiến đấu và trưởng thành gắn liền với sự nghiệp đấu tranh giành độc lập, bảo vệ Tổ quốc và phục vụ Nhân dân.
+
+2. Phát huy tinh thần yêu nước, đoàn kết, kỷ luật, trách nhiệm; tích cực học tập, huấn luyện và hoàn thành nhiệm vụ được giao.
+
+3. Giữ gìn truyền thống bằng hành động cụ thể: chấp hành điều lệnh, rèn luyện tác phong, bảo vệ tài sản chung và giúp đỡ đồng đội.
+
+III. LIÊN HỆ THỰC TIỄN
+
+Gắn việc học tập truyền thống với nhiệm vụ hằng ngày, góp phần xây dựng tập thể đoàn kết, chính quy và an toàn.
+
+IV. CÂU HỎI ÔN TẬP
+
+1. Quân đội nhân dân Việt Nam được thành lập ngày nào?
+2. Nêu những việc làm thiết thực để phát huy truyền thống quân đội.
+3. Liên hệ trách nhiệm của bản thân.`,
+        builtin: true
+    },
+    {
+        id: "ct-bam-4",
+        title: "Đạo đức, lối sống và trách nhiệm khi sử dụng mạng xã hội",
+        category: "Đạo đức, lối sống",
+        description: "Xây dựng lối sống lành mạnh và sử dụng mạng xã hội có trách nhiệm.",
+        content: `I. MỤC ĐÍCH
+
+Nâng cao ý thức tu dưỡng đạo đức, xây dựng lối sống lành mạnh và sử dụng mạng xã hội có trách nhiệm.
+
+II. NỘI DUNG HỌC TẬP
+
+1. Sống trung thực, có trách nhiệm; tôn trọng đồng chí, đồng đội và chấp hành quy tắc ứng xử của đơn vị.
+
+2. Kiểm tra nguồn tin trước khi chia sẻ; không phát tán thông tin sai lệch, nội dung vi phạm pháp luật hoặc thông tin thuộc phạm vi bí mật.
+
+3. Thực hiện đúng quy định hiện hành của pháp luật và đơn vị khi sử dụng thiết bị, mạng xã hội và các dịch vụ trực tuyến.
+
+III. LIÊN HỆ THỰC TIỄN
+
+Tự giác điều chỉnh hành vi, xây dựng môi trường văn hóa lành mạnh và báo cáo người có trách nhiệm khi gặp tình huống đáng ngờ.
+
+IV. CÂU HỎI ÔN TẬP
+
+1. Vì sao cần có trách nhiệm khi sử dụng mạng xã hội?
+2. Cần làm gì trước khi chia sẻ một thông tin?
+3. Liên hệ việc rèn luyện đạo đức, lối sống của bản thân.`,
+        builtin: true
+    }
+];
+
+// MÃ HÓA HTML ĐỂ HIỂN THỊ NỘI DUNG AN TOÀN
+function educationEscapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+// LẤY CÁC BÀI ĐÃ THÊM TRÊN TRÌNH DUYỆT
+function layBaiHocChinhTriTuMay() {
+    try {
+        const data = JSON.parse(
+            localStorage.getItem("bbb11_education") || "[]"
+        );
+
+        return Array.isArray(data)
+            ? data.filter(item =>
+                item &&
+                typeof item.id === "string" &&
+                typeof item.title === "string" &&
+                typeof item.content === "string"
+            )
+            : [];
+    } catch (error) {
+        console.error("Lỗi đọc bài học:", error);
+        return [];
+    }
+}
+
+// GỘP BÀI HỌC MẪU VÀ BÀI HỌC ĐÃ THÊM
+function layTatCaBaiHocChinhTri() {
+    return [
+        ...danhSachBaiHocChinhTriMacDinh,
+        ...layBaiHocChinhTriTuMay()
+    ];
+}
+
+// TẠO DANH SÁCH BÀI HỌC VÀ Ô ĐỌC NỘI DUNG
+function taoDanhSachBaiHocChinhTri(keyword = "") {
+    const tuKhoa = String(keyword)
+        .toLocaleLowerCase("vi")
+        .trim();
+
+    const danhSach = layTatCaBaiHocChinhTri().filter(item =>
+        `${item.title} ${item.category || ""} ${item.description || ""} ${item.content}`
+            .toLocaleLowerCase("vi")
+            .includes(tuKhoa)
+    );
+
+    if (!danhSach.length) {
+        return "<p>Không tìm thấy bài học phù hợp.</p>";
+    }
+
+    return danhSach.map((item, index) => `
+        <div class="list-item education-card">
+            <h3>
+                ${index + 1}. 📘 ${educationEscapeHTML(item.title)}
+            </h3>
+
+            <p>
+                <strong>Chuyên mục:</strong>
+                ${educationEscapeHTML(item.category || "Tài liệu khác")}
+            </p>
+
+            ${item.description ? `
+                <p>
+                    <strong>Trích yếu:</strong>
+                    ${educationEscapeHTML(item.description)}
+                </p>
+            ` : ""}
+
+            <details class="education-detail">
+                <summary>📖 XEM NỘI DUNG BÀI HỌC</summary>
+
+                <div class="education-content">
+                    <pre>${educationEscapeHTML(item.content)}</pre>
+                </div>
+            </details>
+
+            ${item.builtin ? `
+                <span class="education-label">BÀI HỌC MẪU</span>
+            ` : `
+                <button type="button"
+                    class="btn-delete"
+                    onclick="xoaBaiHocChinhTri('${educationEscapeHTML(item.id)}')">
+                    XÓA BÀI HỌC
+                </button>
+            `}
+        </div>
+    `).join("");
+}
+
+// GIAO DIỆN TRANG GIÁO DỤC CHÍNH TRỊ
+function educationPage() {
+    return `
+        <div class="page-box education-page">
+            <h2>📚 GIÁO DỤC CHÍNH TRỊ BBB11</h2>
+
+            <p>
+                Kho bài học dành cho cán bộ, chiến sĩ Đại đội 11.
+                Chọn "XEM NỘI DUNG BÀI HỌC" để đọc ngay trên trang,
+                không cần mở đường link bên ngoài.
+            </p>
+
+            <div class="notice-card">
+                <h3>🎖️ MỤC ĐÍCH HỌC TẬP</h3>
+                <p>
+                    Nâng cao nhận thức, trách nhiệm, ý thức chấp hành
+                    kỷ luật và tinh thần tự học, tự rèn luyện.
+                </p>
+            </div>
+
+            <div class="list-item">
+                <h3>➕ THÊM NỘI DUNG GIÁO DỤC</h3>
+
+                <input id="educationTitle"
+                    placeholder="Tên bài học">
+
+                <select id="educationCategory">
+                    <option value="Giáo dục chính trị">Giáo dục chính trị</option>
+                    <option value="Pháp luật">Pháp luật</option>
+                    <option value="Truyền thống quân đội">Truyền thống quân đội</option>
+                    <option value="Đạo đức, lối sống">Đạo đức, lối sống</option>
+                    <option value="Tài liệu khác">Tài liệu khác</option>
+                </select>
+
+                <textarea id="educationContent"
+                    rows="9"
+                    placeholder="Nhập hoặc dán nội dung bài học tại đây..."></textarea>
+
+                <button type="button"
+                    class="action-button"
+                    onclick="themBaiHocChinhTri()">
+                    THÊM BÀI HỌC
+                </button>
+            </div>
+
+            <div class="list-item">
+                <h3>🔎 TÌM KIẾM BÀI HỌC</h3>
+
+                <input id="educationSearch"
+                    placeholder="Tìm tên, chuyên mục hoặc nội dung..."
+                    oninput="capNhatDanhSachBaiHocChinhTri()">
+            </div>
+
+            <h3>📖 DANH SÁCH BÀI HỌC</h3>
+
+            <div id="educationList">
+                ${taoDanhSachBaiHocChinhTri()}
+            </div>
+
+            <p class="education-note">
+                Nội dung mẫu phục vụ tham khảo, không thay thế văn bản
+                chính thức hoặc giáo án do đơn vị ban hành.
+            </p>
+        </div>
+    `;
+}
+
+// CẬP NHẬT KẾT QUẢ TÌM KIẾM
+function capNhatDanhSachBaiHocChinhTri() {
+    const khung = document.getElementById("educationList");
+    if (!khung) return;
+
+    const keyword =
+        document.getElementById("educationSearch")?.value || "";
+
+    khung.innerHTML = taoDanhSachBaiHocChinhTri(keyword);
+}
+
+// THÊM BÀI HỌC MỚI
+function themBaiHocChinhTri() {
+    const title = document
+        .getElementById("educationTitle")?.value.trim() || "";
+
+    const category = document
+        .getElementById("educationCategory")?.value || "Tài liệu khác";
+
+    const content = document
+        .getElementById("educationContent")?.value.trim() || "";
+
+    if (!title || !content) {
+        alert("Vui lòng nhập tên và nội dung bài học!");
+        return;
+    }
+
+    const danhSach = layBaiHocChinhTriTuMay();
+
+    danhSach.push({
+        id: "ct-user-" + Date.now() + "-" +
+            Math.random().toString(36).slice(2, 8),
+        title,
+        category,
+        description: "Bài học do người dùng thêm.",
+        content,
+        createdAt: new Date().toISOString()
+    });
+
+    try {
+        localStorage.setItem(
+            "bbb11_education",
+            JSON.stringify(danhSach)
+        );
+    } catch (error) {
+        console.error("Không lưu được bài học:", error);
+        alert("Không lưu được bài học. Hãy kiểm tra dung lượng trình duyệt.");
+        return;
+    }
+
+    alert("Đã thêm bài học thành công!");
+
+    if (typeof window.showPage === "function") {
+        window.showPage("education");
+    } else {
+        const titleInput = document.getElementById("educationTitle");
+        const contentInput = document.getElementById("educationContent");
+
+        if (titleInput) titleInput.value = "";
+        if (contentInput) contentInput.value = "";
+
+        capNhatDanhSachBaiHocChinhTri();
+    }
+}
+
+// XÓA BÀI HỌC DO NGƯỜI DÙNG THÊM
+function xoaBaiHocChinhTri(id) {
+    const danhSachCu = layBaiHocChinhTriTuMay();
+
+    if (!danhSachCu.some(item => item.id === id)) {
+        alert("Chỉ có thể xóa bài học do người dùng thêm.");
+        return;
+    }
+
+    if (!confirm("Bạn có chắc muốn xóa bài học này?")) {
+        return;
+    }
+
+    const danhSachMoi = danhSachCu.filter(
+        item => item.id !== id
+    );
+
+    try {
+        localStorage.setItem(
+            "bbb11_education",
+            JSON.stringify(danhSachMoi)
+        );
+    } catch (error) {
+        console.error("Không cập nhật được danh sách:", error);
+        alert("Không thể cập nhật dữ liệu.");
+        return;
+    }
+
+    if (typeof window.showPage === "function") {
+        window.showPage("education");
+    } else {
+        capNhatDanhSachBaiHocChinhTri();
+    }
+}
+
+// ĐƯA CÁC HÀM RA WINDOW ĐỂ MENU VÀ NÚT BẤM SỬ DỤNG
+window.educationPage = educationPage;
+window.themBaiHocChinhTri = themBaiHocChinhTri;
+window.xoaBaiHocChinhTri = xoaBaiHocChinhTri;
+window.capNhatDanhSachBaiHocChinhTri =
+    capNhatDanhSachBaiHocChinhTri;
