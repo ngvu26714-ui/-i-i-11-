@@ -3716,25 +3716,41 @@ function educationEscapeHTML(value) {
     })[char]);
 }
 
-// LẤY CÁC BÀI ĐÃ THÊM TRÊN TRÌNH DUYỆT
-function layBaiHocChinhTriTuMay() {
-    try {
-        const data = JSON.parse(
-            localStorage.getItem("bbb11_education") || "[]"
-        );
 
-        return Array.isArray(data)
-            ? data.filter(item =>
-                item &&
-                typeof item.id === "string" &&
-                typeof item.title === "string" &&
-                typeof item.content === "string"
-            )
-            : [];
-    } catch (error) {
-        console.error("Lỗi đọc bài học:", error);
-        return [];
+let danhSachBaiHocTuSupabase = [];
+
+async function taiBaiHocChinhTri() {
+    const client = window.supabaseClient;
+
+    if (!client) {
+        console.error("Chưa kết nối Supabase.");
+        return;
     }
+
+    const { data, error } = await client
+        .from("bbb11_education")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        console.error("Lỗi tải bài học:", error.message);
+        return;
+    }
+
+    danhSachBaiHocTuSupabase = (data || []).map(item => ({
+        ...item,
+        id: String(item.id),
+        builtin: false
+    }));
+
+    capNhatDanhSachBaiHocChinhTri();
+}
+
+function layTatCaBaiHocChinhTri() {
+    return [
+        ...danhSachBaiHocChinhTriMacDinh,
+        ...danhSachBaiHocTuSupabase
+    ];
 }
 
 // GỘP BÀI HỌC MẪU VÀ BÀI HỌC ĐÃ THÊM
@@ -3745,62 +3761,78 @@ function layTatCaBaiHocChinhTri() {
     ];
 }
 
-// TẠO DANH SÁCH BÀI HỌC VÀ Ô ĐỌC NỘI DUNG
+
 function taoDanhSachBaiHocChinhTri(keyword = "") {
     const tuKhoa = String(keyword)
         .toLocaleLowerCase("vi")
         .trim();
 
-    const danhSach = layTatCaBaiHocChinhTri().filter(item =>
-        `${item.title} ${item.category || ""} ${item.description || ""} ${item.content}`
-            .toLocaleLowerCase("vi")
-            .includes(tuKhoa)
-    );
+    const danhSachGoc = layTatCaBaiHocChinhTri();
+
+    const danhSach = danhSachGoc.filter(item => {
+        const noiDungTimKiem = [
+            item.title,
+            item.category || "",
+            item.description || "",
+            item.content || ""
+        ].join(" ").toLocaleLowerCase("vi");
+
+        return noiDungTimKiem.includes(tuKhoa);
+    });
 
     if (!danhSach.length) {
         return "<p>Không tìm thấy bài học phù hợp.</p>";
     }
 
-    return danhSach.map((item, index) => `
-        <div class="list-item education-card">
-            <h3>
-                ${index + 1}. 📘 ${educationEscapeHTML(item.title)}
-            </h3>
+    return danhSach.map((item, index) => {
+        const idAnToan = JSON.stringify(String(item.id));
 
-            <p>
-                <strong>Chuyên mục:</strong>
-                ${educationEscapeHTML(item.category || "Tài liệu khác")}
-            </p>
+        return `
+            <div class="list-item education-card">
+                <h3>
+                    ${index + 1}. 📘
+                    ${educationEscapeHTML(item.title || "Chưa có tiêu đề")}
+                </h3>
 
-            ${item.description ? `
                 <p>
-                    <strong>Trích yếu:</strong>
-                    ${educationEscapeHTML(item.description)}
+                    <strong>Chuyên mục:</strong>
+                    ${educationEscapeHTML(
+                        item.category || "Tài liệu khác"
+                    )}
                 </p>
-            ` : ""}
 
-            <details class="education-detail">
-                <summary>📖 XEM NỘI DUNG BÀI HỌC</summary>
+                ${item.description ? `
+                    <p>
+                        <strong>Trích yếu:</strong>
+                        ${educationEscapeHTML(item.description)}
+                    </p>
+                ` : ""}
 
-                <div class="education-content">
-                    <pre>${educationEscapeHTML(item.content)}</pre>
-                </div>
-            </details>
+                <details class="education-detail">
+                    <summary>📖 XEM NỘI DUNG BÀI HỌC</summary>
 
-            ${item.builtin ? `
-                <span class="education-label">BÀI HỌC MẪU</span>
-            ` : `
-                <button type="button"
-                    class="btn-delete"
-                    onclick="xoaBaiHocChinhTri('${educationEscapeHTML(item.id)}')">
-                    XÓA BÀI HỌC
-                </button>
-            `}
-        </div>
-    `).join("");
+                    <div class="education-content">
+                        <pre>${educationEscapeHTML(item.content || "")}</pre>
+                    </div>
+                </details>
+
+                ${item.builtin ? `
+                    <span class="education-label">BÀI HỌC MẪU</span>
+                ` : `
+                    <button type="button"
+                        class="btn-delete"
+                        onclick="xoaBaiHocChinhTri(${educationEscapeHTML(idAnToan)})">
+                        XÓA BÀI HỌC
+                    </button>
+                `}
+            </div>
+        `;
+    }).join("");
 }
 
+
 // GIAO DIỆN TRANG GIÁO DỤC CHÍNH TRỊ
+
 function educationPage() {
     return `
         <div class="page-box education-page">
@@ -3841,50 +3873,35 @@ function educationPage() {
                 <button type="button"
                     class="action-button"
                     onclick="themBaiHocChinhTri()">
-                    THÊM BÀI HỌC
+                    💾 LƯU BÀI HỌC
                 </button>
             </div>
 
             <div class="list-item">
-                <h3>🔎 TÌM KIẾM BÀI HỌC</h3>
-
                 <input id="educationSearch"
-                    placeholder="Tìm tên, chuyên mục hoặc nội dung..."
+                    placeholder="🔍 Tìm kiếm bài học..."
                     oninput="capNhatDanhSachBaiHocChinhTri()">
             </div>
 
-            <h3>📖 DANH SÁCH BÀI HỌC</h3>
-
             <div id="educationList">
-                ${taoDanhSachBaiHocChinhTri()}
+                <p>Đang tải danh sách bài học...</p>
             </div>
-
-            <p class="education-note">
-                Nội dung mẫu phục vụ tham khảo, không thay thế văn bản
-                chính thức hoặc giáo án do đơn vị ban hành.
-            </p>
         </div>
     `;
 }
 
-// CẬP NHẬT KẾT QUẢ TÌM KIẾM
-function capNhatDanhSachBaiHocChinhTri() {
-    const khung = document.getElementById("educationList");
-    if (!khung) return;
-
-    const keyword =
-        document.getElementById("educationSearch")?.value || "";
-
-    khung.innerHTML = taoDanhSachBaiHocChinhTri(keyword);
-}
 
 // THÊM BÀI HỌC MỚI
-function themBaiHocChinhTri() {
+
+async function themBaiHocChinhTri() {
+    const client = window.supabaseClient;
+
     const title = document
         .getElementById("educationTitle")?.value.trim() || "";
 
     const category = document
-        .getElementById("educationCategory")?.value || "Tài liệu khác";
+        .getElementById("educationCategory")?.value
+        || "Giáo dục chính trị";
 
     const content = document
         .getElementById("educationContent")?.value.trim() || "";
@@ -3894,41 +3911,45 @@ function themBaiHocChinhTri() {
         return;
     }
 
-    const danhSach = layBaiHocChinhTriTuMay();
-
-    danhSach.push({
-        id: "ct-user-" + Date.now() + "-" +
-            Math.random().toString(36).slice(2, 8),
-        title,
-        category,
-        description: "Bài học do người dùng thêm.",
-        content,
-        createdAt: new Date().toISOString()
-    });
-
-    try {
-        localStorage.setItem(
-            "bbb11_education",
-            JSON.stringify(danhSach)
-        );
-    } catch (error) {
-        console.error("Không lưu được bài học:", error);
-        alert("Không lưu được bài học. Hãy kiểm tra dung lượng trình duyệt.");
+    if (!client) {
+        alert("Chưa kết nối Supabase. Hãy kiểm tra cấu hình Supabase.");
         return;
     }
 
-    alert("Đã thêm bài học thành công!");
+    try {
+        const { data: sessionData, error: sessionError } =
+            await client.auth.getSession();
 
-    if (typeof window.showPage === "function") {
-        window.showPage("education");
-    } else {
-        const titleInput = document.getElementById("educationTitle");
-        const contentInput = document.getElementById("educationContent");
+        if (sessionError) throw sessionError;
 
-        if (titleInput) titleInput.value = "";
-        if (contentInput) contentInput.value = "";
+        if (!sessionData.session) {
+            alert("Vui lòng đăng nhập tài khoản admin trước khi thêm bài.");
+            return;
+        }
 
-        capNhatDanhSachBaiHocChinhTri();
+        const { data, error } = await client
+            .from("bbb11_education")
+            .insert([{
+                title,
+                category,
+                description: "Bài học do admin thêm.",
+                content
+            }])
+            .select()
+            .single();
+
+        if (error) throw error;
+
+        alert("Đã lưu bài học lên Supabase thành công!");
+
+        document.getElementById("educationTitle").value = "";
+        document.getElementById("educationContent").value = "";
+
+        await taiBaiHocChinhTri();
+
+    } catch (error) {
+        console.error("Lỗi lưu bài học:", error);
+        alert("Lưu bài học thất bại: " + error.message);
     }
 }
 
@@ -3971,5 +3992,31 @@ function xoaBaiHocChinhTri(id) {
 window.educationPage = educationPage;
 window.themBaiHocChinhTri = themBaiHocChinhTri;
 window.xoaBaiHocChinhTri = xoaBaiHocChinhTri;
+window.capNhatDanhSachBaiHocChinhTri =
+    capNhatDanhSachBaiHocChinhTri;
+
+
+function capNhatDanhSachBaiHocChinhTri() {
+    const khung = document.getElementById("educationList");
+
+    if (!khung) {
+        console.warn(
+            "Chưa tìm thấy educationList. Hãy mở trang Giáo dục chính trị trước."
+        );
+        return;
+    }
+
+    if (typeof taoDanhSachBaiHocChinhTri === "function") {
+        const keyword =
+            document.getElementById("educationSearch")?.value || "";
+
+        khung.innerHTML = taoDanhSachBaiHocChinhTri(keyword);
+    } else {
+        console.error(
+            "Chưa có hàm taoDanhSachBaiHocChinhTri()."
+        );
+    }
+}
+
 window.capNhatDanhSachBaiHocChinhTri =
     capNhatDanhSachBaiHocChinhTri;
