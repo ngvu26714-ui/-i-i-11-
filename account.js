@@ -242,9 +242,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
-
-
-
-
-
-
