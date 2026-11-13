@@ -3578,3 +3578,4 @@ window.addEventListener("unhandledrejection", function(event) {
         console.error("Promise bị từ chối nhưng không có thông tin lỗi.");
     }
 });
+window.showPage = showPage;
