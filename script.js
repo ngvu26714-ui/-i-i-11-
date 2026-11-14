@@ -2424,51 +2424,61 @@ const danhSachLoiBacBBB11 = [
     {
         title: "Quân đội ta trung với Đảng, hiếu với dân",
         content: "Quân đội nhân dân Việt Nam phải luôn tuyệt đối trung thành với Đảng, với Tổ quốc và nhân dân; sẵn sàng chiến đấu, hy sinh vì độc lập, tự do của Tổ quốc, vì hạnh phúc của nhân dân.",
+         reference_url: "https://www.youtube.com/results?search_query=Quan+doi+ta+trung+voi+Dang+hieu+voi+dan+Ho+Chi+Minh",
         source: "Tư tưởng Hồ Chí Minh về Quân đội nhân dân Việt Nam"
     },
     {
         title: "Nhiệm vụ của quân đội",
         content: "Quân đội phải tích cực tham gia lao động sản xuất, góp phần xây dựng đất nước, đồng thời luôn sẵn sàng chiến đấu bảo vệ Tổ quốc.",
+        reference_url: "",
         source: "Tư tưởng Hồ Chí Minh về xây dựng Quân đội"
     },
     {
         title: "Đoàn kết là sức mạnh",
         content: "Đoàn kết, đoàn kết, đại đoàn kết. Thành công, thành công, đại thành công.",
+        reference_url: "",
         source: "Hồ Chí Minh"
     },
     {
         title: "Cần, kiệm, liêm, chính, chí công vô tư",
         content: "Mỗi cán bộ, chiến sĩ cần thường xuyên rèn luyện đạo đức, lối sống trong sạch, giản dị, chống chủ nghĩa cá nhân.",
+         reference_url: "",
         source: "Tư tưởng Hồ Chí Minh"
     },
     {
         title: "Thi đua yêu nước",
         content: "Thi đua là yêu nước, yêu nước thì phải thi đua. Những người thi đua là những người yêu nước nhất.",
+        reference_url: "",
         source: "Lời kêu gọi thi đua ái quốc (1948)"
     },
     {
         title: "Học tập suốt đời",
         content: "Học hỏi là một việc phải tiếp tục suốt đời. Suốt đời phải gắn liền lý luận với công tác thực tế.",
+        reference_url: "",
         source: "Tư tưởng Hồ Chí Minh về học tập"
     },
     {
         title: "Giữ gìn kỷ luật",
         content: "Cán bộ, chiến sĩ phải nghiêm chỉnh chấp hành kỷ luật, giữ gìn đoàn kết, thống nhất trong đơn vị.",
+        reference_url: "",
         source: "Tư tưởng Hồ Chí Minh về xây dựng quân đội"
     },
     {
         title: "Đoàn kết quân dân",
         content: "Quân đội phải gắn bó mật thiết với nhân dân, tôn trọng và giúp đỡ nhân dân, bảo vệ nhân dân.",
+         reference_url: "",
         source: "Tư tưởng Hồ Chí Minh"
     },
     {
         title: "Rèn luyện đạo đức cách mạng",
         content: "Người cách mạng phải có đạo đức cách mạng làm nền tảng, phải thường xuyên tu dưỡng và rèn luyện.",
+        reference_url: "",
         source: "Tác phẩm Đạo đức cách mạng (1958)"
     },
     {
         title: "Tinh thần trách nhiệm",
         content: "Mỗi cán bộ, chiến sĩ cần nêu cao tinh thần trách nhiệm, tận tụy với công việc, hoàn thành tốt nhiệm vụ được giao.",
+        reference_url: "", 
         source: "Tư tưởng Hồ Chí Minh"
     }
 ];
@@ -2482,20 +2492,36 @@ function bacPage() {
                 phong cách Hồ Chí Minh.
             </p>
 
-            <div id="bacList">
-                ${danhSachLoiBacBBB11.map((item, index) => `
-                    <div class="list-item">
-                        <h3>${index + 1}. ${escapeHTML(item.title)}</h3>
-                        <p>${escapeHTML(item.content)}</p>
-                        <small>
-                            Nguồn: ${escapeHTML(item.source)}
-                        </small>
-                    </div>
-                `).join("")}
-            </div>
+            
+<div id="bacList">
+    ${danhSachLoiBacBBB11.map((item, index) => `
+        <div class="list-item">
+            <h3>${index + 1}. ${escapeHTML(item.title)}</h3>
+
+            <p>${escapeHTML(item.content)}</p>
+
+            <small>
+                Nguồn: ${escapeHTML(item.source || "Tài liệu tham khảo")}
+            </small>
+
+            ${item.reference_url ? `
+                <div style="margin-top: 12px;">
+                    <a
+                        href="${escapeHTML(item.reference_url)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="youtube-button">
+                        ▶ Xem video trên YouTube
+                    </a>
+                </div>
+            ` : ""}
         </div>
-    `;
+    `).join("")}
+</div>
+</div>
+`;
 }
+
 
 // ==========================================
 // HIỂN THỊ TẤT CẢ NỘI DUNG
