@@ -2175,14 +2175,15 @@ IV. CÂU HỎI ÔN TẬP
 1. Ý nghĩa của việc chấp hành pháp luật và kỷ luật là gì?
 2. Nêu những việc cần làm để xây dựng nền nếp chính quy.
 3. Bản thân cần làm gì để phòng ngừa vi phạm?`,
+
         builtin: true
-    },
+     },
     {
         id: "ct-bam-3",
         title: "Phát huy truyền thống Quân đội nhân dân Việt Nam",
         category: "Truyền thống quân đội",
         description: "Bài học về truyền thống, trách nhiệm và hành động thiết thực.",
-         reference_url: "https://vanban.chinhphu.vn/?classid=1&docid=180640&pageid=27160&typegroupid=3",
+         reference_url: "https://www.bienphong.com.vn/quan-doi-nhan-dan-viet-nam-phat-huy-truyen-thong-vung-buoc-tien-vao-giai-doan-phat-trien-hien-dai-post498784.html",
         content: `I. MỤC ĐÍCH
 
 Bồi dưỡng niềm tự hào, ý thức giữ gìn và phát huy truyền thống Quân đội nhân dân Việt Nam.
@@ -2204,14 +2205,15 @@ IV. CÂU HỎI ÔN TẬP
 1. Quân đội nhân dân Việt Nam được thành lập ngày nào?
 2. Nêu những việc làm thiết thực để phát huy truyền thống quân đội.
 3. Liên hệ trách nhiệm của bản thân.`,
-        builtin: true
+  builtin: true
+
     },
     {
         id: "ct-bam-4",
         title: "Đạo đức, lối sống và trách nhiệm khi sử dụng mạng xã hội",
         category: "Đạo đức, lối sống",
         description: "Xây dựng lối sống lành mạnh và sử dụng mạng xã hội có trách nhiệm.",
-         reference_url: "https://vanban.chinhphu.vn/?classid=1&docid=180640&pageid=27160&typegroupid=3",
+         reference_url: "https://baohatinh.vn/chuan-muc-dao-duc-trong-hanh-vi-ung-xu-tren-mang-xa-hoi-post214842.html",
         content: `I. MỤC ĐÍCH
 
 Nâng cao ý thức tu dưỡng đạo đức, xây dựng lối sống lành mạnh và sử dụng mạng xã hội có trách nhiệm.
@@ -2233,9 +2235,185 @@ IV. CÂU HỎI ÔN TẬP
 1. Vì sao cần có trách nhiệm khi sử dụng mạng xã hội?
 2. Cần làm gì trước khi chia sẻ một thông tin?
 3. Liên hệ việc rèn luyện đạo đức, lối sống của bản thân.`,
+ builtin: true
+
+    },
+    {
+         id: "ct-bam-5",
+        title: "Trung thành với Tổ quốc, với Nhân dân",
+        category: "Lý tưởng và trách nhiệm",
+        description:"Bồi dưỡng lòng yêu nước và trách nhiệm phục vụ Nhân dân.",
+        reference_url: "https://www.qdnd.vn/quoc-phong-an-ninh/xay-dung-quan-doi/trung-thanh-vo-han-voi-to-quoc-voi-dang-voi-nhan-dan-435225?utm_source=chatgpt.com",
+        content: `I. MỤC ĐÍCH, YÊU CẦU
+Nâng cao nhận thức về trách nhiệm của quân nhân đối với Tổ quốc và Nhân dân.
+
+II. NỘI DUNG HỌC TẬP
+1. Tìm hiểu truyền thống yêu nước và lịch sử đấu tranh bảo vệ Tổ quốc.
+2. Nêu cao tinh thần trách nhiệm, tận tụy trong học tập, công tác.
+3. Tôn trọng Nhân dân, thực hiện đúng chức trách và nhiệm vụ được giao.
+
+III. LIÊN HỆ THỰC TIỄN
+Mỗi quân nhân chủ động rèn luyện phẩm chất, hoàn thành nhiệm vụ và có hành động thiết thực vì tập thể, cộng đồng.
+
+IV. CÂU HỎI ÔN TẬP
+1. Vì sao quân nhân cần nêu cao trách nhiệm với Tổ quốc và Nhân dân?
+2. Những việc làm nào thể hiện tinh thần trách nhiệm?
+3. Liên hệ bản thân trong thực hiện nhiệm vụ.`,
+        builtin: true
+
+    },
+    {
+        id: "ct-bam-6",
+        title: "Xây dựng ý chí quyết tâm và tinh thần vượt khó",
+        category: "Bản lĩnh và ý chí",
+        description: "Rèn luyện nghị lực, tính kiên trì và tinh thần hoàn thành nhiệm vụ.",
+         reference_url: "https://www.qdnd.vn/quoc-phong-an-ninh/xay-dung-quan-doi/bai-hoc-ve-xay-dung-y-chi-quyet-tam-chien-dau-cho-quan-doi-438695?utm_source=chatgpt.com",
+        content: `I. MỤC ĐÍCH
+Bồi dưỡng ý chí, nghị lực và tinh thần chủ động khắc phục khó khăn.
+
+II. NỘI DUNG HỌC TẬP
+1.Xác định mục tiêu rõ ràng trong học tập và công tác.
+2.Bình tĩnh tìm giải pháp khi gặp khó khăn.
+3.Kiên trì rèn luyện, không ngừng khắc phục hạn chế của bản thân.
+
+III. LIÊN HỆ THỰC TIỄN
+Xây dựng kế hoạch rèn luyện cụ thể, đánh giá kết quả và điều chỉnh phương pháp khi cần thiết.
+
+
+IV. CÂU HỎI ÔN TẬP
+1. Ý chí quyết tâm có ý nghĩa như thế nào?
+2. Cần làm gì để vượt qua khó khăn?
+3. Nêu một việc bản thân cần kiên trì thực hiện.`,
+        builtin: true
+    },
+    {
+        id: "ct-bam-7",
+     title: "Đoàn kết nội bộ, xây dựng tình đồng chí đồng đội",
+        category: "Đoàn kết và văn hóa đơn vị",
+         description: "Phát huy tinh thần tương trợ, tôn trọng và cùng nhau tiến bộ.",
+           reference_url: "https://www.qdnd.vn/vung-buoc-duoi-quan-ky-quyet-thang/lich-su-quan-doi-nhan-dan-viet-nam/quan-doi-ta-doan-ket-tren-duoi-dong-long-thong-nhat-y-chi-va-hanh-dong-807980?utm_source=chatgpt.com",
+        content: `I. MỤC ĐÍCH
+Nâng cao nhận thức về vai trò của đoàn kết trong xây dựng tập thể vững mạnh.
+
+II. NỘI DUNG HỌC TẬP
+1. Tôn trọng, lắng nghe và chia sẻ với đồng chí, đồng đội.
+2. Sẵn sàng giúp đỡ nhau trong học tập, công tác và sinh hoạt.
+3. Góp ý chân thành, giải quyết bất đồng trên tinh thần xây dựng.
+
+III. LIÊN HỆ THỰC TIỄN
+Tích cực tham gia hoạt động tập thể, không gây mất đoàn kết và cùng nhau khắc phục khó khăn.
+
+IV. CÂU HỎI ÔN TẬP
+1. Đoàn kết có vai trò gì đối với tập thể?
+2. Làm thế nào để xây dựng tình đồng chí đồng đội?
+3. Bản thân cần làm gì để giữ gìn đoàn kết?`,
+        builtin: true
+
+    },
+    {
+         id: "ct-bam-8",
+         title: "Rèn luyện tác phong và phương pháp công tác khoa học",
+        category: "Tác phong và hiệu quả công việc",
+        description:  "Hình thành thói quen làm việc có kế hoạch, đúng giờ và trách nhiệm.",
+        reference_url: "https://www.qdnd.vn/nuoi-duong-van-hoa-bo-doi-cu-ho/ren-luyen-phuong-phap-tac-phong-cong-tac-khoa-hoc-nghiem-tuc-trach-nhiem-cao-695872?utm_source=chatgpt.com",
+        content: `
+I. MỤC ĐÍCH
+Nâng cao ý thức tổ chức công việc khoa học, hiệu quả.
+
+II. NỘI DUNG HỌC TẬP
+1. Thực hiện đúng thời gian, quy trình và nhiệm vụ được giao.
+2. Sắp xếp công việc theo thứ tự ưu tiên.
+3. Chủ động kiểm tra kết quả, báo cáo trung thực và chịu trách nhiệm.
+
+III. LIÊN HỆ THỰC TIỄN
+Lập kế hoạch công việc hằng ngày, hạn chế trì hoãn và rút kinh nghiệm sau mỗi nhiệm vụ.
+
+IV. CÂU HỎI ÔN TẬP
+1. Tác phong khoa học mang lại lợi ích gì?
+2. Nêu các bước lập kế hoạch công việc.
+3. Bản thân cần sửa đổi thói quen nào?`,
+        builtin: true
+
+    },
+    {
+         id: "ct-bam-9",
+        title: "Quân đội với công tác dân vận và giúp đỡ Nhân dân",
+        category: "Dân vận và trách nhiệm cộng đồng",
+        description:"Nâng cao ý thức gần dân, tôn trọng dân và phục vụ cộng đồng.",
+         reference_url: "https://www.qdnd.vn/quoc-phong-an-ninh/quoc-phong-toan-dan/quan-doi-thuc-hien-cong-tac-dan-van-vung-dong-bao-dan-toc-thieu-so-bam-sat-phuong-cham-nhieu-mo-hinh-hieu-qua-766334?utm_source=chatgpt.com",
+        content: `
+I. MỤC ĐÍCH
+Nâng cao nhận thức về trách nhiệm của quân nhân trong công tác dân vận.
+
+II. NỘI DUNG HỌC TẬP
+1. Tôn trọng, lắng nghe và ứng xử đúng mực với Nhân dân.
+2. Tích cực tham gia hoạt động cộng đồng theo phân công.
+3. Chấp hành quy định, giữ gìn hình ảnh và uy tín của quân nhân.
+
+III. LIÊN HỆ THỰC TIỄN
+Thực hiện tốt nhiệm vụ được giao, sẵn sàng giúp đỡ người dân trong phạm vi trách nhiệm.
+
+IV. CÂU HỎI ÔN TẬP
+1. Công tác dân vận có ý nghĩa gì?
+2. Quân nhân cần ứng xử thế nào với Nhân dân?
+3. Liên hệ trách nhiệm của bản thân.`,
+        builtin: true
+
+    },
+    {
+     id: "ct-bam-10",
+      title: "Phòng, chống tham nhũng, lãng phí và tiêu cực",
+        category: "Pháp luật và đạo đức",
+        description: "Rèn luyện liêm chính, tiết kiệm và trách nhiệm trong công việc.",
+         reference_url: "https://chinhphu.vn/?classid=2629&docid=217305&pageid=27160&utm_source=chatgpt.com",
+        content: `
+I. MỤC ĐÍCH
+Nâng cao ý thức tuân thủ pháp luật, thực hành tiết kiệm và phòng ngừa sai phạm.
+
+II. NỘI DUNG HỌC TẬP
+1. Sử dụng tài sản, trang thiết bị đúng mục đích.
+2. Trung thực trong báo cáo và thực hiện nhiệm vụ.
+3. Chấp hành quy định, phản ánh sai phạm qua kênh có thẩm quyền.
+
+III. LIÊN HỆ THỰC TIỄN
+Không lãng phí tài sản chung, thực hiện đúng quy trình và chịu trách nhiệm về công việc.
+
+IV. CÂU HỎI ÔN TẬP
+1. Lãng phí gây ra những hậu quả gì?
+2. Cần làm gì để thực hành tiết kiệm?
+3. Bản thân có thể góp phần phòng ngừa tiêu cực như thế nào?`,
+        builtin: true
+
+    },
+    {
+        id: "ct-bam-11",
+        title: "Bảo vệ môi trường, xây dựng đơn vị xanh, sạch, đẹp",
+        category: "Môi trường và nếp sống",
+        description:"Xây dựng ý thức vệ sinh, tiết kiệm và bảo vệ cảnh quan.",
+        reference_url: "https://www.qdnd.vn/quoc-phong-an-ninh/tin-tuc/nhung-nguoi-linh-chung-tay-bao-ve-moi-truong-588464?utm_source=chatgpt.com",
+        content: `
+I. MỤC ĐÍCH
+Nâng cao trách nhiệm bảo vệ môi trường và giữ gìn nơi ở, nơi làm việc.
+
+II. NỘI DUNG HỌC TẬP
+1. Giữ gìn vệ sinh nơi ở và khu vực làm việc.
+2. Tiết kiệm điện, nước và sử dụng vật tư hợp lý.
+3. Thu gom, phân loại và xử lý rác theo quy định.
+
+III. LIÊN HỆ THỰC TIỄN
+Duy trì vệ sinh hằng ngày, bảo vệ cây xanh và sử dụng tiết kiệm tài sản chung.
+
+IV. CÂU HỎI ÔN TẬP
+1. Vì sao cần bảo vệ môi trường?
+2. Những hành động nào giúp tiết kiệm tài nguyên?
+3. Đề xuất một việc làm xây dựng đơn vị xanh, sạch, đẹp.`,
         builtin: true
     }
 ];
+function layTatCaBaiHocChinhTri() {
+    return [...danhSachBaiHocChinhTriMacDinh];
+}
+
 
 // ==========================================
 // THƯ VIỆN LỜI BÁC HỒ DẠY BBB11
