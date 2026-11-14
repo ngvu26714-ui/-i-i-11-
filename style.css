@@ -1570,3 +1570,55 @@ body.login-page {
     background: #b22222;
     color: #ffffff !important;
 }
+
+/* =========================================
+   NÚT XEM VIDEO YOUTUBE - LỜI BÁC DẠY BBB11
+========================================= */
+
+.youtube-button {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 16px;
+
+    background-color: #d93025;
+    color: #ffffff !important;
+
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none !important;
+
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+/* Khi di chuột vào nút */
+.youtube-button:hover {
+    background-color: #b71c1c;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+}
+
+/* Khi bấm nút */
+.youtube-button:active {
+    transform: scale(0.98);
+}
+
+/* Khoảng cách giữa nội dung và nguồn */
+#bacList .list-item small {
+    display: block;
+    margin-top: 10px;
+    color: #666666;
+    line-height: 1.6;
+}
+
+/* Khoảng cách giữa các mục lời Bác dạy */
+#bacList .list-item {
+    margin-bottom: 16px;
+    padding: 16px;
+    border-radius: 8px;
+}
+
