@@ -101,56 +101,65 @@ function showPage(page) {
 
     if (
         ADMIN_PAGES.includes(page) &&
-        bbb11CurrentRole !== "admin"
+      bbb11CurrentRole !== "admin"
     ) {
         alert("Bạn không có quyền truy cập chức năng quản trị!");
         return;
     }
 
-    const home = document.getElementById("homePage");
-    const functionPage = document.getElementById("functionPage");
-    const content = document.getElementById("pageContent");
+   
+const home = document.getElementById("homePage");
+const functionPage = document.getElementById("functionPage");
+const content = document.getElementById("pageContent");
 
-    if (!home || !functionPage || !content) {
-        alert("Không tìm thấy khu vực hiển thị!");
-        return;
-    }
+if (!home || !functionPage || !content) {
+    alert("Không tìm thấy khu vực hiển thị!");
+    return;
+}
 
-    // DANH SÁCH CÁC TRANG
-    const pages = {
-        admin: adminPage,
-        members: membersPage,
-        accounts: accountsPage,
-        attendance: attendancePage,
-        activities: activitiesPage,
-        reports: reportsPage,
-        manual: manualPage,
-        resolution: resolutionPage,
-        news: newsPage,
-        quiz: quizPage,
-        education: educationPage,
-        bac: bacPage,
-        question: questionPage,
-        score: scorePage,
-        ranking: rankingPage
-    };
+// DANH SÁCH CÁC TRANG
+const pages = {
+    admin: adminPage,
+    members: membersPage,
+    accounts: accountsPage,
+    attendance: attendancePage,
+    activities: activitiesPage,
+    reports: reportsPage,
+    manual: manualPage,
+    resolution: resolutionPage,
+    news: newsPage,
+    quiz: quizPage,
+    education: educationPage,
+    bac: bacPage,
+    question: questionPage,
+    score: scorePage,
+    ranking: rankingPage
+};
+
 // KIỂM TRA VÀ HIỂN THỊ TRANG
 if (typeof pages[page] !== "function") {
     content.innerHTML = "<h2>Chức năng chưa được xây dựng.</h2>";
 } else {
     try {
-       
         content.innerHTML = pages[page]();
-        if (page === "bac") {
-    hienThiLoiBac();
-}
-content.innerHTML = pages[page]();
-home.classList.add("hidden");
-functionPage.classList.remove("hidden");
 
-if (page === "resolution") {
-    hienThiTaiLieuNghiQuyet();
-}
+        home.classList.add("hidden");
+        functionPage.classList.remove("hidden");
+
+        // QUẢN LÝ THÀNH VIÊN
+        if (page === "members") {
+            hienThiThanhVien();
+        }
+
+        // LỖI BÁC
+        if (page === "bac") {
+            hienThiLoiBac();
+        }
+
+        // NGHỊ QUYẾT
+        if (page === "resolution") {
+            hienThiTaiLieuNghiQuyet();
+        }
 
     } catch (error) {
         console.error("Lỗi tải trang:", error);
@@ -163,6 +172,10 @@ if (page === "resolution") {
         `;
     }
 }
+
+// HIỂN THỊ GIAO DIỆN
+home.classList.add("hidden");
+functionPage.classList.remove("hidden");
 
 home.classList.add("hidden");
 functionPage.classList.remove("hidden");
@@ -226,153 +239,7 @@ functionPage.classList.remove("hidden");
 // ======================================
 
 
-// ======================================
-// 7. QUẢN LÝ THÀNH VIÊN
-// ======================================
 
-function membersPage() {
-    return `
-        <div class="page-box">
-            <h2>QUẢN LÝ THÀNH VIÊN BBB11</h2>
-
-            <h3>THÊM THÀNH VIÊN</h3>
-
-            <input id="tvHoTen" placeholder="Họ và tên">
-            <input id="tvMaSo" placeholder="Mã số thành viên">
-            <input id="tvChucVu" placeholder="Chức vụ">
-            <input id="tvTieuDoi" placeholder="Tiểu đội">
-
-            <button class="action-button" onclick="themThanhVien()">
-                Thêm thành viên
-            </button>
-
-            <h3>TÌM KIẾM THÀNH VIÊN</h3>
-
-            <input id="timThanhVien"
-                placeholder="Nhập tên hoặc mã số..."
-                oninput="hienThiThanhVien()">
-
-            <h3>DANH SÁCH THÀNH VIÊN</h3>
-
-            <div id="danhSachThanhVien"></div>
-        </div>
-    `;
-}
-
-function layDanhSachThanhVien() {
-    return docDuLieu("bbb11_thanhvien");
-}
-
-function themThanhVien() {
-    const hoTen = document.getElementById("tvHoTen").value.trim();
-    const maSo = document.getElementById("tvMaSo").value.trim();
-    const chucVu = document.getElementById("tvChucVu").value.trim();
-    const tieuDoi = document.getElementById("tvTieuDoi").value.trim();
-
-    if (!hoTen || !maSo) {
-        alert("Vui lòng nhập họ tên và mã số!");
-        return;
-    }
-
-    const danhSach = layDanhSachThanhVien();
-
-    if (danhSach.some(tv => tv.maSo === maSo)) {
-        alert("Mã số đã tồn tại!");
-        return;
-    }
-
-    danhSach.push({
-        id: Date.now().toString(),
-        hoTen,
-        maSo,
-        chucVu,
-        tieuDoi
-    });
-
-    luuDuLieu("bbb11_thanhvien", danhSach);
-
-    alert("Thêm thành viên thành công!");
-    showPage("members");
-}
-
-function hienThiThanhVien() {
-    const noiDung = document.getElementById("danhSachThanhVien");
-    if (!noiDung) return;
-
-    const tuKhoa = (
-        document.getElementById("timThanhVien")?.value || ""
-    ).toLowerCase().trim();
-
-    const danhSach = layDanhSachThanhVien().filter(tv =>
-        String(tv.hoTen).toLowerCase().includes(tuKhoa) ||
-        String(tv.maSo).toLowerCase().includes(tuKhoa)
-    );
-
-    if (!danhSach.length) {
-        noiDung.innerHTML = "<p>Chưa có thành viên.</p>";
-        return;
-    }
-
-    noiDung.innerHTML = danhSach.map(tv => `
-        <button
-</button>
-        <div class="list-item">
-            <h3>${escapeHTML(tv.hoTen)}</h3>
-            <p>Mã số: ${escapeHTML(tv.maSo)}</p>
-            <p>Chức vụ: ${escapeHTML(tv.chucVu)}</p>
-            <p>Tiểu đội: ${escapeHTML(tv.tieuDoi)}</p>
-
-            <button class="action-button"
-                onclick="suaThanhVien('${escapeHTML(tv.id)}')">
-                Sửa
-            </button>
-
-            <button class="action-button"
-                onclick="xoaThanhVien('${escapeHTML(tv.id)}')">
-                Xóa
-            </button>
-        </div>
-    `).join("");
-}
-
-function suaThanhVien(id) {
-    const danhSach = layDanhSachThanhVien();
-    const tv = danhSach.find(item => item.id === id);
-
-    if (!tv) return;
-
-    const hoTen = prompt("Họ tên:", tv.hoTen);
-    if (hoTen === null) return;
-
-    const chucVu = prompt("Chức vụ:", tv.chucVu);
-    if (chucVu === null) return;
-
-    const tieuDoi = prompt("Tiểu đội:", tv.tieuDoi);
-    if (tieuDoi === null) return;
-
-    if (!hoTen.trim()) {
-        alert("Họ tên không được để trống!");
-        return;
-    }
-
-    tv.hoTen = hoTen.trim();
-    tv.chucVu = chucVu.trim();
-    tv.tieuDoi = tieuDoi.trim();
-
-    luuDuLieu("bbb11_thanhvien", danhSach);
-    showPage("members");
-}
-
-function xoaThanhVien(id) {
-    if (!confirm("Bạn chắc chắn muốn xóa thành viên này?")) return;
-
-    const danhSach = layDanhSachThanhVien().filter(
-        tv => tv.id !== id
-    );
-
-    luuDuLieu("bbb11_thanhvien", danhSach);
-    showPage("members");
-}
 
 // ======================================
 // 8. CÁC TRANG CHỨC NĂNG CƠ BẢN
@@ -3900,3 +3767,68 @@ function educationEscapeHTML(value) {
 
 window.capNhatDanhSachBaiHocChinhTri =
     capNhatDanhSachBaiHocChinhTri;
+
+/* =========================================
+   TRANG QUẢN LÝ THÀNH VIÊN BBB11
+   ========================================= */
+
+
+function membersPage() {
+    return `
+        <div class="page-box">
+            <h2>👥 QUẢN LÝ THÀNH VIÊN BBB11</h2>
+
+            <div class="form-group">
+                <label for="tvHoTen">Họ và tên thành viên *</label>
+                <input
+                    type="text"
+                    id="tvHoTen"
+                    placeholder="Nhập họ và tên thành viên"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="ma_so">Mã số thành viên *</label>
+                <input
+                    type="text"
+                    id="ma_so"
+                    name="ma_so"
+                    placeholder="Ví dụ: BBB11-001"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="tvTrungDoi">Trung đội *</label>
+                <input
+                    type="text"
+                    id="tvTrungDoi"
+                    placeholder="Nhập trung đội"
+                    required
+                >
+            </div>
+
+            <button
+                type="button"
+                class="action-button"
+                onclick="themThanhVien()">
+                ➕ Thêm thành viên
+            </button>
+
+            <hr>
+
+            <input
+                type="search"
+                id="timThanhVien"
+                placeholder="Tìm theo họ tên hoặc trung đội"
+                oninput="timKiemThanhVienBBB11()"
+            >
+
+            <div id="danhSachThanhVien">
+                Đang tải danh sách thành viên...
+            </div>
+        </div>
+    `;
+}
+
