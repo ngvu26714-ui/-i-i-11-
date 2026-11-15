@@ -4,6 +4,7 @@
 // KIỂM TRA QUYỀN QUẢN LÝ THÀNH VIÊN BBB11
 // ============================================
 
+
 function duocQuanLyThanhVienBBB11() {
     const nguoiDung = window.bbb11CurrentUser || {};
 
@@ -16,7 +17,9 @@ function duocQuanLyThanhVienBBB11() {
         .trim()
         .toLowerCase()
         .replace(/\s+/g, " ");
-console.log("Vai trò hiện tại:", vaiTro);
+
+    console.log("BBB11 - Vai trò:", vaiTro);
+
     const vaiTroDuocPhep = [
         "admin",
         "đại đội trưởng",
@@ -30,6 +33,7 @@ console.log("Vai trò hiện tại:", vaiTro);
 
     return vaiTroDuocPhep.includes(vaiTro);
 }
+
 // ============================================
 // TRANG QUẢN LÝ THÀNH VIÊN BBB11
 // ============================================
