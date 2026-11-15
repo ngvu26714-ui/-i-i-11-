@@ -273,7 +273,34 @@
                 Quay lại trang chủ
             </button>
 
-            <div id="pageContent"></div>
+            
+<div id="pageContent">
+
+    <!-- CHỨC NĂNG TẢI FILE EXCEL -->
+    <div class="card">
+        <h3>📂 CẬP NHẬT DANH SÁCH THÀNH VIÊN</h3>
+
+        <p>Chọn file Excel danh sách thành viên (.xlsx hoặc .xls)</p>
+
+        <input
+            type="file"
+            id="fileDanhSachThanhVien"
+            accept=".xlsx,.xls"
+        >
+
+        <button
+            type="button"
+            id="nutNhapDanhSachThanhVien"
+            onclick="capNhatDanhSachThanhVienTuFile()"
+        >
+            📤 Tải Excel và cập nhật
+        </button>
+
+        <p id="trangThaiNhapThanhVien"></p>
+    </div>
+
+</div>
+
 
         </section>
 
@@ -286,11 +313,18 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script src="supabase.js"></script>
-
 <script src="account.js"></script>
+<script src="thanhvien.js"></script>
+
+<!-- Thư viện đọc file Excel -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+<!-- File nhập và cập nhật thành viên -->
+<script src="thanhvien-file.js"></script>
 
 <script src="script.js"></script>
+
 </body>
 </html>
+
