@@ -147,9 +147,23 @@ if (typeof pages[page] !== "function") {
         functionPage.classList.remove("hidden");
 
         // QUẢN LÝ THÀNH VIÊN
-        if (page === "members") {
-            hienThiThanhVien();
+       if (page === "members") {
+    const noiDung = document.getElementById("pageContent");
+
+    if (noiDung) {
+        noiDung.innerHTML = membersPage();
+
+        if (typeof hienThiThanhVienBBB11 === "function") {
+            hienThiThanhVienBBB11();
+        } else {
+            console.error(
+                "Chưa tìm thấy hàm hienThiThanhVienBBB11()."
+            );
         }
+    }
+
+    return;
+}
 
         // LỖI BÁC
         if (page === "bac") {
