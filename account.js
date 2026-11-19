@@ -146,7 +146,7 @@ profile = await kiemTraHoSoCaNhanBBB11(
         alert("Đăng nhập BBB11 thành công!");
 
         if (profile.role === "admin") {
-           window.showPage("admin");
+            showPage("admin");
         } else {
             showHome();
         }
@@ -356,5 +356,4 @@ async function kiemTraHoSoCaNhanBBB11(user, profile) {
         tieu_doi: tieuDoi.trim()
     };
 }
-
 
