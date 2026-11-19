@@ -2,332 +2,292 @@
 "use strict";
 
 // ============================================
-// BBB11 - NHẬP / CẬP NHẬT DANH SÁCH THÀNH VIÊN
+// BBB11 - QUẢN LÝ THÀNH VIÊN KHÔNG PHÂN QUYỀN
 // ============================================
 
-(function () {
-const TEN_BANG = "bbb11_members";
+let danhSachThanhVienBBB11 = [];
 
-function layClient() {
-return window.supabaseClient || null;
+function laySupabaseThanhVienBBB11() {
+    return window.supabaseClient || null;
 }
 
-function hienThiTrangThai(noiDung, loi = false) {
-const el = document.getElementById("trangThaiNhapThanhVien");
-
-if (el) {
-el.textContent = noiDung;
-el.style.color = loi ? "#b91c1c" : "#166534";
-} else {
-console.log(noiDung);
-}
-}
-
-function chuanHoa(value) {
-return String(value ?? "").trim();
+function escapeThanhVienBBB11(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[char]);
 }
 
-function chuanHoaCot(value) {
-return chuanHoa(value)
-.normalize("NFD")
-.replace(/[\u0300-\u036f]/g, "")
-.replace(/đ/g, "d")
-.replace(/Đ/g, "D")
-.toLowerCase()
-.replace(/[^a-z0-9]/g, "");
+// TẢI DANH SÁCH
+async function layDanhSachThanhVien() {
+    const client = laySupabaseThanhVienBBB11();
+
+    if (!client) {
+        throw new Error("Chưa kết nối Supabase.");
+    }
+
+    const { data, error } = await client
+        .from("bbb11_members")
+        .select("id, ho_ten, tieu_doi, created_at")
+        .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    danhSachThanhVienBBB11 = data || [];
+    return danhSachThanhVienBBB11;
 }
 
-function layGiaTri(row, cacCot) {
-const keys = Object.keys(row);
+// HIỂN THỊ DANH SÁCH
+async function hienThiThanhVien() {
+    const khung = document.getElementById("danhSachThanhVien");
+    if (!khung) return;
 
-for (const cot of cacCot) {
-const key = keys.find(
-k => chuanHoaCot(k) === chuanHoaCot(cot)
-);
+    khung.textContent = "Đang tải danh sách...";
 
-if (key !== undefined) {
-return row[key];
-}
-}
+    try {
+        const danhSach = await layDanhSachThanhVien();
 
-return "";
-}
+        if (!danhSach.length) {
+            khung.textContent = "Chưa có thành viên nào.";
+            return;
+        }
 
-async function kiemTraQuyen() {
-if (
-typeof window.kiemTraQuyenThanhVienBBB11 !== "function"
-) {
-throw new Error(
-"Không tìm thấy hàm kiểm tra quyền. " +
-"Hãy kiểm tra file thanhvien.js hoặc account.js."
-);
-}
+        khung.innerHTML = danhSach.map((tv, index) => `
+            <div class="list-item">
+                <h4>${index + 1}. ${escapeThanhVienBBB11(tv.ho_ten)}</h4>
+                <p>Trung đội: ${escapeThanhVienBBB11(tv.tieu_doi || "")}</p>
 
-const ketQua =
-await window.kiemTraQuyenThanhVienBBB11();
+                <button type="button" class="action-button"
+                    onclick="suaThanhVienBBB11('${encodeURIComponent(String(tv.id))}')">
+                    Sửa
+                </button>
 
-if (typeof ketQua === "boolean") {
-return ketQua;
-}
-
-if (
-ketQua &&
-typeof ketQua.coQuyen === "boolean"
-) {
-return ketQua.coQuyen;
+                <button type="button" class="action-button"
+                    onclick="xoaThanhVienBBB11('${encodeURIComponent(String(tv.id))}')">
+                    Xóa
+                </button>
+            </div>
+        `).join("");
+    } catch (error) {
+        console.error("Lỗi tải thành viên:", error);
+        khung.textContent = "Không tải được danh sách: " + error.message;
+    }
 }
 
-return false;
+
+async function themThanhVien() {
+    const client = laySupabaseThanhVienBBB11();
+
+    if (!client) {
+        alert("Chưa kết nối Supabase.");
+        return;
+    }
+
+    try {
+
+        // Lấy dữ liệu từ HTML
+        const oHoTen = document.getElementById("tvHoTen");
+        const oMaSo = document.getElementById("ma_so");
+        const oTrungDoi = document.getElementById("tvTrungDoi");
+
+        if (!oHoTen || !oMaSo || !oTrungDoi) {
+            alert("Không tìm thấy ô nhập họ tên, mã số hoặc trung đội.");
+            return;
+        }
+
+        const hoTen = oHoTen.value.trim();
+        const maSo = oMaSo.value.trim();
+        const trungDoi = oTrungDoi.value.trim();
+
+        if (!hoTen || !maSo || !trungDoi) {
+            alert("Vui lòng nhập đầy đủ họ tên, mã số và trung đội.");
+            return;
+        }
+
+        // Thêm vào Supabase
+        const { error } = await client
+            .from("bbb11_members")
+            .insert([{
+                ma_so: maSo,
+                ho_ten: hoTen,
+                tieu_doi: trungDoi,
+                vai_tro: "member",
+                trang_thai: "active"
+            }]);
+
+        if (error) {
+            console.error("Lỗi Supabase:", error);
+            throw error;
+        }
+
+        alert("Thêm thành viên thành công!");
+
+        oHoTen.value = "";
+        oMaSo.value = "";
+        oTrungDoi.value = "";
+
+        // Tải lại danh sách nếu hàm này tồn tại
+        if (typeof hienThiThanhVien === "function") {
+            await hienThiThanhVien();
+        }
+
+    } catch (error) {
+        console.error("Lỗi thêm thành viên:", error);
+        alert("Không thể thêm thành viên: " + 
+            (error.message || String(error)));
+    }
 }
 
-function docExcel(file) {
-return new Promise((resolve, reject) => {
-if (!window.XLSX) {
-reject(
-new Error("Chưa tải thư viện Excel XLSX.")
-);
-return;
+
+// SỬA THÀNH VIÊN
+async function suaThanhVienBBB11(idMaHoa) {
+    const client = laySupabaseThanhVienBBB11();
+    const id = decodeURIComponent(idMaHoa);
+
+    const tv = danhSachThanhVienBBB11.find(
+        item => String(item.id) === id
+    );
+
+    if (!tv) {
+        alert("Không tìm thấy thành viên. Hãy tải lại trang.");
+        return;
+    }
+
+    const hoTen = prompt("Họ tên:", tv.ho_ten || "");
+    if (hoTen === null) return;
+
+    const trungDoi = prompt("Trung đội:", tv.tieu_doi || "");
+    if (trungDoi === null) return;
+
+    if (!hoTen.trim() || !trungDoi.trim()) {
+        alert("Họ tên và trung đội không được để trống.");
+        return;
+    }
+
+    try {
+        const { data, error } = await client
+            .from("bbb11_members")
+            .update({
+                ho_ten: hoTen.trim(),
+                tieu_doi: trungDoi.trim()
+            })
+            .eq("id", id)
+            .select("id");
+
+        if (error) throw error;
+        if (!data?.length) {
+            throw new Error("Không cập nhật được. Hãy kiểm tra quyền UPDATE trên Supabase.");
+        }
+
+        alert("Cập nhật thành công!");
+        await hienThiThanhVien();
+    } catch (error) {
+        alert("Không thể sửa thành viên: " + error.message);
+    }
 }
 
-const reader = new FileReader();
+// XÓA THÀNH VIÊN
+async function xoaThanhVienBBB11(idMaHoa) {
+    const client = laySupabaseThanhVienBBB11();
+    const id = decodeURIComponent(idMaHoa);
 
-reader.onload = function (event) {
-try {
-const workbook = XLSX.read(
-new Uint8Array(event.target.result),
-{ type: "array" }
-);
+    const tv = danhSachThanhVienBBB11.find(
+        item => String(item.id) === id
+    );
 
-const tenSheet = workbook.SheetNames[0];
+    if (!confirm("Bạn có chắc muốn xóa " + (tv?.ho_ten || "thành viên này") + "?")) {
+        return;
+    }
 
-if (!tenSheet) {
-throw new Error(
-"File Excel không có trang tính."
-);
+    try {
+        const { data, error } = await client
+            .from("bbb11_members")
+            .delete()
+            .eq("id", id)
+            .select("id");
+
+        if (error) throw error;
+        if (!data?.length) {
+            throw new Error("Không xóa được. Hãy kiểm tra quyền DELETE trên Supabase.");
+        }
+
+        alert("Đã xóa thành viên!");
+        await hienThiThanhVien();
+    } catch (error) {
+        alert("Không thể xóa thành viên: " + error.message);
+    }
 }
 
-const rows = XLSX.utils.sheet_to_json(
-workbook.Sheets[tenSheet],
-{ defval: "", raw: false }
-);
+// TÌM KIẾM
+function timKiemThanhVienBBB11() {
+    const tuKhoa = (
+        document.getElementById("timThanhVien")?.value || ""
+    ).trim().toLocaleLowerCase("vi");
 
-resolve(rows);
-} catch (error) {
-reject(error);
-}
-};
+    const khung = document.getElementById("danhSachThanhVien");
+    if (!khung) return;
 
-reader.onerror = function () {
-reject(new Error("Không thể đọc file Excel."));
-};
+    const ketQua = danhSachThanhVienBBB11.filter(tv =>
+        String(tv.ho_ten || "").toLocaleLowerCase("vi").includes(tuKhoa) ||
+        String(tv.tieu_doi || "").toLocaleLowerCase("vi").includes(tuKhoa)
+    );
 
-reader.readAsArrayBuffer(file);
-});
-}
+    if (!ketQua.length) {
+        khung.textContent = "Không tìm thấy thành viên.";
+        return;
+    }
 
-async function capNhatDanhSachThanhVienTuFile() {
-const input = document.getElementById(
-"fileDanhSachThanhVien"
-);
-
-const file = input?.files?.[0];
-
-if (!file) {
-hienThiTrangThai(
-"Vui lòng chọn file Excel.",
-true
-);
-return;
+    khung.innerHTML = ketQua.map((tv, index) => `
+        <div class="list-item">
+            <h4>${index + 1}. ${escapeThanhVienBBB11(tv.ho_ten)}</h4>
+            <p>Trung đội: ${escapeThanhVienBBB11(tv.tieu_doi || "")}</p>
+            <button type="button" onclick="suaThanhVienBBB11('${encodeURIComponent(String(tv.id))}')">Sửa</button>
+            <button type="button" onclick="xoaThanhVienBBB11('${encodeURIComponent(String(tv.id))}')">Xóa</button>
+        </div>
+    `).join("");
 }
 
-if (!/\.(xlsx|xls)$/i.test(file.name)) {
-hienThiTrangThai(
-"Chỉ chấp nhận file .xlsx hoặc .xls.",
-true
-);
-return;
+async function kiemTraQuyenThanhVienBBB11() {
+    const client = laySupabaseThanhVienBBB11();
+
+    if (!client) {
+        return { coQuyen: false };
+    }
+
+    try {
+        // Kiểm tra người dùng đang đăng nhập
+        const { data: authData, error: authError } =
+            await client.auth.getUser();
+
+        if (authError || !authData?.user) {
+            return { coQuyen: false };
+        }
+
+        // Lấy vai trò từ bảng profiles
+        const { data: profile, error } = await client
+            .from("profiles")
+            .select("role")
+            .eq("id", authData.user.id)
+            .maybeSingle();
+
+        if (error) {
+            console.error("Lỗi kiểm tra quyền:", error);
+            return { coQuyen: false };
+        }
+
+        // Chỉ cho phép vai trò admin
+        const vaiTro = String(profile?.role || "").toLowerCase();
+
+        return {
+            coQuyen: vaiTro === "admin"
+        };
+
+    } catch (error) {
+        console.error("Lỗi xác minh quyền:", error);
+        return { coQuyen: false };
+    }
 }
-
-const client = layClient();
-
-if (!client) {
-hienThiTrangThai(
-"Không tìm thấy Supabase client. Kiểm tra supabase.js.",
-true
-);
-return;
-}
-
-const nut = document.getElementById(
-"nutNhapDanhSachThanhVien"
-);
-
-if (nut) nut.disabled = true;
-
-try {
-hienThiTrangThai("Đang kiểm tra quyền...");
-
-if (!(await kiemTraQuyen())) {
-throw new Error(
-"Bạn không có quyền nhập danh sách thành viên."
-);
-}
-
-hienThiTrangThai("Đang đọc file Excel...");
-
-const rows = await docExcel(file);
-
-if (!rows.length) {
-throw new Error("File Excel không có dữ liệu.");
-}
-
-const danhSach = [];
-const maSoDaGap = new Set();
-const dongLoi = [];
-
-rows.forEach((row, index) => {
-const maSo = chuanHoa(layGiaTri(row, [
-"ma_so", "ma so", "Mã số", "MS"
-]));
-
-const hoTen = chuanHoa(layGiaTri(row, [
-"ho_ten", "ho ten", "Họ tên",
-"Họ và tên", "Tên thành viên"
-]));
-
-const tieuDoi = chuanHoa(layGiaTri(row, [
-"tieu_doi", "tieu doi", "Tiểu đội"
-]));
-
-const chucVu = chuanHoa(layGiaTri(row, [
-"chuc_vu", "chuc vu", "Chức vụ"
-]));
-
-if (!maSo && !hoTen && !tieuDoi && !chucVu) {
-return;
-}
-
-if (!maSo || !hoTen || !tieuDoi) {
-dongLoi.push(index + 2);
-return;
-}
-
-const khoa = maSo.toLowerCase();
-
-if (maSoDaGap.has(khoa)) {
-dongLoi.push(index + 2);
-return;
-}
-
-maSoDaGap.add(khoa);
-
-danhSach.push({
-ma_so: maSo,
-ho_ten: hoTen,
-tieu_doi: tieuDoi,
-chuc_vu: chucVu
-});
-});
-
-if (!danhSach.length) {
-throw new Error(
-"Không có dòng hợp lệ. Cần các cột " +
-"Mã số, Họ tên, Tiểu đội."
-);
-}
-
-let themMoi = 0;
-let capNhat = 0;
-const loiLuu = [];
-
-for (const tv of danhSach) {
-try {
-const { data: thanhVienCu, error: loiTim } =
-await client
-.from(TEN_BANG)
-.select("id, ma_so")
-.eq("ma_so", tv.ma_so)
-.maybeSingle();
-
-if (loiTim) throw loiTim;
-
-if (thanhVienCu) {
-const { error } = await client
-.from(TEN_BANG)
-.update({
-ho_ten: tv.ho_ten,
-tieu_doi: tv.tieu_doi,
-chuc_vu: tv.chuc_vu
-})
-.eq("id", thanhVienCu.id);
-
-if (error) throw error;
-
-capNhat++;
-} else {
-const { error } = await client
-.from(TEN_BANG)
-.insert({
-ma_so: tv.ma_so,
-ho_ten: tv.ho_ten,
-tieu_doi: tv.tieu_doi,
-chuc_vu: tv.chuc_vu,
-vai_tro: "member",
-trang_thai: "active"
-});
-
-if (error) throw error;
-
-themMoi++;
-}
-} catch (error) {
-loiLuu.push(
-tv.ma_so + ": " + error.message
-);
-}
-}
-
-if (typeof window.hienThiThanhVien === "function") {
-await window.hienThiThanhVien();
-}
-
-let thongBao =
-"Hoàn tất! Thêm mới: " + themMoi +
-"; cập nhật: " + capNhat + ".";
-
-if (dongLoi.length) {
-thongBao +=
-" Bỏ qua dòng lỗi/trùng: " +
-dongLoi.join(", ") + ".";
-}
-
-if (loiLuu.length) {
-console.error("Lỗi lưu thành viên:", loiLuu);
-
-thongBao +=
-" Có " + loiLuu.length +
-" thành viên chưa lưu được. Xem Console (F12).";
-}
-
-hienThiTrangThai(
-thongBao,
-loiLuu.length > 0
-);
-
-} catch (error) {
-console.error("Lỗi nhập Excel:", error);
-
-hienThiTrangThai(
-error.message || "Không thể nhập file Excel.",
-true
-);
-} finally {
-if (nut) nut.disabled = false;
-}
-}
-
-window.capNhatDanhSachThanhVienTuFile =
-capNhatDanhSachThanhVienTuFile;
-})();
-
 
