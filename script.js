@@ -91,88 +91,108 @@ function showHome() {
 // ======================================
 // 4. ĐIỀU HƯỚNG CÁC CHỨC NĂNG
 // ======================================
-function showPage(page) {
 
-    // KIỂM TRA QUYỀN
-    if (!bbb11CurrentUser || !bbb11CurrentRole) {
+window.showPage = function (page) {
+    // 1. KIỂM TRA ĐĂNG NHẬP
+    if (
+        typeof bbb11CurrentUser === "undefined" ||
+        !bbb11CurrentUser ||
+        typeof bbb11CurrentRole === "undefined" ||
+        !bbb11CurrentRole
+    ) {
         alert("Vui lòng đăng nhập trước!");
         return;
     }
 
+    // 2. KIỂM TRA QUYỀN
+    const adminPages = typeof ADMIN_PAGES !== "undefined"
+        ? ADMIN_PAGES
+        : ["admin", "members", "accounts"];
+
     if (
-        ADMIN_PAGES.includes(page) &&
-      bbb11CurrentRole !== "admin"
+        adminPages.includes(page) &&
+        bbb11CurrentRole !== "admin"
     ) {
         alert("Bạn không có quyền truy cập chức năng quản trị!");
         return;
     }
 
-   
-const home = document.getElementById("homePage");
-const functionPage = document.getElementById("functionPage");
-const content = document.getElementById("pageContent");
+    // 3. LẤY KHU VỰC HIỂN THỊ
+    const home = document.getElementById("homePage");
+    const functionPage = document.getElementById("functionPage");
+    const content = document.getElementById("pageContent");
 
-if (!home || !functionPage || !content) {
-    alert("Không tìm thấy khu vực hiển thị!");
-    return;
-}
+    if (!home || !functionPage || !content) {
+        console.error("Thiếu homePage, functionPage hoặc pageContent.");
+        alert("Không tìm thấy khu vực hiển thị!");
+        return;
+    }
 
-// DANH SÁCH CÁC TRANG
-const pages = {
-    admin: adminPage,
-    members: membersPage,
-    accounts: accountsPage,
-    attendance: attendancePage,
-    activities: activitiesPage,
-    reports: reportsPage,
-    music: musicPage,
-    manual: manualPage,
-    resolution: resolutionPage,
-    news: newsPage,
-    quiz: quizPage,
-    education: educationPage,
-    bac: bacPage,
-    question: questionPage,
-    score: scorePage,
-    ranking: rankingPage
-};
+    // 4. DANH SÁCH TRANG
+    const pages = {
+        admin: typeof adminPage === "function" ? adminPage : null,
+        members: typeof membersPage === "function" ? membersPage : null,
+        accounts: typeof accountsPage === "function" ? accountsPage : null,
+        attendance: typeof attendancePage === "function" ? attendancePage : null,
+        activities: typeof activitiesPage === "function" ? activitiesPage : null,
+        reports: typeof reportsPage === "function" ? reportsPage : null,
+        music: typeof musicPage === "function" ? musicPage : null,
+        manual: typeof manualPage === "function" ? manualPage : null,
+        resolution: typeof resolutionPage === "function" ? resolutionPage : null,
+        news: typeof newsPage === "function" ? newsPage : null,
+        quiz: typeof quizPage === "function" ? quizPage : null,
+        education: typeof educationPage === "function" ? educationPage : null,
+        bac: typeof bacPage === "function" ? bacPage : null,
+        question: typeof questionPage === "function" ? questionPage : null,
+        score: typeof scorePage === "function" ? scorePage : null,
+        ranking: typeof rankingPage === "function" ? rankingPage : null
+    };
 
-// KIỂM TRA VÀ HIỂN THỊ TRANG
-if (typeof pages[page] !== "function") {
-    content.innerHTML = "<h2>Chức năng chưa được xây dựng.</h2>";
-} else {
+    const renderPage = pages[page];
+
+    if (typeof renderPage !== "function") {
+        console.error("Trang chưa tồn tại hoặc chưa được tải:", page);
+        content.innerHTML =
+            '<div class="page-box"><h2>Chức năng chưa được xây dựng.</h2></div>';
+        home.classList.add("hidden");
+        functionPage.classList.remove("hidden");
+        return;
+    }
+
     try {
-        content.innerHTML = pages[page]();
+        // 5. HIỂN THỊ TRANG MỘT LẦN
+        content.innerHTML = renderPage();
 
         home.classList.add("hidden");
         functionPage.classList.remove("hidden");
 
-        // QUẢN LÝ THÀNH VIÊN
-    if (page === "members") {
-    const noiDung = document.getElementById("pageContent");
-
-    if (noiDung) {
-        noiDung.innerHTML = membersPage();
-
-        if (typeof hienThiThanhVienBBB11 === "function") {
-            hienThiThanhVienBBB11();
-        } else {
-            console.error(
-                "Chưa tìm thấy hàm hienThiThanhVienBBB11()."
-            );
-        }
-    }
-
-    return;
-}
-        // LỖI BÁC
-        if (page === "bac") {
-            hienThiLoiBac();
+        // 6. TẢI DỮ LIỆU THÀNH VIÊN
+        if (page === "members") {
+            if (typeof window.hienThiThanhVienBBB11 === "function") {
+                window.hienThiThanhVienBBB11();
+            } else if (typeof window.hienThiThanhVien === "function") {
+                window.hienThiThanhVien();
+            } else {
+                console.error(
+                    "Chưa có hàm tải danh sách thành viên từ Supabase."
+                );
+            }
         }
 
-        // NGHỊ QUYẾT
-        if (page === "resolution") {
+        // 7. TẢI TÀI LIỆU NGHỊ QUYẾT
+        if (
+            page === "resolution" &&
+            typeof hienThiTaiLieuNghiQuyet === "function"
+        ) {
             hienThiTaiLieuNghiQuyet();
+        }
+
+        // 8. TẢI NỘI DUNG LỜI BÁC
+        if (
+            page === "bac" &&
+            typeof hienThiLoiBac === "function"
+        ) {
+            hienThiLoiBac();
         }
 
     } catch (error) {
@@ -181,11 +201,14 @@ if (typeof pages[page] !== "function") {
         content.innerHTML = `
             <div class="page-box">
                 <h2>Lỗi tải chức năng</h2>
-                <p>${escapeHTML(error.message)}</p>
+                <p>${String(error.message || error)
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")}</p>
             </div>
         `;
     }
-}
+};
 
 // HIỂN THỊ GIAO DIỆN
 home.classList.add("hidden");
@@ -4625,3 +4648,38 @@ function membersPage() {
         });
     };
 })();
+
+window.showPage = function (page) {
+    if (
+        !window.bbb11CurrentUser ||
+        !window.bbb11CurrentRole
+    ) {
+        console.error("Chưa có thông tin người dùng đăng nhập.");
+        return;
+    }
+
+    const adminPages = [
+        "admin",
+        "members",
+        "accounts"
+    ];
+
+    if (
+        adminPages.includes(page) &&
+        window.bbb11CurrentRole !== "admin"
+    ) {
+        alert("Bạn không có quyền truy cập trang này.");
+        return;
+    }
+
+    if (typeof window.loadPage === "function") {
+        window.loadPage(page);
+        return;
+    }
+
+    console.error(
+        "Chưa xác định hàm tải trang. Không thể tự chuyển trang:",
+        page
+    );
+};
+
