@@ -1,4 +1,4 @@
-/ ======================================
+// ======================================
 // HÀM BẢO MẬT HIỂN THỊ HTML BBB11
 // ======================================
 
@@ -125,6 +125,7 @@ const pages = {
     attendance: attendancePage,
     activities: activitiesPage,
     reports: reportsPage,
+    music: musicPage,
     manual: manualPage,
     resolution: resolutionPage,
     news: newsPage,
@@ -147,7 +148,7 @@ if (typeof pages[page] !== "function") {
         functionPage.classList.remove("hidden");
 
         // QUẢN LÝ THÀNH VIÊN
-       if (page === "members") {
+    if (page === "members") {
     const noiDung = document.getElementById("pageContent");
 
     if (noiDung) {
@@ -164,7 +165,6 @@ if (typeof pages[page] !== "function") {
 
     return;
 }
-
         // LỖI BÁC
         if (page === "bac") {
             hienThiLoiBac();
@@ -1128,196 +1128,632 @@ function xuatBaoCaoCSV() {
 
 
 
-function manualPage() {
-    return `
-        <div class="page-box">
-            <h2>CẨM NANG NGƯỜI LÍNH</h2>
+"use strict";
+
+// ============================================
+// BBB11 - CẨM NANG NGƯỜI LÍNH
+// ============================================
+
+(function () {
+    const STORAGE_KEY = "bbb11_manual";
+
+    let danhMucDangChon = "tatca";
+    let taiLieuDangDoc = null;
+
+    const danhMuc = {
+        tatca: "TẤT CẢ TÀI LIỆU",
+        dieulenh: "ĐIỀU LỆNH",
+        kyluat: "KỶ LUẬT",
+        kynang: "KỸ NĂNG QUÂN NHÂN",
+        kienthuc: "KIẾN THỨC",
+        khac: "TÀI LIỆU KHÁC"
+    };
+
+    // ========================================
+    // GIAO DIỆN
+    // ========================================
+
+    window.manualPage = function () {
+        return `
+        <div class="page-box manual-app">
+
+            <h2>📚 CẨM NANG NGƯỜI LÍNH</h2>
 
             <p>
-                Kho tài liệu cẩm nang, kiến thức và kỹ năng
+                Kho tài liệu kiến thức và kỹ năng
                 dành cho cán bộ, chiến sĩ Đại đội 11.
             </p>
 
+            <div class="news-tabs">
+                
+<button class="action-button"
+    onclick="chonDanhMucCamNang('tatca')">
+    <i class="fa-solid fa-layer-group"></i> TẤT CẢ
+</button>
+
+<button class="action-button"
+    onclick="chonDanhMucCamNang('dieulenh')">
+    <i class="fa-solid fa-person-military-rifle"></i> ĐIỀU LỆNH
+</button>
+
+<button class="action-button"
+    onclick="chonDanhMucCamNang('kyluat')">
+    <i class="fa-solid fa-shield-halved"></i> KỶ LUẬT
+</button>
+
+<button class="action-button"
+    onclick="chonDanhMucCamNang('kynang')">
+    <i class="fa-solid fa-compass"></i> KỸ NĂNG
+</button>
+
+<button class="action-button"
+    onclick="chonDanhMucCamNang('kienthuc')">
+    <i class="fa-solid fa-book-open"></i> KIẾN THỨC
+</button>
+
+<button class="action-button"
+    onclick="chonDanhMucCamNang('khac')">
+    <i class="fa-solid fa-folder-open"></i> KHÁC
+</button>
+
+            </div>
+
             <div class="list-item">
-                <h3>THÊM TÀI LIỆU CẨM NANG</h3>
+                <h3 id="tenDanhMucCamNang">
+                    📖 TẤT CẢ TÀI LIỆU
+                </h3>
 
-                <input id="manualTitle"
-                    placeholder="Tên tài liệu">
+                <input
+                    id="manualSearch"
+                    type="search"
+                    placeholder="🔎 Tìm kiếm tài liệu..."
+                    oninput="hienThiCamNang()"
+                    style="width:100%;box-sizing:border-box"
+                >
 
-                <select id="manualCategory">
+                <div id="manualList">
+                    Đang tải tài liệu...
+                </div>
+            </div>
+
+            <div class="list-item">
+                <h3 id="manualReaderTitle">
+                    📖 KHUNG ĐỌC TÀI LIỆU
+                </h3>
+
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <button class="action-button"
+                        onclick="taiLaiCamNang()">
+                        ↻ TẢI LẠI
+                    </button>
+
+                    <button class="action-button"
+                        onclick="moCamNangNgoai()">
+                        ↗ MỞ BÊN NGOÀI
+                    </button>
+                </div>
+
+                <iframe
+                    id="manualReader"
+                    title="Khung đọc tài liệu"
+                    src="about:blank"
+                    style="width:100%;height:650px;
+                    border:1px solid #ccc;border-radius:8px;
+                    background:white;margin-top:12px"
+                    loading="lazy">
+                </iframe>
+
+                <p style="font-size:13px;color:#777">
+                    Nếu website không hiển thị trong khung đọc,
+                    hãy chọn MỞ BÊN NGOÀI.
+                </p>
+            </div>
+
+            <div class="list-item">
+                <h3>➕ THÊM TÀI LIỆU CẨM NANG</h3>
+
+                <label for="manualTitle">Tên tài liệu</label>
+                <input
+                    id="manualTitle"
+                    type="text"
+                    placeholder="Nhập tên tài liệu..."
+                    style="width:100%;box-sizing:border-box"
+                >
+
+                <label for="manualCategory">Danh mục</label>
+                <select
+                    id="manualCategory"
+                    style="width:100%;box-sizing:border-box"
+                >
                     <option value="Điều lệnh">Điều lệnh</option>
                     <option value="Kỷ luật">Kỷ luật</option>
-                    <option value="Kỹ năng quân nhân">Kỹ năng quân nhân</option>
+                    <option value="Kỹ năng quân nhân">
+                        Kỹ năng quân nhân
+                    </option>
                     <option value="Kiến thức">Kiến thức</option>
                     <option value="Khác">Khác</option>
                 </select>
 
-                <input id="manualUrl"
+                <label for="manualUrl">Link PDF hoặc website</label>
+                <input
+                    id="manualUrl"
                     type="url"
-                    placeholder="Dán link PDF hoặc website">
+                    placeholder="https://..."
+                    style="width:100%;box-sizing:border-box"
+                >
 
                 <button class="action-button"
                     onclick="themCamNang()">
-                    THÊM TÀI LIỆU
+                    ➕ THÊM TÀI LIỆU
                 </button>
             </div>
+        </div>`;
+    };
 
-            <div class="list-item">
-                <h3>TÌM KIẾM CẨM NANG</h3>
+    // ========================================
+    // ĐỌC DỮ LIỆU
+    // ========================================
 
-                <input id="manualSearch"
-                    placeholder="Nhập tên tài liệu..."
-                    oninput="hienThiCamNang()">
-            </div>
+    function layDanhSach() {
+        try {
+            const data = JSON.parse(
+                localStorage.getItem(STORAGE_KEY) || "[]"
+            );
 
-            <h3>DANH SÁCH CẨM NANG</h3>
+            return Array.isArray(data) ? data : [];
+        } catch (error) {
+            console.error("Lỗi đọc cẩm nang:", error);
+            return [];
+        }
+    }
 
-            <div id="manualList">
-                Đang tải dữ liệu...
-            </div>
-        </div>
-    `;
-}
+    function luuDanhSach(data) {
+        try {
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(data)
+            );
+            return true;
+        } catch (error) {
+            console.error("Lỗi lưu cẩm nang:", error);
+            alert("Không thể lưu dữ liệu vào trình duyệt.");
+            return false;
+        }
+    }
 
-// LẤY DỮ LIỆU
-function layDanhSachCamNang() {
+    function escapeHTML(value) {
+        return String(value ?? "").replace(/[&<>"']/g, function (c) {
+            return {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            }[c];
+        });
+    }
+
+    function hopLeURL(url) {
+        try {
+            const parsed = new URL(url);
+            return ["https:", "http:"].includes(parsed.protocol);
+        } catch (error) {
+            return false;
+        }
+    }
+
+    function maDanhMuc(category) {
+        const value = String(category || "")
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
+
+        if (value.includes("dieu lenh")) return "dieulenh";
+        if (value.includes("ky luat")) return "kyluat";
+        if (value.includes("ky nang")) return "kynang";
+        if (value.includes("kien thuc")) return "kienthuc";
+
+        return "khac";
+    }
+
+function layDanhSach() {
+    let duLieuDaLuu = [];
+
     try {
-        return JSON.parse(
+        duLieuDaLuu = JSON.parse(
             localStorage.getItem("bbb11_manual") || "[]"
         );
-    } catch {
-        return [];
-    }
-}
 
-// KIỂM TRA LINK
-function kiemTraLinkCamNang(url) {
-    try {
-        const parsed = new URL(url);
-        return ["https:", "http:"].includes(parsed.protocol);
-    } catch {
-        return false;
-    }
-}
-
-// THÊM TÀI LIỆU
-function themCamNang() {
-    const title = document
-        .getElementById("manualTitle").value.trim();
-
-    const category = document
-        .getElementById("manualCategory").value;
-
-    const url = document
-        .getElementById("manualUrl").value.trim();
-
-    if (!title || !url) {
-        alert("Vui lòng nhập tên và đường link!");
-        return;
+        if (!Array.isArray(duLieuDaLuu)) {
+            duLieuDaLuu = [];
+        }
+    } catch (error) {
+        duLieuDaLuu = [];
     }
 
-    if (!kiemTraLinkCamNang(url)) {
-        alert("Đường link không hợp lệ!");
-        return;
-    }
+    // Kết hợp tài liệu trong code và tài liệu đã thêm
+    const tatCa = [...TAI_LIEU_CAM_NANG, ...duLieuDaLuu];
 
-    const danhSach = layDanhSachCamNang();
-
-    danhSach.push({
-        id: Date.now().toString(),
-        title,
-        category,
-        url
-    });
-
-    localStorage.setItem(
-        "bbb11_manual",
-        JSON.stringify(danhSach)
+    // Loại bỏ tài liệu trùng ID
+    return Array.from(
+        new Map(tatCa.map(item => [String(item.id), item])).values()
     );
-
-    alert("Đã thêm cẩm nang!");
-
-    showPage("manual");
 }
+    // ========================================
+    // CHỌN DANH MỤC
+    // ========================================
 
-// HIỂN THỊ
-function hienThiCamNang() {
-    const khung = document.getElementById("manualList");
+    window.chonDanhMucCamNang = function (ma) {
+        if (!Object.prototype.hasOwnProperty.call(danhMuc, ma)) {
+            return;
+        }
 
-    if (!khung) return;
+        danhMucDangChon = ma;
 
-    const keyword = (
-        document.getElementById("manualSearch")?.value || ""
-    ).toLowerCase().trim();
+        const title = document.getElementById(
+            "tenDanhMucCamNang"
+        );
 
-    const danhSach = layDanhSachCamNang().filter(item =>
-        item.title.toLowerCase().includes(keyword) ||
-        item.category.toLowerCase().includes(keyword)
-    );
+        if (title) {
+            title.textContent = "📖 " + danhMuc[ma];
+        }
 
-    if (!danhSach.length) {
-        khung.innerHTML = "<p>Chưa có tài liệu phù hợp.</p>";
-        return;
+        window.hienThiCamNang();
+    };
+
+    // ========================================
+    // THÊM TÀI LIỆU
+    // ========================================
+
+    window.themCamNang = function () {
+        const title = document.getElementById("manualTitle");
+        const category = document.getElementById("manualCategory");
+        const urlInput = document.getElementById("manualUrl");
+
+        if (!title || !category || !urlInput) {
+            alert("Không tìm thấy biểu mẫu cẩm nang.");
+            return;
+        }
+
+        const ten = title.value.trim();
+        const link = urlInput.value.trim();
+
+        if (!ten || !link) {
+            alert("Vui lòng nhập tên và link tài liệu!");
+            return;
+        }
+
+        if (!hopLeURL(link)) {
+            alert("Link không hợp lệ! Hãy nhập link HTTP hoặc HTTPS.");
+            return;
+        }
+
+        const data = layDanhSach();
+
+        data.unshift({
+            id: Date.now().toString() +
+                Math.random().toString(36).slice(2, 7),
+            title: ten,
+            category: category.value,
+            url: link
+        });
+
+        if (!luuDanhSach(data)) return;
+
+        title.value = "";
+        urlInput.value = "";
+
+        window.hienThiCamNang();
+        alert("Đã thêm tài liệu thành công!");
+    };
+
+    // ========================================
+    // ĐỌC TÀI LIỆU
+    // ========================================
+
+   // ============================================
+// DANH SÁCH CẨM NANG CÓ SẴN
+// DÁN LINK TRỰC TIẾP VÀO ĐÂY
+// ============================================
+
+
+
+
+   
+const TAI_LIEU_CAM_NANG = [
+    {
+        id: "tl001",
+        title: "Sư đoàn 9 diễn tập bắn đạn thật",
+        category: "Huấn luyện quân sự",
+        url: "https://baotintuc.vn/su-doan-9-quan-doan-4-dien-tap-ban-dan-that-post972370.html"
+    },
+    {
+        id: "tl002",
+        title: "Sư đoàn 9 xây dựng lực lượng tinh nhuệ, sẵn sàng chiến đấu",
+        category: "Xây dựng đơn vị",
+        url: "https://baotintuc.vn/xay-dung-luc-luong-tinh-nhue-san-sang-chien-dau-post990814.html"
+    },
+    {
+        id: "tl003",
+        title: "Chủ tịch Quốc hội thăm, làm việc với Sư đoàn 9",
+        category: "Giáo dục chính trị",
+        url: "https://baotintuc.vn/thoi-su/chu-tich-quoc-hoi-tran-thanh-man-tham-lam-viec-voi-su-doan-9-20260303123932667.htm"
+    },
+    {
+        id: "tl004",
+        title: "Những người lính Quân đoàn 4: Trồng rau trên đá, nuôi cá trên đồi",
+        category: "Hậu cần quân đội",
+        url: "https://baotintuc.vn/nhung-nguoi-linh-quan-doan-4-bai-cuoi-trong-rau-tren-da-nuoi-ca-tren-doi-post476258.html"
+    },
+    {
+        id: "tl005",
+        title: "Những kỷ niệm vào sinh ra tử của người lính Sư đoàn 9",
+        category: "Truyền thống đơn vị",
+        url: "https://baotintuc.vn/thoi-su/nhung-ky-niem-vao-sinh-ra-tu-20140103203924304.htm"
+    },
+    {
+        id: "tl006",
+        title: "Chủ tịch nước thăm, tiếp xúc cử tri tại Sư đoàn 9",
+        category: "Truyền thống đơn vị",
+        url: "https://baotintuc.vn/chu-tich-nuoc-nguyen-xuan-phuc-tiep-xuc-cu-tri-thanh-pho-ho-chi-minh-post918969.html"
+    },
+    {
+        id: "tl007",
+        title: "Lịch sử và truyền thống Sư đoàn 9",
+        category: "Truyền thống đơn vị",
+        url: "https://baotintuc.vn/tag/quan-doan-4-tag95245.html"
+    },
+    {
+        id: "tl008",
+        title: "Sư đoàn 9 trong nhiệm vụ xây dựng và bảo vệ Tổ quốc",
+        category: "Giáo dục chính trị",
+        url: "https://baotintuc.vn/chu-tich-quoc-hoi-tran-thanh-man-tham-lam-viec-voi-su-doan-9-post881240.html"
+    },
+    {
+        id: "tl009",
+        title: "Sư đoàn 9 trong cuộc kháng chiến bảo vệ Tổ quốc",
+        category: "Truyền thống đơn vị",
+        url: "https://baotintuc.vn/tim-manh-moi-xac-dinh-danh-tinh-liet-si-tu-buc-anh-luu-cung-hai-cot-post942873.html"
+    },
+    {
+        id: "tl010",
+        title: "Hoạt động của chiến sĩ Sư đoàn 9 trong phòng chống dịch",
+        category: "Công tác dân vận",
+        url: "https://baotintuc.vn/tp-ho-chi-minh-tiem-vaccine-mui-thu-2-cho-cac-chien-si-tham-gia-phong-chong-dich-post597176.html"
+    },
+    {
+        id: "tl011",
+        title: "Sĩ quan quân đội thi điều lệnh",
+        category: "Điều lệnh",
+        url: "https://baotintuc.vn/xem-si-quan-quan-doi-thi-dieu-lenh-post524844.html"
+    },
+    {
+        id: "tl012",
+        title: "Binh đoàn Cửu Long diễn tập chiến thuật bắn đạn thật",
+        category: "Huấn luyện quân sự",
+        url: "https://baotintuc.vn/tag/quan-doan-4-tag95245.html"
+    },
+    {
+        id: "tl013",
+        title: "Sư đoàn 9 tiếp tục nâng cao chất lượng huấn luyện",
+        category: "Huấn luyện quân sự",
+        url: "https://baotintuc.vn/xay-dung-luc-luong-tinh-nhue-san-sang-chien-dau-post990814.html"
+    },
+    {
+        id: "tl014",
+        title: "Truyền thống chiến đấu của Sư đoàn 9",
+        category: "Truyền thống đơn vị",
+        url: "https://baotintuc.vn/thoi-su/nhung-ky-niem-vao-sinh-ra-tu-20140103203924304.htm"
+    },
+    {
+        id: "tl015",
+        title: "Quân đoàn 4 trong chiến dịch giải phóng miền Nam",
+        category: "Lịch sử quân đội",
+        url: "https://baotintuc.vn/long-form/megastory/thanh-pho-mang-ten-bac-vui-sao-nuoc-mat-lai-trao-20230428110313628.htm"
+    },
+    {
+        id: "tl016",
+        title: "Sư đoàn 9 và công tác tìm kiếm hài cốt liệt sĩ",
+        category: "Lịch sử quân đội",
+        url: "https://baotintuc.vn/tim-manh-moi-xac-dinh-danh-tinh-liet-si-tu-buc-anh-luu-cung-hai-cot-post942873.html"
+    },
+    {
+        id: "tl017",
+        title: "Quân đoàn 4 kỷ niệm ngày truyền thống",
+        category: "Truyền thống đơn vị",
+        url: "https://baotintuc.vn/chinh-tri/quan-doan-4-ky-niem-45-nam-ngay-truyen-thong-20190719183104505.htm"
+    },
+    {
+        id: "tl018",
+        title: "Công tác tăng gia sản xuất của bộ đội Sư đoàn 9",
+        category: "Hậu cần quân đội",
+        url: "https://baotintuc.vn/nhung-nguoi-linh-quan-doan-4-bai-cuoi-trong-rau-tren-da-nuoi-ca-tren-doi-post476258.html"
+    },
+    {
+        id: "tl019",
+        title: "Hình ảnh chiến sĩ Sư đoàn 9 trong đời sống quân ngũ",
+        category: "Đời sống quân nhân",
+        url: "https://baotintuc.vn/tp-ho-chi-minh-tiem-vaccine-mui-thu-2-cho-cac-chien-si-tham-gia-phong-chong-dich-post597176.html"
+    },
+    {
+        id: "tl020",
+        title: "Tin tức và hoạt động liên quan đến Quân đoàn 4",
+        category: "Tin tức quân đội",
+        url: "https://baotintuc.vn/tag/quan-doan-4-tag95245.html"
     }
-
-    khung.innerHTML = danhSach.map(item => `
-        <div class="list-item">
-            <h3>${escapeHTML(item.title)}</h3>
-
-            <p>Phân loại: ${escapeHTML(item.category)}</p>
-
-            <a href="${escapeHTML(item.url)}"
-               target="_blank"
-               rel="noopener noreferrer">
-                MỞ TÀI LIỆU
-            </a>
-
-            <button class="btn-delete"
-                onclick="xoaCamNang('${item.id}')">
-                XÓA
-            </button>
-        </div>
-    `).join("");
-}
-
-// XÓA
-function xoaCamNang(id) {
-    if (!confirm("Bạn có chắc muốn xóa tài liệu này?")) return;
-
-    const danhSach = layDanhSachCamNang().filter(
-        item => item.id !== id
-    );
-
-    localStorage.setItem(
-        "bbb11_manual",
-        JSON.stringify(danhSach)
-    );
-
-    showPage("manual");
-}
+];
 
 
-function resolutionPage() {
-    return `
-        <div class="page-box">
+    // ============================================
+    // HIỂN THỊ DANH SÁCH CẨM NANG
+    // ============================================
 
-            <h2>📚 HỌC TẬP NGHỊ QUYẾT</h2>
+    window.hienThiCamNang = function () {
+        const khung = document.getElementById("manualList");
+        if (!khung) return;
 
-            <div class="notice-card">
-                <h3>📖 DANH SÁCH NGHỊ QUYẾT</h3>
+        const tuKhoa = (
+            document.getElementById("manualSearch")?.value || ""
+        ).trim().toLowerCase();
 
-                <p>
-                    Nội dung tóm tắt phục vụ học tập.
-                    Vui lòng mở nguồn tham khảo để đối chiếu
-                    với văn bản chính thức.
-                </p>
+        const danhSach = layDanhSach().filter(item => {
+            const dungDanhMuc =
+                danhMucDangChon === "tatca" ||
+                maDanhMuc(item.category) === danhMucDangChon;
+
+            const dungTuKhoa =
+                String(item.title || "").toLowerCase().includes(tuKhoa);
+
+            return dungDanhMuc && dungTuKhoa;
+        });
+
+        if (!danhSach.length) {
+            khung.innerHTML = "<p>Chưa có tài liệu phù hợp.</p>";
+            return;
+        }
+
+        khung.innerHTML = danhSach.map(item => `
+            <div class="list-item">
+                <h4>${escapeHTML(item.title)}</h4>
+                <p>Danh mục: ${escapeHTML(item.category || "Khác")}</p>
+                <button class="action-button"
+                    onclick="docCamNang('${encodeURIComponent(String(item.id))}')">
+                    📖 ĐỌC TÀI LIỆU
+                </button>
+                <button class="action-button"
+                    onclick="moLinkCamNang('${encodeURIComponent(String(item.id))}')">
+                    ↗ MỞ LINK
+                </button>
             </div>
+        `).join("");
+    };
 
-            <div id="resolutionList"></div>
+    // ============================================
+    // MỞ TÀI LIỆU TRONG KHUNG ĐỌC
+    // ============================================
 
-        </div>
-    `;
-}
+    window.docCamNang = function (encodedId) {
+        const id = decodeURIComponent(encodedId);
+        const taiLieu = layDanhSach().find(
+            item => String(item.id) === id
+        );
+
+        if (!taiLieu) {
+            alert("Không tìm thấy tài liệu!");
+            return;
+        }
+
+        if (!hopLeURL(taiLieu.url)) {
+            alert("Link tài liệu không hợp lệ!");
+            return;
+        }
+
+        taiLieuDangDoc = taiLieu;
+
+        const frame = document.getElementById("manualReader");
+        const title = document.getElementById("manualReaderTitle");
+
+        if (title) {
+            title.textContent = "📖 " + taiLieu.title;
+        }
+
+        if (frame) {
+            frame.src = taiLieu.url;
+            frame.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+    };
+
+    // ============================================
+    // MỞ LINK TÀI LIỆU TRONG TAB MỚI
+    // ============================================
+
+    window.moLinkCamNang = function (encodedId) {
+        const id = decodeURIComponent(encodedId);
+        const taiLieu = layDanhSach().find(
+            item => String(item.id) === id
+        );
+
+        if (!taiLieu || !hopLeURL(taiLieu.url)) {
+            alert("Không tìm thấy link tài liệu hợp lệ!");
+            return;
+        }
+
+        window.open(taiLieu.url, "_blank", "noopener,noreferrer");
+    };
+
+    // ========================================
+    // TẢI LẠI
+    // ========================================
+
+    window.taiLaiCamNang = function () {
+        if (!taiLieuDangDoc) {
+            alert("Vui lòng chọn tài liệu trước!");
+            return;
+        }
+
+        const frame = document.getElementById("manualReader");
+        if (frame) frame.src = taiLieuDangDoc.url;
+    };
+
+    // ========================================
+    // MỞ BÊN NGOÀI
+    // ========================================
+
+    window.moCamNangNgoai = function () {
+        if (!taiLieuDangDoc) {
+            alert("Vui lòng chọn tài liệu trước!");
+            return;
+        }
+
+        if (!hopLeURL(taiLieuDangDoc.url)) {
+            alert("Đường dẫn không hợp lệ!");
+            return;
+        }
+
+        window.open(
+            taiLieuDangDoc.url,
+            "_blank",
+            "noopener,noreferrer"
+        );
+    };
+
+    // ========================================
+    // XÓA TÀI LIỆU
+    // ========================================
+
+    window.xoaCamNang = function (encodedId) {
+        const id = decodeURIComponent(encodedId);
+
+        if (!confirm("Bạn có chắc muốn xóa tài liệu này?")) {
+            return;
+        }
+
+        const data = layDanhSach().filter(
+            item => String(item.id) !== id
+        );
+
+        if (!luuDanhSach(data)) return;
+
+        if (
+            taiLieuDangDoc &&
+            String(taiLieuDangDoc.id) === id
+        ) {
+            taiLieuDangDoc = null;
+
+            const frame = document.getElementById("manualReader");
+            const title = document.getElementById("manualReaderTitle");
+
+            if (frame) frame.src = "about:blank";
+            if (title) title.textContent = "📖 KHUNG ĐỌC TÀI LIỆU";
+        }
+
+        window.hienThiCamNang();
+    };
+
+})();
 
 
 function newsPage() {
@@ -3655,6 +4091,9 @@ const danhSachNghiQuyetBBB11 = [
     }
 ];
 
+ // =============================================
+ // GIAO DIỆN TRANG NGHỊ QUYẾT
+ // =============================================
 
 // =============================================
 // GIAO DIỆN TRANG NGHỊ QUYẾT
@@ -3683,7 +4122,46 @@ window.resolutionPage = function() {
 
             <h3>📖 DANH SÁCH NGHỊ QUYẾT</h3>
 
-            <div id="resolutionList"></div>
+            
+<div id="resolutionList"></div>
+
+<!-- KHUNG ĐỌC NGHỊ QUYẾT TRỰC TIẾP -->
+<div class="resolution-reader-card">
+    <h3 id="resolutionReaderTitle">
+        <i class="fa-solid fa-book-open"></i>
+        KHUNG ĐỌC TÀI LIỆU
+    </h3>
+
+    <p id="resolutionReaderDescription">
+        Chọn một nghị quyết bên trên để xem tài liệu tại đây.
+    </p>
+
+    <div class="resolution-reader-actions">
+        <button class="action-button"
+            onclick="taiLaiNghiQuyet()">
+            <i class="fa-solid fa-rotate"></i> TẢI LẠI
+        </button>
+
+        <button class="action-button"
+            onclick="moNghiQuyetBenNgoai()">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            MỞ BÊN NGOÀI
+        </button>
+    </div>
+
+    <iframe
+        id="resolutionReader"
+        title="Khung đọc nghị quyết"
+        src="about:blank"
+        loading="lazy">
+    </iframe>
+
+    <p class="resolution-reader-note">
+        Nếu tài liệu không hiển thị, hãy chọn
+        “MỞ BÊN NGOÀI” để đọc tại website nguồn.
+    </p>
+</div>
+
 
             <p style="margin-top:20px;color:#777;">
                 Nội dung tóm tắt phục vụ học tập.
@@ -3696,11 +4174,83 @@ window.resolutionPage = function() {
 };
 
 
+
 // =============================================
 // HIỂN THỊ TOÀN BỘ NGHỊ QUYẾT
 // =============================================
 
 window.hienThiTaiLieuNghiQuyet = function() {
+
+
+window.xemNghiQuyetTrenTrang = function(index) {
+    const item = danhSachNghiQuyetBBB11[index];
+
+    if (!item) {
+        alert("Không tìm thấy nghị quyết!");
+        return;
+    }
+
+    const title = document.getElementById("resolutionReaderTitle");
+    const description = document.getElementById("resolutionReaderDescription");
+    const contentBox = document.getElementById("resolutionReaderContent");
+    const frame = document.getElementById("resolutionReader");
+    const reader = document.querySelector(".resolution-reader-card");
+
+    if (title) title.textContent = "📘 " + item.title;
+
+    if (description) {
+        description.textContent =
+            (item.agency || "") + " · " + (item.description || "");
+    }
+
+    // Hiện toàn bộ nội dung đã lưu ngay trong trang
+    if (contentBox) {
+        contentBox.textContent =
+            item.content || "Bài này chưa có nội dung chi tiết.";
+
+        contentBox.style.display = "block";
+    }
+
+    // Không tự chuyển sang website khác
+    if (frame) {
+        frame.style.display = "none";
+        frame.removeAttribute("src");
+    }
+
+    if (reader) {
+        reader.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+};
+
+window.taiLaiNghiQuyet = function() {
+    if (!nghiQuyetDangDoc) {
+        alert("Vui lòng chọn nghị quyết cần đọc!");
+        return;
+    }
+
+    const frame = document.getElementById("resolutionReader");
+
+    if (frame) {
+        frame.src = nghiQuyetDangDoc.url;
+    }
+};
+
+window.moNghiQuyetBenNgoai = function() {
+    if (!nghiQuyetDangDoc) {
+        alert("Vui lòng chọn nghị quyết cần đọc!");
+        return;
+    }
+
+    window.open(
+        nghiQuyetDangDoc.url,
+        "_blank",
+        "noopener,noreferrer"
+    );
+};
+
 
     const khung = document.getElementById("resolutionList");
 
@@ -3745,6 +4295,13 @@ window.hienThiTaiLieuNghiQuyet = function() {
                    style="display:inline-block;text-decoration:none;">
 
                     🔗 MỞ TÀI LIỆU THAM KHẢO
+
+<button class="action-button"
+    onclick="xemNghiQuyetTrenTrang(${index})">
+    <i class="fa-solid fa-book-reader"></i>
+    XEM TRÊN TRANG
+</button>
+
 
                 </a>
             </p>
@@ -3847,3 +4404,224 @@ function membersPage() {
 }
 
 
+/* ==========================================
+   BBB11 - KHO TÀNG ÂM NHẠC QUÂN ĐỘI
+   ========================================== */
+(function () {
+    "use strict";
+
+    // Dán link YouTube của từng bài vào thuộc tính link.
+    // Ví dụ: link: "https://www.youtube.com/watch?v=MA_VIDEO_ID"
+
+    const BAI_HAT_QUAN_DOI = [
+        { ten: "Vì nhân dân quên mình", nhom: "Nhạc quân đội", link: "https://www.youtube.com/watch?v=-SNck1Oc6PM&list=RD-SNck1Oc6PM&start_radio=1" },
+        { ten: "Tiến bước dưới quân kỳ", nhom: "Nhạc hành khúc", link: "https://www.youtube.com/watch?v=XlhBEHQ-Vrc&list=RDXlhBEHQ-Vrc&start_radio=1" },
+        { ten: "Hát mãi khúc quân hành", nhom: "Nhạc quân đội", link: "https://www.youtube.com/watch?v=WhmT-eMT9mY&list=RDWhmT-eMT9mY&start_radio=1" },
+        { ten: "Màu áo chú bộ đội", nhom: "Nhạc về người lính", link: "https://www.youtube.com/watch?v=hAqIT4Qks8o&list=RDhAqIT4Qks8o&start_radio=1" },
+        { ten: "Bác đang cùng chúng cháu hành quân", nhom: "Nhạc cách mạng", link: "https://www.youtube.com/watch?v=6ZLlLhHRg48&list=RD6ZLlLhHRg48&start_radio=1" },
+        { ten: "Đường chúng ta đi", nhom: "Nhạc cách mạng", link: "https://www.youtube.com/watch?v=fxcuE6g7vLw&list=RDfxcuE6g7vLw&start_radio=1" },
+        { ten: "Trường Sơn Đông Trường Sơn Tây", nhom: "Nhạc cách mạng", link:" https://www.youtube.com/watch?v=lY6w0Z8Hm9c&list=RDlY6w0Z8Hm9c&start_radio=1" },
+        { ten: "Cô gái mở đường", nhom: "Nhạc cách mạng", link: "https://www.youtube.com/watch?v=TrGz8VOrWwQ&list=RDTrGz8VOrWwQ&start_radio=1" },
+        { ten: "Năm anh em trên một chiếc xe tăng", nhom: "Nhạc hành khúc", link: "https://www.youtube.com/watch?v=MyoBKVQofb8&utm_source=chatgpt.com" },
+        { ten: "Tiếng chày trên sóc Bom Bo", nhom: "Nhạc cách mạng", link: "https://www.youtube.com/watch?v=88V3DwJP8KU&list=RD88V3DwJP8KU&start_radio=1" },
+        { ten: "Đất nước trọn niềm vui", nhom: "Nhạc cách mạng", link: "https://www.youtube.com/watch?v=lT4gYpIHdr4&list=RDlT4gYpIHdr4&start_radio=1" },
+        { ten: "Như có Bác Hồ trong ngày vui đại thắng", nhom: "Nhạc cách mạng", link: "https://www.youtube.com/watch?v=KdW-JHLHpQQ&list=RDKdW-JHLHpQQ&start_radio=1" },
+        { ten: "Tổ quốc gọi tên mình", nhom: "Nhạc về Tổ quốc", link: "https://www.youtube.com/watch?v=Nw65sK9VfYU&list=RDNw65sK9VfYU&start_radio=1" },
+        { ten: "Giai điệu Tổ quốc", nhom: "Nhạc về Tổ quốc", link: "https://www.youtube.com/watch?v=M2eZUv9ckJg&list=RDM2eZUv9ckJg&start_radio=1" },
+        { ten: "Khúc quân ca Trường Sa", nhom: "Nhạc về người lính", link: "https://www.youtube.com/watch?v=J3tONLXI5Oo&list=RDJ3tONLXI5Oo&start_radio=1" },
+        { ten: "Hành khúc ngày và đêm", nhom: "Nhạc hành khúc", link: "https://www.youtube.com/watch?v=IrripNEcYco&list=RDIrripNEcYco&start_radio=1" },
+        { ten: "Chào em cô gái Lam Hồng", nhom: "Nhạc cách mạng", link: "https://www.youtube.com/watch?v=XRaQrYkdXxo&list=RDXRaQrYkdXxo&start_radio=1" },
+        { ten: "Tiến quân ca", nhom: "Quốc ca", link: "https://www.youtube.com/watch?v=CqC-QMjgsmo&list=RDCqC-QMjgsmo&start_radio=1" },
+        { ten: "Thanh niên làm theo lời Bác", nhom: "Sinh hoạt tập thể", link: "https://www.youtube.com/watch?v=nqejlZymL6Y&list=RDnqejlZymL6Y&start_radio=1" },
+        { ten: "Lên đàng", nhom: "Sinh hoạt tập thể", link: "https://www.youtube.com/watch?v=IftlbxhKb3I&list=RDIftlbxhKb3I&start_radio=1" }
+    ];
+
+    function escapeHTML(value) {
+        return String(value ?? "").replace(/[&<>"']/g, function (c) {
+            return {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            }[c];
+        });
+    }
+
+    function layVideoId(link) {
+        try {
+            const url = new URL(link);
+            const host = url.hostname.replace(/^www\./, "");
+            let id = "";
+
+            if (host === "youtu.be") {
+                id = url.pathname.split("/").filter(Boolean)[0] || "";
+            } else if (
+                ["youtube.com", "m.youtube.com",
+                 "music.youtube.com", "youtube-nocookie.com"].includes(host)
+            ) {
+                if (url.pathname === "/watch") {
+                    id = url.searchParams.get("v") || "";
+                } else {
+                    const match = url.pathname.match(
+                        /^\/(?:embed|shorts|live)\/([^/?]+)/
+                    );
+                    if (match) id = match[1];
+                }
+            }
+
+            return /^[a-zA-Z0-9_-]{11}$/.test(id) ? id : "";
+        } catch (e) {
+            return "";
+        }
+    }
+
+    let baiDangPhat = -1;
+
+    window.musicPage = function () {
+        const cards = BAI_HAT_QUAN_DOI.map((bai, index) => `
+            <article class="bbb11-music-item"
+                data-search="${escapeHTML((bai.ten + " " + bai.nhom).toLocaleLowerCase("vi"))}">
+                <div class="bbb11-track-number">${String(index + 1).padStart(2, "0")}</div>
+                <div class="bbb11-track-icon">♫</div>
+                <div class="bbb11-track-info">
+                    <h4>${escapeHTML(bai.ten)}</h4>
+                    <p>${escapeHTML(bai.nhom)}</p>
+                </div>
+                <button class="bbb11-play-btn"
+                    onclick="window.phatBaiHatBBB11(${index})">
+                    ▶ NGHE NGAY
+                </button>
+            </article>
+        `).join("");
+
+        return `
+        <div class="page-box bbb11-music-app">
+            <section class="bbb11-music-hero">
+                <div class="bbb11-hero-symbol">♫</div>
+                <div class="bbb11-hero-text">
+                    <span class="bbb11-music-label">★ HỆ THỐNG BBB11 ★</span>
+                    <h2>KHO TÀNG<br><span>ÂM NHẠC QUÂN ĐỘI</span></h2>
+                    <p>Giai điệu người lính · Tự hào Tổ quốc · Vững bước quân hành</p>
+                </div>
+            </section>
+
+            <section class="bbb11-player-panel">
+                <div class="bbb11-player-heading">
+                    <div>
+                        <span class="bbb11-small-label">TRÌNH PHÁT ÂM NHẠC</span>
+                        <h3>🎧 Đang phát</h3>
+                        <p id="bbb11NowPlaying">Chọn một bài hát bên dưới để bắt đầu</p>
+                    </div>
+                    <span class="bbb11-live-indicator">● BBB11</span>
+                </div>
+
+                <div class="bbb11-video-wrap">
+                    <iframe id="bbb11MusicPlayer"
+                        src="about:blank"
+                        title="Trình phát âm nhạc BBB11"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="bbb11-player-footer">
+                    <span>♫ Âm nhạc truyền thống và cách mạng</span>
+                    <button onclick="window.xoaNhacBBB11()">■ DỪNG NHẠC</button>
+                </div>
+            </section>
+
+            <section class="bbb11-library">
+                <div class="bbb11-library-heading">
+                    <div>
+                        <span class="bbb11-small-label">THƯ VIỆN ÂM NHẠC</span>
+                        <h3>🎖️ Danh sách bài hát</h3>
+                        <p>Chọn bài hát để nghe trực tiếp trên trang</p>
+                    </div>
+                    <span class="bbb11-song-count">${BAI_HAT_QUAN_DOI.length} BÀI HÁT</span>
+                </div>
+
+                <div class="bbb11-library-search">
+                    <span>⌕</span>
+                    <input id="bbb11MusicSearch" type="search"
+                        placeholder="Tìm tên bài hát, thể loại..."
+                        oninput="window.locBaiHatBBB11()">
+                </div>
+
+                <div id="bbb11MusicList" class="bbb11-music-list">
+                    ${cards}
+                </div>
+                <p id="bbb11NoMusic" class="bbb11-no-music" hidden>
+                    Không tìm thấy bài hát phù hợp.
+                </p>
+            </section>
+        </div>`;
+    };
+
+    window.phatBaiHatBBB11 = function (index) {
+        const bai = BAI_HAT_QUAN_DOI[index];
+        if (!bai) return;
+
+        const id = layVideoId(bai.link);
+
+        if (!id) {
+            alert(
+                'Bài "' + bai.ten + '" chưa có link YouTube hợp lệ.\n\n' +
+                'Hãy điền link video vào thuộc tính link của bài hát trong mảng BAI_HAT_QUAN_DOI.'
+            );
+            return;
+        }
+
+        const player = document.getElementById("bbb11MusicPlayer");
+        const title = document.getElementById("bbb11NowPlaying");
+
+        if (!player) {
+            alert("Không tìm thấy trình phát. Hãy mở lại trang Âm nhạc.");
+            return;
+        }
+
+        baiDangPhat = index;
+        player.src = "https://www.youtube-nocookie.com/embed/" +
+            id + "?autoplay=1&rel=0";
+
+        if (title) title.textContent = bai.ten;
+
+        document.querySelectorAll(".bbb11-music-item").forEach((card, i) => {
+            card.classList.toggle("is-playing", i === index);
+        });
+
+        player.scrollIntoView({ behavior: "smooth", block: "center" });
+    };
+
+    window.locBaiHatBBB11 = function () {
+        const input = document.getElementById("bbb11MusicSearch");
+        const list = document.getElementById("bbb11MusicList");
+        const empty = document.getElementById("bbb11NoMusic");
+
+        if (!input || !list) return;
+
+        const keyword = input.value.trim().toLocaleLowerCase("vi");
+        let visible = 0;
+
+        list.querySelectorAll(".bbb11-music-item").forEach(card => {
+            const show = card.dataset.search.includes(keyword);
+            card.hidden = !show;
+            if (show) visible++;
+        });
+
+        if (empty) empty.hidden = visible !== 0;
+    };
+
+    window.xoaNhacBBB11 = function () {
+        const player = document.getElementById("bbb11MusicPlayer");
+        const title = document.getElementById("bbb11NowPlaying");
+
+        if (player) player.src = "about:blank";
+        if (title) title.textContent = "Chọn một bài hát bên dưới để bắt đầu";
+
+        baiDangPhat = -1;
+        document.querySelectorAll(".bbb11-music-item").forEach(card => {
+            card.classList.remove("is-playing");
+        });
+    };
+})();
