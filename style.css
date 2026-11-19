@@ -1622,3 +1622,1232 @@ body.login-page {
     border-radius: 8px;
 }
 
+
+/* ==================================================
+   BBB11 - CẨM NANG NGƯỜI LÍNH
+   GIAO DIỆN QUÂN ĐỘI HIỆN ĐẠI
+================================================== */
+
+.manual-app {
+    --manual-green: #234b35;
+    --manual-green-dark: #163625;
+    --manual-green-light: #eaf3ec;
+    --manual-red: #a9232b;
+    --manual-gold: #d8b45a;
+    --manual-text: #26352c;
+
+    max-width: 1250px;
+    margin: 22px auto;
+    padding: 26px;
+    box-sizing: border-box;
+    color: var(--manual-text);
+    background: #f5f7f4;
+    border: 1px solid #e1e8df;
+    border-radius: 20px;
+    box-shadow: 0 8px 28px rgba(25, 55, 35, 0.09);
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* TIÊU ĐỀ TRANG */
+.manual-app > h2 {
+    position: relative;
+    margin: -26px -26px 18px;
+    padding: 27px 26px;
+    overflow: hidden;
+    color: #fff;
+    background: linear-gradient(
+        120deg,
+        #163625 0%,
+        #285b3d 65%,
+        #3d704a 100%
+    );
+    border-radius: 19px 19px 0 0;
+    border-bottom: 4px solid var(--manual-gold);
+    font-size: clamp(21px, 3vw, 30px);
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+}
+
+.manual-app > h2::after {
+    content: "";
+    display: block;
+    width: 76px;
+    height: 3px;
+    margin-top: 12px;
+    background: var(--manual-gold);
+    border-radius: 10px;
+}
+
+.manual-app > p {
+    color: #58675c;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* THANH DANH MỤC */
+.manual-app .news-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 22px 0;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #e3e9e2;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(20, 50, 30, 0.04);
+}
+
+/* NÚT CHỨC NĂNG */
+.manual-app .action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 42px;
+    padding: 10px 17px;
+    color: #fff;
+    background: var(--manual-green);
+    border: 1px solid var(--manual-green);
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 750;
+    letter-spacing: 0.2px;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.manual-app .action-button:hover {
+    background: var(--manual-green-dark);
+    border-color: var(--manual-gold);
+    box-shadow: 0 5px 13px rgba(22, 54, 37, 0.16);
+    transform: translateY(-2px);
+}
+
+.manual-app .action-button:active {
+    transform: translateY(0);
+}
+
+/* CÁC KHUNG NỘI DUNG */
+.manual-app .list-item {
+    margin: 20px 0;
+    padding: 22px;
+    background: #fff;
+    border: 1px solid #e3e9e2;
+    border-radius: 15px;
+    box-shadow: 0 4px 16px rgba(25, 55, 35, 0.045);
+}
+
+.manual-app .list-item > h3 {
+    margin: 0 0 18px;
+    padding-bottom: 13px;
+    color: var(--manual-green);
+    border-bottom: 2px solid #e8eee7;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.5;
+}
+
+/* Ô TÌM KIẾM VÀ CÁC TRƯỜNG NHẬP */
+.manual-app input,
+.manual-app select {
+    display: block;
+    width: 100%;
+    min-height: 45px;
+    margin: 8px 0 16px;
+    padding: 11px 14px;
+    box-sizing: border-box;
+    color: #26352c;
+    background: #fbfcfa;
+    border: 1px solid #d7e0d6;
+    border-radius: 9px;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.manual-app input:focus,
+.manual-app select:focus {
+    background: #fff;
+    border-color: #38764d;
+    box-shadow: 0 0 0 3px rgba(56, 118, 77, 0.12);
+}
+
+.manual-app label {
+    display: block;
+    margin-top: 13px;
+    color: #344d3a;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* THẺ TÀI LIỆU ĐƯỢC TẠO BẰNG JAVASCRIPT */
+.manual-app #manualList {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+}
+
+.manual-app #manualList > .list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    min-width: 0;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(145deg, #fff, #f7faf6);
+    border: 1px solid #dfe8dd;
+    border-left: 4px solid var(--manual-green);
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(20, 50, 30, 0.045);
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.manual-app #manualList > .list-item:hover {
+    border-color: #9ab69b;
+    border-left-color: var(--manual-gold);
+    box-shadow: 0 8px 20px rgba(20, 50, 30, 0.10);
+    transform: translateY(-3px);
+}
+
+.manual-app #manualList h4 {
+    margin: 0;
+    color: #234b35;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.65;
+}
+
+.manual-app #manualList p {
+    margin: 0 0 4px;
+    color: #68756b;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.manual-app #manualList .action-button {
+    width: 100%;
+    margin-top: 3px;
+}
+
+.manual-app #manualList .action-button:last-child {
+    color: var(--manual-green);
+    background: #edf4ed;
+    border-color: #d6e5d5;
+}
+
+.manual-app #manualList .action-button:last-child:hover {
+    color: #fff;
+    background: var(--manual-green);
+}
+
+/* KHUNG ĐỌC TÀI LIỆU */
+.manual-app #manualReaderTitle {
+    overflow-wrap: anywhere;
+}
+
+.manual-app iframe#manualReader {
+    display: block;
+    width: 100%;
+    height: 650px;
+    margin-top: 16px;
+    background: #fff;
+    border: 1px solid #d6e0d5 !important;
+    border-radius: 12px !important;
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+/* THÔNG TIN HƯỚNG DẪN */
+.manual-app .list-item > p {
+    line-height: 1.7;
+}
+
+/* HIỆU ỨNG CHUYỂN ĐỘNG NHẸ */
+@media (prefers-reduced-motion: reduce) {
+    .manual-app *,
+    .manual-app *::before,
+    .manual-app *::after {
+        transition: none !important;
+        animation: none !important;
+        transform: none !important;
+    }
+}
+
+/* TABLET */
+@media (max-width: 768px) {
+    .manual-app {
+        margin: 12px auto;
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    .manual-app > h2 {
+        margin: -16px -16px 16px;
+        padding: 23px 17px;
+        border-radius: 13px 13px 0 0;
+    }
+
+    .manual-app .list-item {
+        padding: 17px;
+    }
+
+    .manual-app .news-tabs {
+        gap: 8px;
+        padding: 11px;
+    }
+
+    .manual-app .action-button {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+
+    .manual-app #manualList {
+        grid-template-columns: 1fr;
+    }
+
+    .manual-app iframe#manualReader {
+        height: 500px;
+    }
+}
+
+/* ĐIỆN THOẠI */
+@media (max-width: 480px) {
+    .manual-app {
+        margin: 7px auto;
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .manual-app > h2 {
+        margin: -12px -12px 14px;
+        padding: 20px 13px;
+        font-size: 20px;
+    }
+
+    .manual-app > p {
+        font-size: 14px;
+    }
+
+    .manual-app .news-tabs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+        padding: 9px;
+    }
+
+    .manual-app .news-tabs .action-button {
+        width: 100%;
+        padding: 10px 5px;
+        font-size: 11px;
+    }
+
+    .manual-app .list-item {
+        padding: 13px;
+        border-radius: 11px;
+    }
+
+    .manual-app .list-item > h3 {
+        font-size: 16px;
+    }
+
+    .manual-app #manualList > .list-item {
+        padding: 15px;
+    }
+
+    .manual-app #manualList h4 {
+        font-size: 15px;
+    }
+
+    .manual-app iframe#manualReader {
+        height: 420px;
+    }
+}
+
+/* =========================================
+   ICON ĐẸP CHO CẨM NANG NGƯỜI LÍNH BBB11
+========================================= */
+
+/* Icon trong tiêu đề */
+.manual-app h2 i,
+.manual-app h3 i,
+.manual-app h4 i {
+    margin-right: 8px;
+    color: #c49b36;
+}
+
+/* Icon trong các nút */
+.manual-app .action-button i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    transition: transform 0.2s ease;
+}
+
+.manual-app .action-button:hover i {
+    transform: scale(1.15);
+}
+
+/* Icon danh mục */
+.manual-app .news-tabs .action-button:nth-child(1) {
+    background: #234b35;
+}
+
+.manual-app .news-tabs .action-button:nth-child(2) {
+    background: #315e43;
+}
+
+.manual-app .news-tabs .action-button:nth-child(3) {
+    background: #8b3434;
+}
+
+.manual-app .news-tabs .action-button:nth-child(4) {
+    background: #9a7626;
+}
+
+.manual-app .news-tabs .action-button:nth-child(5) {
+    background: #345a79;
+}
+
+.manual-app .news-tabs .action-button:nth-child(6) {
+    background: #59645b;
+}
+
+/* Hiệu ứng icon khi rê chuột */
+.manual-app .news-tabs .action-button:hover {
+    filter: brightness(1.12);
+    transform: translateY(-2px);
+}
+
+/* Thẻ tài liệu */
+.manual-app #manualList .list-item::before {
+    content: "\f02d";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    margin-bottom: 4px;
+    color: #fff;
+    background: linear-gradient(135deg, #234b35, #497b52);
+    border-radius: 11px;
+    font-size: 19px;
+}
+
+/* Icon trong các trường nhập */
+.manual-app input:focus,
+.manual-app select:focus {
+    border-color: #c49b36;
+}
+
+/* Icon khung đọc */
+.manual-app #manualReaderTitle {
+    color: #234b35;
+}
+
+/* Nút đọc tài liệu */
+.manual-app #manualList .action-button:first-of-type i {
+    color: #f3d477;
+}
+
+/* Nút mở liên kết */
+.manual-app #manualList .action-button:last-child i {
+    color: #c49b36;
+}
+
+/* ==========================================
+   BBB11 - MỖI DANH MỤC MỘT MÀU RIÊNG
+========================================== */
+
+.manual-app .news-tabs .action-button {
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-weight: 800;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.10);
+    transition: all 0.25s ease;
+}
+
+/* 1. TẤT CẢ - Xanh quân đội */
+.manual-app .news-tabs .action-button:nth-child(1) {
+    background: linear-gradient(135deg, #183d2a, #34764b);
+    border-color: #24583a;
+}
+
+/* 2. ĐIỀU LỆNH - Xanh dương */
+.manual-app .news-tabs .action-button:nth-child(2) {
+    background: linear-gradient(135deg, #1756a9, #388be5);
+    border-color: #286fbe;
+}
+
+/* 3. KỶ LUẬT - Đỏ */
+.manual-app .news-tabs .action-button:nth-child(3) {
+    background: linear-gradient(135deg, #9e2029, #e34b50);
+    border-color: #c3333c;
+}
+
+/* 4. KỸ NĂNG - Cam */
+.manual-app .news-tabs .action-button:nth-child(4) {
+    background: linear-gradient(135deg, #bd5318, #f39b35);
+    border-color: #db7926;
+}
+
+/* 5. KIẾN THỨC - Tím */
+.manual-app .news-tabs .action-button:nth-child(5) {
+    background: linear-gradient(135deg, #6536a5, #9a6ce0);
+    border-color: #8050c1;
+}
+
+/* 6. KHÁC - Xám */
+.manual-app .news-tabs .action-button:nth-child(6) {
+    background: linear-gradient(135deg, #46515b, #7b8792);
+    border-color: #64717c;
+}
+
+/* ICON TRONG TỪNG DANH MỤC */
+.manual-app .news-tabs .action-button i {
+    margin-right: 6px;
+    color: #fff;
+    font-size: 15px;
+}
+
+/* HIỆU ỨNG KHI RÊ CHUỘT */
+.manual-app .news-tabs .action-button:hover {
+    filter: brightness(1.12);
+    transform: translateY(-3px);
+    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.18);
+}
+
+/* HIỆU ỨNG KHI BẤM */
+.manual-app .news-tabs .action-button:active {
+    transform: scale(0.97);
+}
+
+/* DANH MỤC TRÊN ĐIỆN THOẠI */
+@media (max-width: 480px) {
+    .manual-app .news-tabs .action-button {
+        min-height: 42px;
+        padding: 10px 5px;
+        font-size: 11px;
+    }
+}
+
+
+/* KHUNG ĐỌC NGHỊ QUYẾT BBB11 */
+.resolution-reader-card {
+    margin-top: 26px;
+    padding: 22px;
+    background: #fff;
+    border: 1px solid #dce7dc;
+    border-top: 4px solid #285b3d;
+    border-radius: 15px;
+    box-shadow: 0 6px 22px rgba(25, 55, 35, .08);
+    scroll-margin-top: 20px;
+}
+
+.resolution-reader-card h3 {
+    color: #234b35;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.resolution-reader-card h3 i {
+    color: #c49b36;
+    margin-right: 7px;
+}
+
+.resolution-reader-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 16px 0;
+}
+
+.resolution-reader-card iframe {
+    display: block;
+    width: 100%;
+    height: 650px;
+    border: 1px solid #dce5dc;
+    border-radius: 11px;
+    background: #f8faf7;
+}
+
+.resolution-reader-note {
+    color: #718074;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-top: 12px;
+}
+
+@media (max-width: 600px) {
+    .resolution-reader-card {
+        padding: 14px;
+    }
+
+    .resolution-reader-card iframe {
+        height: 480px;
+    }
+
+    .resolution-reader-actions .action-button {
+        flex: 1 1 140px;
+    }
+}
+
+/* KHUNG ĐỌC NGHỊ QUYẾT - HIỂN THỊ TRỰC TIẾP */
+.resolution-reader-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 28px 0;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #e0e5eb;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+}
+
+.resolution-reader-card h3 {
+    margin: 0 0 12px;
+    color: #8b1e1e;
+    font-size: 23px;
+    line-height: 1.5;
+}
+
+#resolutionReader {
+    display: block;
+    width: 100%;
+    height: 85vh;
+    min-height: 700px;
+    border: 1px solid #d8dee8;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.resolution-reader-content {
+    width: 100%;
+    min-height: 700px;
+    padding: 30px;
+    box-sizing: border-box;
+    background: #fff;
+    color: #252525;
+    font-size: 17px;
+    line-height: 1.9;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    border: 1px solid #d8dee8;
+    border-radius: 10px;
+}
+
+.resolution-reader-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 16px 0;
+}
+
+@media (max-width: 768px) {
+    .resolution-reader-card {
+        padding: 12px;
+    }
+
+    #resolutionReader {
+        height: 75vh;
+        min-height: 500px;
+    }
+
+    .resolution-reader-content {
+        padding: 16px;
+        font-size: 16px;
+        min-height: 500px;
+    }
+}
+
+
+/* ==========================================
+   BBB11 - KHO TÀNG ÂM NHẠC QUÂN ĐỘI
+========================================== */
+
+.music-app {
+    --music-red: #8e1425;
+    --music-red-dark: #5e0c18;
+    --music-gold: #e8bd59;
+    --music-text: #263244;
+
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.music-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 32px 22px;
+    margin-bottom: 22px;
+    text-align: center;
+    color: #fff;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #5e0c18, #a91d32 60%, #6f101e);
+    box-shadow: 0 10px 28px rgba(94, 12, 24, 0.2);
+}
+
+.music-hero::after {
+    content: "♫";
+    position: absolute;
+    right: 24px;
+    bottom: -48px;
+    font-size: 160px;
+    color: rgba(255, 255, 255, 0.07);
+    pointer-events: none;
+}
+
+.music-hero-icon {
+    font-size: 42px;
+    margin-bottom: 8px;
+}
+
+.music-hero h2 {
+    margin: 0 0 10px;
+    color: #fff;
+    font-size: clamp(21px, 3vw, 30px);
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.music-hero p {
+    margin: 0;
+    color: #ffebba;
+    line-height: 1.7;
+}
+
+.music-panel {
+    padding: 22px;
+    margin-bottom: 22px;
+    background: #fff;
+    border: 1px solid #e8eaf0;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(22, 34, 51, 0.06);
+}
+
+.music-panel h3 {
+    margin: 0 0 16px;
+    color: var(--music-red, #8e1425);
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.music-search-row {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    margin: 10px 0 16px;
+}
+
+.music-app input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 13px 15px;
+    border: 1px solid #d6dbe4;
+    border-radius: 10px;
+    outline: none;
+    font: inherit;
+    background: #fff;
+    color: #222;
+}
+
+.music-app input:focus {
+    border-color: #a91d32;
+    box-shadow: 0 0 0 3px rgba(169, 29, 50, 0.1);
+}
+
+.music-btn {
+    flex-shrink: 0;
+    padding: 11px 15px;
+    border: 1px solid #e0e3e9;
+    border-radius: 10px;
+    background: #f7f8fa;
+    color: #313b4a;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.music-btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(0.97);
+}
+
+.music-btn-primary {
+    border-color: var(--music-red, #8e1425);
+    color: #fff;
+    background: var(--music-red, #8e1425);
+}
+
+.music-hint {
+    color: #737d8c;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.music-player-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.music-player-heading h3 {
+    margin-bottom: 5px;
+}
+
+.music-player-heading p {
+    margin: 0;
+    color: #697586;
+    font-size: 14px;
+}
+
+.music-player-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    min-height: 280px;
+    overflow: hidden;
+    background: #141414;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.16);
+}
+
+.music-player-frame iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    border: 0;
+}
+
+#musicLibrarySearch {
+    margin-bottom: 16px;
+}
+
+.music-song-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.music-song-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #e8eaf0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fff, #fcfaf7);
+    transition: 0.2s ease;
+}
+
+.music-song-card:hover {
+    border-color: #d8b56b;
+    box-shadow: 0 5px 15px rgba(50, 40, 20, 0.07);
+}
+
+.music-song-number {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 11px;
+    background: #f8ebd0;
+    color: #7d1423;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.music-song-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.music-song-info h4 {
+    margin: 0 0 5px;
+    color: #263244;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.music-song-info p {
+    margin: 0;
+    color: #7a8493;
+    font-size: 12px;
+}
+
+.music-song-search {
+    padding: 9px 11px;
+    color: #8e1425;
+    background: #fff;
+    border-color: #ead9dc;
+    font-size: 12px;
+}
+
+.music-instructions {
+    padding-left: 22px;
+    color: #455064;
+    line-height: 2;
+}
+
+@media (max-width: 700px) {
+    .music-panel {
+        padding: 16px;
+    }
+
+    .music-search-row {
+        flex-direction: column;
+    }
+
+    .music-search-row .music-btn {
+        width: 100%;
+    }
+
+    .music-song-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .music-player-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .music-player-frame,
+    .music-player-frame iframe {
+        min-height: 220px;
+    }
+}
+
+/* ===== BBB11 MUSIC - GIAO DIỆN ĐỎ ĐÔ & VÀNG ===== */
+.bbb11-music-app {
+    --music-red: #72151c;
+    --music-dark: #350b10;
+    --music-gold: #f4cf78;
+    --music-cream: #fffaf0;
+    color: var(--music-cream);
+}
+
+.bbb11-music-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 34px 28px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(244, 207, 120, .55);
+    border-radius: 20px;
+    background: radial-gradient(circle at 85% 15%, #a83b31 0, transparent 36%),
+                linear-gradient(125deg, #350b10, #72151c 60%, #4b1015);
+    box-shadow: 0 12px 30px rgba(45, 8, 12, .18);
+}
+
+.bbb11-hero-symbol {
+    display: grid;
+    place-items: center;
+    flex: 0 0 88px;
+    width: 88px;
+    height: 88px;
+    border: 2px solid var(--music-gold);
+    border-radius: 50%;
+    color: var(--music-gold);
+    font-size: 48px;
+    background: rgba(255,255,255,.06);
+}
+
+.bbb11-music-label,
+.bbb11-small-label {
+    color: var(--music-gold);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.6px;
+}
+
+.bbb11-hero-text h2 {
+    margin: 10px 0;
+    color: white;
+    font-size: clamp(23px, 3vw, 36px);
+    line-height: 1.25;
+    font-weight: 900;
+}
+
+.bbb11-hero-text h2 span {
+    color: var(--music-gold);
+}
+
+.bbb11-hero-text p {
+    margin: 0;
+    color: #f5e6df;
+    line-height: 1.7;
+}
+
+.bbb11-player-panel,
+.bbb11-library {
+    padding: 22px;
+    margin-bottom: 24px;
+    border: 1px solid #ead8d2;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #fff, #fffaf7);
+    color: #38171a;
+    box-shadow: 0 8px 24px rgba(73, 20, 20, .07);
+}
+
+.bbb11-player-heading,
+.bbb11-library-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.bbb11-player-heading h3,
+.bbb11-library-heading h3 {
+    margin: 6px 0;
+    color: #6e111a;
+    font-size: 21px;
+    font-weight: 850;
+}
+
+.bbb11-player-heading p,
+.bbb11-library-heading p {
+    margin: 4px 0 0;
+    color: #786365;
+    font-size: 13px;
+}
+
+.bbb11-live-indicator {
+    padding: 8px 12px;
+    border-radius: 30px;
+    background: #f8e9e6;
+    color: #821b24;
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.bbb11-video-wrap {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    border-radius: 13px;
+    background: #18090b;
+    box-shadow: 0 8px 22px rgba(0,0,0,.18);
+}
+
+.bbb11-video-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.bbb11-player-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-top: 15px;
+    color: #80666a;
+    font-size: 12px;
+}
+
+.bbb11-player-footer button {
+    padding: 9px 13px;
+    border: 1px solid #ead2d0;
+    border-radius: 9px;
+    background: white;
+    color: #821b24;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.bbb11-song-count {
+    padding: 8px 12px;
+    border-radius: 9px;
+    background: #f8e9e6;
+    color: #821b24;
+    font-size: 11px;
+    font-weight: 850;
+    white-space: nowrap;
+}
+
+.bbb11-library-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    margin-bottom: 16px;
+    border: 1px solid #ead8d2;
+    border-radius: 12px;
+    background: white;
+    color: #821b24;
+}
+
+.bbb11-library-search span {
+    font-size: 26px;
+}
+
+.bbb11-library-search input {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #38171a;
+    font-size: 14px;
+}
+
+.bbb11-music-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+}
+
+.bbb11-music-item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #f0e2dc;
+    border-radius: 13px;
+    background: #fff;
+    transition: border-color .2s, background .2s, transform .2s;
+}
+
+.bbb11-music-item:hover {
+    border-color: #d5a94e;
+    background: #fffaf0;
+    transform: translateY(-2px);
+}
+
+.bbb11-music-item.is-playing {
+    border-color: #9a252d;
+    background: #fff1ed;
+}
+
+.bbb11-track-number {
+    color: #a08a87;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.bbb11-track-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    background: #f7e6df;
+    color: #811a24;
+    font-size: 21px;
+}
+
+.bbb11-track-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.bbb11-track-info h4 {
+    margin: 0 0 5px;
+    color: #43151b;
+    font-size: 13px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.bbb11-track-info p {
+    margin: 0;
+    color: #927b7c;
+    font-size: 11px;
+}
+
+.bbb11-play-btn {
+    flex-shrink: 0;
+    padding: 9px 11px;
+    border: 0;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #8e2028, #591018);
+    color: white;
+    font-size: 10px;
+    font-weight: 850;
+    cursor: pointer;
+    transition: filter .2s;
+}
+
+.bbb11-play-btn:hover {
+    filter: brightness(1.2);
+}
+
+.bbb11-no-music {
+    padding: 20px;
+    color: #80666a;
+    text-align: center;
+}
+
+@media (max-width: 760px) {
+    .bbb11-music-list {
+        grid-template-columns: 1fr;
+    }
+
+    .bbb11-music-hero {
+        padding: 24px 18px;
+        gap: 15px;
+    }
+
+    .bbb11-hero-symbol {
+        flex-basis: 56px;
+        width: 56px;
+        height: 56px;
+        font-size: 32px;
+    }
+
+    .bbb11-player-panel,
+    .bbb11-library {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 420px) {
+    .bbb11-hero-symbol {
+        display: none;
+    }
+
+    .bbb11-music-item {
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .bbb11-play-btn {
+        padding: 9px 8px;
+        font-size: 9px;
+    }
+
+    .bbb11-track-number {
+        font-size: 10px;
+    }
+}
+
