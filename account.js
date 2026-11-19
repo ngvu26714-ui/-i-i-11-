@@ -146,7 +146,7 @@ profile = await kiemTraHoSoCaNhanBBB11(
         alert("Đăng nhập BBB11 thành công!");
 
         if (profile.role === "admin") {
-            showPage("admin");
+           window.showPage("admin");
         } else {
             showHome();
         }
