@@ -269,7 +269,7 @@ functionPage.classList.remove("hidden");
 
     if (page === "question") {
         xuLyTrang("question");
- }
+ 
  };
 // ======================================
 // 6. ĐĂNG XUẤT
