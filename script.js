@@ -91,108 +91,88 @@ function showHome() {
 // ======================================
 // 4. ĐIỀU HƯỚNG CÁC CHỨC NĂNG
 // ======================================
+function showPage(page) {
 
-window.showPage = function (page) {
-    // 1. KIỂM TRA ĐĂNG NHẬP
-    if (
-        typeof bbb11CurrentUser === "undefined" ||
-        !bbb11CurrentUser ||
-        typeof bbb11CurrentRole === "undefined" ||
-        !bbb11CurrentRole
-    ) {
+    // KIỂM TRA QUYỀN
+    if (!bbb11CurrentUser || !bbb11CurrentRole) {
         alert("Vui lòng đăng nhập trước!");
         return;
     }
 
-    // 2. KIỂM TRA QUYỀN
-    const adminPages = typeof ADMIN_PAGES !== "undefined"
-        ? ADMIN_PAGES
-        : ["admin", "members", "accounts"];
-
     if (
-        adminPages.includes(page) &&
-        bbb11CurrentRole !== "admin"
+        ADMIN_PAGES.includes(page) &&
+      bbb11CurrentRole !== "admin"
     ) {
         alert("Bạn không có quyền truy cập chức năng quản trị!");
         return;
     }
 
-    // 3. LẤY KHU VỰC HIỂN THỊ
-    const home = document.getElementById("homePage");
-    const functionPage = document.getElementById("functionPage");
-    const content = document.getElementById("pageContent");
+   
+const home = document.getElementById("homePage");
+const functionPage = document.getElementById("functionPage");
+const content = document.getElementById("pageContent");
 
-    if (!home || !functionPage || !content) {
-        console.error("Thiếu homePage, functionPage hoặc pageContent.");
-        alert("Không tìm thấy khu vực hiển thị!");
-        return;
-    }
+if (!home || !functionPage || !content) {
+    alert("Không tìm thấy khu vực hiển thị!");
+    return;
+}
 
-    // 4. DANH SÁCH TRANG
-    const pages = {
-        admin: typeof adminPage === "function" ? adminPage : null,
-        members: typeof membersPage === "function" ? membersPage : null,
-        accounts: typeof accountsPage === "function" ? accountsPage : null,
-        attendance: typeof attendancePage === "function" ? attendancePage : null,
-        activities: typeof activitiesPage === "function" ? activitiesPage : null,
-        reports: typeof reportsPage === "function" ? reportsPage : null,
-        music: typeof musicPage === "function" ? musicPage : null,
-        manual: typeof manualPage === "function" ? manualPage : null,
-        resolution: typeof resolutionPage === "function" ? resolutionPage : null,
-        news: typeof newsPage === "function" ? newsPage : null,
-        quiz: typeof quizPage === "function" ? quizPage : null,
-        education: typeof educationPage === "function" ? educationPage : null,
-        bac: typeof bacPage === "function" ? bacPage : null,
-        question: typeof questionPage === "function" ? questionPage : null,
-        score: typeof scorePage === "function" ? scorePage : null,
-        ranking: typeof rankingPage === "function" ? rankingPage : null
-    };
+// DANH SÁCH CÁC TRANG
+const pages = {
+    admin: adminPage,
+    members: membersPage,
+    accounts: accountsPage,
+    attendance: attendancePage,
+    activities: activitiesPage,
+    reports: reportsPage,
+    music: musicPage,
+    manual: manualPage,
+    resolution: resolutionPage,
+    news: newsPage,
+    quiz: quizPage,
+    education: educationPage,
+    bac: bacPage,
+    question: questionPage,
+    score: scorePage,
+    ranking: rankingPage
+};
 
-    const renderPage = pages[page];
-
-    if (typeof renderPage !== "function") {
-        console.error("Trang chưa tồn tại hoặc chưa được tải:", page);
-        content.innerHTML =
-            '<div class="page-box"><h2>Chức năng chưa được xây dựng.</h2></div>';
-        home.classList.add("hidden");
-        functionPage.classList.remove("hidden");
-        return;
-    }
-
+// KIỂM TRA VÀ HIỂN THỊ TRANG
+if (typeof pages[page] !== "function") {
+    content.innerHTML = "<h2>Chức năng chưa được xây dựng.</h2>";
+} else {
     try {
-        // 5. HIỂN THỊ TRANG MỘT LẦN
-        content.innerHTML = renderPage();
+        content.innerHTML = pages[page]();
 
         home.classList.add("hidden");
         functionPage.classList.remove("hidden");
 
-        // 6. TẢI DỮ LIỆU THÀNH VIÊN
-        if (page === "members") {
-            if (typeof window.hienThiThanhVienBBB11 === "function") {
-                window.hienThiThanhVienBBB11();
-            } else if (typeof window.hienThiThanhVien === "function") {
-                window.hienThiThanhVien();
-            } else {
-                console.error(
-                    "Chưa có hàm tải danh sách thành viên từ Supabase."
-                );
-            }
-        }
+        // QUẢN LÝ THÀNH VIÊN
+    if (page === "members") {
+    const noiDung = document.getElementById("pageContent");
 
-        // 7. TẢI TÀI LIỆU NGHỊ QUYẾT
-        if (
-            page === "resolution" &&
-            typeof hienThiTaiLieuNghiQuyet === "function"
-        ) {
-            hienThiTaiLieuNghiQuyet();
-        }
+    if (noiDung) {
+        noiDung.innerHTML = membersPage();
 
-        // 8. TẢI NỘI DUNG LỜI BÁC
-        if (
-            page === "bac" &&
-            typeof hienThiLoiBac === "function"
-        ) {
+        if (typeof hienThiThanhVienBBB11 === "function") {
+            hienThiThanhVienBBB11();
+        } else {
+            console.error(
+                "Chưa tìm thấy hàm hienThiThanhVienBBB11()."
+            );
+        }
+    }
+
+    return;
+}
+        // LỖI BÁC
+        if (page === "bac") {
             hienThiLoiBac();
+        }
+
+        // NGHỊ QUYẾT
+        if (page === "resolution") {
+            hienThiTaiLieuNghiQuyet();
         }
 
     } catch (error) {
@@ -201,14 +181,11 @@ window.showPage = function (page) {
         content.innerHTML = `
             <div class="page-box">
                 <h2>Lỗi tải chức năng</h2>
-                <p>${String(error.message || error)
-                    .replace(/&/g, "&amp;")
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;")}</p>
+                <p>${escapeHTML(error.message)}</p>
             </div>
         `;
     }
-};
+}
 
 // HIỂN THỊ GIAO DIỆN
 home.classList.add("hidden");
@@ -269,7 +246,7 @@ functionPage.classList.remove("hidden");
 
     if (page === "question") {
         xuLyTrang("question");
- 
+ }
  };
 // ======================================
 // 6. ĐĂNG XUẤT
@@ -4649,280 +4626,3 @@ function membersPage() {
     };
 })();
 
-window.showPage = function (page) {
-    if (
-        !window.bbb11CurrentUser ||
-        !window.bbb11CurrentRole
-    ) {
-        console.error("Chưa có thông tin người dùng đăng nhập.");
-        return;
-    }
-
-    const adminPages = [
-        "admin",
-        "members",
-        "accounts"
-    ];
-
-    if (
-        adminPages.includes(page) &&
-        window.bbb11CurrentRole !== "admin"
-    ) {
-        alert("Bạn không có quyền truy cập trang này.");
-        return;
-    }
-
-    if (typeof window.loadPage === "function") {
-        window.loadPage(page);
-        return;
-    }
-
-    console.error(
-        "Chưa xác định hàm tải trang. Không thể tự chuyển trang:",
-        page
-    );
-};
-
-
-/* ==========================================
-   BBB11 - DANH SÁCH THÀNH VIÊN SUPABASE
-========================================== */
-(function () {
-    "use strict";
-
-    let danhSachThanhVienBBB11 = [];
-
-    function supabaseBBB11() {
-        if (!window.supabaseClient) {
-            throw new Error("Supabase Client chưa được khởi tạo.");
-        }
-        return window.supabaseClient;
-    }
-
-    function escBBB11(value) {
-        return String(value ?? "").replace(/[&<>"']/g, c => ({
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#39;"
-        })[c]);
-    }
-
-    function layKhungDanhSach() {
-        return document.getElementById("danhSachThanhVienBBB11")
-            || document.getElementById("danhSachThanhVien")
-            || document.getElementById("memberList");
-    }
-
-    function layTuKhoa() {
-        const input = document.querySelector(
-            'input[oninput*="timKiemThanhVienBBB11"]'
-        );
-        return (input?.value || "").trim().toLocaleLowerCase("vi");
-    }
-
-    // HIỂN THỊ DANH SÁCH TỪ SUPABASE
-    window.hienThiThanhVienBBB11 = async function () {
-        const khung = layKhungDanhSach();
-
-        if (!khung) {
-            console.error(
-                "Không tìm thấy vùng danh sách thành viên trong membersPage()."
-            );
-            return;
-        }
-
-        khung.innerHTML = "<p>Đang tải danh sách thành viên...</p>";
-
-        try {
-            const { data, error } = await supabaseBBB11()
-                .from("bbb11_thanhvien")
-                .select("*")
-                .order("created_at", { ascending: false });
-
-            if (error) throw error;
-
-            danhSachThanhVienBBB11 = data || [];
-            window.timKiemThanhVienBBB11();
-
-        } catch (error) {
-            console.error("Lỗi tải danh sách:", error);
-            khung.innerHTML =
-                "<p>Không tải được dữ liệu. Hãy kiểm tra đăng nhập và quyền Supabase.</p>";
-        }
-    };
-
-    // TÌM KIẾM THÀNH VIÊN
-    window.timKiemThanhVienBBB11 = function () {
-        const khung = layKhungDanhSach();
-        if (!khung) return;
-
-        const tuKhoa = layTuKhoa();
-
-        const ketQua = danhSachThanhVienBBB11.filter(tv => {
-            const noiDung = [
-                tv.ho_ten,
-                tv.ma_so,
-                tv.chuc_vu,
-                tv.tieu_doi
-            ].join(" ").toLocaleLowerCase("vi");
-
-            return noiDung.includes(tuKhoa);
-        });
-
-        if (!ketQua.length) {
-            khung.innerHTML = "<p>Không tìm thấy thành viên phù hợp.</p>";
-            return;
-        }
-
-        khung.innerHTML = `
-            <div class="table-responsive">
-                <table class="member-table">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Họ và tên</th>
-                            <th>Mã số</th>
-                            <th>Chức vụ</th>
-                            <th>Tiểu đội</th>
-                            <th>Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${ketQua.map((tv, i) => `
-                            <tr>
-                                <td>${i + 1}</td>
-                                <td>${escBBB11(tv.ho_ten)}</td>
-                                <td>${escBBB11(tv.ma_so)}</td>
-                                <td>${escBBB11(tv.chuc_vu)}</td>
-                                <td>${escBBB11(tv.tieu_doi)}</td>
-                                <td>
-                                    <button type="button"
-                                        onclick="suaThanhVienBBB11('${escBBB11(tv.id)}')">
-                                        Sửa
-                                    </button>
-                                    <button type="button"
-                                        onclick="xoaThanhVienBBB11('${escBBB11(tv.id)}')">
-                                        Xóa
-                                    </button>
-                                </td>
-                            </tr>
-                        `).join("")}
-                    </tbody>
-                </table>
-            </div>
-        `;
-    };
-
-    // THÊM THÀNH VIÊN
-    window.themThanhVien = async function () {
-        const hoTen = document.getElementById("tvHoTen")?.value.trim();
-        const maSo = document.getElementById("tvMaSo")?.value.trim() || "";
-        const chucVu = document.getElementById("tvChucVu")?.value.trim() || "";
-        const tieuDoi =
-            document.getElementById("tvTieuDoi")?.value.trim()
-            || "Chưa phân trung đội";
-
-        if (!hoTen) {
-            alert("Vui lòng nhập họ và tên.");
-            return;
-        }
-
-        try {
-            const { error } = await supabaseBBB11()
-                .from("bbb11_thanhvien")
-                .insert([{
-                    ho_ten: hoTen,
-                    ma_so: maSo,
-                    chuc_vu: chucVu,
-                    tieu_doi: tieuDoi
-                }]);
-
-            if (error) throw error;
-
-            alert("Đã lưu thành viên lên Supabase.");
-
-            ["tvHoTen", "tvMaSo", "tvChucVu", "tvTieuDoi"]
-                .forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) el.value = "";
-                });
-
-            await window.hienThiThanhVienBBB11();
-
-        } catch (error) {
-            console.error("Lỗi thêm thành viên:", error);
-            alert("Lưu thất bại: " + error.message);
-        }
-    };
-
-    // SỬA THÀNH VIÊN
-    window.suaThanhVienBBB11 = async function (id) {
-        const tv = danhSachThanhVienBBB11.find(
-            item => String(item.id) === String(id)
-        );
-        if (!tv) return;
-
-        const hoTen = prompt("Họ và tên:", tv.ho_ten || "");
-        if (hoTen === null) return;
-        if (!hoTen.trim()) {
-            alert("Họ tên không được để trống.");
-            return;
-        }
-
-        const maSo = prompt("Mã số:", tv.ma_so || "");
-        if (maSo === null) return;
-
-        const chucVu = prompt("Chức vụ:", tv.chuc_vu || "");
-        if (chucVu === null) return;
-
-        const tieuDoi = prompt(
-            "Tiểu đội:", tv.tieu_doi || "Chưa phân trung đội"
-        );
-        if (tieuDoi === null) return;
-
-        try {
-            const { error } = await supabaseBBB11()
-                .from("bbb11_thanhvien")
-                .update({
-                    ho_ten: hoTen.trim(),
-                    ma_so: maSo.trim(),
-                    chuc_vu: chucVu.trim(),
-                    tieu_doi: tieuDoi.trim() || "Chưa phân trung đội"
-                })
-                .eq("id", id);
-
-            if (error) throw error;
-
-            await window.hienThiThanhVienBBB11();
-            alert("Đã cập nhật thành viên.");
-
-        } catch (error) {
-            console.error("Lỗi sửa thành viên:", error);
-            alert("Cập nhật thất bại: " + error.message);
-        }
-    };
-
-    // XÓA THÀNH VIÊN
-    window.xoaThanhVienBBB11 = async function (id) {
-        if (!confirm("Bạn có chắc muốn xóa thành viên này?")) return;
-
-        try {
-            const { error } = await supabaseBBB11()
-                .from("bbb11_thanhvien")
-                .delete()
-                .eq("id", id);
-
-            if (error) throw error;
-
-            await window.hienThiThanhVienBBB11();
-            alert("Đã xóa thành viên.");
-
-        } catch (error) {
-            console.error("Lỗi xóa thành viên:", error);
-            alert("Xóa thất bại: " + error.message);
-        }
-    };
-
-})();
