@@ -94,22 +94,24 @@
     KHO TÀNG ÂM NHẠC
 </button>
 
-<button class="menu-btn"
-    onclick="showPage('gallery')">
-    <i class="fa-solid fa-images"></i>
-    Thư viện hình ảnh
-</button>
+
+
 <button class="menu-btn" onclick="showPage('gallery')">
     <i class="fa-solid fa-images"></i>
-    Thư viện hình ảnh
+    Thư viện ảnh
 </button>
+
+
         <button class="menu-btn" onclick="showPage('members')">
             <i class="fa-solid fa-users"></i> Quản lý thành viên
         </button>
 
-        <button class="menu-btn" onclick="showPage('accounts')">
-            <i class="fa-solid fa-user-shield"></i> Quản lý tài khoản
-        </button>
+       
+<button class="menu-btn" onclick="showPage('accounts')">
+    <i class="fa-solid fa-user-shield"></i>
+    Quản lý tài khoản
+</button>
+
 
         <button class="menu-btn" onclick="showPage('attendance')">
             <i class="fa-solid fa-calendar-check"></i> Quản lý điểm danh
@@ -153,8 +155,10 @@
             <i class="fa-solid fa-book-open"></i> Giáo dục chính trị
         </button>
 
-        <button class="menu-btn" onclick="showPage('bac')">
-            <i class="fa-solid fa-sun"></i> Lời Bác Hồ dạy
+       
+         <button class="menu-btn" onclick="showPage('bac')">
+              <i class="fa-solid fa-book-open"></i>
+                Lời Bác Hồ dạy
         </button>
 
         <button class="menu-btn" onclick="showPage('question')">
@@ -306,28 +310,39 @@
 </div>
 
 
-        </section>
+</section>
 
-        <footer>
-            BBB11 - ĐẠI ĐỘI 11 |
-            TRUNG THÀNH - DŨNG CẢM - VƯỢT MỌI KHÓ KHĂN - LIÊN TỤC LẬP CÔNG
-        </footer>
+<footer>
+    BBB11 - ĐẠI ĐỘI 11 |
+    TRUNG THÀNH - DŨNG CẢM - VƯỢT MỌI KHÓ KHĂN - LIÊN TỤC LẬP CÔNG
+</footer>
 
-    </main>
+</main>
 </div>
 
+<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
+
+<!-- QUẢN LÝ TÀI KHOẢN -->
 <script src="account.js"></script>
+
+<!-- QUẢN LÝ THÀNH VIÊN -->
 <script src="thanhvien.js"></script>
 
-<!-- Thư viện đọc file Excel -->
+<!-- THƯ VIỆN EXCEL -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-
-<!-- File nhập và cập nhật thành viên -->
 <script src="thanhvien-file.js"></script>
 
+<!-- FILE JAVASCRIPT CHÍNH -->
 <script src="script.js"></script>
+
+<!-- THƯ VIỆN ẢNH BBB11 -->
+<script src="gallery.js"></script>
+
+
+<!-- THƯ VIỆN LỜI BÁC HỒ DẠY -->
+<script src="bac.js"></script>
 
 </body>
 </html>
