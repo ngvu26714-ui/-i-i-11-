@@ -91,6 +91,22 @@ function showHome() {
 // ======================================
 // 4. ĐIỀU HƯỚNG CÁC CHỨC NĂNG
 // ======================================
+// DANH SÁCH TÀI LIỆU BBB11
+const TAI_LIEU_BBB11 = {
+    thanhvien: [
+        {
+            ten: "Tài liệu thành viên BBB11",
+            url: "https://docs.google.com/document/d/1hODKga-xGZ4DsuPKNLAVGPylQTo98Jud/edit"
+        }
+    ],
+
+    taikhoan: [
+        {
+            ten: "Tài liệu tài khoản BBB11",
+            url: "https://docs.google.com/document/d/1UoJS9Lnhvv3bLOJA73sqGqKsRPiKlnsS/edit"
+        }
+    ]
+};
 function showPage(page) {
 
     // KIỂM TRA QUYỀN
@@ -143,7 +159,21 @@ if (typeof pages[page] !== "function") {
 } else {
     try {
         content.innerHTML = pages[page]();
+// Hiển thị tài liệu thành viên
+if (page === "members") {
+    hienThiLinkTaiLieuBBB11(
+        "thanhvien",
+        "taiLieuThanhVien"
+    );
+}
 
+// Hiển thị tài liệu tài khoản
+if (page === "accounts") {
+    hienThiLinkTaiLieuBBB11(
+        "taikhoan",
+        "taiLieuTaiKhoan"
+    );
+}
         home.classList.add("hidden");
         functionPage.classList.remove("hidden");
 
@@ -163,17 +193,23 @@ if (typeof pages[page] !== "function") {
         }
     }
 
-    return;
 }
         // LỖI BÁC
-        if (page === "bac") {
-            hienThiLoiBac();
-        }
+       if (page === "bac") {
+    pageContent.innerHTML = window.bacPage();
+
+    if (typeof window.hienThiLoiBac === "function") {
+        window.hienThiLoiBac();
+    }
+
+    return;
+}
 
         // NGHỊ QUYẾT
         if (page === "resolution") {
             hienThiTaiLieuNghiQuyet();
         }
+
 
     } catch (error) {
         console.error("Lỗi tải trang:", error);
@@ -375,13 +411,17 @@ function capNhatBangDieuKhien() {
 
 
 
+
 function accountsPage() {
     return `
         <div class="page-box">
-
             <h2>QUẢN LÝ TÀI KHOẢN BBB11</h2>
 
             <p>Danh sách tài khoản thành viên Đại đội 11.</p>
+            <h3>📚 TÀI LIỆU TÀI KHOẢN</h3>
+<div id="taiLieuTaiKhoan">
+    Đang tải danh sách tài liệu...
+</div>
 
             <button class="action-button"
                 onclick="hienThiTaiKhoan()">
@@ -391,10 +431,33 @@ function accountsPage() {
             <div id="danhSachTaiKhoan">
                 <p>Nhấn nút để tải danh sách.</p>
             </div>
-
         </div>
     `;
 }
+
+function membersPage() {
+    return `
+        <div class="page-box">
+            <h2>DANH SÁCH THÀNH VIÊN BBB11</h2>
+            <h3>📚 TÀI LIỆU THÀNH VIÊN</h3>
+<div id="taiLieuThanhVien">
+    Đang tải danh sách tài liệu...
+</div>
+
+            <p>Quản lý quân số thành viên Đại đội 11.</p>
+
+            <button class="action-button"
+                onclick="hienThiThanhVien()">
+                TẢI DANH SÁCH THÀNH VIÊN
+            </button>
+
+            <div id="danhSachThanhVien">
+                <p>Nhấn nút để tải danh sách.</p>
+            </div>
+        </div>
+    `;
+}
+
 
 
 
@@ -2732,145 +2795,464 @@ function layTatCaBaiHocChinhTri() {
 }
 
 
-// ==========================================
-// THƯ VIỆN LỜI BÁC HỒ DẠY BBB11
-// ==========================================
 
+/* ==========================================
+   BBB11 - THƯ VIỆN LỜI BÁC HỒ DẠY
+   VÀ KIẾN THỨC CÁCH MẠNG
+   ========================================== */
 
 const danhSachLoiBacBBB11 = [
     {
         title: "Quân đội ta trung với Đảng, hiếu với dân",
-        content: "Quân đội nhân dân Việt Nam phải luôn tuyệt đối trung thành với Đảng, với Tổ quốc và nhân dân; sẵn sàng chiến đấu, hy sinh vì độc lập, tự do của Tổ quốc, vì hạnh phúc của nhân dân.",
-         reference_url: "https://www.youtube.com/results?search_query=Quan+doi+ta+trung+voi+Dang+hieu+voi+dan+Ho+Chi+Minh",
-        source: "Tư tưởng Hồ Chí Minh về Quân đội nhân dân Việt Nam"
-    },
-    {
-        title: "Nhiệm vụ của quân đội",
-        content: "Quân đội phải tích cực tham gia lao động sản xuất, góp phần xây dựng đất nước, đồng thời luôn sẵn sàng chiến đấu bảo vệ Tổ quốc.",
-        reference_url: "",
-        source: "Tư tưởng Hồ Chí Minh về xây dựng Quân đội"
+        content: "Quân đội nhân dân Việt Nam từ nhân dân mà ra, vì nhân dân mà chiến đấu. Mỗi cán bộ, chiến sĩ cần nêu cao tinh thần trách nhiệm, gắn bó với nhân dân và hoàn thành tốt nhiệm vụ.",
+        source: "Tư tưởng Hồ Chí Minh về Quân đội nhân dân Việt Nam",
+        category: "Quân đội"
     },
     {
         title: "Đoàn kết là sức mạnh",
         content: "Đoàn kết, đoàn kết, đại đoàn kết. Thành công, thành công, đại thành công.",
-        reference_url: "",
-        source: "Hồ Chí Minh"
-    },
-    {
-        title: "Cần, kiệm, liêm, chính, chí công vô tư",
-        content: "Mỗi cán bộ, chiến sĩ cần thường xuyên rèn luyện đạo đức, lối sống trong sạch, giản dị, chống chủ nghĩa cá nhân.",
-         reference_url: "",
-        source: "Tư tưởng Hồ Chí Minh"
+        source: "Hồ Chí Minh",
+        category: "Đoàn kết"
     },
     {
         title: "Thi đua yêu nước",
         content: "Thi đua là yêu nước, yêu nước thì phải thi đua. Những người thi đua là những người yêu nước nhất.",
-        reference_url: "",
-        source: "Lời kêu gọi thi đua ái quốc (1948)"
+        source: "Lời kêu gọi thi đua ái quốc, năm 1948",
+        category: "Thi đua"
+    },
+    {
+        title: "Cần, kiệm, liêm, chính",
+        content: "Mỗi cán bộ, chiến sĩ cần rèn luyện đạo đức, thực hành tiết kiệm, sống giản dị, trung thực, có trách nhiệm và chống lãng phí.",
+        source: "Chuyên đề học tập đạo đức Hồ Chí Minh",
+        category: "Đạo đức"
     },
     {
         title: "Học tập suốt đời",
-        content: "Học hỏi là một việc phải tiếp tục suốt đời. Suốt đời phải gắn liền lý luận với công tác thực tế.",
-        reference_url: "",
-        source: "Tư tưởng Hồ Chí Minh về học tập"
+        content: "Không ngừng học tập, nâng cao trình độ chính trị, quân sự, chuyên môn; gắn kiến thức với thực tiễn và nhiệm vụ được giao.",
+        source: "Nội dung giáo dục, rèn luyện cán bộ, chiến sĩ",
+        category: "Học tập"
     },
     {
-        title: "Giữ gìn kỷ luật",
-        content: "Cán bộ, chiến sĩ phải nghiêm chỉnh chấp hành kỷ luật, giữ gìn đoàn kết, thống nhất trong đơn vị.",
-        reference_url: "",
-        source: "Tư tưởng Hồ Chí Minh về xây dựng quân đội"
+        title: "Kỷ luật là sức mạnh của quân đội",
+        content: "Chấp hành nghiêm điều lệnh, điều lệ, mệnh lệnh và quy định của đơn vị; giữ gìn đoàn kết, thống nhất, bảo đảm an toàn trong huấn luyện và công tác.",
+        source: "Chuyên đề giáo dục kỷ luật quân đội",
+        category: "Kỷ luật"
     },
     {
         title: "Đoàn kết quân dân",
-        content: "Quân đội phải gắn bó mật thiết với nhân dân, tôn trọng và giúp đỡ nhân dân, bảo vệ nhân dân.",
-         reference_url: "",
-        source: "Tư tưởng Hồ Chí Minh"
+        content: "Tôn trọng, giúp đỡ và bảo vệ nhân dân; giữ gìn phẩm chất người quân nhân cách mạng; tích cực tham gia các hoạt động giúp dân phù hợp với nhiệm vụ.",
+        source: "Chuyên đề công tác dân vận",
+        category: "Đoàn kết"
     },
     {
-        title: "Rèn luyện đạo đức cách mạng",
-        content: "Người cách mạng phải có đạo đức cách mạng làm nền tảng, phải thường xuyên tu dưỡng và rèn luyện.",
-        reference_url: "",
-        source: "Tác phẩm Đạo đức cách mạng (1958)"
+        title: "Đạo đức cách mạng",
+        content: "Thường xuyên tu dưỡng, rèn luyện bản thân; đặt trách nhiệm với tập thể lên trên lợi ích cá nhân; kiên quyết đấu tranh với biểu hiện thiếu trách nhiệm và chủ nghĩa cá nhân.",
+        source: "Chuyên đề học tập tư tưởng Hồ Chí Minh",
+        category: "Đạo đức"
     },
     {
         title: "Tinh thần trách nhiệm",
-        content: "Mỗi cán bộ, chiến sĩ cần nêu cao tinh thần trách nhiệm, tận tụy với công việc, hoàn thành tốt nhiệm vụ được giao.",
-        reference_url: "", 
-        source: "Tư tưởng Hồ Chí Minh"
+        content: "Mỗi chiến sĩ cần chủ động trong công việc, thực hiện đúng chức trách, không ngại khó khăn, đoàn kết giúp đỡ đồng đội và hoàn thành nhiệm vụ.",
+        source: "Chuyên đề xây dựng phẩm chất người quân nhân",
+        category: "Quân đội"
+    },
+    {
+        title: "Tự phê bình và phê bình",
+        content: "Thẳng thắn nhìn nhận khuyết điểm, chân thành góp ý trên tinh thần xây dựng, tôn trọng đồng chí và cùng nhau tiến bộ.",
+        source: "Chuyên đề xây dựng tổ chức và rèn luyện đảng viên",
+        category: "Đạo đức"
+    },
+    {
+        title: "Truyền thống Quân đội nhân dân Việt Nam",
+        content: "Ngày 22 tháng 12 năm 1944 là ngày thành lập Đội Việt Nam Tuyên truyền Giải phóng quân, tiền thân của Quân đội nhân dân Việt Nam.",
+        source: "Lịch sử Quân đội nhân dân Việt Nam",
+        category: "Lịch sử"
+    },
+    {
+        title: "Cách mạng Tháng Tám năm 1945",
+        content: "Thắng lợi của Cách mạng Tháng Tám năm 1945 mở ra bước ngoặt lớn trong lịch sử dân tộc, dẫn tới sự ra đời của nước Việt Nam Dân chủ Cộng hòa ngày 2 tháng 9 năm 1945.",
+        source: "Lịch sử Việt Nam",
+        category: "Lịch sử"
+    },
+    {
+        title: "Chiến thắng Điện Biên Phủ",
+        content: "Chiến thắng Điện Biên Phủ ngày 7 tháng 5 năm 1954 là mốc son trong lịch sử đấu tranh giành độc lập dân tộc, thể hiện ý chí và sức mạnh đoàn kết của nhân dân Việt Nam.",
+        source: "Lịch sử Việt Nam",
+        category: "Lịch sử"
+    },
+    {
+        title: "Ngày Quốc khánh 2 tháng 9",
+        content: "Ngày 2 tháng 9 năm 1945, tại Quảng trường Ba Đình, Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập, khai sinh nước Việt Nam Dân chủ Cộng hòa.",
+        source: "Tuyên ngôn Độc lập năm 1945",
+        category: "Lịch sử"
+    },
+    {
+        title: "Phát huy phẩm chất Bộ đội Cụ Hồ",
+        content: "Rèn luyện bản lĩnh chính trị, giữ gìn đạo đức, chấp hành kỷ luật, đoàn kết với đồng chí, gần gũi nhân dân và nỗ lực hoàn thành nhiệm vụ.",
+        source: "Chuyên đề giáo dục truyền thống quân đội",
+        category: "Quân đội"
+        
     }
 ];
 
+/* Video mặc định: dùng mã video YouTube đã có trong dữ liệu cũ.
+   Có thể bổ sung video khác bằng cách thêm mã video hợp lệ. */
+
+
+const danhSachVideoBBB11 = [
+    {
+        title: "Quân đội ta trung với Đảng, hiếu với dân",
+        id: "l9kvarGw-hU",
+        category: "Tư tưởng Hồ Chí Minh",
+        link: "https://www.youtube.com/watch?v=l9kvarGw-hU"
+    },
+    {
+        title: "Học tập tư tưởng, đạo đức, phong cách Hồ Chí Minh",
+        id: "",
+        category: "Tư tưởng Hồ Chí Minh",
+        link: "https://www.youtube.com/watch?v=HR8wWe6uqGs"
+    },
+    {
+        title: "Lịch sử Quân đội nhân dân Việt Nam",
+        id: "",
+        category: "Lịch sử quân đội",
+        link: "https://www.youtube.com/watch?v=iNiXDtewkrI"
+    },
+    {
+        title: "Truyền thống Bộ đội Cụ Hồ",
+        id: "",
+        category: "Truyền thống quân đội",
+        link: "https://www.youtube.com/watch?v=wnMs4ZhTasM"
+    },
+    {
+        title: "Chiến thắng Điện Biên Phủ",
+        id: "",
+        category: "Lịch sử cách mạng",
+        link: "https://www.youtube.com/watch?v=lp8vODuwq_k"
+    },
+    {
+        title: "Cách mạng Tháng Tám năm 1945",
+        id: "",
+        category: "Lịch sử cách mạng",
+        link: "https://www.youtube.com/watch?v=u7kjhRCfj2o"
+    },
+    {
+        title: "Lịch sử Đảng Cộng sản Việt Nam",
+        id: "",
+        category: "Lịch sử Đảng",
+        link: "https://www.youtube.com/watch?v=7FtGvLISpIk"
+    },
+    {
+        title: "Điều lệnh và kỷ luật quân đội",
+        id: "",
+        category: "Điều lệnh quân đội",
+        link: "https://www.youtube.com/watch?v=OKWf_LwarO8"
+    },
+    {
+        title: "Đoàn kết quân dân",
+        id: "",
+        category: "Đoàn kết",
+        link: "https://www.youtube.com/watch?v=9WziqsYSUgk"
+    },
+    {
+        title: "Thi đua yêu nước",
+        id: "",
+        category: "Thi đua",
+        link: "https://www.youtube.com/watch?v=Q0-0o0Yj0ew"
+    },
+    {
+        title: "Đạo đức cách mạng, cần kiệm liêm chính",
+        id: "",
+        category: "Đạo đức cách mạng",
+        link: "https://www.youtube.com/watch?v=VqIy_YGMw6Q"
+    },
+    {
+        title: "Tự phê bình và tinh thần trách nhiệm",
+        id: "",
+        category: "Rèn luyện phẩm chất",
+        link: "https://www.youtube.com/watch?v=rbFSxuUrEFE"
+    },
+    {
+        title: "Học tập suốt đời",
+        id: "",
+        category: "Học tập",
+        link: "https://www.youtube.com/watch?v=_Us8u92YY3E"
+    },
+    {
+        title: "Các bài hát truyền thống cách mạng",
+        id: "",
+        category: "Văn hóa văn nghệ",
+        link: "https://www.youtube.com/watch?v=38SCCHGYfAo"
+    }
+];
+
+
+
+function bacEscapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function (char) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[char];
+    });
+}
+
 function bacPage() {
     return `
-        <div class="page-box">
-            <h2>☀️ LỜI BÁC HỒ DẠY</h2>
-            <p>
-                Học tập và làm theo tư tưởng, đạo đức,
-                phong cách Hồ Chí Minh.
-            </p>
+        <div class="page-box bac-library">
+
+            <div class="bac-hero">
+                <div class="bac-symbol">★</div>
+                <h2>THƯ VIỆN LỜI BÁC HỒ DẠY</h2>
+                <p>
+                    Học tập tư tưởng, đạo đức, phong cách Hồ Chí Minh;
+                    phát huy truyền thống cách mạng, rèn luyện bản lĩnh
+                    và phẩm chất người quân nhân.
+                </p>
+            </div>
+
+            <div class="bac-section">
+                <h3>▶ VIDEO HỌC TẬP TRỰC TUYẾN</h3>
+
+                <label for="bacVideoSelect">Chọn video:</label>
+
+                <select id="bacVideoSelect"
+                    onchange="chonVideoBacBBB11(this.value)">
+                    ${danhSachVideoBBB11.map((video, index) => `
+                        <option value="${index}">
+                            ${bacEscapeHTML(video.title)}
+                        </option>
+                    `).join("")}
+                </select>
+
+                <div class="bac-video-frame">
+                    <iframe
+                        id="bacVideoPlayer"
+                        src="https://www.youtube-nocookie.com/embed/l9kvarGw-hU"
+                        title="Video học tập tư tưởng Hồ Chí Minh"
+                        loading="lazy"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <p class="bac-note">
+                    Nếu video không phát được, hãy kiểm tra quyền nhúng
+                    của video hoặc mở video trực tiếp trên YouTube.
+                </p>
 
             
-<div id="bacList">
-    ${danhSachLoiBacBBB11.map((item, index) => `
-        <div class="list-item">
-            <h3>${index + 1}. ${escapeHTML(item.title)}</h3>
 
-            <p>${escapeHTML(item.content)}</p>
+<div class="bac-video-list">
+    <h3>🎵 DANH SÁCH VIDEO VÀ BÀI HÁT</h3>
 
-            <small>
-                Nguồn: ${escapeHTML(item.source || "Tài liệu tham khảo")}
-            </small>
+    ${danhSachVideoBBB11.map((video, index) => `
+        <div class="bac-video-item">
+            <div class="bac-video-info">
+                <strong>${bacEscapeHTML(video.title)}</strong>
+                <p>${bacEscapeHTML(video.category)}</p>
+            </div>
 
-            ${item.reference_url ? `
-                <div style="margin-top: 12px;">
-                    <a
-                        href="${escapeHTML(item.reference_url)}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="youtube-button">
-                        ▶ Xem video trên YouTube
-                    </a>
-                </div>
-            ` : ""}
+            <button
+                type="button"
+                class="bac-youtube-button"
+                onclick="phatVideoTrongOBBB11(${index})">
+                ▶ Phát ngay tại đây
+            </button>
         </div>
     `).join("")}
 </div>
+
+
+            </div>
+
+<div class="bac-section">
+    <h3>🎵 NGHE NHẠC CÁCH MẠNG</h3>
+
+    <p>
+        Các bài hát truyền thống, khơi dậy tinh thần yêu nước
+        và niềm tự hào của người quân nhân.
+    </p>
+
+    <a
+        class="bac-youtube-button"
+        href="https://www.youtube.com/watch?v=7zPT3rR3HAs&list=RD7zPT3rR3HAs&start_radio=1"
+        target="_blank"
+        rel="noopener noreferrer">
+        ▶ Mở bài hát trên YouTube
+    </a>
 </div>
-`;
+
+            <div class="bac-section">
+                <h3>📚 KHO LỜI BÁC HỒ DẠY VÀ KIẾN THỨC CÁCH MẠNG</h3>
+
+                <input
+                    id="bacSearch"
+                    type="search"
+                    placeholder="🔍 Tìm lời Bác, lịch sử, kỷ luật..."
+                    oninput="hienThiLoiBac()">
+
+                <select id="bacCategory"
+                    onchange="hienThiLoiBac()">
+                    <option value="">Tất cả chủ đề</option>
+                    <option value="Quân đội">Quân đội</option>
+                    <option value="Đạo đức">Đạo đức cách mạng</option>
+                    <option value="Đoàn kết">Đoàn kết quân dân</option>
+                    <option value="Kỷ luật">Kỷ luật</option>
+                    <option value="Thi đua">Thi đua yêu nước</option>
+                    <option value="Học tập">Học tập</option>
+                    <option value="Lịch sử">Lịch sử cách mạng</option>
+                </select>
+
+                <div id="bacList"></div>
+
+                <p id="bacEmpty" style="display:none">
+                    Không tìm thấy nội dung phù hợp.
+                </p>
+            </div>
+
+        </div>
+    `;
 }
 
+function chonVideoBacBBB11(index) {
+    const video = danhSachVideoBBB11[Number(index)];
+    const player = document.getElementById("bacVideoPlayer");
+    const link = document.getElementById("bacYoutubeLink");
 
-// ==========================================
-// HIỂN THỊ TẤT CẢ NỘI DUNG
-// ==========================================
+    if (!video || !player || !link) return;
+
+    // Chỉ nhận mã video YouTube có định dạng hợp lệ.
+    if (!/^[a-zA-Z0-9_-]{11}$/.test(video.id)) return;
+
+    player.src =
+        "https://www.youtube-nocookie.com/embed/" + video.id;
+
+    link.href = "https://www.youtube.com/watch?v=" + video.id;
+    player.title = video.title;
+}
 
 function hienThiLoiBac() {
-
     const khung = document.getElementById("bacList");
-
     if (!khung) return;
 
-    khung.innerHTML = danhSachLoiBacBBB11.map((item, index) => `
-        <div class="list-item">
+    const searchElement = document.getElementById("bacSearch");
+    const categoryElement = document.getElementById("bacCategory");
 
-            <h3>${index + 1}. ⭐ ${escapeHTML(item.title)}</h3>
+    const tuKhoa = (searchElement?.value || "")
+        .trim()
+        .toLocaleLowerCase("vi");
 
-            <p style="
-                font-size:16px;
-                line-height:1.8;
-                white-space:pre-line;
-            ">
-                ${escapeHTML(item.content)}
-            </p>
+    const chuDe = categoryElement?.value || "";
 
-            <p>
+    const ketQua = danhSachLoiBacBBB11.filter(item => {
+        const noiDung = [
+            item.title,
+            item.content,
+            item.source,
+            item.category
+        ].join(" ").toLocaleLowerCase("vi");
+
+        return noiDung.includes(tuKhoa) &&
+            (!chuDe || item.category === chuDe);
+    });
+
+    khung.innerHTML = ketQua.map((item, index) => `
+        <article class="bac-card">
+            <div class="bac-card-category">
+                ${bacEscapeHTML(item.category)}
+            </div>
+
+            <h4>${index + 1}. ${bacEscapeHTML(item.title)}</h4>
+
+            <p>${bacEscapeHTML(item.content)}</p>
+
+            <small>
                 <strong>Nguồn tham khảo:</strong>
-                ${escapeHTML(item.source)}
-            </p>
+                ${bacEscapeHTML(item.source)}
+            </small>
+        </article>
+    `).join("");
 
+    const empty = document.getElementById("bacEmpty");
+    if (empty) {
+        empty.style.display = ketQua.length ? "none" : "block";
+    }
+}
+
+const linkHocTapBBB11 = [
+    {
+        ten: "▶ Xem video về lời Bác Hồ dạy",
+        moTa: "Học tập tư tưởng Hồ Chí Minh",
+        link: "https://www.youtube.com/watch?v=l9kvarGw-hU"
+    },
+    {
+        ten: "▶ Tìm hiểu lịch sử Quân đội nhân dân Việt Nam",
+        moTa: "Truyền thống vẻ vang của Quân đội",
+        link: "https://www.youtube.com/watch?v=iNiXDtewkrI"
+    },
+    {
+        ten: "▶ Học tập truyền thống Bộ đội Cụ Hồ",
+        moTa: "Phẩm chất, đạo đức và trách nhiệm người quân nhân",
+        link: "https://www.youtube.com/watch?v=rmA7oywKpdI"
+    },
+    {
+        ten: "▶ Tìm hiểu lịch sử Đảng Cộng sản Việt Nam",
+        moTa: "Những mốc son lịch sử cách mạng",
+        link: "https://www.youtube.com/watch?v=7FtGvLISpIk"
+    },
+    {
+        ten: "▶ Tìm hiểu Chiến thắng Điện Biên Phủ",
+        moTa: "Chiến thắng lịch sử ngày 7/5/1954",
+        link: "https://www.youtube.com/watch?v=COG1itIE3Rw"
+    },
+    {
+        ten: "▶ Tìm hiểu Cách mạng Tháng Tám năm 1945",
+        moTa: "Mốc son giành độc lập dân tộc",
+        link: "https://www.youtube.com/watch?v=u7kjhRCfj2o"
+    },
+    {
+        ten: "▶ Học tập điều lệnh và kỷ luật quân đội",
+        moTa: "Rèn luyện tác phong, ý thức tổ chức kỷ luật",
+        link: "https://www.youtube.com/watch?v=I0PaHFVRKuA"
+    },
+    {
+        ten: "▶ Nghe những bài hát cách mạng",
+        moTa: "Các ca khúc truyền thống, khơi dậy tinh thần yêu nước",
+        link: "https://www.youtube.com/watch?v=7zPT3rR3HAs&list=RD7zPT3rR3HAs&start_radio=1"
+    }
+];
+
+function hienThiLinkHocTapBBB11() {
+    const khung = document.getElementById("bacLinks");
+    if (!khung) return;
+
+    khung.innerHTML = linkHocTapBBB11.map(item => `
+        <div class="list-item">
+            <h3>${bacEscapeHTML(item.ten)}</h3>
+            <p>${bacEscapeHTML(item.moTa)}</p>
+            <a class="youtube-button"
+               href="${bacEscapeHTML(item.link)}"
+               target="_blank"
+               rel="noopener noreferrer">
+                Mở nội dung ▶
+            </a>
         </div>
     `).join("");
 }
+
+window.hienThiLinkHocTapBBB11 = hienThiLinkHocTapBBB11;
+
+
+/* Cho phép các hàm được gọi từ menu và HTML của website. */
+window.bacPage = bacPage;
+window.hienThiLoiBac = hienThiLoiBac;
+window.chonVideoBacBBB11 = chonVideoBacBBB11;
+
 
 
 function questionPage() {
@@ -4624,5 +5006,245 @@ function membersPage() {
             card.classList.remove("is-playing");
         });
     };
-})();
+  
+/* =========================================
+   TÀI LIỆU BBB11
+   Thay link mẫu bằng link thật của bạn
+   ========================================= */
 
+const TAI_LIEU_BBB11 = {
+    thanhvien: [
+        {
+            ten: "Danh sách thành viên BBB11",
+            url: "DAN_LINK_TAI_LIEU_THANH_VIEN_VAO_DAY"
+        }
+    ],
+
+    taikhoan: [
+        {
+            ten: "Tài liệu tài khoản BBB11",
+            url: "DAN_LINK_TAI_LIEU_TAI_KHOAN_VAO_DAY"
+        }
+    ]
+};
+
+function taiTaiLieuBBB11(loai, index) {
+    const danhSach = TAI_LIEU_BBB11[loai];
+
+    if (!Array.isArray(danhSach) || !danhSach[index]) {
+        alert("Không tìm thấy tài liệu.");
+        return;
+    }
+
+    const taiLieu = danhSach[index];
+
+    try {
+        const url = new URL(taiLieu.url);
+
+        if (url.protocol !== "https:") {
+            alert("Đường link phải bắt đầu bằng https://");
+            return;
+        }
+
+        window.open(url.href, "_blank", "noopener,noreferrer");
+    } catch (error) {
+        alert("Link tài liệu chưa hợp lệ. Vui lòng kiểm tra lại.");
+        console.error(error);
+    }
+}
+
+function hienThiLinkTaiLieuBBB11(loai, idPhanTu) {
+    const noiDung = document.getElementById(idPhanTu);
+
+    if (!noiDung) return;
+
+    const danhSach = TAI_LIEU_BBB11[loai];
+
+    if (!Array.isArray(danhSach) || danhSach.length === 0) {
+        noiDung.textContent = "Chưa có tài liệu.";
+        return;
+    }
+
+    noiDung.innerHTML = danhSach.map((taiLieu, index) => {
+        const ten = String(taiLieu.ten || "Tài liệu")
+            .replace(/[&<>"']/g, kyTu => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            })[kyTu]);
+
+        return `
+            <p>
+                <button
+                    type="button"
+                    class="action-button"
+                    onclick="taiTaiLieuBBB11('${loai}', ${index})">
+                    📄 ${ten}
+                </button>
+            </p>
+        `;
+    }).join("");
+}
+function taiTaiLieuBBB11(loai, index) {
+    const danhSach = TAI_LIEU_BBB11[loai];
+
+    if (!Array.isArray(danhSach) || !danhSach[index]) {
+        alert("Không tìm thấy tài liệu.");
+        return;
+    }
+
+    try {
+        const url = new URL(danhSach[index].url);
+
+        if (url.protocol !== "https:") {
+            alert("Đường link phải bắt đầu bằng https://");
+            return;
+        }
+
+        window.open(url.href, "_blank", "noopener,noreferrer");
+    } catch (error) {
+        alert("Link tài liệu chưa hợp lệ. Vui lòng kiểm tra lại.");
+    }
+}
+
+function hienThiLinkTaiLieuBBB11(loai, idPhanTu) {
+    const noiDung = document.getElementById(idPhanTu);
+    if (!noiDung) return;
+
+    const danhSach = TAI_LIEU_BBB11[loai];
+
+    if (!Array.isArray(danhSach) || danhSach.length === 0) {
+        noiDung.textContent = "Chưa có tài liệu.";
+        return;
+    }
+
+    noiDung.innerHTML = danhSach.map((taiLieu, index) => {
+        const ten = String(taiLieu.ten || "Tài liệu")
+            .replace(/[&<>"']/g, kyTu => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            })[kyTu]);
+
+        return `
+            <p>
+                <button type="button"
+                    onclick="taiTaiLieuBBB11('${loai}', ${index})">
+                    📄 ${ten}
+                </button>
+            </p>
+        `;
+    }).join("");
+}
+
+
+// ===============================
+// THƯ VIỆN ẢNH
+// ===============================
+function loadGallery() {
+    const gallery = document.getElementById("gallery");
+
+    if (!gallery) return;
+
+    gallery.innerHTML = `
+        <div class="page-box">
+            <h2>THƯ VIỆN ẢNH BBB11</h2>
+            <p>Chưa có hình ảnh được tải lên.</p>
+        </div>
+    `;
+}
+
+
+// ===============================
+// TÀI LIỆU BBB11
+// ===============================
+function hienThiLinkTaiLieuBBB11() {
+    const container = document.getElementById("taiLieuBBB11");
+
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="page-box">
+            <h2>TÀI LIỆU ĐẠI ĐỘI 11</h2>
+
+            <p>Danh sách tài liệu BBB11.</p>
+
+            <a href="DAN_LINK_GOOGLE_DRIVE"
+               target="_blank"
+               class="action-button">
+                XEM TÀI LIỆU
+            </a>
+        </div>
+    `;
+}
+
+
+// ===============================
+// XỬ LÝ TRANG
+// ===============================
+function xuLyTrang() {
+    console.log("Trang đã được tải thành công!");
+}
+
+function phatVideoTrongOBBB11(index) {
+    const video = danhSachVideoBBB11[index];
+    const player = document.getElementById("bacVideoPlayer");
+    const link = document.getElementById("bacYoutubeLink");
+
+    if (!video || !player) return;
+
+    let videoId = video.id || "";
+    let playlistId = "";
+
+    try {
+        const url = new URL(video.link);
+
+        videoId = url.searchParams.get("v") || videoId;
+        playlistId = url.searchParams.get("list") || "";
+
+        if (url.hostname === "youtu.be") {
+            videoId = url.pathname.slice(1) || videoId;
+        }
+    } catch (error) {
+        console.error("Đường dẫn YouTube không hợp lệ:", error);
+    }
+
+    if (!/^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
+        if (playlistId) {
+            player.src =
+                "https://www.youtube-nocookie.com/embed/videoseries?list=" +
+                encodeURIComponent(playlistId);
+        } else {
+            alert("Bài này chưa có đường dẫn video hợp lệ.");
+            return;
+        }
+    } else {
+        player.src =
+            "https://www.youtube-nocookie.com/embed/" +
+            videoId +
+            (playlistId
+                ? "?list=" + encodeURIComponent(playlistId) + "&autoplay=1"
+                : "?autoplay=1");
+    }
+
+    player.title = video.title;
+
+    if (link) {
+        link.href = video.link;
+        link.textContent = "▶ Mở video trên YouTube";
+    }
+
+    player.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
+
+window.phatVideoTrongOBBB11 = phatVideoTrongOBBB11;
+
+
+})();
