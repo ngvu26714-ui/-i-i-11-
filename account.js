@@ -248,9 +248,137 @@ async function khoiTaoDangNhapBBB11() {
     }
 }
 
-// ======================================
-// KHỞI ĐỘNG
-// ======================================
+
+// ============================================
+// BBB11 - HIỂN THỊ DANH SÁCH QUẢN LÝ TÀI KHOẢN
+// ============================================
+
+async function hienThiTaiKhoan() {
+    const client = window.supabaseClient;
+
+    // Chỉ quản trị viên được xem danh sách tài khoản
+    if (window.bbb11CurrentRole !== "admin") {
+        alert("Bạn không có quyền quản lý tài khoản!");
+        return;
+    }
+
+    if (!client) {
+        alert("Chưa kết nối được Supabase!");
+        return;
+    }
+
+    // Tìm vùng hiển thị, không ghi đè lên nút menu
+    let khuVuc = document.getElementById("danhSachTaiKhoan");
+
+    if (!khuVuc || khuVuc.closest(".menu-btn")) {
+        khuVuc = document.getElementById("pageContent");
+    }
+
+    if (!khuVuc) {
+        console.error("Không tìm thấy khu vực hiển thị tài khoản.");
+        return;
+    }
+
+    khuVuc.innerHTML = `
+        <h2>QUẢN LÝ TÀI KHOẢN BBB11</h2>
+        <p>Đang tải danh sách tài khoản...</p>
+    `;
+
+    try {
+        const { data: danhSach, error } = await client
+            .from("profiles")
+            .select("*")
+            .order("ho_ten", { ascending: true });
+
+        if (error) throw error;
+
+        if (!danhSach || danhSach.length === 0) {
+            khuVuc.innerHTML = `
+                <h2>QUẢN LÝ TÀI KHOẢN BBB11</h2>
+                <p>Chưa có hồ sơ tài khoản nào.</p>
+            `;
+            return;
+        }
+
+        // Tạo bảng và tránh đưa dữ liệu trực tiếp vào HTML
+        const bang = document.createElement("table");
+        bang.style.width = "100%";
+        bang.style.borderCollapse = "collapse";
+
+        const tieuDe = document.createElement("thead");
+        const dongTieuDe = document.createElement("tr");
+
+        [
+            "STT",
+            "HỌ VÀ TÊN",
+            "TRUNG ĐỘI",
+            "VAI TRÒ",
+            "MÃ HỒ SƠ"
+        ].forEach(tieuDeCot => {
+            const o = document.createElement("th");
+            o.textContent = tieuDeCot;
+            o.style.padding = "10px";
+            o.style.border = "1px solid #ccc";
+            dongTieuDe.appendChild(o);
+        });
+
+        tieuDe.appendChild(dongTieuDe);
+        bang.appendChild(tieuDe);
+
+        const thanBang = document.createElement("tbody");
+
+        danhSach.forEach((taiKhoan, index) => {
+            const dong = document.createElement("tr");
+
+            const vaiTro = taiKhoan.role === "admin"
+                ? "Quản trị viên"
+                : "Thành viên";
+
+            const cacCot = [
+                index + 1,
+                taiKhoan.ho_ten || "Chưa cập nhật",
+                taiKhoan.tieu_doi || "Chưa cập nhật",
+                vaiTro,
+                taiKhoan.id || ""
+            ];
+
+            cacCot.forEach(giaTri => {
+                const o = document.createElement("td");
+                o.textContent = String(giaTri);
+                o.style.padding = "10px";
+                o.style.border = "1px solid #ccc";
+                dong.appendChild(o);
+            });
+
+            thanBang.appendChild(dong);
+        });
+
+        bang.appendChild(thanBang);
+
+        khuVuc.replaceChildren();
+
+        const tieuDeTrang = document.createElement("h2");
+        tieuDeTrang.textContent = "QUẢN LÝ TÀI KHOẢN BBB11";
+
+        const thongBao = document.createElement("p");
+        thongBao.textContent =
+            "Tổng số hồ sơ: " + danhSach.length;
+
+        khuVuc.append(tieuDeTrang, thongBao, bang);
+
+    } catch (error) {
+        console.error("Lỗi tải danh sách tài khoản:", error);
+
+        khuVuc.replaceChildren();
+
+        const thongBao = document.createElement("p");
+        thongBao.textContent =
+            "Không tải được danh sách. Hãy kiểm tra quyền truy cập bảng profiles trên Supabase.";
+
+        khuVuc.appendChild(thongBao);
+    }
+}
+
 
 document.addEventListener("DOMContentLoaded", () => {
     khoiTaoDangNhapBBB11().catch(error => {
@@ -356,4 +484,744 @@ async function kiemTraHoSoCaNhanBBB11(user, profile) {
         tieu_doi: tieuDoi.trim()
     };
 }
+
+
+// ============================================
+// BBB11 - HIỂN THỊ DANH SÁCH QUẢN LÝ TÀI KHOẢN
+// ============================================
+
+async function hienThiTaiKhoan() {
+    const client = window.supabaseClient;
+
+    // Chỉ quản trị viên được xem danh sách tài khoản
+    if (window.bbb11CurrentRole !== "admin") {
+        alert("Bạn không có quyền quản lý tài khoản!");
+        return;
+    }
+
+    if (!client) {
+        alert("Chưa kết nối được Supabase!");
+        return;
+    }
+
+    // Tìm vùng hiển thị, không ghi đè lên nút menu
+    let khuVuc = document.getElementById("danhSachTaiKhoan");
+
+    if (!khuVuc || khuVuc.closest(".menu-btn")) {
+        khuVuc = document.getElementById("pageContent");
+    }
+
+    if (!khuVuc) {
+        console.error("Không tìm thấy khu vực hiển thị tài khoản.");
+        return;
+    }
+
+    khuVuc.innerHTML = `
+        <h2>QUẢN LÝ TÀI KHOẢN BBB11</h2>
+        <p>Đang tải danh sách tài khoản...</p>
+    `;
+
+    try {
+        const { data: danhSach, error } = await client
+            .from("profiles")
+            .select("*")
+            .order("ho_ten", { ascending: true });
+
+        if (error) throw error;
+
+        if (!danhSach || danhSach.length === 0) {
+            khuVuc.innerHTML = `
+                <h2>QUẢN LÝ TÀI KHOẢN BBB11</h2>
+                <p>Chưa có hồ sơ tài khoản nào.</p>
+            `;
+            return;
+        }
+
+        // Tạo bảng và tránh đưa dữ liệu trực tiếp vào HTML
+        const bang = document.createElement("table");
+        bang.style.width = "100%";
+        bang.style.borderCollapse = "collapse";
+
+        const tieuDe = document.createElement("thead");
+        const dongTieuDe = document.createElement("tr");
+
+        [
+            "STT",
+            "HỌ VÀ TÊN",
+            "TRUNG ĐỘI",
+            "VAI TRÒ",
+            "MÃ HỒ SƠ"
+        ].forEach(tieuDeCot => {
+            const o = document.createElement("th");
+            o.textContent = tieuDeCot;
+            o.style.padding = "10px";
+            o.style.border = "1px solid #ccc";
+            dongTieuDe.appendChild(o);
+        });
+
+        tieuDe.appendChild(dongTieuDe);
+        bang.appendChild(tieuDe);
+
+        const thanBang = document.createElement("tbody");
+
+        danhSach.forEach((taiKhoan, index) => {
+            const dong = document.createElement("tr");
+
+            const vaiTro = taiKhoan.role === "admin"
+                ? "Quản trị viên"
+                : "Thành viên";
+
+            const cacCot = [
+                index + 1,
+                taiKhoan.ho_ten || "Chưa cập nhật",
+                taiKhoan.tieu_doi || "Chưa cập nhật",
+                vaiTro,
+                taiKhoan.id || ""
+            ];
+
+            cacCot.forEach(giaTri => {
+                const o = document.createElement("td");
+                o.textContent = String(giaTri);
+                o.style.padding = "10px";
+                o.style.border = "1px solid #ccc";
+                dong.appendChild(o);
+            });
+
+            thanBang.appendChild(dong);
+        });
+
+        bang.appendChild(thanBang);
+
+        khuVuc.replaceChildren();
+
+        const tieuDeTrang = document.createElement("h2");
+        tieuDeTrang.textContent = "QUẢN LÝ TÀI KHOẢN BBB11";
+
+        const thongBao = document.createElement("p");
+        thongBao.textContent =
+            "Tổng số hồ sơ: " + danhSach.length;
+
+        khuVuc.append(tieuDeTrang, thongBao, bang);
+
+    } catch (error) {
+        console.error("Lỗi tải danh sách tài khoản:", error);
+
+        khuVuc.replaceChildren();
+
+        const thongBao = document.createElement("p");
+        thongBao.textContent =
+            "Không tải được danh sách. Hãy kiểm tra quyền truy cập bảng profiles trên Supabase.";
+
+        khuVuc.appendChild(thongBao);
+    }
+}
+
+// ============================================
+// BBB11 - HIỂN THỊ DANH SÁCH QUẢN LÝ TÀI KHOẢN
+// ============================================
+
+async function hienThiTaiKhoan() {
+    const client = window.supabaseClient;
+
+    // Chỉ quản trị viên được xem danh sách tài khoản
+    if (window.bbb11CurrentRole !== "admin") {
+        alert("Bạn không có quyền quản lý tài khoản!");
+        return;
+    }
+
+    if (!client) {
+        alert("Chưa kết nối được Supabase!");
+        return;
+    }
+
+    // Tìm vùng hiển thị, không ghi đè lên nút menu
+    let khuVuc = document.getElementById("danhSachTaiKhoan");
+
+    if (!khuVuc || khuVuc.closest(".menu-btn")) {
+        khuVuc = document.getElementById("pageContent");
+    }
+
+    if (!khuVuc) {
+        console.error("Không tìm thấy khu vực hiển thị tài khoản.");
+        return;
+    }
+
+    khuVuc.innerHTML = `
+        <h2>QUẢN LÝ TÀI KHOẢN BBB11</h2>
+        <p>Đang tải danh sách tài khoản...</p>
+    `;
+
+    try {
+        const { data: danhSach, error } = await client
+            .from("profiles")
+            .select("*")
+            .order("ho_ten", { ascending: true });
+
+        if (error) throw error;
+
+        if (!danhSach || danhSach.length === 0) {
+            khuVuc.innerHTML = `
+                <h2>QUẢN LÝ TÀI KHOẢN BBB11</h2>
+                <p>Chưa có hồ sơ tài khoản nào.</p>
+            `;
+            return;
+        }
+
+        // Tạo bảng và tránh đưa dữ liệu trực tiếp vào HTML
+        const bang = document.createElement("table");
+        bang.style.width = "100%";
+        bang.style.borderCollapse = "collapse";
+
+        const tieuDe = document.createElement("thead");
+        const dongTieuDe = document.createElement("tr");
+
+        [
+            "STT",
+            "HỌ VÀ TÊN",
+            "TRUNG ĐỘI",
+            "VAI TRÒ",
+            "MÃ HỒ SƠ"
+        ].forEach(tieuDeCot => {
+            const o = document.createElement("th");
+            o.textContent = tieuDeCot;
+            o.style.padding = "10px";
+            o.style.border = "1px solid #ccc";
+            dongTieuDe.appendChild(o);
+        });
+
+        tieuDe.appendChild(dongTieuDe);
+        bang.appendChild(tieuDe);
+
+        const thanBang = document.createElement("tbody");
+
+        danhSach.forEach((taiKhoan, index) => {
+            const dong = document.createElement("tr");
+
+            const vaiTro = taiKhoan.role === "admin"
+                ? "Quản trị viên"
+                : "Thành viên";
+
+            const cacCot = [
+                index + 1,
+                taiKhoan.ho_ten || "Chưa cập nhật",
+                taiKhoan.tieu_doi || "Chưa cập nhật",
+                vaiTro,
+                taiKhoan.id || ""
+            ];
+
+            cacCot.forEach(giaTri => {
+                const o = document.createElement("td");
+                o.textContent = String(giaTri);
+                o.style.padding = "10px";
+                o.style.border = "1px solid #ccc";
+                dong.appendChild(o);
+            });
+
+            thanBang.appendChild(dong);
+        });
+
+        bang.appendChild(thanBang);
+
+        khuVuc.replaceChildren();
+
+        const tieuDeTrang = document.createElement("h2");
+        tieuDeTrang.textContent = "QUẢN LÝ TÀI KHOẢN BBB11";
+
+        const thongBao = document.createElement("p");
+        thongBao.textContent =
+            "Tổng số hồ sơ: " + danhSach.length;
+
+        khuVuc.append(tieuDeTrang, thongBao, bang);
+
+    } catch (error) {
+        console.error("Lỗi tải danh sách tài khoản:", error);
+
+        khuVuc.replaceChildren();
+
+        const thongBao = document.createElement("p");
+        thongBao.textContent =
+            "Không tải được danh sách. Hãy kiểm tra quyền truy cập bảng profiles trên Supabase.";
+
+        khuVuc.appendChild(thongBao);
+    }
+}
+
+// ============================================
+// BBB11 - HIỂN THỊ DANH SÁCH QUẢN LÝ TÀI KHOẢN
+// ============================================
+
+async function hienThiTaiKhoan() {
+    const client = window.supabaseClient;
+
+    // Chỉ quản trị viên được xem danh sách tài khoản
+    if (window.bbb11CurrentRole !== "admin") {
+        alert("Bạn không có quyền quản lý tài khoản!");
+        return;
+    }
+
+    if (!client) {
+        alert("Chưa kết nối được Supabase!");
+        return;
+    }
+
+    // Tìm vùng hiển thị, không ghi đè lên nút menu
+    let khuVuc = document.getElementById("danhSachTaiKhoan");
+
+    if (!khuVuc || khuVuc.closest(".menu-btn")) {
+        khuVuc = document.getElementById("pageContent");
+    }
+
+    if (!khuVuc) {
+        console.error("Không tìm thấy khu vực hiển thị tài khoản.");
+        return;
+    }
+
+    khuVuc.innerHTML = `
+        <h2>QUẢN LÝ TÀI KHOẢN BBB11</h2>
+        <p>Đang tải danh sách tài khoản...</p>
+    `;
+
+    try {
+        const { data: danhSach, error } = await client
+            .from("profiles")
+            .select("*")
+            .order("ho_ten", { ascending: true });
+
+        if (error) throw error;
+
+        if (!danhSach || danhSach.length === 0) {
+            khuVuc.innerHTML = `
+                <h2>QUẢN LÝ TÀI KHOẢN BBB11</h2>
+                <p>Chưa có hồ sơ tài khoản nào.</p>
+            `;
+            return;
+        }
+
+        // Tạo bảng và tránh đưa dữ liệu trực tiếp vào HTML
+        const bang = document.createElement("table");
+        bang.style.width = "100%";
+        bang.style.borderCollapse = "collapse";
+
+        const tieuDe = document.createElement("thead");
+        const dongTieuDe = document.createElement("tr");
+
+        [
+            "STT",
+            "HỌ VÀ TÊN",
+            "TRUNG ĐỘI",
+            "VAI TRÒ",
+            "MÃ HỒ SƠ"
+        ].forEach(tieuDeCot => {
+            const o = document.createElement("th");
+            o.textContent = tieuDeCot;
+            o.style.padding = "10px";
+            o.style.border = "1px solid #ccc";
+            dongTieuDe.appendChild(o);
+        });
+
+        tieuDe.appendChild(dongTieuDe);
+        bang.appendChild(tieuDe);
+
+        const thanBang = document.createElement("tbody");
+
+        danhSach.forEach((taiKhoan, index) => {
+            const dong = document.createElement("tr");
+
+            const vaiTro = taiKhoan.role === "admin"
+                ? "Quản trị viên"
+                : "Thành viên";
+
+            const cacCot = [
+                index + 1,
+                taiKhoan.ho_ten || "Chưa cập nhật",
+                taiKhoan.tieu_doi || "Chưa cập nhật",
+                vaiTro,
+                taiKhoan.id || ""
+            ];
+
+            cacCot.forEach(giaTri => {
+                const o = document.createElement("td");
+                o.textContent = String(giaTri);
+                o.style.padding = "10px";
+                o.style.border = "1px solid #ccc";
+                dong.appendChild(o);
+            });
+
+            thanBang.appendChild(dong);
+        });
+
+        bang.appendChild(thanBang);
+
+        khuVuc.replaceChildren();
+
+        const tieuDeTrang = document.createElement("h2");
+        tieuDeTrang.textContent = "QUẢN LÝ TÀI KHOẢN BBB11";
+
+        const thongBao = document.createElement("p");
+        thongBao.textContent =
+            "Tổng số hồ sơ: " + danhSach.length;
+
+        khuVuc.append(tieuDeTrang, thongBao, bang);
+
+    } catch (error) {
+        console.error("Lỗi tải danh sách tài khoản:", error);
+
+        khuVuc.replaceChildren();
+
+        const thongBao = document.createElement("p");
+        thongBao.textContent =
+            "Không tải được danh sách. Hãy kiểm tra quyền truy cập bảng profiles trên Supabase.";
+
+        khuVuc.appendChild(thongBao);
+    }
+}
+// ============================================
+// BBB11 - HIỂN THỊ DANH SÁCH QUẢN LÝ TÀI KHOẢN
+// ============================================
+
+async function hienThiTaiKhoan() {
+    const client = window.supabaseClient;
+
+    // Chỉ quản trị viên được xem danh sách tài khoản
+    if (window.bbb11CurrentRole !== "admin") {
+        alert("Bạn không có quyền quản lý tài khoản!");
+        return;
+    }
+
+    if (!client) {
+        alert("Chưa kết nối được Supabase!");
+        return;
+    }
+
+    // Tìm vùng hiển thị, không ghi đè lên nút menu
+    let khuVuc = document.getElementById("danhSachTaiKhoan");
+
+    if (!khuVuc || khuVuc.closest(".menu-btn")) {
+        khuVuc = document.getElementById("pageContent");
+    }
+
+    if (!khuVuc) {
+        console.error("Không tìm thấy khu vực hiển thị tài khoản.");
+        return;
+    }
+
+    khuVuc.innerHTML = `
+        <h2>QUẢN LÝ TÀI KHOẢN BBB11</h2>
+        <p>Đang tải danh sách tài khoản...</p>
+    `;
+
+    try {
+        const { data: danhSach, error } = await client
+            .from("profiles")
+            .select("*")
+            .order("ho_ten", { ascending: true });
+
+        if (error) throw error;
+
+        if (!danhSach || danhSach.length === 0) {
+            khuVuc.innerHTML = `
+                <h2>QUẢN LÝ TÀI KHOẢN BBB11</h2>
+                <p>Chưa có hồ sơ tài khoản nào.</p>
+            `;
+            return;
+        }
+
+        // Tạo bảng và tránh đưa dữ liệu trực tiếp vào HTML
+        const bang = document.createElement("table");
+        bang.style.width = "100%";
+        bang.style.borderCollapse = "collapse";
+
+        const tieuDe = document.createElement("thead");
+        const dongTieuDe = document.createElement("tr");
+
+        [
+            "STT",
+            "HỌ VÀ TÊN",
+            "TRUNG ĐỘI",
+            "VAI TRÒ",
+            "MÃ HỒ SƠ"
+        ].forEach(tieuDeCot => {
+            const o = document.createElement("th");
+            o.textContent = tieuDeCot;
+            o.style.padding = "10px";
+            o.style.border = "1px solid #ccc";
+            dongTieuDe.appendChild(o);
+        });
+
+        tieuDe.appendChild(dongTieuDe);
+        bang.appendChild(tieuDe);
+
+        const thanBang = document.createElement("tbody");
+
+        danhSach.forEach((taiKhoan, index) => {
+            const dong = document.createElement("tr");
+
+            const vaiTro = taiKhoan.role === "admin"
+                ? "Quản trị viên"
+                : "Thành viên";
+
+            const cacCot = [
+                index + 1,
+                taiKhoan.ho_ten || "Chưa cập nhật",
+                taiKhoan.tieu_doi || "Chưa cập nhật",
+                vaiTro,
+                taiKhoan.id || ""
+            ];
+
+            cacCot.forEach(giaTri => {
+                const o = document.createElement("td");
+                o.textContent = String(giaTri);
+                o.style.padding = "10px";
+                o.style.border = "1px solid #ccc";
+                dong.appendChild(o);
+            });
+
+            thanBang.appendChild(dong);
+        });
+
+        bang.appendChild(thanBang);
+
+        khuVuc.replaceChildren();
+
+        const tieuDeTrang = document.createElement("h2");
+        tieuDeTrang.textContent = "QUẢN LÝ TÀI KHOẢN BBB11";
+
+        const thongBao = document.createElement("p");
+        thongBao.textContent =
+            "Tổng số hồ sơ: " + danhSach.length;
+
+        khuVuc.append(tieuDeTrang, thongBao, bang);
+
+    } catch (error) {
+        console.error("Lỗi tải danh sách tài khoản:", error);
+
+        khuVuc.replaceChildren();
+
+        const thongBao = document.createElement("p");
+        thongBao.textContent =
+            "Không tải được danh sách. Hãy kiểm tra quyền truy cập bảng profiles trên Supabase.";
+
+        khuVuc.appendChild(thongBao);
+    }
+}
+
+// ============================================
+// BBB11 - HIỂN THỊ DANH SÁCH QUẢN LÝ TÀI KHOẢN
+// ============================================
+
+async function hienThiTaiKhoan() {
+    const client = window.supabaseClient;
+
+    // Chỉ quản trị viên được xem danh sách tài khoản
+    if (window.bbb11CurrentRole !== "admin") {
+        alert("Bạn không có quyền quản lý tài khoản!");
+        return;
+    }
+
+    if (!client) {
+        alert("Chưa kết nối được Supabase!");
+        return;
+    }
+
+    // Tìm vùng hiển thị, không ghi đè lên nút menu
+    let khuVuc = document.getElementById("danhSachTaiKhoan");
+
+    if (!khuVuc || khuVuc.closest(".menu-btn")) {
+        khuVuc = document.getElementById("pageContent");
+    }
+
+    if (!khuVuc) {
+        console.error("Không tìm thấy khu vực hiển thị tài khoản.");
+        return;
+    }
+
+    khuVuc.innerHTML = `
+        <h2>QUẢN LÝ TÀI KHOẢN BBB11</h2>
+        <p>Đang tải danh sách tài khoản...</p>
+    `;
+
+    try {
+        const { data: danhSach, error } = await client
+            .from("profiles")
+            .select("*")
+            .order("ho_ten", { ascending: true });
+
+        if (error) throw error;
+
+        if (!danhSach || danhSach.length === 0) {
+            khuVuc.innerHTML = `
+                <h2>QUẢN LÝ TÀI KHOẢN BBB11</h2>
+                <p>Chưa có hồ sơ tài khoản nào.</p>
+            `;
+            return;
+        }
+
+        // Tạo bảng và tránh đưa dữ liệu trực tiếp vào HTML
+        const bang = document.createElement("table");
+        bang.style.width = "100%";
+        bang.style.borderCollapse = "collapse";
+
+        const tieuDe = document.createElement("thead");
+        const dongTieuDe = document.createElement("tr");
+
+        [
+            "STT",
+            "HỌ VÀ TÊN",
+            "TRUNG ĐỘI",
+            "VAI TRÒ",
+            "MÃ HỒ SƠ"
+        ].forEach(tieuDeCot => {
+            const o = document.createElement("th");
+            o.textContent = tieuDeCot;
+            o.style.padding = "10px";
+            o.style.border = "1px solid #ccc";
+            dongTieuDe.appendChild(o);
+        });
+
+        tieuDe.appendChild(dongTieuDe);
+        bang.appendChild(tieuDe);
+
+        const thanBang = document.createElement("tbody");
+
+        danhSach.forEach((taiKhoan, index) => {
+            const dong = document.createElement("tr");
+
+            const vaiTro = taiKhoan.role === "admin"
+                ? "Quản trị viên"
+                : "Thành viên";
+
+            const cacCot = [
+                index + 1,
+                taiKhoan.ho_ten || "Chưa cập nhật",
+                taiKhoan.tieu_doi || "Chưa cập nhật",
+                vaiTro,
+                taiKhoan.id || ""
+            ];
+
+            cacCot.forEach(giaTri => {
+                const o = document.createElement("td");
+                o.textContent = String(giaTri);
+                o.style.padding = "10px";
+                o.style.border = "1px solid #ccc";
+                dong.appendChild(o);
+            });
+
+            thanBang.appendChild(dong);
+        });
+
+        bang.appendChild(thanBang);
+
+        khuVuc.replaceChildren();
+
+        const tieuDeTrang = document.createElement("h2");
+        tieuDeTrang.textContent = "QUẢN LÝ TÀI KHOẢN BBB11";
+
+        const thongBao = document.createElement("p");
+        thongBao.textContent =
+            "Tổng số hồ sơ: " + danhSach.length;
+
+        khuVuc.append(tieuDeTrang, thongBao, bang);
+
+    } catch (error) {
+        console.error("Lỗi tải danh sách tài khoản:", error);
+
+        khuVuc.replaceChildren();
+
+        const thongBao = document.createElement("p");
+        thongBao.textContent =
+            "Không tải được danh sách. Hãy kiểm tra quyền truy cập bảng profiles trên Supabase.";
+
+        khuVuc.appendChild(thongBao);
+    }
+}
+
+// BBB11 - QUAN LY TAI KHOAN
+async function hienThiTaiKhoan() {
+    const client = window.supabaseClient;
+
+    if (window.bbb11CurrentRole !== "admin") {
+        alert("Ban khong co quyen quan ly tai khoan!");
+        return;
+    }
+
+    if (!client) {
+        alert("Chua ket noi Supabase!");
+        return;
+    }
+
+    const khuVuc = document.getElementById("pageContent");
+
+    if (!khuVuc) {
+        alert("Khong tim thay pageContent!");
+        return;
+    }
+
+    khuVuc.innerHTML = "<h2>QUAN LY TAI KHOAN BBB11</h2><p>Dang tai...</p>";
+        try {
+        const { data, error } = await client
+            .from("profiles")
+            .select("id, ho_ten, tieu_doi, role")
+            .order("ho_ten", { ascending: true });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            khuVuc.innerHTML =
+                "<h2>QUAN LY TAI KHOAN BBB11</h2><p>Chua co tai khoan.</p>";
+            return;
+        }
+                const bang = document.createElement("table");
+        bang.style.width = "100%";
+        bang.style.borderCollapse = "collapse";
+
+        const cot = ["STT", "HO TEN", "TRUNG DOI", "VAI TRO", "MA HO SO"];
+        const thead = document.createElement("tr");
+
+        cot.forEach(t => {
+            const th = document.createElement("th");
+            th.textContent = t;
+            th.style.border = "1px solid #ccc";
+            th.style.padding = "8px";
+            thead.appendChild(th);
+        });
+
+        bang.appendChild(thead);
+
+        data.forEach((tk, i) => {
+            const tr = document.createElement("tr");
+
+            [
+                i + 1,
+                tk.ho_ten || "Chua cap nhat",
+                tk.tieu_doi || "Chua cap nhat",
+                tk.role || "member",
+                tk.id || ""
+            ].forEach(value => {
+                const td = document.createElement("td");
+                td.textContent = String(value);
+                td.style.border = "1px solid #ccc";
+                td.style.padding = "8px";
+                tr.appendChild(td);
+            });
+
+            bang.appendChild(tr);
+        });
+
+        khuVuc.replaceChildren();
+
+        const h2 = document.createElement("h2");
+        h2.textContent = "QUAN LY TAI KHOAN BBB11";
+
+        const p = document.createElement("p");
+        p.textContent = "Tong so ho so: " + data.length;
+
+        khuVuc.append(h2, p, bang);
+            } catch (error) {
+        console.error("Loi hien thi tai khoan:", error);
+        khuVuc.textContent =
+            "Khong tai duoc danh sach. Hay kiem tra quyen truy cap Supabase.";
+    }
+}
+
+window.hienThiTaiKhoan = hienThiTaiKhoan;
 
