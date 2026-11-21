@@ -4303,7 +4303,7 @@ const danhSachNghiQuyetBBB11 = [
         - Xây dựng đoàn kết nội bộ, chấp hành nghiêm kỷ luật.
         - Tích cực tu dưỡng, rèn luyện đạo đức, lối sống.
         `,
-        url: "https://btllang.mod.gov.vn/tin-tuc/tin-tong-hop/12143-toan-quan-quan-triet-va-thuc-hien-hieu-qua-nghi-quyet-so-847-nq-qutw-cua-quan-uy-trung-uong.html"
+        url: "https://tapchiqptd.vn/vi/quan-triet-thuc-hien-nghi-quyet/quan-doan-2-tap-trung-lanh-dao-thuc-hien-nghi-quyet-so-847nqqutw-cua-quan-uy-trung-uong/18677.html?utm_source=chatgpt.com"
     },
 
     {
@@ -4320,7 +4320,7 @@ const danhSachNghiQuyetBBB11 = [
         - Xây dựng đội ngũ cán bộ đáp ứng yêu cầu nhiệm vụ.
         - Tăng cường xây dựng chính quy và quản lý kỷ luật.
         `,
-        url: "https://www.qdnd.vn/vung-buoc-duoi-quan-ky-quyet-thang/su-menh-thoi-binh/xay-dung-quan-doi-nhan-dan-viet-nam-tinh-gon-manh-hien-dai-trong-thoi-ky-moi-807382"
+        url: "https://tapchiqptd.vn/vi/dua-nghi-quyet-cua-dang-vao-cuoc-song/ve-to-chuc-xay-dung-quan-doi-giai-doan-2021-2030-theo-dinh-huong-cua-dang/20093.html?utm_source=chatgpt.com"
     },
 
     {
@@ -4336,7 +4336,7 @@ const danhSachNghiQuyetBBB11 = [
         - Phát triển đội ngũ cán bộ nghiên cứu khoa học.
         - Gắn nghiên cứu với yêu cầu xây dựng Quân đội.
         `,
-        url: "https://baoquankhu7.vn/dang-uy-quan-su-tphcm-quan-triet-cac-nghi-quyet-cua-quan-uy-trung-uong-1501886898-0032490s36310gs"
+        url: "https://tapchiqptd.vn/vi/bao-ve-to-quoc/chu-truong-giai-phap-dot-pha-nang-cao-chat-luong-hieu-qua-cong-tac-nghien-cuu-khoa-hoc-quan-su/20094.html?utm_source=chatgpt.com"
     },
 
     {
@@ -4352,7 +4352,7 @@ const danhSachNghiQuyetBBB11 = [
         - Tăng cường quản lý, bảo quản và sử dụng trang bị.
         - Phát triển đội ngũ cán bộ, nhân viên kỹ thuật.
         `,
-        url: "https://baoquankhu7.vn/dang-uy-quan-su-tphcm-quan-triet-cac-nghi-quyet-cua-quan-uy-trung-uong-1501886898-0032490s36310gs"
+        url: "https://www.qdnd.vn/chinh-tri/tin-tuc/dang-uy-binh-doan-15-quan-triet-trien-khai-thuc-hien-cac-nghi-quyet-cua-quan-uy-trung-uong-721057"
     },
 
     {
@@ -4369,7 +4369,7 @@ const danhSachNghiQuyetBBB11 = [
         - Nâng cao chất lượng đào tạo cán bộ.
         - Xây dựng môi trường giáo dục chính quy, hiện đại.
         `,
-        url: "https://tapchiqptd.vn/vi/quan-triet-thuc-hien-nghi-quyet/quan-triet-nghi-quyet-so-1657nqqutw-hoc-vien-phong-khong-khong-quan-doi-moi-cong-tac-giao-/22259.html"
+        url: "https://tapchiqptd.vn/vi/quan-triet-thuc-hien-nghi-quyet/quan-triet-nghi-quyet-so-1657nqqutw-hoc-vien-phong-khong-khong-quan-doi-moi-cong-tac-giao-/22259.html?utm_source=chatgpt.com"
     },
 
     {
@@ -4385,7 +4385,7 @@ const danhSachNghiQuyetBBB11 = [
         - Chủ động bảo đảm hậu cần cho các nhiệm vụ.
         - Quản lý và sử dụng hiệu quả nguồn lực hậu cần.
         `,
-        url: "https://baoquankhu7.vn/dang-uy-quan-su-tphcm-quan-triet-cac-nghi-quyet-cua-quan-uy-trung-uong-1501886898-0032490s36310gs"
+        url: "https://www.qdnd.vn/quoc-phong-an-ninh/xay-dung-quan-doi/p/238"
     },
     {
         title: "Nghị quyết 847-NQ/QUTW",
@@ -4402,7 +4402,7 @@ const danhSachNghiQuyetBBB11 = [
         - Xây dựng đoàn kết nội bộ, chấp hành nghiêm kỷ luật.
         - Tích cực tu dưỡng, rèn luyện đạo đức, lối sống.
         `,
-        url: "https://btllang.mod.gov.vn/tin-tuc/tin-tong-hop/12143-toan-quan-quan-triet-va-thuc-hien-hieu-qua-nghi-quyet-so-847-nq-qutw-cua-quan-uy-trung-uong.html"
+        url: "https://tapchiqptd.vn/vi/quan-triet-thuc-hien-nghi-quyet/quan-doan-2-tap-trung-lanh-dao-thuc-hien-nghi-quyet-so-847nqqutw-cua-quan-uy-trung-uong/18677.html?utm_source=chatgpt.com"
     },
      
     {
@@ -4421,7 +4421,7 @@ const danhSachNghiQuyetBBB11 = [
     - Gắn phát huy phẩm chất Bộ đội Cụ Hồ với thực hiện nhiệm vụ.
     - Kiên quyết đấu tranh với những biểu hiện suy thoái về đạo đức, lối sống.
     `,
-    url: "https://btllang.mod.gov.vn/tin-tuc/tin-tu-bo-tu-lenh-lang/16044-doan-285-to-chuc-quan-triet-trien-khai-cac-chi-thi-cua-bo-chinh-tri-quan-uy-trung-uong-bo-quoc-phong.html"
+    url: "https://tapchiqptd.vn/vi/chuyen-luan-chi-dao/nang-cao-hieu-qua-cong-tac-tu-tuong-trong-quan-doi-thoi-ky-moi/26797.html?utm_source=chatgpt.com"
   },
   {
     title: "Chỉ thị số 1161-CT/QUTW về tăng cường lãnh đạo, chỉ đạo công tác quản lý tư tưởng, chấp hành kỷ luật, pháp luật trong toàn quân",
@@ -4440,7 +4440,7 @@ const danhSachNghiQuyetBBB11 = [
     - Chủ động phòng ngừa vi phạm và bảo đảm an toàn trong đơn vị.
     - Xây dựng cơ quan, đơn vị vững mạnh toàn diện.
     `,
-    url: "https://quankhu2.vn/bo-tham-muu-quan-khu-tang-cuong-quan-ly-tu-tuong-chap-hanh-ky-luat/"
+    url: "https://www.qdnd.vn/?utm_source=chatgpt.com"
   },
   {
     title: "Chỉ thị số 76/CT-BQP về tăng cường công tác giáo dục chính trị, quản lý tư tưởng, duy trì kỷ luật và bảo đảm an toàn trong Quân đội nhân dân Việt Nam",
@@ -4459,25 +4459,10 @@ const danhSachNghiQuyetBBB11 = [
     - Tăng cường kiểm tra, giám sát việc thực hiện nhiệm vụ.
     - Xây dựng đơn vị vững mạnh toàn diện, an toàn.
     `,
-    url: "https://baoquankhu4.com.vn/chinh-tri/quan-su-quoc-phong/tang-cuong-giao-duc-chinh-tri-quan-ly-tu-tuong-duy-tri-ky-luat-va-bao-dam-an-toan-trong-luc-luong-vu-trang-quan-khu-4.html"
+    url: "https://tapchiqptd.vn/vi/chuyen-luan-chi-dao/nang-cao-hieu-qua-cong-tac-tu-tuong-trong-quan-doi-thoi-ky-moi/26797.html?utm_source=chatgpt.com"
  },
 
-    {
-        title: "Nghị quyết 05-NQ/TW",
-        date: "17/01/2022",
-        agency: "Bộ Chính trị",
-        description: "Về tổ chức Quân đội nhân dân Việt Nam giai đoạn 2021–2030 và những năm tiếp theo.",
-        content: `
-        NỘI DUNG HỌC TẬP:
 
-        - Xây dựng Quân đội nhân dân cách mạng, chính quy, tinh nhuệ, hiện đại.
-        - Điều chỉnh tổ chức lực lượng theo hướng tinh, gọn, mạnh.
-        - Nâng cao chất lượng tổng hợp và sức mạnh chiến đấu.
-        - Xây dựng đội ngũ cán bộ đáp ứng yêu cầu nhiệm vụ.
-        - Tăng cường xây dựng chính quy và quản lý kỷ luật.
-        `,
-        url: "https://www.qdnd.vn/vung-buoc-duoi-quan-ky-quyet-thang/su-menh-thoi-binh/xay-dung-quan-doi-nhan-dan-viet-nam-tinh-gon-manh-hien-dai-trong-thoi-ky-moi-807382"
-    },
 
 
   {
@@ -4496,7 +4481,7 @@ const danhSachNghiQuyetBBB11 = [
     - Xây dựng nền quốc phòng toàn dân và thế trận an ninh nhân dân.
     - Phấn đấu thực hiện các mục tiêu phát triển đất nước đến năm 2030 và tầm nhìn 2045.
     `,
-    url: "https://tulieuvankien.dangcongsan.vn/"
+    url: "https://tulieuvankien.dangcongsan.vn/?utm_source=chatgpt.com"
   },
   {
     title: "Nghị quyết số 847-NQ/QUTW về phát huy phẩm chất Bộ đội Cụ Hồ",
@@ -4513,7 +4498,7 @@ const danhSachNghiQuyetBBB11 = [
     - Xây dựng đoàn kết nội bộ, chấp hành nghiêm kỷ luật.
     - Tích cực tu dưỡng, rèn luyện đạo đức, lối sống.
     `,
-    url: "https://btllang.mod.gov.vn/tin-tuc/tin-tong-hop/12143-toan-quan-quan-triet-va-thuc-hien-hieu-qua-nghi-quyet-so-847-nq-qutw-cua-quan-uy-trung-uong.html"
+    url: "https://tulieuvankien.dangcongsan.vn/?utm_source=chatgpt.com"
   },
   {
     title: "Nghị quyết số 765-NQ/QUTW về nâng cao chất lượng huấn luyện trong tình hình mới",
@@ -4531,7 +4516,7 @@ const danhSachNghiQuyetBBB11 = [
     - Nâng cao trình độ, năng lực của đội ngũ cán bộ huấn luyện.
     - Gắn huấn luyện với yêu cầu nhiệm vụ và thực tiễn đơn vị.
     `,
-    url: "https://www.qdnd.vn/vung-buoc-duoi-quan-ky-quyet-thang/su-menh-thoi-binh/nghi-quyet-so-765-tam-nhin-chien-luoc-cua-quan-uy-trung-uong-ve-nang-cao-chat-luong-huan-luyen-trong-thoi-ky-moi-808019"
+    url: "https://tapchiqptd.vn/vi/chuyen-luan-chi-dao/phat-huy-ket-qua-10-nam-thuc-hien-nghi-quyet-so-765nqqutw-toan-quan-tiep-tuc-doi-moi-sang-/19787.html?utm_source=chatgpt.com"
   },
   {
     title: "Nghị quyết số 31-NQ/TW về tăng cường xây dựng, chỉnh đốn Đảng và hệ thống chính trị",
@@ -4549,7 +4534,7 @@ const danhSachNghiQuyetBBB11 = [
     - Phát huy vai trò giám sát của Nhân dân.
     - Xây dựng đội ngũ cán bộ, đảng viên có phẩm chất và năng lực.
     `,
-    url: "https://xaydungchinhsach.chinhphu.vn/toan-van-nghi-quyet-so-31-nq-tw-ve-tang-cuong-xay-dung-chinh-don-dang-va-he-thong-chinh-tri-trong-sach-vung-manh-toan-dien-dap-ung-yeu-cau-phat-trien-cua-dat-nuoc-trong-ky-nguyen-moi-119261016055452113.htm"
+    url: "https://www.qdnd.vn/quoc-phong-an-ninh/tin-tuc/cu-the-hoa-nghi-quyet-trung-uong-4-khoa-xiv-bang-ke-hoach-chuong-trinh-hanh-dong-thiet-thuc-hieu-qua-phu-hop-voi-chuc-nang-nhiem-vu-quan-doi-1061589"
   },
   {
     title: "Nghị quyết số 29-NQ/TW về tiếp tục đổi mới, hoàn thiện phương thức lãnh đạo, cầm quyền của Đảng",
@@ -4567,7 +4552,7 @@ const danhSachNghiQuyetBBB11 = [
     - Phát huy dân chủ, trách nhiệm và tính chủ động của các tổ chức.
     - Nâng cao hiệu lực, hiệu quả hoạt động của hệ thống chính trị.
     `,
-    url: "https://xaydungchinhsach.chinhphu.vn/toan-van-nghi-quyet-so-29-nq-tw-ve-tiep-tuc-doi-moi-hoan-thien-phuong-thuc-lanh-dao-cam-quyen-cua-dang-trong-ky-nguyen-moi-119261016061054937.htm"
+    url: "https://www.qdnd.vn/quoc-phong-an-ninh/tin-tuc/cu-the-hoa-nghi-quyet-trung-uong-4-khoa-xiv-bang-ke-hoach-chuong-trinh-hanh-dong-thiet-thuc-hieu-qua-phu-hop-voi-chuc-nang-nhiem-vu-quan-doi-1061589https://www.qdnd.vn/chinh-tri/cac-van-de/bo-chinh-tri-ban-hanh-chuong-trinh-hanh-dong-thuc-hien-ba-nghi-quyet-ve-xay-dung-dang-1060883"
   },
   {
     title: "Nghị quyết số 30-NQ/TW về tiếp tục xây dựng đội ngũ cán bộ các cấp",
@@ -4585,7 +4570,7 @@ const danhSachNghiQuyetBBB11 = [
     - Kiên quyết phòng, chống chạy chức, chạy quyền.
     - Xây dựng đội ngũ cán bộ đáp ứng yêu cầu nhiệm vụ trong tình hình mới.
     `,
-    url: "https://xaydungchinhsach.chinhphu.vn/toan-van-nghi-quyet-so-30-nq-tw-ve-tiep-tuc-xay-dung-doi-ngu-can-bo-cac-cap-va-doi-moi-can-ban-toan-dien-cong-tac-can-bo-dap-ung-yeu-cau-phat-trien-dat-nuoc-trong-ky-nguyen-moi-119261016060339237.htm"
+    url: "https://www.qdnd.vn/chinh-tri/cac-van-de/bo-chinh-tri-ban-hanh-chuong-trinh-hanh-dong-thuc-hien-ba-nghi-quyet-ve-xay-dung-dang-1060883"
   },
   {
     title: "Nghị quyết số 224/2025/QH15",
@@ -4601,7 +4586,7 @@ const danhSachNghiQuyetBBB11 = [
     - Tìm hiểu yêu cầu tổ chức triển khai thực hiện.
     - Liên hệ trách nhiệm cá nhân trong thực hiện chủ trương, chính sách.
     `,
-    url: "https://quangngai.gov.vn/tin-tuc/tin-chi-dao-dieu-hanh/trien-khai-thuc-hien-nghi-quyet-so-224-2025-qh15-va-nghi-quyet-so-227-2025-qh15-ve-ky-hop-thu-9-quoc-hoi-khoa-xv.html"
+    url: "https://vanban.chinhphu.vn/?classid=1&docid=214384&pageid=27160&utm_source=chatgpt.com"
   },
   {
     title: "Quyết định số 3089/QĐ-TLĐ của Đoàn Chủ tịch Tổng Liên đoàn Lao động Việt Nam",
@@ -4618,7 +4603,7 @@ const danhSachNghiQuyetBBB11 = [
     - Tăng cường trách nhiệm của doanh nghiệp và tổ chức công đoàn.
     - Thực hiện các quy định về hỗ trợ theo đúng đối tượng và điều kiện.
     `,
-    url: "https://laodong.vn/cong-doan/quyet-dinh-3089-cua-tong-ldldvn-giup-nguoi-lao-dong-3-tai-cho-yen-tam-san-xuat-950859.ldo"
+    url: "https://congdoanvietnam.vn/"
   },
   {
     title: "Nghị quyết về nhiệm vụ quân sự, quốc phòng",
@@ -4636,7 +4621,7 @@ const danhSachNghiQuyetBBB11 = [
     - Nâng cao tinh thần cảnh giác và trách nhiệm bảo vệ Tổ quốc.
     - Xây dựng đơn vị vững mạnh toàn diện.
     `,
-    url: "https://mod.gov.vn/"
+    url: "https://www.qdnd.vn/?utm_source=chatgpt.com"
   },
   {
     title: "Văn kiện và nghị quyết của Đảng",
@@ -4653,7 +4638,7 @@ const danhSachNghiQuyetBBB11 = [
     - Vận dụng nội dung văn kiện vào thực tiễn công tác.
     - Tăng cường trách nhiệm của cán bộ, đảng viên.
     `,
-    url: "https://tulieuvankien.dangcongsan.vn/"
+    url: "https://mod.gov.vn/?utm_source=chatgpt.com"
   },
   {
     title: "Tài liệu tuyên truyền, giáo dục chính trị trong Quân đội",
@@ -4671,7 +4656,7 @@ const danhSachNghiQuyetBBB11 = [
     - Xây dựng đoàn kết nội bộ và đoàn kết quân dân.
     - Nâng cao tinh thần trách nhiệm trong thực hiện nhiệm vụ.
     `,
-    url: "https://www.qdnd.vn/"
+    url: "https://tulieuvankien.dangcongsan.vn/?utm_source=chatgpt.com"
   },
 
 
@@ -4688,7 +4673,7 @@ const danhSachNghiQuyetBBB11 = [
         - Phát triển đội ngũ cán bộ nghiên cứu khoa học.
         - Gắn nghiên cứu với yêu cầu xây dựng Quân đội.
         `,
-        url: "https://baoquankhu7.vn/dang-uy-quan-su-tphcm-quan-triet-cac-nghi-quyet-cua-quan-uy-trung-uong-1501886898-0032490s36310gs"
+        url: "https://hcmcpv.org.vn/tin-tuc/dang-uy-quan-khu-7-quan-triet-trien-khai-thuc-hien-cac-nghi-quyet-cua-quan-uy-trung-uong-1491905850?utm_source=chatgpt.com"
     },
 
     {
@@ -4704,7 +4689,7 @@ const danhSachNghiQuyetBBB11 = [
         - Tăng cường quản lý, bảo quản và sử dụng trang bị.
         - Phát triển đội ngũ cán bộ, nhân viên kỹ thuật.
         `,
-        url: "https://baoquankhu7.vn/dang-uy-quan-su-tphcm-quan-triet-cac-nghi-quyet-cua-quan-uy-trung-uong-1501886898-0032490s36310gs"
+        url: "https://tapchiqptd.vn/vi/bao-ve-to-quoc/chu-truong-giai-phap-dot-pha-nang-cao-chat-luong-hieu-qua-cong-tac-nghien-cuu-khoa-hoc-quan-su/20094.html?utm_source=chatgpt.com"
     },
 
     {
@@ -4721,7 +4706,7 @@ const danhSachNghiQuyetBBB11 = [
         - Nâng cao chất lượng đào tạo cán bộ.
         - Xây dựng môi trường giáo dục chính quy, hiện đại.
         `,
-        url: "https://tapchiqptd.vn/vi/quan-triet-thuc-hien-nghi-quyet/quan-triet-nghi-quyet-so-1657nqqutw-hoc-vien-phong-khong-khong-quan-doi-moi-cong-tac-giao-/22259.html"
+        url: "https://tapchiqptd.vn/vi/bao-ve-to-quoc/chu-truong-giai-phap-dot-pha-nang-cao-chat-luong-hieu-qua-cong-tac-nghien-cuu-khoa-hoc-quan-su/20094.html?utm_source=chatgpt.com"
     },
 
     {
@@ -4737,7 +4722,7 @@ const danhSachNghiQuyetBBB11 = [
         - Chủ động bảo đảm hậu cần cho các nhiệm vụ.
         - Quản lý và sử dụng hiệu quả nguồn lực hậu cần.
         `,
-        url: "https://baoquankhu7.vn/dang-uy-quan-su-tphcm-quan-triet-cac-nghi-quyet-cua-quan-uy-trung-uong-1501886898-0032490s36310gs"
+        url: "https://tapchiqptd.vn/vi/bao-ve-to-quoc/chu-truong-giai-phap-dot-pha-nang-cao-chat-luong-hieu-qua-cong-tac-nghien-cuu-khoa-hoc-quan-su/20094.html?utm_source=chatgpt.com"
     },
 
     {
@@ -4754,7 +4739,7 @@ const danhSachNghiQuyetBBB11 = [
         - Nâng cao trình độ và khả năng thực hiện nhiệm vụ.
         - Bảo đảm an toàn trong huấn luyện và diễn tập.
         `,
-        url: "https://baoquankhu7.vn/dang-uy-quan-su-tphcm-quan-triet-cac-nghi-quyet-cua-quan-uy-trung-uong-1501886898-0032490s36310gs"
+        url: "https://tapchiqptd.vn/vi/bao-ve-to-quoc/chu-truong-giai-phap-dot-pha-nang-cao-chat-luong-hieu-qua-cong-tac-nghien-cuu-khoa-hoc-quan-su/20094.html?utm_source=chatgpt.com"
     },
 
     {
@@ -4770,7 +4755,7 @@ const danhSachNghiQuyetBBB11 = [
         - Thực hành tiết kiệm, chống lãng phí.
         - Tăng cường công khai, minh bạch và kiểm tra tài chính.
         `,
-        url: "https://baoquankhu7.vn/dang-uy-quan-su-tphcm-quan-triet-cac-nghi-quyet-cua-quan-uy-trung-uong-1501886898-0032490s36310gs"
+        url: "https://tapchiqptd.vn/vi/chuyen-luan-chi-dao/trien-khai-thuc-hien-co-hieu-qua-cong-tac-tai-chinh-quan-doi-nam-2025/23781.html?utm_source=chatgpt.com"
     },
 
     {
@@ -4787,7 +4772,7 @@ const danhSachNghiQuyetBBB11 = [
         - Kết hợp chặt chẽ nhiệm vụ xây dựng và bảo vệ Tổ quốc.
         - Xây dựng lực lượng vũ trang nhân dân vững mạnh.
         `,
-        url: "https://truongchinhtrihatinh.gov.vn/uploads/news/2024_08/so-50.pdf"
+        url: "https://tapchiqptd.vn/vi/quan-triet-thuc-hien-nghi-quyet/nhung-noi-dung-co-ban-cua-nghi-quyet-trung-uong-8-khoa-xiii-ve-chien-luoc-bao-ve-to-quoc-t/21360.html?utm_source=chatgpt.com"
     },
 
     {
@@ -4804,7 +4789,7 @@ const danhSachNghiQuyetBBB11 = [
         - Nâng cao năng lực chuyển đổi số.
         - Ứng dụng công nghệ vào quản lý và thực hiện nhiệm vụ.
         `,
-        url: "https://tulieuvankien.dangcongsan.vn/"
+        url: "https://baochinhphu.vn/nghi-quyet-so-57-tu-tam-nhin-den-hanh-dong-de-tang-toc-trong-ky-nguyen-so-102241227194540796.htm?utm_source=chatgpt.com"
     },
 
     {
@@ -4840,75 +4825,10 @@ const danhSachNghiQuyetBBB11 = [
         - Nâng cao trình độ và khả năng thực hiện nhiệm vụ.
         - Bảo đảm an toàn trong huấn luyện và diễn tập.
         `,
-        url: "https://baoquankhu7.vn/dang-uy-quan-su-tphcm-quan-triet-cac-nghi-quyet-cua-quan-uy-trung-uong-1501886898-0032490s36310gs"
+        url: "https://tapchiqptd.vn/vi/quan-triet-thuc-hien-nghi-quyet/binh-chung-thong-tin-lien-lac-day-manh-thuc-hien-nghi-quyet-so-1659-cua-quan-uy-trung-uong/23767.html?utm_source=chatgpt.com"
     },
 
-    {
-        title: "Nghị quyết 1661-NQ/QUTW",
-        date: "20/12/2022",
-        agency: "Quân ủy Trung ương",
-        description: "Về lãnh đạo công tác tài chính Quân đội đến năm 2030.",
-        content: `
-        NỘI DUNG HỌC TẬP:
-
-        - Nâng cao hiệu quả quản lý tài chính.
-        - Bảo đảm ngân sách thực hiện nhiệm vụ.
-        - Thực hành tiết kiệm, chống lãng phí.
-        - Tăng cường công khai, minh bạch và kiểm tra tài chính.
-        `,
-        url: "https://baoquankhu7.vn/dang-uy-quan-su-tphcm-quan-triet-cac-nghi-quyet-cua-quan-uy-trung-uong-1501886898-0032490s36310gs"
-    },
-
-    {
-        title: "Nghị quyết 44-NQ/TW",
-        date: "24/11/2023",
-        agency: "Ban Chấp hành Trung ương Đảng",
-        description: "Về Chiến lược bảo vệ Tổ quốc trong tình hình mới.",
-        content: `
-        NỘI DUNG HỌC TẬP:
-
-        - Bảo vệ vững chắc độc lập, chủ quyền và toàn vẹn lãnh thổ.
-        - Bảo vệ Đảng, Nhà nước, Nhân dân và chế độ xã hội chủ nghĩa.
-        - Xây dựng nền quốc phòng toàn dân vững mạnh.
-        - Kết hợp chặt chẽ nhiệm vụ xây dựng và bảo vệ Tổ quốc.
-        - Xây dựng lực lượng vũ trang nhân dân vững mạnh.
-        `,
-        url: "https://truongchinhtrihatinh.gov.vn/uploads/news/2024_08/so-50.pdf"
-    },
-
-    {
-        title: "Nghị quyết 57-NQ/TW",
-        date: "22/12/2024",
-        agency: "Bộ Chính trị",
-        description: "Về đột phá phát triển khoa học, công nghệ, đổi mới sáng tạo và chuyển đổi số quốc gia.",
-        content: `
-        NỘI DUNG HỌC TẬP:
-
-        - Đẩy mạnh phát triển khoa học và công nghệ.
-        - Thúc đẩy đổi mới sáng tạo.
-        - Phát triển hạ tầng số và dữ liệu số.
-        - Nâng cao năng lực chuyển đổi số.
-        - Ứng dụng công nghệ vào quản lý và thực hiện nhiệm vụ.
-        `,
-        url: "https://tulieuvankien.dangcongsan.vn/"
-    },
-
-    {
-        title: "Nghị quyết 3488-NQ/QUTW",
-        date: "29/01/2025",
-        agency: "Quân ủy Trung ương",
-        description: "Về đột phá phát triển khoa học, công nghệ, đổi mới sáng tạo và chuyển đổi số trong Quân đội.",
-        content: `
-        NỘI DUNG HỌC TẬP:
-
-        - Phát triển khoa học và công nghệ trong Quân đội.
-        - Đẩy mạnh đổi mới sáng tạo.
-        - Tăng cường ứng dụng công nghệ số.
-        - Nâng cao năng lực nghiên cứu và làm chủ công nghệ.
-        - Thúc đẩy chuyển đổi số trong các cơ quan, đơn vị.
-        `,
-        url: "https://www.qdnd.vn/giao-duc-khoa-hoc/nha-truong-quan-doi/hoc-vien-quan-y-quan-triet-trien-khai-thuc-hien-nghi-quyet-so-3488-nq-qutw-818493"
-    }
+    
 ];
 
  // =============================================
@@ -4990,7 +4910,29 @@ window.resolutionPage = function () {
 
             </div>
         </div>
-    `;
+    
+    <div class="resolution-web-box">
+    <h3>🌐 XEM TÀI LIỆU TRỰC TIẾP</h3>
+
+    <iframe
+        id="resolutionWebFrame"
+        src="about:blank"
+        title="Nội dung nghị quyết"
+        style="
+            width: 100%;
+            height: 650px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: white;
+        "
+        loading="lazy">
+    </iframe>
+
+    <p id="resolutionWebNote">
+        Chọn nghị quyết để xem tài liệu tại đây.
+    </p>
+</div>
+`;
 };
 
 
@@ -5031,11 +4973,10 @@ window.hienThiTaiLieuNghiQuyet = function () {
 };
 
 
+
 /* =========================================
    CHỌN NGHỊ QUYẾT ĐỂ ĐỌC
 ========================================= */
-
-
 
 window.chonNghiQuyetBBB11 = function (index) {
     const item = danhSachNghiQuyetBBB11[index];
@@ -5047,44 +4988,55 @@ window.chonNghiQuyetBBB11 = function (index) {
 
     nghiQuyetDangXemBBB11 = index;
 
+    // Hiển thị tiêu đề
     const title = document.getElementById("resolutionReaderTitle");
     const description = document.getElementById("resolutionReaderDescription");
     const content = document.getElementById("resolutionReaderContent");
-    const frame = document.getElementById("resolutionReader");
-    const note = document.getElementById("resolutionReaderNote");
 
-    if (!title || !description || !content) {
-        alert("Không tìm thấy khung đọc tài liệu!");
-        return;
+    if (title) {
+        title.textContent = item.title || "Nghị quyết";
     }
 
-    title.textContent = item.title || "Nghị quyết";
-    description.textContent =
-        (item.agency || "Chưa cập nhật") + " | " +
-        (item.date || "Chưa cập nhật");
+    if (description) {
+        description.textContent = item.description || "";
+    }
 
-    content.innerHTML = `
-        <div class="notice-card">
-            <h3>📘 NỘI DUNG HỌC TẬP</h3>
-            <p>${escapeHTML(item.description || "")}</p>
-            <div style="white-space:pre-line;line-height:1.9">
-                ${escapeHTML(item.content || "Chưa có nội dung chi tiết.")}
-            </div>
-        </div>
-    `;
+    if (content) {
+        content.textContent =
+            item.content || "Chưa có nội dung văn bản được lưu.";
+    }
+
+    // Hiển thị đường link trực tiếp trong trang
+    const frame = document.getElementById("resolutionWebFrame");
+    const note = document.getElementById("resolutionWebNote");
 
     if (frame) {
-        frame.src = "about:blank";
-        frame.style.display = "none";
+        if (item.url) {
+            frame.src = item.url;
+
+            if (note) {
+                note.textContent =
+                    "Đang thử tải tài liệu. Nếu không hiển thị, website nguồn có thể chặn khung xem trực tiếp.";
+            }
+        } else {
+            frame.src = "about:blank";
+
+            if (note) {
+                note.textContent = "Nghị quyết này chưa có đường link tài liệu.";
+            }
+        }
     }
 
-    if (note) {
-        note.textContent =
-            "Bạn đang đọc nội dung học tập trong hệ thống BBB11.";
-    }
+    // Hiện khu vực đọc nghị quyết nếu đang bị ẩn
+    const reader = document.getElementById("resolutionReader");
 
-    document.querySelector(".resolution-reader-card")
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (reader) {
+        reader.style.display = "block";
+        reader.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
 };
 
 
