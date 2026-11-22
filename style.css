@@ -1168,7 +1168,7 @@ footer {
 
 /* =================================
    GIAO DIỆN ĐĂNG NHẬP BBB11
-================================= */
+   ================================= */
 
 .login-container {
     position: fixed;
@@ -3269,7 +3269,7 @@ body.login-page {
             rgba(70, 0, 0, 0.12),
             rgba(70, 0, 0, 0.12)
         ),
-        url("./images/login-bg.png");
+        url("https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/login-bg%202.png");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -3313,7 +3313,7 @@ body.login-page {
     align-items: center;
 
     background-color: #8b0000;
-    background-image: url("./images/login-bg.png");
+    background-image: url("https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/login-bg%20(1).pnghttps://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/login-bg%202.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -3335,3 +3335,402 @@ body.login-page {
         padding: 16px;
     }
 }
+
+/* ===== ẢNH NỀN ĐĂNG NHẬP BBB11 ===== */
+
+html,
+body.login-page {
+    margin: 0 !important;
+    min-height: 100vh;
+    width: 100%;
+}
+
+body.login-page {
+    background: #8b0000 !important;
+}
+
+/* Ảnh Bác Hồ phủ toàn bộ màn hình */
+body.login-page #loginPage.login-container {
+    position: fixed !important;
+    inset: 0 !important;
+
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 100vh !important;
+    height: 100vh;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #8b0000 !important;
+    background-image: url("https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/login-bg%202.png") !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* Giữ các thành phần đăng nhập phía trên ảnh nền */
+body.login-page #loginPage .login-logo,
+body.login-page #loginPage form,
+body.login-page #loginPage p {
+    position: relative;
+    z-index: 2;
+}
+
+/* Thu nhỏ logo phía trên */
+body.login-page #loginPage .login-emblem {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+/* Hiển thị tốt trên điện thoại */
+@media (max-width: 600px) {
+    body.login-page #loginPage.login-container {
+        background-position: center center !important;
+        padding: 12px;
+    }
+
+    body.login-page #loginPage form {
+        width: 100%;
+        max-width: 380px;
+    }
+}
+
+/* CĂN GIỮA TIÊU ĐỀ SƯ ĐOÀN 9 - TRUNG ĐOÀN 1 */
+#loginPage .login-logo {
+    text-align: center;
+}
+
+#loginPage .login-logo .login-emblem {
+    display: block;
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    margin: 0 auto 8px;
+}
+
+/* SƯ ĐOÀN 9 */
+#loginPage .title-sudoan9 {
+    text-align: center;
+    margin: 0;
+}
+
+/* TRUNG ĐOÀN 1: hạ xuống một chút */
+#loginPage .title-trungdoan1 {
+    text-align: center;
+    margin: 6px 0 0;
+}
+
+/* NGÔI SAO VÀ HAI GẠCH VÀNG */
+#loginPage .star-divider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    width: 260px;
+    max-width: 85%;
+    margin: 20px auto 12px;
+}
+
+#loginPage .star-divider .gold-line {
+    flex: 1;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        #b8860b,
+        #fff4a3,
+        #ffdf00
+    );
+    border-radius: 4px;
+}
+
+#loginPage .star-divider i {
+    color: #ffdf00;
+    font-size: 28px;
+}
+
+/* HẠ LOGO SƯ ĐOÀN 9 XUỐNG THÊM */
+#loginPage .login-logo img.login-emblem {
+    transform: translateY(15px) !important;
+    margin-bottom: 20px !important;
+}
+
+/* HẠ CHỮ SƯ ĐOÀN 9 XUỐNG NHẸ */
+#loginPage .login-logo .title-sudoan9 {
+    position: relative;
+    top: 35px;
+}
+
+/* HẠ CHỮ TRUNG ĐOÀN 1 XUỐNG NHẸ */
+#loginPage .login-logo .title-trungdoan1 {
+    position: relative;
+    top: 15px;
+}
+
+/* HẠ NGÔI SAO VÀ HAI GẠCH VÀNG */
+#loginPage .star-divider {
+    position: relative;
+    top: 15px;
+    margin-bottom: 25px !important;
+}
+
+/* CĂN GIỮA TIÊU ĐỀ */
+#loginPage .login-heading {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#loginPage .login-heading .login-logo {
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#loginPage .login-heading h1,
+#loginPage .login-heading h2,
+#loginPage .login-heading h3 {
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#loginPage .login-heading h1 {
+    margin: 0;
+}
+
+#loginPage .login-heading h2 {
+    margin: 4px 0 0;
+}
+
+/* NGÔI SAO VÀ HAI GẠCH VÀNG */
+#loginPage .star-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    width: 280px;
+    max-width: 85%;
+    margin: 24px auto 14px;
+}
+
+#loginPage .star-divider .gold-line {
+    flex: 1;
+    height: 3px;
+    border-radius: 4px;
+    background: linear-gradient(
+        90deg,
+        #b8860b,
+        #fff2a0,
+        #ffdf00
+    );
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
+}
+
+#loginPage .star-divider i {
+    color: #ffdf00;
+    font-size: 28px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+#loginPage .title-tieudoan3 {
+    text-align: center;
+}
+
+#loginPage .login-heading h3 {
+    margin: 5px 0 0;
+}
+
+/* ÉP TOÀN BỘ TIÊU ĐỀ CĂN GIỮA */
+#loginPage .login-heading {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+}
+
+/* Hai cụm chữ căn giữa */
+#loginPage .login-heading > .login-logo {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+}
+
+/* Không để tiêu đề bị lệch do lề mặc định */
+#loginPage .login-heading h1,
+#loginPage .login-heading h2,
+#loginPage .login-heading h3 {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* Ngôi sao và hai gạch vàng */
+#loginPage .star-divider {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 280px !important;
+    max-width: 85% !important;
+    margin: 22px auto 14px !important;
+    gap: 12px !important;
+}
+
+#loginPage .star-divider .gold-line {
+    display: block !important;
+    flex: 1 !important;
+    height: 3px !important;
+    background: #ffdf00 !important;
+    border-radius: 4px !important;
+}
+
+#loginPage .star-divider i {
+    display: block !important;
+    color: #ffdf00 !important;
+    font-size: 28px !important;
+}
+
+/* ===== SỬA CĂN GIỮA TIÊU ĐỀ BBB11 ===== */
+
+body.login-page #loginPage {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+}
+
+/* Hai cụm tiêu đề chiếm toàn bộ chiều ngang */
+body.login-page #loginPage > .login-logo {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+}
+
+/* SƯ ĐOÀN 9 */
+body.login-page #loginPage .login-logo h1 {
+    width: 100% !important;
+    color: #ffdf00 !important;
+    font-size: 40px;
+    line-height: 1.2;
+    text-align: center !important;
+    margin: 0 auto !important;
+}
+
+/* TRUNG ĐOÀN 1 */
+body.login-page #loginPage .login-logo h2 {
+    width: 100% !important;
+    color: #ffdf00 !important;
+    text-align: center !important;
+    margin: 4px auto 0 !important;
+}
+
+/* Cụm TIỂU ĐOÀN 3 */
+body.login-page #loginPage > .login-logo:nth-of-type(2) {
+    margin-top: 18px !important;
+}
+
+/* NGÔI SAO VÀ HAI GẠCH VÀNG */
+body.login-page #loginPage .star-divider {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 280px !important;
+    max-width: 85% !important;
+    margin: 22px auto 12px !important;
+    gap: 14px !important;
+}
+
+body.login-page #loginPage .star-divider .gold-line {
+    display: block !important;
+    flex: 1 !important;
+    height: 3px !important;
+    background: linear-gradient(
+        90deg, #b8860b, #fff2a0, #ffdf00
+    ) !important;
+    border-radius: 4px !important;
+}
+
+body.login-page #loginPage .star-divider i {
+    color: #ffdf00 !important;
+    font-size: 28px !important;
+}
+
+/* ĐẠI ĐỘI BỘ BINH 11 */
+body.login-page #loginPage .login-logo h3 {
+    width: 100% !important;
+    text-align: center !important;
+    color: #ffdf00 !important;
+    margin: 5px auto 20px !important;
+}
+
+/* DÒNG GIỚI THIỆU VÀ CHÂN TRANG */
+body.login-page #loginPage > p {
+    width: 100%;
+    text-align: center !important;
+}
+
+/* SỬA CHỮ TIỂU ĐOÀN 3 BỊ LỆCH */
+body.login-page #loginPage > .login-logo:nth-of-type(2) h1 {
+    display: block !important;
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+
+    text-align: center !important;
+    text-indent: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* Căn giữa cả dòng ĐẠI ĐỘI BỘ BINH 11 */
+body.login-page #loginPage > .login-logo:nth-of-type(2) h3 {
+    display: block !important;
+    width: 100% !important;
+    margin: 5px auto 20px !important;
+    padding: 0 !important;
+    text-align: center !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+}
+
