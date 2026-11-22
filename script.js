@@ -4196,47 +4196,74 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 // ======================================
 // HỌC TẬP NGHỊ QUYẾT BBB11
-// ======================================
 
 function resolutionPage() {
+    const danhSach = typeof danhSachNghiQuyetBBB11 !== "undefined"
+        ? danhSachNghiQuyetBBB11
+        : [];
 
-    const danhSachNghiQuyet = [
-        {
-            title: "Nghị quyết Đại hội đại biểu toàn quốc lần thứ XIII của Đảng",
-            category: "Văn kiện Đại hội Đảng",
-            url: "https://tulieuvankien.dangcongsan.vn/"
-        },
-        {
-            title: "Nghị quyết số 847-NQ/QUTW về phát huy phẩm chất Bộ đội Cụ Hồ",
-            category: "Nghị quyết Quân ủy Trung ương",
-            url: "https://www.qdnd.vn/"
-        },
-        {
-            title: "Nghị quyết về nhiệm vụ quân sự, quốc phòng",
-            category: "Quân sự - Quốc phòng",
-            url: "https://mod.gov.vn/"
-        },
-        {
-            title: "Văn kiện và nghị quyết của Đảng",
-            category: "Tài liệu chính trị",
-            url: "https://tulieuvankien.dangcongsan.vn/"
-        },
-        {
-            title: "Tài liệu tuyên truyền, giáo dục chính trị trong Quân đội",
-            category: "Giáo dục chính trị",
-            url: "https://www.qdnd.vn/"
-        }
-    ];
+    const layNam = item => {
+        const match = String(item.date || "").match(
+            /\d{2}\/\d{2}\/(\d{4})/
+        );
+        return match ? match[1] : "Chưa xác minh";
+    };
+
+    const layChuDe = item => {
+        const text = (
+            (item.title || "") + " " +
+            (item.description || "")
+        ).toLowerCase();
+
+        if (/765|1657|1659|huấn luyện|đào tạo/.test(text))
+            return "Huấn luyện, giáo dục và đào tạo";
+
+        if (/1652|1656|3488|57-nq\/tw|khoa học|kỹ thuật|công nghệ|chuyển đổi số/.test(text))
+            return "Khoa học, kỹ thuật và công nghệ";
+
+        if (/1658|1661|hậu cần|tài chính/.test(text))
+            return "Hậu cần, tài chính";
+
+        if (/847|676|1161|76\/ct-bqp|bộ đội cụ hồ|tư tưởng|kỷ luật/.test(text))
+            return "Chính trị, tư tưởng và kỷ luật";
+
+        if (/29-nq\/tw|30-nq\/tw|31-nq\/tw|đại hội.*xiii|xây dựng đảng|hệ thống chính trị/.test(text))
+            return "Xây dựng Đảng và hệ thống chính trị";
+
+        if (/05-nq\/tw|44-nq\/tw|quốc phòng|bảo vệ tổ quốc|quân sự/.test(text))
+            return "Quân sự, quốc phòng và bảo vệ Tổ quốc";
+
+        return "Văn bản khác, đang xác minh";
+    };
+
+    const danhSachGop = [];
+    const daGap = new Set();
+
+    danhSach.forEach(item => {
+        const khoa = (item.title || "").trim().toLowerCase();
+
+        if (!khoa || daGap.has(khoa)) return;
+
+        daGap.add(khoa);
+        danhSachGop.push({
+            ...item,
+            nam: layNam(item),
+            chuDe: layChuDe(item)
+        });
+    });
+
+    const cacNam = [...new Set(danhSachGop.map(item => item.nam))]
+        .sort((a, b) => b.localeCompare(a));
+
+    const cacChuDe = [...new Set(danhSachGop.map(item => item.chuDe))];
 
     return `
         <div class="page-box">
-
             <h2>📚 HỌC TẬP NGHỊ QUYẾT BBB11</h2>
 
             <p>
-                Kho tài liệu học tập nghị quyết,
-                chỉ thị và văn kiện chính trị dành cho cán bộ,
-                chiến sĩ Đại đội 11.
+                Tra cứu tài liệu theo năm ban hành
+                và chủ đề học tập chính trị.
             </p>
 
             <div class="notice-card">
@@ -4247,46 +4274,226 @@ function resolutionPage() {
                 </p>
             </div>
 
-            <h3>📖 DANH SÁCH TÀI LIỆU</h3>
+            <h3>🔎 PHÂN LOẠI TÀI LIỆU</h3>
 
-            <div id="resolutionList">
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin:15px 0">
+                <select id="locNamNQ"
+                    onchange="locHienThiNghiQuyetBBB11()"
+                    style="padding:10px;max-width:100%">
+                    <option value="Tất cả">Tất cả các năm</option>
+                    ${cacNam.map(nam =>
+                        `<option value="${escapeHTML(nam)}">${escapeHTML(nam)}</option>`
+                    ).join("")}
+                </select>
 
-                ${danhSachNghiQuyet.map((item, index) => `
-                    <div class="list-item">
-
-                        <h3>
-                            ${index + 1}. ${escapeHTML(item.title)}
-                        </h3>
-
-                        <p>
-                            Phân loại:
-                            ${escapeHTML(item.category)}
-                        </p>
-
-                        <a href="${item.url}"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="action-button"
-                           style="display:inline-block;text-decoration:none">
-
-                            📖 XEM TÀI LIỆU
-
-                        </a>
-
-                    </div>
-                `).join("")}
-
+                <select id="locChuDeNQ"
+                    onchange="locHienThiNghiQuyetBBB11()"
+                    style="padding:10px;max-width:100%">
+                    <option value="Tất cả">Tất cả chủ đề</option>
+                    ${cacChuDe.map(chuDe =>
+                        `<option value="${escapeHTML(chuDe)}">${escapeHTML(chuDe)}</option>`
+                    ).join("")}
+                </select>
             </div>
 
+            <p id="demNghiQuyetBBB11"></p>
+            <div id="resolutionList"></div>
         </div>
     `;
 }
+
+function locHienThiNghiQuyetBBB11() {
+    const danhSach = typeof danhSachNghiQuyetBBB11 !== "undefined"
+        ? danhSachNghiQuyetBBB11
+        : [];
+
+    const namChon = document.getElementById("locNamNQ")?.value || "Tất cả";
+    const chuDeChon = document.getElementById("locChuDeNQ")?.value || "Tất cả";
+    const noiHienThi = document.getElementById("resolutionList");
+
+    if (!noiHienThi) return;
+
+    function layNam(item) {
+        const match = String(item.date || "").match(
+            /\d{2}\/\d{2}\/(\d{4})/
+        );
+        return match ? match[1] : "Chưa xác minh";
+    }
+
+    function layChuDe(item) {
+        const text = (
+            (item.title || "") + " " +
+            (item.description || "")
+        ).toLowerCase();
+
+        if (/765|1657|1659|huấn luyện|đào tạo/.test(text))
+            return "Huấn luyện, giáo dục và đào tạo";
+        if (/1652|1656|3488|57-nq\/tw|khoa học|kỹ thuật|công nghệ|chuyển đổi số/.test(text))
+            return "Khoa học, kỹ thuật và công nghệ";
+        if (/1658|1661|hậu cần|tài chính/.test(text))
+            return "Hậu cần, tài chính";
+        if (/847|676|1161|76\/ct-bqp|bộ đội cụ hồ|tư tưởng|kỷ luật/.test(text))
+            return "Chính trị, tư tưởng và kỷ luật";
+        if (/29-nq\/tw|30-nq\/tw|31-nq\/tw|đại hội.*xiii|xây dựng đảng|hệ thống chính trị/.test(text))
+            return "Xây dựng Đảng và hệ thống chính trị";
+        if (/05-nq\/tw|44-nq\/tw|quốc phòng|bảo vệ tổ quốc|quân sự/.test(text))
+            return "Quân sự, quốc phòng và bảo vệ Tổ quốc";
+
+        return "Văn bản khác, đang xác minh";
+    }
+
+    const daGap = new Set();
+
+    const ketQua = danhSach.filter(item => {
+        const khoa = (item.title || "").trim().toLowerCase();
+
+        if (!khoa || daGap.has(khoa)) return false;
+        daGap.add(khoa);
+
+        return (namChon === "Tất cả" || layNam(item) === namChon) &&
+            (chuDeChon === "Tất cả" || layChuDe(item) === chuDeChon);
+    });
+
+    document.getElementById("demNghiQuyetBBB11").textContent =
+        "Có " + ketQua.length + " tài liệu phù hợp.";
+
+    noiHienThi.innerHTML = ketQua.map((item, index) => `
+        <div class="list-item">
+            <h3>${index + 1}. ${escapeHTML(item.title || "Chưa có tiêu đề")}</h3>
+            <p><b>Năm ban hành:</b> ${escapeHTML(layNam(item))}</p>
+            <p><b>Phân loại:</b> ${escapeHTML(layChuDe(item))}</p>
+            <p>${escapeHTML(item.description || "")}</p>
+            ${item.url ? `
+                <a href="${escapeHTML(item.url)}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="action-button"
+                   style="display:inline-block;text-decoration:none">
+                    📖 XEM TÀI LIỆU
+                </a>
+            ` : "<p>Chưa có đường dẫn tài liệu.</p>"}
+        </div>
+    `).join("") || "<p>Không có tài liệu phù hợp.</p>";
+}
+
 
 // =============================================
 // KHO HỌC TẬP NGHỊ QUYẾT BBB11
 // =============================================
 
 const danhSachNghiQuyetBBB11 = [
+ {
+    title: "Chỉ thị số 676-CT/QUTW về tăng cường lãnh đạo, chỉ đạo phát huy giá trị văn hóa Bộ đội Cụ Hồ thời kỳ mới",
+    date: "20/06/2026",
+    agency: "Ban Thường vụ Quân ủy Trung ương",
+    description: "Tăng cường lãnh đạo, chỉ đạo phát huy giá trị văn hóa Bộ đội Cụ Hồ trong thời kỳ mới.",
+    content: `
+    NỘI DUNG HỌC TẬP:
+
+    - Giữ gìn và phát huy giá trị văn hóa Bộ đội Cụ Hồ.
+    - Tăng cường giáo dục chính trị, tư tưởng cho cán bộ, chiến sĩ.
+    - Xây dựng phẩm chất đạo đức, lối sống trong sáng.
+    - Phát huy tinh thần trách nhiệm, ý chí tự lực, tự cường.
+    - Xây dựng môi trường văn hóa quân sự lành mạnh.
+    - Gắn phát huy phẩm chất Bộ đội Cụ Hồ với thực hiện nhiệm vụ.
+    - Kiên quyết đấu tranh với những biểu hiện suy thoái về đạo đức, lối sống.
+    `,
+    url: "https://tapchiqptd.vn/vi/chuyen-luan-chi-dao/nang-cao-hieu-qua-cong-tac-tu-tuong-trong-quan-doi-thoi-ky-moi/26797.html?utm_source=chatgpt.com"
+  },
+   {
+    title: "Chỉ thị số 1161-CT/QUTW về tăng cường lãnh đạo, chỉ đạo công tác quản lý tư tưởng, chấp hành kỷ luật, pháp luật trong toàn quân",
+    date: "03/11/2026",
+    agency: "Ban Thường vụ Quân ủy Trung ương",
+    description: "Tăng cường công tác quản lý tư tưởng, chấp hành kỷ luật, pháp luật trong toàn quân.",
+    content: `
+    NỘI DUNG HỌC TẬP:
+
+    - Tăng cường sự lãnh đạo, chỉ đạo của cấp ủy, chỉ huy các cấp.
+    - Chủ động nắm bắt và quản lý tình hình tư tưởng bộ đội.
+    - Kịp thời định hướng tư tưởng và giải quyết các vấn đề phát sinh.
+    - Nâng cao ý thức chấp hành pháp luật Nhà nước, kỷ luật Quân đội.
+    - Phát huy vai trò, trách nhiệm của cán bộ chủ trì.
+    - Tăng cường xây dựng chính quy, duy trì nghiêm kỷ luật.
+    - Chủ động phòng ngừa vi phạm và bảo đảm an toàn trong đơn vị.
+    - Xây dựng cơ quan, đơn vị vững mạnh toàn diện.
+    `,
+    url: "https://www.qdnd.vn/?utm_source=chatgpt.com"
+  },
+   {
+    title: "Nghị quyết số 31-NQ/TW về tăng cường xây dựng, chỉnh đốn Đảng và hệ thống chính trị",
+    date: "15/10/2026",
+    agency: "Ban Chấp hành Trung ương Đảng",
+    description: "Tăng cường xây dựng, chỉnh đốn Đảng và hệ thống chính trị trong sạch, vững mạnh toàn diện, đáp ứng yêu cầu phát triển đất nước trong kỷ nguyên mới.",
+    content: `
+    NỘI DUNG HỌC TẬP:
+
+    - Tăng cường xây dựng, chỉnh đốn Đảng trong sạch, vững mạnh.
+    - Nâng cao năng lực lãnh đạo và sức chiến đấu của tổ chức Đảng.
+    - Chủ động phòng ngừa suy thoái về tư tưởng chính trị, đạo đức, lối sống.
+    - Kiên quyết đấu tranh phòng, chống tham nhũng, lãng phí, tiêu cực.
+    - Tăng cường kiểm soát quyền lực và trách nhiệm giải trình.
+    - Phát huy vai trò giám sát của Nhân dân.
+    - Xây dựng đội ngũ cán bộ, đảng viên có phẩm chất và năng lực.
+    `,
+    url: "https://www.qdnd.vn/quoc-phong-an-ninh/tin-tuc/cu-the-hoa-nghi-quyet-trung-uong-4-khoa-xiv-bang-ke-hoach-chuong-trinh-hanh-dong-thiet-thuc-hieu-qua-phu-hop-voi-chuc-nang-nhiem-vu-quan-doi-1061589"
+  },
+  {
+    title: "Nghị quyết số 29-NQ/TW về tiếp tục đổi mới, hoàn thiện phương thức lãnh đạo, cầm quyền của Đảng",
+    date: "15/10/2026",
+    agency: "Ban Chấp hành Trung ương Đảng",
+    description: "Tiếp tục đổi mới phương thức lãnh đạo, cầm quyền của Đảng trong kỷ nguyên mới, nâng cao hiệu quả hoạt động của hệ thống chính trị.",
+    content: `
+    NỘI DUNG HỌC TẬP:
+
+    - Đổi mới phương thức lãnh đạo và cầm quyền của Đảng.
+    - Nâng cao chất lượng xây dựng và tổ chức thực hiện nghị quyết.
+    - Phát huy vai trò, trách nhiệm của cấp ủy và người đứng đầu.
+    - Tăng cường công tác kiểm tra, giám sát.
+    - Đẩy mạnh cải cách hành chính và chuyển đổi số trong Đảng.
+    - Phát huy dân chủ, trách nhiệm và tính chủ động của các tổ chức.
+    - Nâng cao hiệu lực, hiệu quả hoạt động của hệ thống chính trị.
+    `,
+    url: "https://www.qdnd.vn/quoc-phong-an-ninh/tin-tuc/cu-the-hoa-nghi-quyet-trung-uong-4-khoa-xiv-bang-ke-hoach-chuong-trinh-hanh-dong-thiet-thuc-hieu-qua-phu-hop-voi-chuc-nang-nhiem-vu-quan-doi-1061589https://www.qdnd.vn/chinh-tri/cac-van-de/bo-chinh-tri-ban-hanh-chuong-trinh-hanh-dong-thuc-hien-ba-nghi-quyet-ve-xay-dung-dang-1060883"
+  },
+  {
+    title: "Nghị quyết số 30-NQ/TW về tiếp tục xây dựng đội ngũ cán bộ các cấp",
+    date: "15/10/2026",
+    agency: "Ban Chấp hành Trung ương Đảng",
+    description: "Tiếp tục xây dựng đội ngũ cán bộ các cấp và đổi mới căn bản, toàn diện công tác cán bộ, đáp ứng yêu cầu phát triển đất nước trong kỷ nguyên mới.",
+    content: `
+    NỘI DUNG HỌC TẬP:
+
+    - Xây dựng đội ngũ cán bộ có phẩm chất chính trị, đạo đức và năng lực.
+    - Đổi mới căn bản, toàn diện công tác cán bộ.
+    - Nâng cao chất lượng đánh giá, quy hoạch và đào tạo cán bộ.
+    - Tăng cường trách nhiệm nêu gương của cán bộ lãnh đạo.
+    - Kiểm soát quyền lực trong công tác cán bộ.
+    - Kiên quyết phòng, chống chạy chức, chạy quyền.
+    - Xây dựng đội ngũ cán bộ đáp ứng yêu cầu nhiệm vụ trong tình hình mới.
+    `,
+    url: "https://www.qdnd.vn/chinh-tri/cac-van-de/bo-chinh-tri-ban-hanh-chuong-trinh-hanh-dong-thuc-hien-ba-nghi-quyet-ve-xay-dung-dang-1060883"
+  },
+  {
+    title: "Chỉ thị số 76/CT-BQP về tăng cường công tác giáo dục chính trị, quản lý tư tưởng, duy trì kỷ luật và bảo đảm an toàn trong Quân đội nhân dân Việt Nam",
+    date: "28/04/2026",
+    agency: "Bộ trưởng Bộ Quốc phòng",
+    description: "Tăng cường giáo dục chính trị, quản lý tư tưởng, duy trì kỷ luật và bảo đảm an toàn trong toàn quân.",
+    content: `
+    NỘI DUNG HỌC TẬP:
+
+    - Nâng cao chất lượng công tác giáo dục chính trị.
+    - Tăng cường quản lý và định hướng tư tưởng bộ đội.
+    - Duy trì nghiêm nền nếp chính quy, chấp hành kỷ luật.
+    - Nâng cao ý thức chấp hành pháp luật Nhà nước.
+    - Phát huy trách nhiệm của cấp ủy, chỉ huy và cán bộ quản lý.
+    - Chủ động phát hiện, ngăn ngừa các nguy cơ mất an toàn.
+    - Tăng cường kiểm tra, giám sát việc thực hiện nhiệm vụ.
+    - Xây dựng đơn vị vững mạnh toàn diện, an toàn.
+    `,
+    url: "https://tapchiqptd.vn/vi/chuyen-luan-chi-dao/nang-cao-hieu-qua-cong-tac-tu-tuong-trong-quan-doi-thoi-ky-moi/26797.html?utm_source=chatgpt.com"
+ },
+
+
 
     {
         title: "Nghị quyết 847-NQ/QUTW",
@@ -4405,65 +4612,8 @@ const danhSachNghiQuyetBBB11 = [
         url: "https://tapchiqptd.vn/vi/quan-triet-thuc-hien-nghi-quyet/quan-doan-2-tap-trung-lanh-dao-thuc-hien-nghi-quyet-so-847nqqutw-cua-quan-uy-trung-uong/18677.html?utm_source=chatgpt.com"
     },
      
-    {
-    title: "Chỉ thị số 676-CT/QUTW về tăng cường lãnh đạo, chỉ đạo phát huy giá trị văn hóa Bộ đội Cụ Hồ thời kỳ mới",
-    date: "20/06/2026",
-    agency: "Ban Thường vụ Quân ủy Trung ương",
-    description: "Tăng cường lãnh đạo, chỉ đạo phát huy giá trị văn hóa Bộ đội Cụ Hồ trong thời kỳ mới.",
-    content: `
-    NỘI DUNG HỌC TẬP:
-
-    - Giữ gìn và phát huy giá trị văn hóa Bộ đội Cụ Hồ.
-    - Tăng cường giáo dục chính trị, tư tưởng cho cán bộ, chiến sĩ.
-    - Xây dựng phẩm chất đạo đức, lối sống trong sáng.
-    - Phát huy tinh thần trách nhiệm, ý chí tự lực, tự cường.
-    - Xây dựng môi trường văn hóa quân sự lành mạnh.
-    - Gắn phát huy phẩm chất Bộ đội Cụ Hồ với thực hiện nhiệm vụ.
-    - Kiên quyết đấu tranh với những biểu hiện suy thoái về đạo đức, lối sống.
-    `,
-    url: "https://tapchiqptd.vn/vi/chuyen-luan-chi-dao/nang-cao-hieu-qua-cong-tac-tu-tuong-trong-quan-doi-thoi-ky-moi/26797.html?utm_source=chatgpt.com"
-  },
-  {
-    title: "Chỉ thị số 1161-CT/QUTW về tăng cường lãnh đạo, chỉ đạo công tác quản lý tư tưởng, chấp hành kỷ luật, pháp luật trong toàn quân",
-    date: "03/11/2026",
-    agency: "Ban Thường vụ Quân ủy Trung ương",
-    description: "Tăng cường công tác quản lý tư tưởng, chấp hành kỷ luật, pháp luật trong toàn quân.",
-    content: `
-    NỘI DUNG HỌC TẬP:
-
-    - Tăng cường sự lãnh đạo, chỉ đạo của cấp ủy, chỉ huy các cấp.
-    - Chủ động nắm bắt và quản lý tình hình tư tưởng bộ đội.
-    - Kịp thời định hướng tư tưởng và giải quyết các vấn đề phát sinh.
-    - Nâng cao ý thức chấp hành pháp luật Nhà nước, kỷ luật Quân đội.
-    - Phát huy vai trò, trách nhiệm của cán bộ chủ trì.
-    - Tăng cường xây dựng chính quy, duy trì nghiêm kỷ luật.
-    - Chủ động phòng ngừa vi phạm và bảo đảm an toàn trong đơn vị.
-    - Xây dựng cơ quan, đơn vị vững mạnh toàn diện.
-    `,
-    url: "https://www.qdnd.vn/?utm_source=chatgpt.com"
-  },
-  {
-    title: "Chỉ thị số 76/CT-BQP về tăng cường công tác giáo dục chính trị, quản lý tư tưởng, duy trì kỷ luật và bảo đảm an toàn trong Quân đội nhân dân Việt Nam",
-    date: "28/04/2026",
-    agency: "Bộ trưởng Bộ Quốc phòng",
-    description: "Tăng cường giáo dục chính trị, quản lý tư tưởng, duy trì kỷ luật và bảo đảm an toàn trong toàn quân.",
-    content: `
-    NỘI DUNG HỌC TẬP:
-
-    - Nâng cao chất lượng công tác giáo dục chính trị.
-    - Tăng cường quản lý và định hướng tư tưởng bộ đội.
-    - Duy trì nghiêm nền nếp chính quy, chấp hành kỷ luật.
-    - Nâng cao ý thức chấp hành pháp luật Nhà nước.
-    - Phát huy trách nhiệm của cấp ủy, chỉ huy và cán bộ quản lý.
-    - Chủ động phát hiện, ngăn ngừa các nguy cơ mất an toàn.
-    - Tăng cường kiểm tra, giám sát việc thực hiện nhiệm vụ.
-    - Xây dựng đơn vị vững mạnh toàn diện, an toàn.
-    `,
-    url: "https://tapchiqptd.vn/vi/chuyen-luan-chi-dao/nang-cao-hieu-qua-cong-tac-tu-tuong-trong-quan-doi-thoi-ky-moi/26797.html?utm_source=chatgpt.com"
- },
-
-
-
+   
+ 
 
   {
     title: "Nghị quyết Đại hội đại biểu toàn quốc lần thứ XIII của Đảng",
@@ -4518,60 +4668,7 @@ const danhSachNghiQuyetBBB11 = [
     `,
     url: "https://tapchiqptd.vn/vi/chuyen-luan-chi-dao/phat-huy-ket-qua-10-nam-thuc-hien-nghi-quyet-so-765nqqutw-toan-quan-tiep-tuc-doi-moi-sang-/19787.html?utm_source=chatgpt.com"
   },
-  {
-    title: "Nghị quyết số 31-NQ/TW về tăng cường xây dựng, chỉnh đốn Đảng và hệ thống chính trị",
-    date: "15/10/2026",
-    agency: "Ban Chấp hành Trung ương Đảng",
-    description: "Tăng cường xây dựng, chỉnh đốn Đảng và hệ thống chính trị trong sạch, vững mạnh toàn diện, đáp ứng yêu cầu phát triển đất nước trong kỷ nguyên mới.",
-    content: `
-    NỘI DUNG HỌC TẬP:
-
-    - Tăng cường xây dựng, chỉnh đốn Đảng trong sạch, vững mạnh.
-    - Nâng cao năng lực lãnh đạo và sức chiến đấu của tổ chức Đảng.
-    - Chủ động phòng ngừa suy thoái về tư tưởng chính trị, đạo đức, lối sống.
-    - Kiên quyết đấu tranh phòng, chống tham nhũng, lãng phí, tiêu cực.
-    - Tăng cường kiểm soát quyền lực và trách nhiệm giải trình.
-    - Phát huy vai trò giám sát của Nhân dân.
-    - Xây dựng đội ngũ cán bộ, đảng viên có phẩm chất và năng lực.
-    `,
-    url: "https://www.qdnd.vn/quoc-phong-an-ninh/tin-tuc/cu-the-hoa-nghi-quyet-trung-uong-4-khoa-xiv-bang-ke-hoach-chuong-trinh-hanh-dong-thiet-thuc-hieu-qua-phu-hop-voi-chuc-nang-nhiem-vu-quan-doi-1061589"
-  },
-  {
-    title: "Nghị quyết số 29-NQ/TW về tiếp tục đổi mới, hoàn thiện phương thức lãnh đạo, cầm quyền của Đảng",
-    date: "15/10/2026",
-    agency: "Ban Chấp hành Trung ương Đảng",
-    description: "Tiếp tục đổi mới phương thức lãnh đạo, cầm quyền của Đảng trong kỷ nguyên mới, nâng cao hiệu quả hoạt động của hệ thống chính trị.",
-    content: `
-    NỘI DUNG HỌC TẬP:
-
-    - Đổi mới phương thức lãnh đạo và cầm quyền của Đảng.
-    - Nâng cao chất lượng xây dựng và tổ chức thực hiện nghị quyết.
-    - Phát huy vai trò, trách nhiệm của cấp ủy và người đứng đầu.
-    - Tăng cường công tác kiểm tra, giám sát.
-    - Đẩy mạnh cải cách hành chính và chuyển đổi số trong Đảng.
-    - Phát huy dân chủ, trách nhiệm và tính chủ động của các tổ chức.
-    - Nâng cao hiệu lực, hiệu quả hoạt động của hệ thống chính trị.
-    `,
-    url: "https://www.qdnd.vn/quoc-phong-an-ninh/tin-tuc/cu-the-hoa-nghi-quyet-trung-uong-4-khoa-xiv-bang-ke-hoach-chuong-trinh-hanh-dong-thiet-thuc-hieu-qua-phu-hop-voi-chuc-nang-nhiem-vu-quan-doi-1061589https://www.qdnd.vn/chinh-tri/cac-van-de/bo-chinh-tri-ban-hanh-chuong-trinh-hanh-dong-thuc-hien-ba-nghi-quyet-ve-xay-dung-dang-1060883"
-  },
-  {
-    title: "Nghị quyết số 30-NQ/TW về tiếp tục xây dựng đội ngũ cán bộ các cấp",
-    date: "15/10/2026",
-    agency: "Ban Chấp hành Trung ương Đảng",
-    description: "Tiếp tục xây dựng đội ngũ cán bộ các cấp và đổi mới căn bản, toàn diện công tác cán bộ, đáp ứng yêu cầu phát triển đất nước trong kỷ nguyên mới.",
-    content: `
-    NỘI DUNG HỌC TẬP:
-
-    - Xây dựng đội ngũ cán bộ có phẩm chất chính trị, đạo đức và năng lực.
-    - Đổi mới căn bản, toàn diện công tác cán bộ.
-    - Nâng cao chất lượng đánh giá, quy hoạch và đào tạo cán bộ.
-    - Tăng cường trách nhiệm nêu gương của cán bộ lãnh đạo.
-    - Kiểm soát quyền lực trong công tác cán bộ.
-    - Kiên quyết phòng, chống chạy chức, chạy quyền.
-    - Xây dựng đội ngũ cán bộ đáp ứng yêu cầu nhiệm vụ trong tình hình mới.
-    `,
-    url: "https://www.qdnd.vn/chinh-tri/cac-van-de/bo-chinh-tri-ban-hanh-chuong-trinh-hanh-dong-thuc-hien-ba-nghi-quyet-ve-xay-dung-dang-1060883"
-  },
+ 
   {
     title: "Nghị quyết số 224/2025/QH15",
     date: "Chưa xác minh",
@@ -4827,9 +4924,53 @@ const danhSachNghiQuyetBBB11 = [
         `,
         url: "https://tapchiqptd.vn/vi/quan-triet-thuc-hien-nghi-quyet/binh-chung-thong-tin-lien-lac-day-manh-thuc-hien-nghi-quyet-so-1659-cua-quan-uy-trung-uong/23767.html?utm_source=chatgpt.com"
     },
-
-    
 ];
+
+function layNamNghiQuyetBBB11(vanBan) {
+    const ngay = (vanBan.date || "").match(/\d{2}\/\d{2}\/(\d{4})/);
+    return ngay ? ngay[1] : "Chưa xác minh";
+}
+
+function layChuDeNghiQuyetBBB11(vanBan) {
+    const noiDung = (
+        (vanBan.title || "") + " " +
+        (vanBan.description || "")
+    ).toLowerCase();
+
+    if (/765|1657|1659|huấn luyện|đào tạo/.test(noiDung))
+        return "Huấn luyện, giáo dục và đào tạo";
+
+    if (/1652|1656|3488|57-nq\/tw|khoa học|kỹ thuật|công nghệ/.test(noiDung))
+        return "Khoa học, kỹ thuật và công nghệ";
+
+    if (/1658|1661|hậu cần|tài chính/.test(noiDung))
+        return "Hậu cần, tài chính";
+
+    if (/847|676|1161|76\/ct-bqp|bộ đội cụ hồ|tư tưởng|kỷ luật/.test(noiDung))
+        return "Chính trị, tư tưởng và kỷ luật";
+
+    if (/29-nq\/tw|30-nq\/tw|31-nq\/tw|đại hội.*xiii|xây dựng đảng|hệ thống chính trị/.test(noiDung))
+        return "Xây dựng Đảng và hệ thống chính trị";
+
+    if (/05-nq\/tw|44-nq\/tw|quốc phòng|bảo vệ tổ quốc/.test(noiDung))
+        return "Quân sự, quốc phòng và bảo vệ Tổ quốc";
+
+    return "Văn bản khác, đang xác minh";
+}
+
+function locNghiQuyetBBB11(nam, chuDe) {
+    return danhSachNghiQuyetBBB11.filter(function(vanBan) {
+        const dungNam = !nam || nam === "Tất cả" ||
+            layNamNghiQuyetBBB11(vanBan) === nam;
+
+        const dungChuDe = !chuDe || chuDe === "Tất cả" ||
+            layChuDeNghiQuyetBBB11(vanBan) === chuDe;
+
+        return dungNam && dungChuDe;
+    });
+}
+
+
 
  // =============================================
  // GIAO DIỆN TRANG NGHỊ QUYẾT
