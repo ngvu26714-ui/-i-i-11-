@@ -3069,3 +3069,269 @@ body.login-page {
     }
 }
 
+/* GIAO DIEN GIAO DUC CHINH TRI */
+.ct-container {
+    padding: 20px;
+    color: #263238;
+}
+
+.ct-header {
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #8b0000, #c62828);
+    color: #fff;
+}
+
+.ct-header h2 {
+    margin: 0 0 8px;
+    font-size: 24px;
+}
+
+.ct-header p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.ct-layout {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.ct-sidebar,
+.ct-reader {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.ct-sidebar h3 {
+    margin: 0;
+    padding: 16px;
+    background: #f5f5f5;
+    font-size: 15px;
+}
+
+.ct-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 15px;
+    border: 0;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+    text-align: left;
+    cursor: pointer;
+    color: #333;
+    font-size: 14px;
+}
+
+.ct-item:hover,
+.ct-item.active {
+    background: #fff0f0;
+    color: #a00000;
+    border-left: 4px solid #b71c1c;
+}
+
+.ct-reader-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 14px;
+    background: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+    font-weight: 600;
+}
+
+.ct-reader-header button {
+    padding: 8px 12px;
+    border: 0;
+    border-radius: 6px;
+    background: #8b0000;
+    color: #fff;
+    cursor: pointer;
+}
+
+#ctKhungDoc {
+    display: block;
+    background: #f3f3f3;
+}
+
+@media (max-width: 768px) {
+    .ct-layout {
+        grid-template-columns: 1fr;
+    }
+
+    #ctKhungDoc {
+        height: 70vh !important;
+    }
+
+    .ct-container {
+        padding: 10px;
+    }
+}
+
+.ct-search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.ct-search input {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.ct-search span {
+    color: #8b0000;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+#ctDanhSach {
+    max-height: 650px;
+    overflow-y: auto;
+}
+
+.ct-item span {
+    line-height: 1.5;
+}
+
+.ct-reader {
+    min-height: 500px;
+}
+
+.ct-article {
+    padding: 24px;
+    max-height: 720px;
+    overflow-y: auto;
+    line-height: 1.85;
+    font-size: 16px;
+    overflow-wrap: anywhere;
+}
+
+.ct-article h3 {
+    color: #8b0000;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.ct-article h4 {
+    color: #9b2222;
+    margin-top: 22px;
+}
+
+.ct-article p {
+    text-align: justify;
+}
+
+.ct-article li {
+    margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+    .ct-search {
+        flex-wrap: wrap;
+    }
+
+    .ct-search input {
+        flex-basis: 100%;
+    }
+
+    #ctDanhSach {
+        max-height: 300px;
+    }
+
+    .ct-article {
+        padding: 16px;
+        max-height: none;
+    }
+}
+
+/* HÌNH NỀN MÀN HÌNH ĐĂNG NHẬP BBB11 */
+body.login-page {
+    margin: 0;
+    min-height: 100vh;
+    background-image:
+        linear-gradient(
+            rgba(70, 0, 0, 0.12),
+            rgba(70, 0, 0, 0.12)
+        ),
+        url("./images/login-bg.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* KHU VỰC ĐĂNG NHẬP */
+body.login-page #loginPage {
+    box-sizing: border-box;
+    min-height: 100vh;
+    width: 100%;
+    background: transparent;
+}
+
+
+/* HÌNH NỀN ĐĂNG NHẬP BBB11 */
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body.login-page {
+    min-height: 100vh;
+    background: #8b0000;
+}
+
+/* Ảnh phủ toàn màn hình đăng nhập */
+#loginPage.login-container {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    width: 100%;
+    max-width: none;
+    min-height: 100vh;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #8b0000;
+    background-image: url("./images/login-bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* Giữ nguyên khung nhập tài khoản */
+#loginPage form {
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 600px) {
+    #loginPage.login-container {
+        background-position: center;
+        padding: 16px;
+    }
+}
