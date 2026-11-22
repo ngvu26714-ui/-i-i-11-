@@ -3733,3 +3733,28 @@ body.login-page #loginPage > .login-logo:nth-of-type(2) h3 {
     transform: none !important;
     box-sizing: border-box !important;
 }
+
+/* Ảnh nền chỉ hiển thị phía sau trang đăng nhập */
+#loginPage {
+    position: relative;
+    isolation: isolate;
+    background: transparent !important;
+}
+
+/* Khung đăng nhập có nền riêng, không bị ảnh xuyên qua */
+#loginPage .login-box,
+#loginPage .login-card,
+#loginPage .login-form {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Các ô nhập liệu */
+#loginPage input {
+    background: #ffffff;
+    color: #222222;
+}
+
