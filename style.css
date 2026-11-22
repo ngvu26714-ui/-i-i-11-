@@ -3758,3 +3758,58 @@ body.login-page #loginPage > .login-logo:nth-of-type(2) h3 {
     color: #222222;
 }
 
+/* ===== BBB11: SỬA GIAO DIỆN ĐĂNG NHẬP ===== */
+
+/* Toàn bộ trang đăng nhập */
+body.login-page {
+    min-height: 100vh;
+    margin: 0;
+    background-color: #8b0000;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Khu vực bao quanh khung đăng nhập */
+#loginPage {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    background: transparent !important;
+}
+
+/* Khung đăng nhập - nền trắng đục */
+#loginPage .login-box,
+#loginPage .login-card,
+#loginPage .login-content {
+    position: relative;
+    z-index: 1;
+    background: #ffffff !important;
+    background-image: none !important;
+    opacity: 1 !important;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.30);
+}
+
+/* Các ô nhập tài khoản và mật khẩu */
+#loginPage input {
+    background-color: #ffffff !important;
+    color: #222222 !important;
+    opacity: 1;
+}
+
+/* Chữ trong khung đăng nhập */
+#loginPage label,
+#loginPage h1,
+#loginPage h2,
+#loginPage p {
+    position: relative;
+    z-index: 1;
+}
+
