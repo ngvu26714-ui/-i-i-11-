@@ -188,7 +188,7 @@ const GALLERY_ACTIVITIES = [
         id: "HOẠT ĐỘNG ĐOÀN",
         title: "HOẠT ĐỘNG ĐOÀN",
         album: " -TUỔI TRẺ ĐẠI ĐỘI 11 , TIÊN PHONG, BẢN LĨNH, CỐNG HIẾN",
-        description: "Lưu giữ những hình ảnh nổi bật của đoàn viên, thanh niên Đại đội 11 trong các hoạt động Đoàn, phong trào thi đua, tình nguyện, giao lưu và xây dựng đơn vị vững mạnh.",
+        description: "Lưu giữ những hình ảnh nổi bật của đoàn viên, thanh niên Đại đội 11 trong các hoạt động Đoàn.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-35.jpg", title: "Ảnh 01", description: "" },
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-36.jpg", title: "Ảnh 02", description: "" },
@@ -208,7 +208,7 @@ const GALLERY_ACTIVITIES = [
         id: "HỘI THI VÀ THI ĐUA",
         title: "THI ĐUA QUYẾT THẮNG , VỮNG BƯỚC TIẾN LÊN",
         album: " Hội thi, hội thao và phong trào thi đua",
-        description: "Lưu giữ những khoảnh khắc tiêu biểu trong các hội thi, hội thao và phong trào thi đua của cán bộ, chiến sĩ Đại đội 11; thể hiện tinh thần đoàn kết, ý chí quyết tâm, rèn luyện bản lĩnh và phấn đấu hoàn thành tốt mọi nhiệm vụ được giao.",
+        description: "Lưu giữ những khoảnh khắc tiêu biểu trong các hội thi, hội thao và phong trào thi đua của cán bộ, chiến sĩ Đại đội 11.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-41.jpg", title: "Ảnh 01", description: "" },
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-42.jpg", title: "Ảnh 02", description: "" },
@@ -228,7 +228,7 @@ const GALLERY_ACTIVITIES = [
         id: "THĂM HỎI VÀ ĐỘNG VIÊN",
         title: "THĂM HỎI VÀ ĐỘNG VIÊN",
         album: "Thăm hỏi, động viên và sẻ chia",
-        description: "Ghi lại những khoảnh khắc thăm hỏi ân cần, động viên kịp thời và sẻ chia chân thành với cán bộ, chiến sĩ. Qua đó lan tỏa tinh thần đoàn kết, tình đồng chí, đồng đội, sự quan tâm sâu sắc đến đời sống vật chất và tinh thần, góp phần xây dựng Đại đội 11 đoàn kết, vững mạnh.",
+        description: "Ghi lại những khoảnh khắc thăm hỏi ân cần, động viên kịp thời và sẻ chia chân thành với cán bộ, chiến sĩ. Qua đó lan tỏa tinh thần đoàn kết, tình đồng chí, đồng đội.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-39.jpg", title: "Ảnh 01", description: "" },
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-40.jpg", title: "Ảnh 02", description: "" },
@@ -248,7 +248,7 @@ const GALLERY_ACTIVITIES = [
         id: "Phòng Hồ Chí Minh",
         title: "Học Tập Những Kiến Thức",
         album: " - Công tác học tập rèn luyện",
-        description: "Ghi lại những hình ảnh tiêu biểu trong công tác học tập rèn luyện của đơn vị, từ chăm lo đời sống, bảo đảm ăn ở, quân trang đến duy trì vệ sinh, xây dựng cảnh quan doanh trại chính quy, xanh, sạch, đẹp. Qua đó thể hiện tinh thần chủ động, trách nhiệm, tận tụy của cán bộ, chiến sĩ, góp phần nâng cao chất lượng đời sống và sức mạnh tổng hợp của Đại đội 11.",
+        description: "Ghi lại những hình ảnh tiêu biểu trong công tác học tập rèn luyện của đơn vị, từ chăm lo đời sống, bảo đảm ăn ở, quân trang đến duy trì vệ sinh, xây dựng cảnh quan doanh trại chính quy.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-24.jpg", title: "Ảnh 01", description: "" },
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-25.jpg", title: "Ảnh 02", description: "" },
@@ -268,7 +268,7 @@ const GALLERY_ACTIVITIES = [
         id: "CÔNG TÁC DÂN VẬN",
         title: "CÔNG TÁC DÂN VẬN",
         album: "- Công tác dân vận",
-        description: "Ghi lại những hình ảnh tiêu biểu của cán bộ, chiến sĩ Đại đội 11 trong các hoạt động dân vận, giúp đỡ nhân dân, tham gia lao động, vệ sinh môi trường và xây dựng nếp sống văn minh tại địa phương. Qua đó lan tỏa hình ảnh cao đẹp Bộ đội Cụ Hồ, thắt chặt tình đoàn kết quân dân, góp phần xây dựng cơ sở chính trị vững mạnh và củng cố thế trận lòng dânn.",
+        description: "Ghi lại những hình ảnh tiêu biểu của cán bộ, chiến sĩ Đại đội 11 trong các hoạt động dân vận, giúp đỡ nhân dân, tham gia lao động, vệ sinh môi trường và xây dựng nếp sống văn minh tại địa phương.",
         images: [
             { src: "", title: "Ảnh 01", description: "" },
             { src: "", title: "Ảnh 02", description: "" },
