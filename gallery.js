@@ -23,7 +23,7 @@
 const GALLERY_ACTIVITIES = [
     // KHU VỰC 01
     {
-        id: "01. Lễ tuyên thệ chiến sĩ mới",
+        id: "LỄ TUYÊN THỆ CHIẾN SĨ MỚI",
         title: "LỄ TUYÊN THỆ CHIẾN SĨ MỚI",
         album: " LỄ TUYÊN THỆ CHIẾN SĨ MỚI",
         description: "Ghi lại những khoảnh khắc thiêng liêng và đáng nhớ của người chiến sĩ.",
@@ -85,7 +85,7 @@ const GALLERY_ACTIVITIES = [
     {
         id: "TÌNH ĐỒNG CHÍ, NGHĨA ĐỒNG ĐỘI",
         title: "VĂN NGHỆ",
-        album: "- Hoạt động văn nghệ",
+        album: "HOẠT ĐỘNG VĂN NGHỆ",
         description: "Lưu giữ những khoảnh khắc sẻ chia, đoàn kết và gắn bó.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-03.jpg.jpg", title: "Ảnh 01", description: "" },
