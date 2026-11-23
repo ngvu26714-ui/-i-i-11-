@@ -141,6 +141,7 @@ const pages = {
     attendance: attendancePage,
     activities: activitiesPage,
     reports: reportsPage,
+    binhdanhocvuso: window.binhDanHocVuSoPage,
     music: musicPage,
     gallery: galleryPage,
     manual: manualPage,
@@ -202,6 +203,7 @@ if (page === "accounts") {
     }
 
 }
+
         // LỖI BÁC
        if (page === "bac") {
     pageContent.innerHTML = window.bacPage();
@@ -6143,5 +6145,59 @@ function phatVideoTrongOBBB11(index) {
 }
 
 window.phatVideoTrongOBBB11 = phatVideoTrongOBBB11;
+
+
+
+
+function binhDanHocVuSoPage() {
+    return `
+        <div class="page-box">
+            <h2>
+                <i class="fa-solid fa-laptop-file"></i>
+                BÌNH DÂN HỌC VỤ SỐ
+            </h2>
+
+            <p>
+                Truy cập hệ thống học tập và xem hướng dẫn ngay tại đây.
+            </p>
+
+            <a href="https://binhdanhocvuso.gov.vn/"
+               target="_blank"
+               rel="noopener noreferrer"
+               style="display:block;padding:18px;background:#b71c1c;
+               color:white;text-align:center;text-decoration:none;
+               border-radius:10px;font-weight:bold;">
+                <i class="fa-solid fa-graduation-cap"></i>
+                TRUY CẬP HỆ THỐNG HỌC TẬP
+            </a>
+
+            <h3 style="margin-top:25px;">
+                <i class="fa-solid fa-book-open"></i>
+                HƯỚNG DẪN HỌC TẬP
+            </h3>
+
+            <div style="width:100%;height:750px;">
+                <iframe
+                    src="https://binhdanhocvuso.gov.vn/help"
+                    title="Hướng dẫn học Bình dân học vụ số"
+                    style="width:100%;height:100%;border:0;
+                    border-radius:10px;">
+                </iframe>
+            </div>
+
+            <p>
+                Nếu phần hướng dẫn không hiển thị,
+                <a href="https://binhdanhocvuso.gov.vn/help"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    bấm vào đây để xem hướng dẫn
+                </a>.
+            </p>
+        </div>
+    `;
+}
+
+window.binhDanHocVuSoPage = binhDanHocVuSoPage;
+
 
 })();
