@@ -6350,3 +6350,59 @@ html body.login-page #loginPage input {
     }
 }
 
+/* KHU VỰC MÃ QR ĐẠI ĐỘI 11 */
+.qr-section {
+  text-align: center;
+  padding: 25px 15px;
+  margin: 25px auto;
+  max-width: 400px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+.qr-section h2 {
+  color: #b00000;
+  font-size: 20px;
+}
+
+.qr-section p {
+  color: #333333;
+  overflow-wrap: anywhere;
+}
+
+.qr-image {
+  display: block;
+  width: 220px;
+  max-width: 100%;
+  height: auto;
+  margin: 15px auto;
+}
+
+.qr-link {
+  font-size: 13px;
+}
+
+/* MÃ QR NHỎ GỌN Ở CUỐI TRANG CHỦ */
+.qr-mini {
+  text-align: center;
+  padding: 18px 10px;
+  margin: 25px auto 10px;
+  border-top: 1px solid #dddddd;
+}
+
+.qr-mini p {
+  font-size: 13px;
+  font-weight: 600;
+  color: #8b0000;
+  margin-bottom: 10px;
+}
+
+.qr-mini img {
+  display: block;
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
