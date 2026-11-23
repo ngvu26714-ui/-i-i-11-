@@ -142,6 +142,7 @@ const pages = {
     activities: activitiesPage,
     reports: reportsPage,
     music: musicPage,
+    gallery: galleryPage,
     manual: manualPage,
     resolution: resolutionPage,
     news: newsPage,
@@ -166,6 +167,13 @@ if (page === "members") {
         "taiLieuThanhVien"
     );
 }
+  // CẬP NHẬT THƯ VIỆN ẢNH
+        if (
+            page === "gallery" &&
+            typeof loadGallery === "function"
+        ) {
+            loadGallery();
+        }
 
 // Hiển thị tài liệu tài khoản
 if (page === "accounts") {
@@ -5716,21 +5724,337 @@ function hienThiLinkTaiLieuBBB11(loai, idPhanTu) {
     }).join("");
 }
 
-// ===============================
-// THƯ VIỆN ẢNH
-// ===============================
-function loadGallery() {
-    const gallery = document.getElementById("gallery");
 
-    if (!gallery) return;
+"use strict";
 
-    gallery.innerHTML = `
-        <div class="page-box">
-            <h2>THƯ VIỆN ẢNH BBB11</h2>
-            <p>Chưa có hình ảnh được tải lên.</p>
-        </div>
-    `;
-}
+// ============================================
+// BBB11 - THƯ VIỆN ẢNH ĐƠN VỊ
+// Ảnh được quản lý trực tiếp trong code
+// Không cần Supabase
+// ============================================
+
+(function () {
+
+    // ========================================
+    // DANH SÁCH ẢNH CỦA ĐƠN VỊ
+    // Thay đường dẫn bằng ảnh thật trong GitHub
+    // ========================================
+
+    const GALLERY_IMAGES = [
+        {
+            title: "Hoạt động Đại đội 11",
+            album: "Hoạt động văn nghệ ",
+            description: "Lễ Tuyên Thệ Chiến Sĩ Mới.",
+            src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-01.jpg.jpg"
+        },
+        {
+            title: "Huấn luyện",
+            album: "Kết Thúc 3 tiếng nổ CSM",
+            description: "Hình ảnh huấn luyện của đơn vị.",
+            src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-02.jpg.jpg"
+        },
+        {
+            title: "Học Tập Và Giao Lưu Văn Nghệ ",
+            album: "Học tập và Sinh hoạt",
+            description: "Hình ảnh học tập và  sinh hoạt Đại đội 11.",
+            src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-03.jpg.jpg"
+        },
+        {
+            title: "Hoạt động tập thể",
+            album: "Giao Lưu giữa Chiến Sĩ Cũ Và Chiến Sĩ Mới",
+            description: "Hình ảnh hoạt động tập thể.",
+            src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-04.jpg.jpg"
+        }
+    ];
+
+    // Mã hóa nội dung văn bản để hiển thị an toàn
+    function escapeHTML(value) {
+        return String(value ?? "").replace(/[&<>"']/g, c => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        })[c]);
+    }
+
+    // ========================================
+    // GIAO DIỆN THƯ VIỆN ẢNH
+    // ========================================
+
+    window.galleryPage = function () {
+        return `
+        <section id="bbb11Gallery" class="bbb11-gallery">
+            <style>
+                .bbb11-gallery {
+                    padding: 18px;
+                    color: var(--text-color, inherit);
+                }
+
+                .bbb11-gallery h2 {
+                    margin: 0 0 10px;
+                }
+
+                .bbb11-gallery .gallery-toolbar {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    margin: 18px 0;
+                }
+
+                .bbb11-gallery input,
+                .bbb11-gallery select {
+                    box-sizing: border-box;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 8px;
+                    font: inherit;
+                    max-width: 100%;
+                }
+
+                .bbb11-gallery input {
+                    flex: 1;
+                    min-width: 180px;
+                }
+
+                .bbb11-gallery .gallery-grid {
+                    display: grid;
+                    grid-template-columns:
+                        repeat(auto-fill, minmax(190px, 1fr));
+                    gap: 15px;
+                    margin-top: 18px;
+                }
+
+                .bbb11-gallery .gallery-card {
+                    overflow: hidden;
+                    border: 1px solid #ddd;
+                    border-radius: 12px;
+                    background: var(--card-bg, #fff);
+                    color: var(--text-color, #222);
+                    box-shadow: 0 2px 7px #0000000d;
+                }
+
+                .bbb11-gallery .gallery-photo {
+                    display: block;
+                    width: 100%;
+                    height: 190px;
+                    object-fit: cover;
+                    cursor: pointer;
+                    background: #eee;
+                }
+
+                .bbb11-gallery .gallery-info {
+                    padding: 12px;
+                }
+
+                .bbb11-gallery .gallery-info h3 {
+                    font-size: 16px;
+                    margin: 0 0 8px;
+                    overflow-wrap: anywhere;
+                }
+
+                .bbb11-gallery .gallery-desc {
+                    font-size: 13px;
+                    overflow-wrap: anywhere;
+                }
+
+                .bbb11-gallery .gallery-album {
+                    display: inline-block;
+                    background: #fee2e2;
+                    color: #991b1b;
+                    padding: 4px 8px;
+                    border-radius: 6px;
+                    font-size: 12px;
+                }
+
+                .bbb11-gallery .gallery-empty {
+                    padding: 20px;
+                    text-align: center;
+                    opacity: .8;
+                }
+
+                .bbb11-gallery .gallery-lightbox {
+                    position: fixed;
+                    inset: 0;
+                    z-index: 999999;
+                    background: #000e;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 20px;
+                }
+
+                .bbb11-gallery .gallery-lightbox img {
+                    max-width: 95vw;
+                    max-height: 85vh;
+                    object-fit: contain;
+                }
+
+                .bbb11-gallery .gallery-lightbox button {
+                    position: absolute;
+                    top: 15px;
+                    right: 20px;
+                    padding: 10px 14px;
+                    border: 0;
+                    border-radius: 8px;
+                    cursor: pointer;
+                }
+
+                @media (max-width: 600px) {
+                    .bbb11-gallery {
+                        padding: 10px;
+                    }
+
+                    .bbb11-gallery .gallery-grid {
+                        grid-template-columns:
+                            repeat(2, minmax(0, 1fr));
+                        gap: 9px;
+                    }
+
+                    .bbb11-gallery .gallery-photo {
+                        height: 140px;
+                    }
+                }
+            </style>
+
+            <h2>🖼️ THƯ VIỆN ẢNH BBB11</h2>
+            <p>Hình ảnh hoạt động, huấn luyện và sinh hoạt Đại đội 11.</p>
+
+            <div class="gallery-toolbar">
+                <input id="bbb11GallerySearch"
+                    type="search"
+                    placeholder="Tìm kiếm hình ảnh..."
+                    oninput="loadGallery()">
+
+                <select id="bbb11GalleryAlbum"
+                    onchange="loadGallery()">
+                    <option value="">Tất cả album</option>
+                </select>
+            </div>
+
+            <p id="bbb11GalleryStatus">Đang tải hình ảnh...</p>
+            <div id="bbb11GalleryGrid" class="gallery-grid"></div>
+        </section>`;
+    };
+
+    // ========================================
+    // HIỂN THỊ ẢNH
+    // ========================================
+
+    window.loadGallery = function () {
+        const root = document.getElementById("bbb11Gallery");
+        if (!root) return;
+
+        const grid = root.querySelector("#bbb11GalleryGrid");
+        const status = root.querySelector("#bbb11GalleryStatus");
+        const searchInput = root.querySelector("#bbb11GallerySearch");
+        const albumSelect = root.querySelector("#bbb11GalleryAlbum");
+
+        if (!grid || !status || !searchInput || !albumSelect) return;
+
+        const previousAlbum = albumSelect.value;
+        const albums = [...new Set(
+            GALLERY_IMAGES.map(item => item.album).filter(Boolean)
+        )].sort((a, b) => a.localeCompare(b, "vi"));
+
+        albumSelect.innerHTML =
+            '<option value="">Tất cả album</option>' +
+            albums.map(album =>
+                `<option value="${escapeHTML(album)}">${escapeHTML(album)}</option>`
+            ).join("");
+
+        if (albums.includes(previousAlbum)) {
+            albumSelect.value = previousAlbum;
+        }
+
+        const keyword = searchInput.value.trim().toLowerCase();
+        const selectedAlbum = albumSelect.value;
+
+        const filtered = GALLERY_IMAGES.filter(item => {
+            const text = [
+                item.title,
+                item.album,
+                item.description
+            ].join(" ").toLowerCase();
+
+            return text.includes(keyword) &&
+                (!selectedAlbum || item.album === selectedAlbum);
+        });
+
+        status.textContent = filtered.length
+            ? `Có ${filtered.length} hình ảnh`
+            : "Không tìm thấy hình ảnh phù hợp.";
+
+        grid.innerHTML = filtered.map((item, index) => `
+            <article class="gallery-card">
+                <img
+                    class="gallery-photo"
+                    data-gallery-index="${index}"
+                    src="${escapeHTML(item.src)}"
+                    alt="${escapeHTML(item.title)}"
+                    loading="lazy">
+
+                <div class="gallery-info">
+                    <h3>${escapeHTML(item.title)}</h3>
+
+                    <span class="gallery-album">
+                        ${escapeHTML(item.album || "Ảnh đơn vị")}
+                    </span>
+
+                    <p class="gallery-desc">
+                        ${escapeHTML(item.description || "")}
+                    </p>
+                </div>
+            </article>
+        `).join("");
+
+        grid.querySelectorAll("[data-gallery-index]").forEach(img => {
+            img.onerror = function () {
+                this.alt = "Không tải được ảnh. Hãy kiểm tra đường dẫn.";
+                this.style.opacity = "0.45";
+            };
+
+            img.onclick = function () {
+                openGalleryLightbox(filtered[Number(this.dataset.galleryIndex)]);
+            };
+        });
+    };
+
+    // ========================================
+    // XEM ẢNH PHÓNG TO
+    // ========================================
+
+    function openGalleryLightbox(item) {
+        if (!item) return;
+
+        document.getElementById("bbb11GalleryLightbox")?.remove();
+
+        const overlay = document.createElement("div");
+        overlay.id = "bbb11GalleryLightbox";
+        overlay.className = "gallery-lightbox";
+
+        const img = document.createElement("img");
+        img.src = item.src;
+        img.alt = item.title || "";
+
+        const close = document.createElement("button");
+        close.type = "button";
+        close.textContent = "✕ Đóng";
+        close.setAttribute("aria-label", "Đóng ảnh");
+
+        close.onclick = () => overlay.remove();
+
+        overlay.onclick = event => {
+            if (event.target === overlay) overlay.remove();
+        };
+
+        overlay.append(close, img);
+        document.body.appendChild(overlay);
+    }
+
+    console.log("BBB11: Đã nạp thư viện ảnh từ code.");
+
+})();
 
 
 // ===============================
@@ -5819,6 +6143,5 @@ function phatVideoTrongOBBB11(index) {
 }
 
 window.phatVideoTrongOBBB11 = phatVideoTrongOBBB11;
-
 
 })();
