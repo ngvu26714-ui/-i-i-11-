@@ -25,7 +25,7 @@ const GALLERY_ACTIVITIES = [
     {
         id: "01. Lễ tuyên thệ chiến sĩ mới",
         title: "LỄ TUYÊN THỆ CHIẾN SĨ MỚI",
-        album: " tuyên thệ chiến sĩ mới",
+        album: " LỄ TUYÊN THỆ CHIẾN SĨ MỚI",
         description: "Ghi lại những khoảnh khắc thiêng liêng và đáng nhớ của người chiến sĩ.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-01.jpg.jpg", title: "Van nghe", description: "Toàn cảnh buổi lễ" },
@@ -44,8 +44,8 @@ const GALLERY_ACTIVITIES = [
     // KHU VỰC 02
     {
         id: "DẤU ẤN THAO TRƯỜNG",
-        title: "HUẤN LUYỆN",
-        album: "- Huấn luyện chiến sĩ",
+        title: "HUẤN LUYỆN CHIẾN SĨ",
+        album: "DẤU ẤN THAO TRƯỜNG",
         description: "Những ngày tháng rèn luyện ý chí, bản lĩnh và tinh thần vượt khó.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-18.jpg", title: "Giờ huấn luyện", description: "" },
@@ -65,7 +65,7 @@ const GALLERY_ACTIVITIES = [
     {
         id: "VỮNG VÀNG BẢN LĨNH CHÍNH TRỊ",
         title: "HỌC TẬP CHÍNH TRỊ",
-        album: " - Không ngừng học tập",
+        album: " HỌC TẬP CHÍNH TRỊ",
         description: "Không ngừng học tập, nâng cao nhận thức và trách nhiệm của người quân nhân.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-16.jpg", title: "Ảnh 01", description: "" },
@@ -104,8 +104,8 @@ const GALLERY_ACTIVITIES = [
     // KHU VỰC 05
     {
         id: "ĐẠI ĐỘI 11 - MỘT TẬP THỂ, MỘT QUYẾT TÂM",
-        title: "THỂ DỤC THỂ THAO",
-        album: "-  Hình ảnh lưu niệm",
+        title: "Hình ảnh lưu niệm",
+        album: "THỂ DỤC THỂ THAO",
         description: "Những hình ảnh đẹp, ghi dấu chặng đường trưởng thành của đơn vị.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-22.jpg", title: "Ảnh 01", description: "" },
@@ -123,9 +123,9 @@ const GALLERY_ACTIVITIES = [
 
     // KHU VỰC 06
     {
-        id: "NGÀY CHỦ NHẬT XANH",
+        id: " Hình ảnh vệ sinh môi trường",
         title: "CHUNG TAY XÂY DỰNG DOANH TRẠI XANH",
-        album: " -Hình ảnh vệ sinh môi trường",
+        album: "NGÀY CHỦ NHẬT XANH",
         description: "Tuổi trẻ Đại đội 11 chung tay vệ sinh môi trường, xây dựng doanh trại chính quy, xanh, sạch, đẹp.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-05.jpg.jpg", title: "Ảnh 01", description: "" },
@@ -143,9 +143,9 @@ const GALLERY_ACTIVITIES = [
 
     // KHU VỰC 07
     {
-        id: "NGÀY CHÍNH TRỊ ",
+        id: "ĐỘNG VIÊN TƯ TƯỞNG CHIẾN SĨ",
         title: "SINH HOẠT CHÍNH TRỊ",
-        album: "ĐỘNG VIÊN TƯ TƯỞNG CHIẾN SĨ ",
+        album: "NGÀY SINH HOẠT CHÍNH TRỊ ",
         description: "động viên hỏi thăm dò ý kiến tù chiến sĩ đến cán bộ.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-49.jpg", title: "Ảnh 01", description: "" },
@@ -165,8 +165,8 @@ const GALLERY_ACTIVITIES = [
     // KHU VỰC 09
     {
         id: "TỌA ĐÀM THANH NIÊN",
-        title: "TỌA ĐÀM THANH NIÊN",
-        album: "-TUỔI TRẺ BẢN LĨNH , KHÁT VỌNG CỐNG HIẾN",
+        title: "TUỔI TRẺ BẢN LĨNH , KHÁT VỌNG CỐNG HIẾN",
+        album: "TỌA ĐÀM THANH NIÊN",
         description: "Những buổi trao đổi, chia sẻ kinh nghiệm, phát huy tinh thần trách nhiệm và khát vọng cống hiến của tuổi trẻ.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-09.jpg.jpg", title: "Ảnh 01", description: "" },
@@ -186,8 +186,8 @@ const GALLERY_ACTIVITIES = [
     // KHU VỰC 12
     {
         id: "HOẠT ĐỘNG ĐOÀN",
-        title: "HOẠT ĐỘNG ĐOÀN",
-        album: " -TUỔI TRẺ ĐẠI ĐỘI 11 , TIÊN PHONG, BẢN LĨNH, CỐNG HIẾN",
+        title: "TUỔI TRẺ ĐẠI ĐỘI 11 , TIÊN PHONG, BẢN LĨNH, CỐNG HIẾN",
+        album: "HOẠT ĐỘNG ĐOÀN",
         description: "Lưu giữ những hình ảnh nổi bật của đoàn viên, thanh niên Đại đội 11 trong các hoạt động Đoàn.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-35.jpg", title: "Ảnh 01", description: "" },
@@ -207,7 +207,7 @@ const GALLERY_ACTIVITIES = [
     {
         id: "HỘI THI VÀ THI ĐUA",
         title: "THI ĐUA QUYẾT THẮNG , VỮNG BƯỚC TIẾN LÊN",
-        album: " Hội thi, hội thao và phong trào thi đua",
+        album: " HỘI THI , HỘI THAO , VÀ PHONG TRÀO THI ĐUA ",
         description: "Lưu giữ những khoảnh khắc tiêu biểu trong các hội thi, hội thao và phong trào thi đua của cán bộ, chiến sĩ Đại đội 11.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-41.jpg", title: "Ảnh 01", description: "" },
@@ -226,8 +226,8 @@ const GALLERY_ACTIVITIES = [
     // KHU VỰC 14
     {
         id: "THĂM HỎI VÀ ĐỘNG VIÊN",
-        title: "THĂM HỎI VÀ ĐỘNG VIÊN",
-        album: "Thăm hỏi, động viên và sẻ chia",
+        title: "Thăm hỏi, động viên và sẻ chia",
+        album: "CÁN BỘ CHIẾN SĨ THĂM HỎI ĐỘNG VIÊN",
         description: "Ghi lại những khoảnh khắc thăm hỏi ân cần, động viên kịp thời và sẻ chia chân thành với cán bộ, chiến sĩ. Qua đó lan tỏa tinh thần đoàn kết, tình đồng chí, đồng đội.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-39.jpg", title: "Ảnh 01", description: "" },
@@ -247,7 +247,7 @@ const GALLERY_ACTIVITIES = [
     {
         id: "Phòng Hồ Chí Minh",
         title: "Học Tập Những Kiến Thức",
-        album: " - Công tác học tập rèn luyện",
+        album:"PHÒNG HỒ CHÍ MINH ",
         description: "Ghi lại những hình ảnh tiêu biểu trong công tác học tập rèn luyện của đơn vị, từ chăm lo đời sống, bảo đảm ăn ở, quân trang đến duy trì vệ sinh, xây dựng cảnh quan doanh trại chính quy.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-24.jpg", title: "Ảnh 01", description: "" },
@@ -267,7 +267,7 @@ const GALLERY_ACTIVITIES = [
     {
         id: "CÔNG TÁC DÂN VẬN",
         title: "CÔNG TÁC DÂN VẬN",
-        album: "- Công tác dân vận",
+        album: "CÔNG TÁC DÂN VẬN",
         description: "Ghi lại những hình ảnh tiêu biểu của cán bộ, chiến sĩ Đại đội 11 trong các hoạt động dân vận, giúp đỡ nhân dân, tham gia lao động, vệ sinh môi trường và xây dựng nếp sống văn minh tại địa phương.",
         images: [
             { src: "", title: "Ảnh 01", description: "" },
@@ -287,7 +287,7 @@ const GALLERY_ACTIVITIES = [
     {
         id: "KỶ NIỆM VÀ TRUYỀN THỐNG",
         title: "Hình ảnh kỷ niệm của đơn vị",
-        album: " Kỷ niệm và truyền thống",
+        album: "KỶ NIỆM VÀ TRUYỀN THỐNG",
         description: "Lưu giữ kỷ niệm đẹp, phát huy truyền thống và niềm tự hào Đại đội 11.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-07.jpg.jpg", title: "Ảnh 01", description: "" },
@@ -307,7 +307,7 @@ const GALLERY_ACTIVITIES = [
     {
         id: "Công Tác Chăm Hoa Tết",
         title: "Hoạt Động Trồng Hoa Tết",
-        album: "Tết 2027 ",
+        album: "CÔNG TÁC CHĂM HOA TẾT ",
         description: "Các hình ảnh hoạt động chăm trồng hoa tết.",
         images: [
             { src: "https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/bbb11-gallery/anh-12.jpg", title: "Ảnh 01", description: "" },
