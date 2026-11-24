@@ -155,12 +155,122 @@ const pages = {
     ranking: rankingPage
 };
 
+ 
+
+
+
+/* ===== TRANG CHỦ TẾT ĐẠI ĐỘI 11 ===== */
+pages.tet = function () {
+    return `
+        <div class="tet-home-container">
+
+            <div class="tet-image-frame">
+
+                <img
+                    src="https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/login-bg%205.png"
+                    alt="Chúc mừng năm mới Đại đội 11"
+                >
+
+                <!-- LỚP HIỆU ỨNG ÁNH SÁNG -->
+                <canvas
+                    id="tetEffectsCanvas"
+                    aria-hidden="true"
+                ></canvas>
+
+                <div class="tet-light-frame"></div>
+
+                <!-- ĐÈN LỒNG TRANG TRÍ -->
+                <div class="tet-lantern tet-lantern-left" aria-hidden="true">
+                    <span class="tet-lantern-string"></span>
+                    <span class="tet-lantern-body">✦</span>
+                    <span class="tet-lantern-tassel"></span>
+                </div>
+
+                <div class="tet-lantern tet-lantern-right" aria-hidden="true">
+                    <span class="tet-lantern-string"></span>
+                    <span class="tet-lantern-body">✦</span>
+                    <span class="tet-lantern-tassel"></span>
+                </div>
+
+                <!-- TIÊU ĐỀ TRANG TRÍ -->
+                <div class="tet-floating-title">
+                    <span class="tet-eyebrow">✦ MỪNG ĐẢNG - MỪNG XUÂN ✦</span>
+                    <strong>ĐẠI ĐỘI BỘ BINH 11</strong>
+                    <small>XUÂN MỚI · KHÍ THẾ MỚI · QUYẾT TÂM MỚI</small>
+                </div>
+
+                <div class="tet-corner-label">
+                    ★ XUÂN ĐOÀN KẾT ★
+                </div>
+
+            </div>
+
+            <!-- LỜI CHÚC NẰM DƯỚI ẢNH -->
+            <section class="tet-message-bottom">
+
+                <div class="tet-ornament">✦ ❖ ✦ ❖ ✦</div>
+
+                <p class="tet-kicker">CHÀO MỪNG NĂM MỚI</p>
+
+                <h1 class="tet-shimmer">ĐẠI ĐỘI BỘ BINH 11</h1>
+
+                <p class="tet-subtitle">
+                    VỮNG NIỀM TIN - SẮT Ý CHÍ - BỀN QUYẾT TÂM
+                </p>
+
+                <div class="tet-ribbon">
+                    <span>★</span>
+                    <strong>
+                        ĐOÀN KẾT - KỶ LUẬT - TRÁCH NHIỆM - QUYẾT THẮNG
+                    </strong>
+                    <span>★</span>
+                </div>
+
+                <div class="tet-divider-bottom">
+                    <span>✦</span>
+                </div>
+
+                <p>
+                    Phát huy truyền thống, xây dựng đơn vị vững mạnh toàn diện
+                </p>
+
+                <p>
+                    Mừng Đảng - Mừng Xuân - Quyết tâm hoàn thành xuất sắc mọi nhiệm vụ
+                </p>
+
+                <h3>CHÚC CÁN BỘ, CHIẾN SĨ ĐẠI ĐỘI 11</h3>
+
+                <p class="tet-wish-bottom">
+                    SỨC KHỎE - HẠNH PHÚC - BÌNH AN - THẮNG LỢI
+                </p>
+
+                <div class="tet-ornament tet-ornament-bottom">
+                    🌸 ✨ 🌼 ✨ 🌸
+                </div>
+
+            </section>
+        </div>
+    `;
+};
+
+
 // KIỂM TRA VÀ HIỂN THỊ TRANG
 if (typeof pages[page] !== "function") {
     content.innerHTML = "<h2>Chức năng chưa được xây dựng.</h2>";
 } else {
     try {
         content.innerHTML = pages[page]();
+
+if (page === "tet") {
+    requestAnimationFrame(() => {
+        if (typeof window.initTetEffects === "function") {
+            window.initTetEffects();
+        }
+    });
+} else if (typeof window.__tetEffectsCleanup === "function") {
+    window.__tetEffectsCleanup();
+}
+
 // Hiển thị tài liệu thành viên
 if (page === "members") {
     hienThiLinkTaiLieuBBB11(
@@ -6147,9 +6257,9 @@ function phatVideoTrongOBBB11(index) {
 window.phatVideoTrongOBBB11 = phatVideoTrongOBBB11;
 
 
-
-
 function binhDanHocVuSoPage() {
+    const qlmsUrl = "https://qlms.bqp.vn/trang-chu?continue=%252F";
+
     return `
         <div class="page-box">
             <h2>
@@ -6157,47 +6267,317 @@ function binhDanHocVuSoPage() {
                 BÌNH DÂN HỌC VỤ SỐ
             </h2>
 
-            <p>
-                Truy cập hệ thống học tập và xem hướng dẫn ngay tại đây.
-            </p>
+            <p>Học tập, rèn luyện kỹ năng số ngay tại Đại đội 11.</p>
 
-            <a href="https://binhdanhocvuso.gov.vn/"
-               target="_blank"
+            <a href="${qlmsUrl}" target="_blank"
                rel="noopener noreferrer"
-               style="display:block;padding:18px;background:#b71c1c;
+               style="display:block;padding:16px;background:#b71c1c;
                color:white;text-align:center;text-decoration:none;
                border-radius:10px;font-weight:bold;">
                 <i class="fa-solid fa-graduation-cap"></i>
-                TRUY CẬP HỆ THỐNG HỌC TẬP
+                MỞ HỆ THỐNG HỌC TẬP QLMS
             </a>
 
             <h3 style="margin-top:25px;">
                 <i class="fa-solid fa-book-open"></i>
-                HƯỚNG DẪN HỌC TẬP
+                Ô HỌC TẬP TRỰC TIẾP
             </h3>
 
-            <div style="width:100%;height:750px;">
+            <p>
+                Bạn có thể thử đăng nhập và học ngay trong khung bên dưới.
+                Nếu khung không tải được, hãy mở QLMS bằng nút phía trên.
+            </p>
+
+            <div style="width:100%;height:700px;
+                        border:2px solid #b71c1c;
+                        border-radius:10px;overflow:hidden;
+                        background:#f5f5f5;">
                 <iframe
-                    src="https://binhdanhocvuso.gov.vn/help"
-                    title="Hướng dẫn học Bình dân học vụ số"
-                    style="width:100%;height:100%;border:0;
-                    border-radius:10px;">
+                    src="${qlmsUrl}"
+                    title="Hệ thống học tập Bình dân học vụ số"
+                    style="width:100%;height:100%;border:0;"
+                    loading="lazy"
+                    allow="fullscreen">
                 </iframe>
             </div>
 
-            <p>
-                Nếu phần hướng dẫn không hiển thị,
-                <a href="https://binhdanhocvuso.gov.vn/help"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    bấm vào đây để xem hướng dẫn
-                </a>.
-            </p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;
+                        margin-top:15px;">
+                <a href="${qlmsUrl}" target="_blank"
+                   rel="noopener noreferrer"
+                   style="flex:1;min-width:180px;padding:14px;
+                   background:#1976d2;color:white;text-align:center;
+                   text-decoration:none;border-radius:8px;font-weight:bold;">
+                    <i class="fa-solid fa-up-right-from-square"></i>
+                    MỞ QLMS RIÊNG
+                </a>
+
+                <button onclick="document.getElementById('videoHuongDan').scrollIntoView({behavior:'smooth'})"
+                    style="flex:1;min-width:180px;padding:14px;
+                    background:#388e3c;color:white;border:0;
+                    border-radius:8px;font-weight:bold;cursor:pointer;">
+                    <i class="fa-solid fa-circle-play"></i>
+                    XEM HƯỚNG DẪN
+                </button>
+            </div>
+
+            <div id="videoHuongDan">
+                <h3 style="margin-top:30px;">
+                    <i class="fa-brands fa-youtube"></i>
+                    VIDEO HƯỚNG DẪN HỌC TẬP
+                </h3>
+
+                <div style="position:relative;width:100%;
+                            aspect-ratio:16/9;background:#111;
+                            border-radius:10px;overflow:hidden;">
+                    <iframe
+                        src="https://www.youtube.com/embed/qpu_q5qalQI"
+                        title="Hướng dẫn Bình dân học vụ số"
+                        style="position:absolute;inset:0;
+                        width:100%;height:100%;border:0;"
+                        allow="accelerometer; autoplay; clipboard-write;
+                        encrypted-media; gyroscope; picture-in-picture;
+                        web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <p>
+                    <a href="https://www.youtube.com/watch?v=qpu_q5qalQI"
+                       target="_blank" rel="noopener noreferrer">
+                        Nếu video không chạy, bấm vào đây để mở YouTube.
+                    </a>
+                </p>
+
+                <p>
+                    <a href="https://www.binhchungtangthietgiap.vn/huong-dan-su-dung-nen-tang-binh-dan-hoc-vu-so-qlms-cua-bo-quoc-phong-tren-internet"
+                       target="_blank" rel="noopener noreferrer">
+                        Xem hướng dẫn sử dụng QLMS chi tiết
+                    </a>
+                </p>
+            </div>
         </div>
     `;
 }
 
 window.binhDanHocVuSoPage = binhDanHocVuSoPage;
+
+
+
+/* ===== HIỆU ỨNG CHUYỂN ĐỘNG TRANG TẾT ===== */
+window.initTetEffects = function () {
+    const canvas = document.getElementById("tetEffectsCanvas");
+    if (!canvas) return;
+
+    // Dọn vòng hoạt ảnh cũ nếu mở lại trang Tết
+    if (typeof window.__tetEffectsCleanup === "function") {
+        window.__tetEffectsCleanup();
+    }
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let raf = 0;
+    let width = 0;
+    let height = 0;
+    let lastTime = 0;
+    let elapsed = 0;
+    let fireworkTimer = 0;
+    let sparkleTimer = 0;
+
+    const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    const particles = [];
+    const fireworks = [];
+    const colors = ["#ffd96a", "#fff4c2", "#ffb347", "#ff765e"];
+
+    function resize() {
+        if (!canvas.isConnected) return;
+
+        const rect = canvas.getBoundingClientRect();
+        width = rect.width;
+        height = rect.height;
+
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function random(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    function addSparkle(initial = false) {
+        particles.push({
+            x: random(0, width),
+            y: initial ? random(0, height) : height + 5,
+            vx: random(-7, 7),
+            vy: random(-24, -8),
+            size: random(0.7, 2),
+            phase: random(0, Math.PI * 2),
+            alpha: random(0.35, 0.9)
+        });
+    }
+
+    function addFirework() {
+        const x = random(width * 0.12, width * 0.88);
+        const y = random(height * 0.08, height * 0.55);
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const bits = [];
+
+        for (let i = 0; i < 28; i++) {
+            const angle = Math.PI * 2 * i / 28;
+            const speed = random(22, 75);
+
+            bits.push({
+                x: 0,
+                y: 0,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                alpha: 1,
+                size: random(0.8, 1.8)
+            });
+        }
+
+        fireworks.push({
+            x,
+            y,
+            age: 0,
+            life: random(0.8, 1.2),
+            color,
+            bits
+        });
+    }
+
+    function drawSparkles(dt) {
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+
+            p.x += p.vx * dt + Math.sin(elapsed * 1.5 + p.phase) * 5 * dt;
+            p.y += p.vy * dt;
+
+            const twinkle = 0.45 + 0.55 *
+                Math.abs(Math.sin(elapsed * 2.5 + p.phase));
+
+            ctx.save();
+            ctx.globalAlpha = p.alpha * twinkle;
+            ctx.fillStyle = "#ffe6a0";
+            ctx.shadowColor = "#ffc83d";
+            ctx.shadowBlur = 8;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+
+            if (p.y < -10) {
+                particles.splice(i, 1);
+            }
+        }
+    }
+
+    function drawFireworks(dt) {
+        for (let i = fireworks.length - 1; i >= 0; i--) {
+            const f = fireworks[i];
+            f.age += dt;
+
+            const fade = Math.max(0, 1 - f.age / f.life);
+
+            for (const p of f.bits) {
+                p.x += p.vx * dt;
+                p.y += p.vy * dt;
+                p.vy += 22 * dt;
+
+                ctx.save();
+                ctx.globalAlpha = fade;
+                ctx.fillStyle = f.color;
+                ctx.shadowColor = f.color;
+                ctx.shadowBlur = 7;
+                ctx.beginPath();
+                ctx.arc(
+                    f.x + p.x,
+                    f.y + p.y,
+                    p.size,
+                    0,
+                    Math.PI * 2
+                );
+                ctx.fill();
+                ctx.restore();
+            }
+
+            if (f.age >= f.life) {
+                fireworks.splice(i, 1);
+            }
+        }
+    }
+
+    function frame(now) {
+        if (!canvas.isConnected) {
+            cleanup();
+            return;
+        }
+
+        const dt = lastTime
+            ? Math.min((now - lastTime) / 1000, 0.04)
+            : 0.016;
+
+        lastTime = now;
+        elapsed += dt;
+
+        ctx.clearRect(0, 0, width, height);
+
+        if (!reducedMotion) {
+            fireworkTimer -= dt;
+            sparkleTimer -= dt;
+
+            if (fireworkTimer <= 0) {
+                addFirework();
+                fireworkTimer = random(0.7, 1.3);
+            }
+
+            if (sparkleTimer <= 0) {
+                const maxParticles = width < 600 ? 32 : 65;
+
+                if (particles.length < maxParticles) {
+                    addSparkle();
+                }
+
+                sparkleTimer = 0.07;
+            }
+        }
+
+        drawSparkles(dt);
+        drawFireworks(dt);
+
+        raf = requestAnimationFrame(frame);
+    }
+
+    function cleanup() {
+        cancelAnimationFrame(raf);
+        window.removeEventListener("resize", resize);
+        particles.length = 0;
+        fireworks.length = 0;
+
+        if (window.__tetEffectsCleanup === cleanup) {
+            window.__tetEffectsCleanup = null;
+        }
+    }
+
+    resize();
+
+    if (!reducedMotion) {
+        for (let i = 0; i < (width < 600 ? 18 : 35); i++) {
+            addSparkle(true);
+        }
+    }
+
+    window.__tetEffectsCleanup = cleanup;
+    window.addEventListener("resize", resize, { passive: true });
+    raf = requestAnimationFrame(frame);
+};
 
 
 })();
