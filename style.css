@@ -6425,3 +6425,1078 @@ html body.login-page #loginPage input {
   line-height: 1.6;
 }
 
+/* ==========================================
+   BBB11 - CẨM NANG NGƯỜI LÍNH
+   GIAO DIỆN QUÂN ĐỘI HIỆN ĐẠI
+========================================== */
+
+.manual-app {
+    --manual-green: #263b30;
+    --manual-green-light: #385846;
+    --manual-red: #a51d2d;
+    --manual-gold: #e4c778;
+    --manual-bg: #f3f5f1;
+    --manual-text: #26332b;
+
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 26px;
+    color: var(--manual-text);
+    background: var(--manual-bg);
+    border: 1px solid #dce3d9;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(31, 53, 38, .09);
+    box-sizing: border-box;
+}
+
+/* Tiêu đề chính */
+.manual-app > h2 {
+    position: relative;
+    overflow: hidden;
+    margin: -26px -26px 18px;
+    padding: 30px 26px;
+    color: #fff;
+    background: linear-gradient(
+        125deg,
+        #20372a 0%,
+        #365943 65%,
+        #4a684c 100%
+    );
+    border-radius: 19px 19px 0 0;
+    border-bottom: 4px solid var(--manual-gold);
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 800;
+    letter-spacing: .5px;
+    line-height: 1.5;
+}
+
+.manual-app > h2::after {
+    content: "";
+    display: block;
+    width: 75px;
+    height: 4px;
+    margin-top: 12px;
+    background: var(--manual-gold);
+    border-radius: 5px;
+}
+
+/* Mô tả */
+.manual-app > p {
+    line-height: 1.8;
+    color: #58665b;
+    font-size: 15px;
+}
+
+/* Thanh danh mục */
+.manual-app .news-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 22px 0;
+    padding: 15px;
+    background: #e7ece5;
+    border: 1px solid #d8e0d5;
+    border-radius: 15px;
+}
+
+/* Nút chức năng */
+.manual-app .action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 11px 16px;
+    color: #fff;
+    background: var(--manual-green);
+    border: 1px solid var(--manual-green);
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    cursor: pointer;
+    transition:
+        background .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.manual-app .action-button:hover {
+    background: var(--manual-red);
+    border-color: var(--manual-red);
+    box-shadow: 0 5px 13px rgba(91, 31, 34, .17);
+    transform: translateY(-2px);
+}
+
+.manual-app .action-button:active {
+    transform: translateY(0);
+}
+
+/* Các khối nội dung */
+.manual-app .list-item {
+    margin: 18px 0;
+    padding: 22px;
+    background: #fff;
+    border: 1px solid #e0e6dd;
+    border-radius: 15px;
+    box-shadow: 0 4px 14px rgba(34, 52, 39, .045);
+    transition: box-shadow .2s ease;
+}
+
+.manual-app .list-item:hover {
+    box-shadow: 0 7px 20px rgba(34, 52, 39, .09);
+}
+
+/* Tiêu đề từng khối */
+.manual-app .list-item h3 {
+    margin: 0 0 18px;
+    padding-bottom: 13px;
+    color: var(--manual-green);
+    border-bottom: 2px solid #e7eadd;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.manual-app .list-item h4 {
+    margin: 0 0 10px;
+    color: #263e30;
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+.manual-app .list-item p {
+    color: #68756a;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Ô nhập và tìm kiếm */
+.manual-app input,
+.manual-app select {
+    width: 100%;
+    min-height: 45px;
+    margin: 7px 0 16px;
+    padding: 12px 14px;
+    color: #27372c;
+    background: #fff;
+    border: 1px solid #ccd7ca;
+    border-radius: 10px;
+    outline: none;
+    box-sizing: border-box;
+    font: inherit;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.manual-app input:focus,
+.manual-app select:focus {
+    border-color: #477453;
+    box-shadow: 0 0 0 3px rgba(71, 116, 83, .13);
+}
+
+.manual-app input::placeholder {
+    color: #98a398;
+}
+
+/* Nhãn biểu mẫu */
+.manual-app label {
+    display: block;
+    margin-top: 8px;
+    color: #344b39;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* Khung đọc tài liệu */
+.manual-app #manualReader {
+    display: block;
+    width: 100%;
+    height: 650px;
+    margin-top: 15px;
+    background: #fff;
+    border: 1px solid #d5dfd2 !important;
+    border-radius: 12px !important;
+    box-sizing: border-box;
+}
+
+/* Danh sách tài liệu */
+.manual-app #manualList {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.manual-app #manualList > .list-item {
+    min-width: 0;
+    margin: 0;
+    padding: 18px;
+}
+
+.manual-app #manualList .action-button {
+    margin: 5px 5px 0 0;
+}
+
+/* Nút điều hướng và liên kết */
+.manual-app a {
+    transition: opacity .2s ease;
+}
+
+.manual-app a:hover {
+    opacity: .86;
+}
+
+/* Hiệu ứng khi chọn bằng bàn phím */
+.manual-app button:focus-visible,
+.manual-app a:focus-visible {
+    outline: 3px solid var(--manual-gold);
+    outline-offset: 3px;
+}
+
+/* Điện thoại và màn hình nhỏ */
+@media (max-width: 700px) {
+    .manual-app {
+        margin: 8px auto;
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .manual-app > h2 {
+        margin: -14px -14px 16px;
+        padding: 22px 16px;
+        font-size: 22px;
+        border-radius: 13px 13px 0 0;
+    }
+
+    .manual-app .news-tabs {
+        padding: 10px;
+        gap: 7px;
+    }
+
+    .manual-app .news-tabs .action-button {
+        flex: 1 1 calc(50% - 7px);
+        padding: 10px 8px;
+        font-size: 12px;
+    }
+
+    .manual-app .list-item {
+        padding: 15px;
+    }
+
+    .manual-app #manualList {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .manual-app #manualReader {
+        height: 500px;
+    }
+
+    .manual-app .action-button {
+        max-width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .manual-app *,
+    .manual-app *::before,
+    .manual-app *::after {
+        transition: none !important;
+    }
+}
+
+/* BBB11 - BUỘC CẬP NHẬT MÀU GIAO DIỆN CẨM NANG */
+body .manual-app {
+    background: #f4f6f2 !important;
+    color: #24392f !important;
+    border: 1px solid #d5dfd4 !important;
+    border-radius: 20px !important;
+    box-shadow: 0 12px 35px rgba(24, 60, 44, .12) !important;
+}
+
+body .manual-app > h2 {
+    background: linear-gradient(135deg, #102f29, #28705a) !important;
+    color: #fff !important;
+    border-bottom: 4px solid #d7b765 !important;
+    padding: 28px 24px !important;
+    border-radius: 16px 16px 0 0 !important;
+}
+
+body .manual-app .news-tabs {
+    background: #e3ebe3 !important;
+    border: 1px solid #cbd9cb !important;
+    border-radius: 14px !important;
+    padding: 14px !important;
+}
+
+body .manual-app .action-button {
+    background: #205744 !important;
+    color: #fff !important;
+    border: 1px solid #205744 !important;
+    border-radius: 9px !important;
+}
+
+body .manual-app .action-button:hover {
+    background: #a12738 !important;
+    border-color: #a12738 !important;
+}
+
+body .manual-app .list-item {
+    background: #fff !important;
+    border: 1px solid #dce5da !important;
+    border-radius: 14px !important;
+    box-shadow: 0 5px 18px rgba(30, 60, 40, .07) !important;
+}
+
+body .manual-app .list-item h3,
+body .manual-app .list-item h4 {
+    color: #205744 !important;
+}
+
+body .manual-app input,
+body .manual-app select {
+    background: #fff !important;
+    color: #24392f !important;
+    border: 1px solid #cbd8ca !important;
+    border-radius: 9px !important;
+}
+
+body .manual-app input:focus,
+body .manual-app select:focus {
+    border-color: #c5a454 !important;
+    box-shadow: 0 0 0 3px rgba(197, 164, 84, .2) !important;
+}
+
+body .manual-app #manualReader {
+    border: 2px solid #d5dfd4 !important;
+    border-radius: 12px !important;
+}
+
+
+
+/* Ảnh nền trang menu chính BBB11 */
+#homePage {
+    background:
+        linear-gradient(
+            rgba(12, 30, 22, 0.72),
+            rgba(12, 30, 22, 0.82)
+        ),
+        url("https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/login-bg%205.png") center / cover no-repeat;
+
+    min-height: 100vh;
+    background-attachment: fixed;
+}
+
+/* Giữ nội dung menu dễ đọc */
+#homePage .menu-btn {
+    position: relative;
+    z-index: 1;
+}
+
+
+.tet-image-page {
+    width: 100%;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #7a0000;
+}
+
+.tet-image-page img {
+    display: block;
+    width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+}
+
+/* LỜI CHÚC XUÂN ĐẠI ĐỘI 11 */
+.tet-image-page {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    width: 100%;
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #650000;
+    border-radius: 12px;
+    box-shadow: 0 0 24px rgba(255, 190, 40, 0.3);
+}
+
+.tet-image-page > img {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    object-fit: cover;
+}
+
+.tet-message {
+    width: min(900px, 94%);
+    margin: 24px auto;
+    padding: 24px;
+    text-align: center;
+    color: #fff4bd;
+    background: rgba(100, 0, 0, 0.72);
+    border: 2px solid #ffd45e;
+    border-radius: 18px;
+    box-shadow: 0 0 30px rgba(255, 190, 40, 0.25);
+    backdrop-filter: blur(5px);
+    animation: tetFadeIn 1.2s ease both;
+}
+
+.tet-message h1 {
+    color: #ffe27a;
+    font-size: clamp(22px, 3vw, 36px);
+    text-shadow: 0 0 14px #ff9d00;
+}
+
+.tet-message h2 {
+    color: #fff;
+    font-size: clamp(25px, 4vw, 44px);
+    margin: 14px 0;
+    text-shadow: 0 0 12px #ffb300;
+}
+
+.tet-message p {
+    line-height: 1.8;
+    font-size: clamp(13px, 1.5vw, 18px);
+    font-weight: 600;
+}
+
+.tet-message .tet-slogan,
+.tet-message .tet-wish {
+    color: #ffe27a;
+    font-weight: 800;
+}
+
+.tet-message h3 {
+    color: #fff;
+    margin-top: 24px;
+    font-size: clamp(15px, 2vw, 22px);
+}
+
+.tet-divider {
+    width: 65%;
+    height: 2px;
+    margin: 18px auto;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #ffe27a,
+        #fff,
+        #ffe27a,
+        transparent
+    );
+}
+
+@keyframes tetFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 600px) {
+    .tet-image-page {
+        min-height: 75vh;
+    }
+
+    .tet-message {
+        padding: 16px 10px;
+    }
+}
+
+/* TRANG CHỦ TẾT - ẢNH TRÊN, LỜI CHÚC DƯỚI */
+.tet-home-container {
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+    background: linear-gradient(180deg, #fff8e7, #fff0cf);
+    border-radius: 14px;
+}
+
+.tet-image-frame {
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    border: 3px solid #d6a63b;
+    border-radius: 12px;
+    background: #7a0000;
+    box-shadow: 0 5px 22px rgba(120, 0, 0, 0.2);
+}
+
+.tet-image-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 75vh;
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+.tet-message-bottom {
+    margin-top: 18px;
+    padding: 24px 18px;
+    text-align: center;
+    color: #7a0000;
+    background: linear-gradient(135deg, #fff9e8, #ffe7a0);
+    border: 2px solid #d6a63b;
+    border-radius: 12px;
+    box-shadow: 0 5px 18px rgba(120, 0, 0, 0.12);
+    animation: tetBottomAppear 0.9s ease both;
+}
+
+.tet-message-bottom h1 {
+    color: #a40000;
+    font-size: clamp(21px, 3vw, 34px);
+    text-shadow: 0 2px 8px rgba(255, 190, 40, 0.35);
+}
+
+.tet-message-bottom h2 {
+    color: #8b0000;
+    font-size: clamp(25px, 4vw, 42px);
+    margin: 12px 0;
+}
+
+.tet-message-bottom p {
+    font-size: clamp(14px, 1.6vw, 18px);
+    line-height: 1.8;
+    margin: 8px 0;
+}
+
+.tet-message-bottom .tet-motto,
+.tet-message-bottom .tet-wish-bottom {
+    color: #a00000;
+    font-weight: 800;
+}
+
+.tet-message-bottom h3 {
+    margin-top: 22px;
+    color: #8b0000;
+}
+
+.tet-divider-bottom {
+    width: min(400px, 80%);
+    height: 3px;
+    margin: 16px auto;
+    border-radius: 10px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #c99a25,
+        #ffdf75,
+        #c99a25,
+        transparent
+    );
+}
+
+@keyframes tetBottomAppear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 600px) {
+    .tet-home-container {
+        padding: 8px;
+    }
+
+    .tet-message-bottom {
+        padding: 18px 10px;
+    }
+
+    .tet-image-frame img {
+        max-height: 55vh;
+    }
+}
+
+
+/* ===== BBB11 - TET LUXURY MOTION THEME ===== */
+
+.tet-home-container {
+    width: 100%;
+    padding: 14px;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 18px;
+    background:
+        radial-gradient(ellipse at top, #fff0bf, transparent 65%),
+        linear-gradient(180deg, #fffaf0, #ffebc0);
+}
+
+/* KHUNG ẢNH TẾT */
+.tet-image-frame {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    overflow: hidden;
+    border: 2px solid #d9ad42;
+    border-radius: 15px;
+    background: #650000;
+    box-shadow:
+        0 0 12px rgba(255, 201, 67, .5),
+        0 0 32px rgba(177, 0, 0, .18),
+        0 10px 30px rgba(70, 0, 0, .2);
+}
+
+.tet-image-frame > img {
+    display: block;
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    height: auto;
+    max-height: 78vh;
+    object-fit: contain;
+    margin: auto;
+}
+
+/* CANVAS PHÁO HOA VÀ BỤI SÁNG */
+#tetEffectsCanvas {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* VIỀN VÀNG PHÁT SÁNG */
+.tet-light-frame {
+    position: absolute;
+    z-index: 3;
+    inset: 0;
+    border: 2px solid rgba(255, 220, 115, .9);
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow:
+        inset 0 0 14px rgba(255, 205, 75, .28),
+        0 0 12px rgba(255, 201, 60, .35);
+    animation: tetFrameGlow 3s ease-in-out infinite;
+}
+
+.tet-light-frame::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -45%;
+    width: 30%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 244, 190, .45),
+        transparent
+    );
+    transform: skewX(-20deg);
+    animation: tetLightSweep 5s ease-in-out infinite;
+}
+
+@keyframes tetFrameGlow {
+    0%, 100% {
+        box-shadow:
+            inset 0 0 8px rgba(255, 205, 75, .18),
+            0 0 8px rgba(255, 201, 60, .25);
+    }
+    50% {
+        box-shadow:
+            inset 0 0 22px rgba(255, 205, 75, .4),
+            0 0 22px rgba(255, 201, 60, .65);
+    }
+}
+
+@keyframes tetLightSweep {
+    0%, 15% { left: -45%; opacity: 0; }
+    25% { opacity: 1; }
+    65% { left: 120%; opacity: .7; }
+    75%, 100% { left: 120%; opacity: 0; }
+}
+
+/* TIÊU ĐỀ TRÊN ẢNH */
+.tet-floating-title {
+    position: absolute;
+    z-index: 4;
+    left: 50%;
+    bottom: 5%;
+    transform: translateX(-50%);
+    width: 92%;
+    box-sizing: border-box;
+    padding: 15px 10px;
+    text-align: center;
+    color: #ffe8a5;
+    border: 1px solid rgba(255, 220, 125, .8);
+    border-radius: 12px;
+    background: linear-gradient(
+        100deg,
+        rgba(80, 0, 0, .18),
+        rgba(80, 0, 0, .8),
+        rgba(80, 0, 0, .18)
+    );
+    backdrop-filter: blur(3px);
+    animation: tetTitleEnter 1s ease both;
+}
+
+.tet-floating-title span,
+.tet-floating-title strong,
+.tet-floating-title small {
+    display: block;
+}
+
+.tet-floating-title .tet-eyebrow {
+    margin-bottom: 7px;
+    font-size: clamp(10px, 1.5vw, 16px);
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.tet-floating-title strong {
+    font-size: clamp(20px, 4vw, 42px);
+    font-weight: 900;
+    line-height: 1.25;
+    color: #ffe6a0;
+    text-shadow:
+        0 0 8px rgba(255, 203, 57, .7),
+        0 2px 3px rgba(80, 0, 0, .6);
+    background: linear-gradient(
+        100deg,
+        #fff4c6,
+        #e9b93c,
+        #fffde0,
+        #f2c34f,
+        #fff4c6
+    );
+    background-size: 250% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: tetGoldShimmer 5s linear infinite;
+}
+
+.tet-floating-title small {
+    margin-top: 8px;
+    font-size: clamp(9px, 1.3vw, 14px);
+    letter-spacing: 1px;
+}
+
+@keyframes tetTitleEnter {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 15px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes tetGoldShimmer {
+    to { background-position: 250% center; }
+}
+
+/* ĐÈN LỒNG ĐUNG ĐƯA */
+.tet-lantern {
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    width: 48px;
+    height: 118px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform-origin: top center;
+    pointer-events: none;
+    filter: drop-shadow(0 0 9px rgba(255, 174, 38, .65));
+    animation: tetLanternSwing 3.5s ease-in-out infinite;
+}
+
+.tet-lantern-left {
+    left: 7%;
+}
+
+.tet-lantern-right {
+    right: 7%;
+    animation-delay: -.9s;
+}
+
+.tet-lantern-string {
+    display: block;
+    width: 2px;
+    height: 20px;
+    background: linear-gradient(#ffe9a0, #c58b26);
+}
+
+.tet-lantern-body {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 49px;
+    border: 2px solid #ffda73;
+    border-radius: 45% 45% 42% 42%;
+    color: #ffe8a5;
+    font-size: 17px;
+    background:
+        radial-gradient(ellipse at 35% 25%, #ff9270, transparent 35%),
+        linear-gradient(90deg, #a30000, #ff3021, #ad0000);
+    box-shadow:
+        inset 4px 0 7px rgba(255, 226, 125, .35),
+        inset -4px 0 7px rgba(70, 0, 0, .35),
+        0 0 13px rgba(255, 120, 30, .45);
+}
+
+.tet-lantern-body::before,
+.tet-lantern-body::after {
+    content: "";
+    position: absolute;
+    left: 3px;
+    right: 3px;
+    height: 3px;
+    background: #f8d36e;
+    border-radius: 3px;
+}
+
+.tet-lantern-body::before { top: 4px; }
+.tet-lantern-body::after { bottom: 4px; }
+
+.tet-lantern-tassel {
+    width: 2px;
+    height: 22px;
+    background: #e7b747;
+    position: relative;
+}
+
+.tet-lantern-tassel::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: -4px;
+    width: 10px;
+    height: 9px;
+    background: #cf2525;
+    border-bottom: 2px solid #ffe08a;
+    border-radius: 2px 2px 5px 5px;
+}
+
+@keyframes tetLanternSwing {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+/* NHÃN TRANG TRÍ */
+.tet-corner-label {
+    position: absolute;
+    z-index: 4;
+    top: 14px;
+    left: 14px;
+    padding: 8px 12px;
+    color: #ffe6a0;
+    font-size: clamp(9px, 1.3vw, 13px);
+    font-weight: 800;
+    letter-spacing: 1px;
+    border: 1px solid #eac65e;
+    border-radius: 8px;
+    background: rgba(103, 0, 0, .8);
+    box-shadow: 0 0 12px rgba(255, 200, 50, .25);
+}
+
+/* LỜI CHÚC PHÍA DƯỚI ẢNH */
+.tet-message-bottom {
+    margin-top: 18px;
+    padding: 26px 18px;
+    overflow: hidden;
+    text-align: center;
+    color: #790000;
+    border: 2px solid #d7aa3f;
+    border-radius: 15px;
+    background:
+        radial-gradient(ellipse at top, #fffefa, transparent 70%),
+        linear-gradient(135deg, #fff8e8, #ffe6a0);
+    box-shadow:
+        inset 0 0 20px rgba(255, 205, 92, .2),
+        0 6px 22px rgba(120, 0, 0, .12);
+    animation: tetMessageEnter 1s ease both;
+}
+
+@keyframes tetMessageEnter {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.tet-ornament {
+    margin: 8px 0 14px;
+    color: #c38d1e;
+    font-size: 22px;
+    letter-spacing: 7px;
+    animation: tetOrnamentGlow 3s ease-in-out infinite;
+}
+
+@keyframes tetOrnamentGlow {
+    0%, 100% { opacity: .65; }
+    50% { opacity: 1; text-shadow: 0 0 12px #edca69; }
+}
+
+.tet-message-bottom .tet-kicker {
+    color: #a50000;
+    font-weight: 900;
+    letter-spacing: 3px;
+}
+
+.tet-message-bottom .tet-shimmer {
+    margin: 12px 0;
+    font-size: clamp(24px, 4vw, 44px);
+    font-weight: 900;
+    background: linear-gradient(
+        100deg,
+        #8c0000,
+        #d19b22,
+        #fff0a0,
+        #b47b08,
+        #ffe89a,
+        #9a0000
+    );
+    background-size: 250% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: tetGoldShimmer 5s linear infinite;
+}
+
+.tet-message-bottom .tet-subtitle {
+    color: #930000;
+    font-weight: 800;
+}
+
+.tet-ribbon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin: 24px 0;
+    padding: 16px 12px;
+    color: #ffe7a0;
+    font-size: clamp(12px, 1.7vw, 17px);
+    line-height: 1.8;
+    background: linear-gradient(110deg, #650000, #bd0000, #710000);
+    border: 2px solid #e4bc54;
+    border-radius: 8px;
+    box-shadow: 0 5px 16px rgba(100, 0, 0, .2);
+    animation: tetRibbonGlow 3s ease-in-out infinite;
+}
+
+.tet-ribbon span {
+    color: #ffe8a0;
+    text-shadow: 0 0 10px #ffc83d;
+}
+
+@keyframes tetRibbonGlow {
+    0%, 100% { box-shadow: 0 5px 12px rgba(100, 0, 0, .18); }
+    50% { box-shadow: 0 0 22px rgba(226, 169, 45, .4); }
+}
+
+.tet-divider-bottom {
+    width: min(420px, 80%);
+    height: 2px;
+    margin: 20px auto;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #c48d1d,
+        #fff0a0,
+        #c48d1d,
+        transparent
+    );
+}
+
+.tet-divider-bottom span {
+    position: relative;
+    top: -12px;
+    padding: 0 8px;
+    color: #bc8a20;
+    background: #fff4d7;
+}
+
+.tet-message-bottom > p {
+    margin: 10px 0;
+    font-size: clamp(13px, 1.5vw, 18px);
+    line-height: 1.9;
+}
+
+.tet-message-bottom h3 {
+    margin-top: 24px;
+    color: #870000;
+    font-size: clamp(15px, 2vw, 21px);
+}
+
+.tet-message-bottom .tet-wish-bottom {
+    color: #a00000;
+    font-weight: 900;
+}
+
+.tet-ornament-bottom {
+    margin-top: 20px;
+}
+
+/* ĐIỆN THOẠI */
+@media (max-width: 600px) {
+    .tet-home-container { padding: 7px; }
+
+    .tet-image-frame > img { max-height: 65vh; }
+
+    .tet-floating-title {
+        bottom: 3%;
+        width: 94%;
+        padding: 8px 5px;
+    }
+
+    .tet-floating-title .tet-eyebrow {
+        letter-spacing: 1px;
+    }
+
+    .tet-floating-title small {
+        letter-spacing: .3px;
+    }
+
+    .tet-lantern {
+        transform: scale(.75);
+        transform-origin: top center;
+    }
+
+    .tet-corner-label {
+        top: 7px;
+        left: 7px;
+        padding: 6px;
+    }
+
+    .tet-message-bottom { padding: 18px 10px; }
+    .tet-ribbon { gap: 6px; padding: 12px 6px; }
+    .tet-ornament { letter-spacing: 3px; }
+}
+
+/* TÔN TRỌNG CÀI ĐẶT GIẢM CHUYỂN ĐỘNG */
+@media (prefers-reduced-motion: reduce) {
+    .tet-light-frame,
+    .tet-light-frame::after,
+    .tet-floating-title,
+    .tet-floating-title strong,
+    .tet-lantern,
+    .tet-message-bottom,
+    .tet-ornament,
+    .tet-shimmer,
+    .tet-ribbon {
+        animation: none !important;
+    }
+}
