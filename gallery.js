@@ -1,6 +1,3 @@
-
-
-
 "use strict";
 
 // ======================================================
@@ -832,5 +829,4 @@ window.loadGallery = function () {
     });
 
     console.log("BBB11: Đã nạp thư viện ảnh.");
-
 })();
