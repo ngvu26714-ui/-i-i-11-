@@ -6298,6 +6298,7 @@ function membersPage() {
    BBB11 - KHO TÀNG ÂM NHẠC QUÂN ĐỘI
    ========================================== */
 (function () {
+
     "use strict";
 
     // Dán link YouTube của từng bài vào thuộc tính link.
@@ -6369,6 +6370,7 @@ function membersPage() {
     let baiDangPhat = -1;
 
     window.musicPage = function () {
+         
         const cards = BAI_HAT_QUAN_DOI.map((bai, index) => `
             <article class="bbb11-music-item"
                 data-search="${escapeHTML((bai.ten + " " + bai.nhom).toLocaleLowerCase("vi"))}">
@@ -6387,14 +6389,16 @@ function membersPage() {
 
         return `
         <div class="page-box bbb11-music-app">
-            <section class="bbb11-music-hero">
-                <div class="bbb11-hero-symbol">♫</div>
-                <div class="bbb11-hero-text">
-                    <span class="bbb11-music-label">★ HỆ THỐNG BBB11 ★</span>
-                    <h2>KHO TÀNG<br><span>ÂM NHẠC QUÂN ĐỘI</span></h2>
-                    <p>Giai điệu người lính · Tự hào Tổ quốc · Vững bước quân hành</p>
-                </div>
-            </section>
+          
+<div class="tt-page">
+    <header class="hero hero-image tradition-banner-fix">
+        <img
+            src="https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/truyen-thong-banner.png"
+            alt="Truyền thống đơn vị - Giáo dục chính trị"
+        >
+    </header>
+</div>
+
 
             <section class="bbb11-player-panel">
                 <div class="bbb11-player-heading">
@@ -6862,6 +6866,12 @@ function hienThiLinkTaiLieuBBB11(loai, idPhanTu) {
                     }
                 }
             </style>
+   
+            
+        
+
+
+
 
             <h2>🖼️ THƯ VIỆN ẢNH BBB11</h2>
             <p>Hình ảnh hoạt động, huấn luyện và sinh hoạt Đại đội 11.</p>
