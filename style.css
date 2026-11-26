@@ -7500,3 +7500,417 @@ body .manual-app #manualReader {
         animation: none !important;
     }
 }
+.bbb11-ai-button-avatar {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ffd700;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+/* ===== TRUYỀN THỐNG ĐƠN VỊ ===== */
+.tradition-page {
+    padding: 18px;
+    color: #29251d;
+}
+
+.tradition-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 38px 20px;
+    text-align: center;
+    color: #ffe6a0;
+    background: linear-gradient(135deg, #5e1010, #a51d1d, #4d0909);
+    border: 1px solid #d8ae55;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(90, 15, 15, .18);
+}
+
+.tradition-hero-icon {
+    font-size: 38px;
+    color: #ffda62;
+    margin-bottom: 10px;
+}
+
+.tradition-eyebrow {
+    letter-spacing: 3px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.tradition-hero h1 {
+    margin: 10px 0;
+    color: #ffdf78;
+    font-size: clamp(23px, 4vw, 36px);
+    text-shadow: 0 2px 12px rgba(255, 210, 90, .25);
+}
+
+.tradition-hero h2 {
+    font-size: clamp(15px, 2.5vw, 22px);
+}
+
+.tradition-hero p {
+    line-height: 1.7;
+}
+
+.tradition-section {
+    margin-top: 28px;
+}
+
+.tradition-section > h2 {
+    font-size: 20px;
+    color: #851c1c;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #d9b35d;
+}
+
+.tradition-grid,
+.tradition-video-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.tradition-card,
+.tradition-video {
+    min-width: 0;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #eadfc8;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .06);
+}
+
+.tradition-card {
+    padding: 20px;
+}
+
+.tradition-card-icon {
+    font-size: 30px;
+    color: #a32222;
+}
+
+.tradition-card h3,
+.tradition-video h3 {
+    color: #7c1919;
+    line-height: 1.5;
+}
+
+.tradition-card p,
+.tradition-video p,
+.tradition-description {
+    line-height: 1.75;
+    color: #625b52;
+}
+
+.tradition-card button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #891d1d;
+    color: #fff3d0;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.tradition-card button:hover {
+    background: #b52a2a;
+}
+
+.tradition-video-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #190b0b;
+}
+
+.tradition-video-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.tradition-video-info {
+    padding: 16px;
+}
+
+.tradition-tag {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 5px;
+    color: #7e1b1b;
+    background: #fff0cf;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.tradition-detail {
+    margin-top: 18px;
+    padding: 20px;
+    border-left: 4px solid #a52222;
+    border-radius: 8px;
+    background: #fff7e7;
+    line-height: 1.8;
+}
+
+.tradition-note {
+    margin-top: 16px;
+    color: #776c5b;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+@media (max-width: 800px) {
+    .tradition-grid,
+    .tradition-video-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .tradition-page {
+        padding: 10px;
+    }
+
+    .tradition-card {
+        padding: 14px;
+    }
+}
+
+@media (max-width: 520px) {
+    .tradition-grid,
+    .tradition-video-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tradition-hero {
+        padding: 28px 14px;
+        border-radius: 12px;
+    }
+
+    .tradition-section > h2 {
+        font-size: 17px;
+    }
+}
+
+
+
+
+/* ===== BANNER TRUYỀN THỐNG - TĂNG KÍCH THƯỚC ===== */
+.tt-page header.tradition-banner-fix {
+    display: block !important;
+    width: 100% !important;
+    max-width: 1000px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 auto 20px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.tt-page header.tradition-banner-fix img {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    position: static !important;
+    object-fit: contain !important;
+    transform: none !important;
+    margin: 0 auto !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+}
+
+/* Điện thoại */
+@media (max-width: 500px) {
+    .tt-page header.tradition-banner-fix {
+        max-width: 90% !important;
+    }
+}
+
+/* ===== SỬA BỐ CỤC TRANG TÌM HIỂU TRUYỀN THỐNG ===== */
+
+.tt-cards {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 18px !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.tt-card {
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    border-radius: 16px !important;
+}
+
+.tt-card-picture {
+    position: relative !important;
+    width: 100% !important;
+    height: 190px !important;
+    min-height: 190px !important;
+    max-height: 190px !important;
+    overflow: hidden !important;
+    flex-shrink: 0 !important;
+}
+
+.tt-card-picture img,
+.tt-card-picture .tt-upload-image {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+}
+
+.tt-card-picture > i {
+    display: none !important;
+}
+
+.tt-card-body {
+    position: relative !important;
+    display: block !important;
+    flex: 1 !important;
+    padding: 14px 16px !important;
+    background: #063c27 !important;
+    box-sizing: border-box !important;
+    overflow-wrap: anywhere !important;
+}
+
+.tt-card-body h3 {
+    margin: 0 0 10px !important;
+    color: #ffd45c !important;
+    font-size: 18px !important;
+    line-height: 1.5 !important;
+}
+
+.tt-card-body p {
+    margin: 0 0 14px !important;
+    color: #ffffff !important;
+    font-size: 15px !important;
+    line-height: 1.7 !important;
+}
+
+.tt-btn {
+    display: inline-block !important;
+    max-width: 100% !important;
+}
+
+@media (max-width: 760px) {
+    .tt-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .tt-cards {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* THU NHỎ ẢNH TRUYỀN THỐNG */
+.tt-cards .tt-card-picture {
+    height: 130px !important;
+    min-height: 130px !important;
+    max-height: 130px !important;
+    overflow: hidden !important;
+}
+
+.tt-cards .tt-card-picture img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+}
+
+/* KHÔI PHỤC NÚT TÌM HIỂU TRUYỀN THỐNG */
+.tt-cards .tt-card-body .tt-btn {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 5 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    width: auto !important;
+    height: auto !important;
+    margin-top: 10px !important;
+    padding: 10px 18px !important;
+    color: #3b2900 !important;
+    background: linear-gradient(135deg, #ffe88a, #e8ad27) !important;
+    border: none !important;
+    border-radius: 25px !important;
+    cursor: pointer !important;
+}
+
+.tt-cards .tt-card-body {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+}
+
+.tt-cards .tt-card-body .tt-btn i {
+    display: inline-block !important;
+}
+
+/* KHUNG ẢNH BÁC HỒ - CBB11 */
+.tt-bac-frame {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    border: 1px solid #c5a044;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    background: #063b2b;
+}
+
+.tt-bac-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+}
+
+/* DẤU NGOẶC KÉP */
+.tt-quote-mark {
+    color: #ffdc70;
+    font-size: 45px;
+    font-weight: bold;
+}
+
+/* LỜI TRÍCH DẪN */
+.tt-quote blockquote {
+    color: #fff0c2;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: italic;
+    line-height: 1.7;
+    margin: 10px 0 25px;
+}
+
+/* NGÔI SAO */
+.tt-quote-star {
+    text-align: center;
+    color: #ffdc70;
+    font-size: 23px;
+}
