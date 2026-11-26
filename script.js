@@ -133,6 +133,840 @@ if (!home || !functionPage || !content) {
     return;
 }
 
+
+/* =====================================================
+   BBB11 - TRANG TRUYỀN THỐNG ĐƠN VỊ
+   Không thay thế hàm showPage() hiện có.
+===================================================== */
+
+window.traditionPage = function () {
+    return `
+    <style>
+    .tt-page {
+        --tt-gold: #ffdc70;
+        --tt-red: #b50919;
+        color: #fff6df;
+        padding: 16px;
+        border: 1px solid #cba94a;
+        border-radius: 18px;
+        background:
+            radial-gradient(ellipse at top, #17683b, transparent 55%),
+            linear-gradient(145deg, #073820, #02160c);
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+    }
+
+    .tt-page * { box-sizing: border-box; }
+
+    .tt-hero {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        text-align: center;
+        padding: 35px 15px;
+        border: 1px solid var(--tt-gold);
+        border-radius: 18px;
+        background:
+            linear-gradient(90deg, #031b10eF, #07532cce, #031b10eF),
+            url('https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/truyen-thong-su%20doan.png')
+            center/cover;
+    }
+
+    .tt-hero:before {
+        content: "★";
+        position: absolute;
+        z-index: -1;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: #ffdc701c;
+        font-size: clamp(160px, 30vw, 320px);
+    }
+
+    .tt-emblem {
+        display: grid;
+        place-items: center;
+        width: 68px;
+        height: 68px;
+        margin: auto auto 14px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #fff2a4, #d49a21);
+        color: #a60012;
+        border: 3px solid #fff0a0;
+        box-shadow: 0 0 25px #ffdc7066;
+        font-size: 32px;
+    }
+
+    .tt-label {
+        display: inline-block;
+        padding: 8px 17px;
+        border: 1px solid var(--tt-gold);
+        border-radius: 30px;
+        background: #07512d;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .tt-hero h1 {
+        margin: 18px 0 12px;
+        color: var(--tt-gold);
+        font-size: clamp(27px, 4.5vw, 52px);
+        font-weight: 900;
+        line-height: 1.2;
+        text-shadow: 0 3px 0 #583900, 0 0 20px #ffdc7066;
+    }
+
+    .tt-ribbon {
+        display: inline-block;
+        padding: 10px 22px;
+        background: linear-gradient(90deg, #85000b, #d51424, #85000b);
+        color: #fff0a0;
+        font-weight: 900;
+    }
+
+    .tt-motto {
+        color: #fff0b5;
+        font-style: italic;
+        font-size: 17px;
+        margin-bottom: 0;
+    }
+
+    .tt-section { margin-top: 23px; }
+
+    .tt-heading {
+        color: var(--tt-gold);
+        font-size: clamp(18px, 2.5vw, 26px);
+        font-weight: 900;
+        padding-bottom: 12px;
+        margin: 0 0 15px;
+        border-bottom: 1px solid #ffdc7070;
+    }
+
+    .tt-top-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 3fr) minmax(230px, 1fr);
+        gap: 16px;
+        margin-top: 20px;
+    }
+
+    .tt-panel {
+        min-width: 0;
+        border: 1px solid #dcb644;
+        border-radius: 17px;
+        background: linear-gradient(145deg, #0b4b2a, #032217);
+        box-shadow: 0 7px 22px #0004;
+        overflow: hidden;
+    }
+
+    .tt-cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .tt-card {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid #dcb644;
+        border-radius: 13px;
+        background: #062819;
+    }
+
+    .tt-card-picture {
+        height: 125px;
+        display: grid;
+        place-items: center;
+        color: #ffdf76;
+        font-size: 42px;
+        background:
+            radial-gradient(circle at center, #267a45, transparent 65%),
+            linear-gradient(135deg, #12472c, #03180e);
+        border-bottom: 1px solid #dcb64455;
+    }
+
+    .tt-card-body {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        flex: 1;
+        padding: 13px;
+    }
+
+    .tt-card h3 {
+        color: var(--tt-gold);
+        font-size: 16px;
+        line-height: 1.4;
+        margin: 0 0 8px;
+    }
+
+    .tt-card p {
+        color: #f4eedc;
+        font-size: 13px;
+        line-height: 1.6;
+        margin: 0 0 14px;
+    }
+
+    .tt-btn {
+        margin-top: auto;
+        padding: 10px 14px;
+        border: 0;
+        border-radius: 25px;
+        background: linear-gradient(135deg, #fff1a4, #dfa21e);
+        color: #392600;
+        font-weight: bold;
+        cursor: pointer;
+        transition: .2s;
+    }
+
+    .tt-btn:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.08);
+    }
+
+    .tt-detail {
+        margin-top: 15px;
+        padding: 17px;
+        border: 1px solid var(--tt-gold);
+        border-radius: 12px;
+        background: #03190f;
+        line-height: 1.8;
+    }
+
+    .tt-detail h3 { color: var(--tt-gold); }
+
+    .tt-quote {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 24px;
+        min-height: 250px;
+        background:
+            linear-gradient(145deg, #064021ed, #02170eeb),
+            url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=700&q=80')
+            center/cover;
+    }
+
+    .tt-quote-mark {
+        color: var(--tt-gold);
+        font-family: Georgia, serif;
+        font-size: 60px;
+    }
+
+    .tt-quote blockquote {
+        margin: 8px 0 18px;
+        color: #fff0be;
+        font-family: Georgia, serif;
+        font-size: 19px;
+        font-weight: bold;
+        font-style: italic;
+        line-height: 1.7;
+    }
+
+    .tt-video-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr);
+        gap: 16px;
+    }
+
+    .tt-video-main { padding: 17px; }
+
+    .tt-player {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: #000;
+        border: 1px solid var(--tt-gold);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .tt-player iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+    .tt-placeholder {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 15px;
+        text-align: center;
+        color: #fff0a8;
+        background: radial-gradient(circle, #145d35, #020d08);
+    }
+
+    .tt-placeholder i { font-size: 48px; }
+
+    .tt-video-info h3 {
+        color: var(--tt-gold);
+        line-height: 1.4;
+    }
+
+    .tt-video-info p { line-height: 1.7; }
+
+    .tt-playlist-title {
+        padding: 16px;
+        background: linear-gradient(135deg, #fff0a0, #e6ae31);
+        color: #17391d;
+        font-weight: 900;
+    }
+
+    .tt-playlist {
+        display: grid;
+        gap: 9px;
+        padding: 11px;
+    }
+
+    .tt-video-item {
+        display: grid;
+        grid-template-columns: 75px minmax(0, 1fr);
+        gap: 10px;
+        align-items: center;
+        width: 100%;
+        padding: 9px;
+        text-align: left;
+        border: 1px solid #d5ad3c66;
+        border-radius: 10px;
+        background: #ffffff08;
+        color: #fff4d5;
+        cursor: pointer;
+    }
+
+    .tt-video-item.active,
+    .tt-video-item:hover {
+        border-color: var(--tt-gold);
+        background: #ffdc7018;
+    }
+
+    .tt-video-icon {
+        display: grid;
+        place-items: center;
+        height: 55px;
+        border-radius: 7px;
+        background: #124b2b;
+        color: #ffdf76;
+        font-size: 23px;
+    }
+
+    .tt-video-item strong {
+        display: block;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .tt-video-item small {
+        display: block;
+        margin-top: 4px;
+        color: #e8dfc5;
+        font-size: 11px;
+    }
+
+    .tt-footer {
+        margin-top: 22px;
+        padding: 17px;
+        text-align: center;
+        color: #a10013;
+        background: linear-gradient(90deg, #d99b25, #fff0a0, #d99b25);
+        border: 2px solid #fff0a0;
+        font-weight: 900;
+        line-height: 1.7;
+    }
+
+    @media(max-width: 850px) {
+        .tt-top-grid,
+        .tt-video-grid { grid-template-columns: 1fr; }
+        .tt-quote { min-height: 200px; }
+    }
+
+    @media(max-width: 600px) {
+        .tt-page { padding: 9px; border-radius: 12px; }
+        .tt-hero { padding: 28px 12px; }
+        .tt-cards { grid-template-columns: 1fr; }
+        .tt-card { display: grid; grid-template-columns: 95px minmax(0, 1fr); }
+        .tt-card-picture { height: 100%; min-height: 160px; font-size: 30px; }
+        .tt-card-body { padding: 11px; }
+        .tt-card h3 { font-size: 15px; }
+        .tt-heading { font-size: 18px; }
+        .tt-video-main { padding: 11px; }
+        .tt-video-item { grid-template-columns: 65px minmax(0, 1fr); }
+        .tt-quote { padding: 18px; }
+        .tt-quote blockquote { font-size: 17px; }
+        .tt-footer { padding: 13px 9px; font-size: 13px; }
+    }
+
+    @media(prefers-reduced-motion: reduce) {
+        .tt-page * { scroll-behavior: auto !important; transition: none !important; }
+    }
+    </style>
+
+    <div class="tt-page">
+      
+<header class="hero hero-image tradition-banner-fix">
+    <img
+        src="https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/truyen-thong-banner.png"
+        alt="Truyền thống đơn vị - Giáo dục chính trị"
+    >
+</header>
+
+
+       
+<div class="tt-top-grid">
+
+    <section class="tt-panel" style="padding:16px">
+
+        <h2 class="tt-heading">
+            <i class="fa-solid fa-book-open"></i>
+            TÌM HIỂU TRUYỀN THỐNG
+        </h2>
+
+        <div class="tt-cards">
+
+            <!-- THẺ 1: SƯ ĐOÀN -->
+            <article class="tt-card">
+                <div class="tt-card-picture">
+                    <img
+                        id="ttImage1"
+                        class="tt-upload-image"
+                        src="https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/truyen-thong-su%20doan.png"
+                        alt="Ảnh truyền thống Sư đoàn"
+                        style="display:block;width:100%;height:100%;object-fit:cover;"
+                    >
+         
+                </div>
+
+                <div class="tt-card-body">
+                    <h3>Truyền thống Sư đoàn</h3>
+                    <p>Hình ảnh truyền thống và thành tích của Sư đoàn.</p>
+              
+                    <button class="tt-btn"
+            onclick="bbb11ShowTraditionDetail('company')">
+        Tìm hiểu <i class="fa-solid fa-arrow-right"></i>
+    </button>
+            </article>
+
+            <!-- THẺ 2: TRUNG ĐOÀN -->
+            <article class="tt-card">
+                <div class="tt-card-picture">
+                    <img
+                        id="ttImage2"
+                        class="tt-upload-image"
+                        src="https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/truyen-thong-trung%20doan.png"
+                        alt="Ảnh truyền thống Trung đoàn"
+                        style="display:block;width:100%;height:100%;object-fit:cover;"
+                    >
+                </div>
+
+                <div class="tt-card-body">
+                    <h3>Truyền thống Trung đoàn</h3>
+                    <p>Hình ảnh truyền thống, hoạt động và thành tích của Trung đoàn.</p>
+                 <div class="tt-card-body">
+              
+                    <button class="tt-btn"
+            onclick="bbb11ShowTraditionDetail('company')">
+        Tìm hiểu <i class="fa-solid fa-arrow-right"></i>
+    </button>
+            </article>
+
+    </article>
+
+            <!-- THẺ 3: ĐẠI ĐỘI 11 -->
+            <article class="tt-card">
+                <div class="tt-card-picture">
+                    <img
+                        id="ttImage3"
+                        class="tt-upload-image"
+                        src="https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/truyen-thong-dai-%20doi.png"
+                        alt="Ảnh truyền thống Đại đội 11"
+                        style="display:block;width:100%;height:100%;object-fit:cover;"
+                    >
+                </div>
+
+                <div class="tt-card-body">
+                    <h3>Truyền thống Đại đội 11</h3>
+                    <p>Cán bộ, chiến sĩ là anh em, Đại đội là ngôi nhà đoàn kết.</p>
+
+                    <button class="tt-btn"
+                            onclick="bbb11ShowTraditionDetail('company')">
+                        Tìm hiểu
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </article>
+
+        </div>
+
+<div id="bbb11TraditionDetail" class="tt-detail"></div>
+
+</section>
+
+<aside class="tt-panel tt-quote">
+
+    <!-- KHUNG HÌNH BÁC HỒ -->
+    <div class="tt-bac-frame">
+        <img src="https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/bac-ho%205.png"
+             alt="Chủ tịch Hồ Chí Minh"
+             class="tt-bac-img">
+    </div>
+
+    <!-- DẤU NGOẶC KÉP -->
+    <div class="tt-quote-mark">“</div>
+
+    <!-- NỘI DUNG TRÍCH DẪN -->
+    <blockquote>
+        Phát huy truyền thống, đoàn kết, kỷ luật,
+        ra sức học tập, rèn luyện và hoàn thành tốt
+        mọi nhiệm vụ.
+    </blockquote>
+
+    <!-- HỌA TIẾT TRANG TRÍ -->
+    <div class="tt-quote-star">
+        ❧ ★ ❧
+    </div>
+
+</aside>
+
+</div>
+
+
+        <section class="tt-section tt-video-grid">
+            <div class="tt-panel tt-video-main">
+                <h2 class="tt-heading">
+                    <i class="fa-solid fa-circle-play"></i>
+                    GÓC VIDEO CÁCH MẠNG
+                </h2>
+
+                <div class="tt-player">
+                    <iframe id="bbb11TraditionPlayer"
+                        src="about:blank"
+                        title="Video truyền thống đơn vị"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+
+                    <div id="bbb11TraditionPlaceholder" class="tt-placeholder">
+                        <i class="fa-solid fa-circle-play"></i>
+                        <p>Chọn video trong danh sách để xem tại đây.</p>
+                    </div>
+                </div>
+
+                <div class="tt-video-info">
+                    <h3 id="bbb11TraditionVideoTitle">Góc video truyền thống</h3>
+                    <p id="bbb11TraditionVideoDescription">
+                        Chọn một video trong danh sách bên cạnh.
+                    </p>
+                </div>
+            </div>
+
+            <aside class="tt-panel">
+                <div class="tt-playlist-title">
+                    <i class="fa-solid fa-list"></i> DANH SÁCH VIDEO
+                </div>
+
+                <div class="tt-playlist">
+                    <button class="tt-video-item"
+                        onclick="bbb11PlayTraditionVideo('history',this)">
+                        <span class="tt-video-icon"><i class="fa-solid fa-flag"></i></span>
+                        <span>
+                            <strong>Lịch sử cách mạng Việt Nam</strong>
+                            <small>Các dấu mốc lịch sử</small>
+                        </span>
+                    </button>
+
+                    <button class="tt-video-item"
+                        onclick="bbb11PlayTraditionVideo('hochiminh',this)">
+                        <span class="tt-video-icon"><i class="fa-solid fa-user"></i></span>
+                        <span>
+                            <strong>Chủ tịch Hồ Chí Minh</strong>
+                            <small>Cuộc đời và sự nghiệp</small>
+                        </span>
+                    </button>
+
+                    <button class="tt-video-item"
+                        onclick="bbb11PlayTraditionVideo('dienbien',this)">
+                        <span class="tt-video-icon"><i class="fa-solid fa-medal"></i></span>
+                        <span>
+                            <strong>Chiến thắng Điện Biên Phủ</strong>
+                            <small>Bản hùng ca lịch sử</small>
+                        </span>
+                    </button>
+
+                    <button class="tt-video-item"
+                        onclick="bbb11PlayTraditionVideo('army',this)">
+                        <span class="tt-video-icon"><i class="fa-solid fa-shield-halved"></i></span>
+                        <span>
+                            <strong>Quân đội nhân dân Việt Nam</strong>
+                            <small>Xây dựng và trưởng thành</small>
+                        </span>
+                    </button>
+                </div>
+            </aside>
+        </section>
+
+        <footer class="tt-footer">
+            ★ PHÁT HUY TRUYỀN THỐNG ★<br>
+            RÈN LUYỆN BẢN LĨNH – XÂY DỰNG ĐƠN VỊ VỮNG MẠNH
+        </footer>
+    </div>
+    `;
+};
+
+
+/* NỘI DUNG TÌM HIỂU
+   Hãy bổ sung dữ kiện lịch sử chính thức của đơn vị. */
+
+
+window.bbb11ShowTraditionDetail = function(type) {
+    const contents = {
+        division: {
+            title: "TRUYỀN THỐNG SƯ ĐOÀN",
+            text: "Bổ sung lịch sử hình thành, ngày truyền thống, các mốc thời gian, chiến công và thành tích chính thức của Sư đoàn."
+        },
+        regiment: {
+            title: "TRUYỀN THỐNG TRUNG ĐOÀN",
+            text: "Bổ sung ngày thành lập, quá trình xây dựng, chiến đấu, trưởng thành và thành tích chính thức của Trung đoàn."
+        },
+        company: {
+            title: "TÌM HIỂU TRUYỀN THỐNG CÁCH MẠNG",
+            text: "Bổ sung lịch sử Đại đội 11, các hoạt động tiêu biểu, hình ảnh tư liệu và thành tích thi đua của đơn vị."
+        }
+    };
+const box = document.getElementById("bbb11TraditionDetail");
+const item = contents[type];
+
+if (!box || !item) {
+    alert("Không tìm thấy khu vực hiển thị nội dung!");
+    return;
+}
+
+box.hidden = false;
+box.style.display = "block";
+box.replaceChildren();
+
+    const title = document.createElement("h3");
+    title.textContent = item.title;
+
+    const paragraph = document.createElement("p");
+    paragraph.textContent = item.text;
+
+    box.append(title, paragraph);
+
+ 
+if (type === "company") {
+    // KHUNG XEM WEBSITE / TRANG FACEBOOK
+    const viewer = document.createElement("div");
+    viewer.className = "tt-web-viewer";
+
+    const webTitle = document.createElement("h4");
+    webTitle.textContent = "TRANG FACEBOOK TRUNG ĐOÀN BỘ BINH 1";
+    viewer.appendChild(webTitle);
+
+ 
+    // NÚT MỞ TRANG FACEBOOK
+    const fbLink = document.createElement("a");
+
+    fbLink.href = "https://www.facebook.com/trungdoanbobinh1";
+    fbLink.target = "_blank";
+    fbLink.rel = "noopener noreferrer";
+    fbLink.textContent = "MỞ TRANG FACEBOOK TRUNG ĐOÀN";
+
+    fbLink.style.cssText = `
+        display: inline-block;
+        padding: 12px 18px;
+        margin: 8px 0 20px;
+        background: #1877f2;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+    `;
+
+    viewer.appendChild(fbLink);
+
+    // KHUNG XEM TRỰC TIẾP TRANG FACEBOOK
+    const fbViewer = document.createElement("div");
+    fbViewer.className = "tt-facebook-viewer";
+
+    fbViewer.style.cssText = `
+        width: 100%;
+        margin: 0 0 24px;
+        padding: 12px;
+        box-sizing: border-box;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+    `;
+
+    const fbTitle = document.createElement("h4");
+    fbTitle.textContent = "THEO DÕI TIN TỨC TRUNG ĐOÀN";
+    fbTitle.style.cssText = `
+        margin: 4px 0 14px;
+        color: #8b1e1e;
+        font-size: 19px;
+    `;
+
+    const fbFrame = document.createElement("iframe");
+
+    fbFrame.src =
+        "https://www.facebook.com/plugins/page.php?href=" +
+        encodeURIComponent(
+            "https://www.facebook.com/trungdoanbobinh1"
+        ) +
+        "&tabs=timeline&width=500&height=650" +
+        "&small_header=false&adapt_container_width=true" +
+        "&hide_cover=false&show_facepile=true";
+
+    fbFrame.title = "Trang Facebook Trung đoàn Bộ binh 1";
+    fbFrame.style.cssText = `
+        display: block;
+        width: 100%;
+        height: 650px;
+        border: none;
+        overflow: hidden;
+    `;
+
+    fbFrame.setAttribute("scrolling", "no");
+    fbFrame.setAttribute("frameborder", "0");
+    fbFrame.setAttribute("allowfullscreen", "true");
+    fbFrame.setAttribute("loading", "lazy");
+    fbFrame.setAttribute(
+        "allow",
+        "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+    );
+
+    fbViewer.appendChild(fbTitle);
+    fbViewer.appendChild(fbFrame);
+    viewer.appendChild(fbViewer);
+
+    box.appendChild(viewer);
+
+
+    // Ô XEM VIDEO FACEBOOK
+    const videoBox = document.createElement("div");
+    videoBox.className = "tt-video-viewer";
+    videoBox.style.cssText = `
+        margin-top: 24px;
+        padding: 18px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+    `;
+
+    const videoTitle = document.createElement("h4");
+    videoTitle.textContent = "VIDEO TRUYỀN THỐNG ĐƠN VỊ";
+    videoTitle.style.cssText = `
+        margin: 0 0 14px;
+        color: #8b1e1e;
+        font-size: 19px;
+    `;
+    videoBox.appendChild(videoTitle);
+
+    // DÁN LINK VIDEO FACEBOOK THẬT VÀO ĐÂY
+    const facebookVideoUrl = "https://www.facebook.com/reel/1829016894945257";
+
+    if (facebookVideoUrl !== "DAN_LINK_VIDEO_FACEBOOK_VAO_DAY") {
+        const videoFrame = document.createElement("iframe");
+
+        videoFrame.src =
+            "https://www.facebook.com/plugins/video.php?href=" +
+            encodeURIComponent(facebookVideoUrl) +
+            "&show_text=false";
+
+        videoFrame.title = "Video truyền thống đơn vị";
+        videoFrame.style.cssText = `
+            display: block;
+            width: 100%;
+            height: 400px;
+            border: 0;
+            border-radius: 10px;
+        `;
+
+        videoFrame.setAttribute("allowfullscreen", "true");
+        videoFrame.setAttribute("loading", "lazy");
+
+        videoBox.appendChild(videoFrame);
+    } else {
+        const note = document.createElement("p");
+        note.textContent =
+            "Vui lòng thêm link một video Facebook công khai để xem trực tiếp tại đây.";
+        videoBox.appendChild(note);
+    }
+
+    box.appendChild(videoBox);
+}
+};
+/* VIDEO
+   Thay VIDEO_ID bằng ID YouTube thật trước khi phát.
+   ID là phần sau v= trong đường dẫn YouTube. */
+
+window.bbb11TraditionVideos = {
+    history: {
+        id: "2gtZpukMrn0",
+        title: "Lịch sử cách mạng Việt Nam",
+        description: "Những dấu mốc quan trọng trong lịch sử dân tộc."
+    },
+    hochiminh: {
+        id: "cxKnRdHQIm4",
+        title: "Chủ tịch Hồ Chí Minh",
+        description: "Tìm hiểu cuộc đời và sự nghiệp của Bác Hồ."
+    },
+    dienbien: {
+        id: "p6GGTkHS8wQ",
+        title: "Chiến thắng Điện Biên Phủ",
+        description: "Ôn lại chiến thắng lịch sử Điện Biên Phủ."
+    },
+    army: {
+        id: "iNiXDtewkrI",
+        title: "Quân đội nhân dân Việt Nam",
+        description: "Tìm hiểu quá trình xây dựng và trưởng thành của Quân đội."
+    }
+};
+
+window.bbb11PlayTraditionVideo = function(key, button) {
+    const video = window.bbb11TraditionVideos[key];
+    if (!video) return;
+
+    if (!/^[a-zA-Z0-9_-]{11}$/.test(video.id)) {
+        alert(
+            "Video này chưa được cài đặt ID YouTube.\n" +
+            "Hãy điền ID video thật vào bbb11TraditionVideos."
+        );
+        return;
+    }
+
+    const player = document.getElementById("bbb11TraditionPlayer");
+    const placeholder = document.getElementById("bbb11TraditionPlaceholder");
+    const title = document.getElementById("bbb11TraditionVideoTitle");
+    const description = document.getElementById("bbb11TraditionVideoDescription");
+
+    if (!player || !placeholder || !title || !description) return;
+
+    player.src =
+        "https://www.youtube-nocookie.com/embed/" +
+        encodeURIComponent(video.id) + "?autoplay=1&rel=0";
+
+    placeholder.style.display = "none";
+    title.textContent = video.title;
+    description.textContent = video.description;
+
+    document.querySelectorAll(".tt-video-item").forEach(function(item) {
+        item.classList.remove("active");
+    });
+
+    if (button) button.classList.add("active");
+};
+
+
 // DANH SÁCH CÁC TRANG
 const pages = {
     admin: adminPage,
@@ -145,6 +979,7 @@ const pages = {
     music: musicPage,
     gallery: galleryPage,
     manual: manualPage,
+    tradition: traditionPage,
     resolution: resolutionPage,
     news: newsPage,
     quiz: quizPage,
@@ -155,7 +990,6 @@ const pages = {
     ranking: rankingPage
 };
 
- 
 
 
 
