@@ -4809,7 +4809,620 @@ fireButton.onclick = function (event) {
 
     hienThi();
 };
+/* ==========================================
+   ARCADE BBB11 - BỔ SUNG 5 TRÒ CHƠI
+   Dán cuối file JavaScript game hiện tại
+========================================== */
+(function () {
+    "use strict";
 
+    if (window.bbb11ArcadeInstalled) return;
+    window.bbb11ArcadeInstalled = true;
+
+    var XP_KEY = "bbb11_arcade_xp";
+    var currentGame = "";
+    var memoryCards = [];
+    var memoryOpen = [];
+    var memoryMatched = [];
+    var journeyIndex = 0;
+    var journeyScore = 0;
+
+    function arcadeEscape(value) {
+        return String(value == null ? "" : value).replace(/[&<>"']/g, function (c) {
+            return {
+                "&": "&amp;", "<": "&lt;", ">": "&gt;",
+                '"': "&quot;", "'": "&#39;"
+            }[c];
+        });
+    }
+
+    function getProfile() {
+        try {
+            var p = JSON.parse(localStorage.getItem(XP_KEY) || "{}");
+            p.xp = Number(p.xp) || 0;
+            p.played = Number(p.played) || 0;
+            p.badges = Array.isArray(p.badges) ? p.badges : [];
+            p.name = p.name || "";
+            return p;
+        } catch (e) {
+            return { xp: 0, played: 0, badges: [], name: "" };
+        }
+    }
+
+    function saveProfile(p) {
+        localStorage.setItem(XP_KEY, JSON.stringify(p));
+    }
+
+    function getPlayerName() {
+        var input = document.getElementById("quizPlayerName");
+        var p = getProfile();
+        return (input && input.value.trim()) ||
+            p.name || "Chiến sĩ BBB11";
+    }
+
+    function getRank(xp) {
+        if (xp >= 1000) return "👑 HUYỀN THOẠI TRI THỨC";
+        if (xp >= 600) return "🛡️ CHIẾN BINH TINH NHUỆ";
+        if (xp >= 300) return "🏅 ĐỘI TRƯỞNG THỬ THÁCH";
+        if (xp >= 120) return "🚀 CHIẾN SĨ BỨT PHÁ";
+        if (xp >= 40) return "⭐ TÂN BINH TRIỂN VỌNG";
+        return "🎖️ TÂN BINH";
+    }
+
+    function getBank() {
+        try {
+            if (typeof window.layNganHangQuiz === "function") {
+                return window.layNganHangQuiz();
+            }
+            var data = JSON.parse(localStorage.getItem("bbb11_quiz") || "[]");
+            return Array.isArray(data) ? data : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function getArena() {
+        return document.getElementById("bbb11ExtraArena");
+    }
+
+    function renderProfile() {
+        var p = getProfile();
+        var xp = document.getElementById("bbb11ArcadeXP");
+        var rank = document.getElementById("bbb11ArcadeRank");
+        var played = document.getElementById("bbb11ArcadePlayed");
+        var badges = document.getElementById("bbb11ArcadeBadges");
+
+        if (xp) xp.textContent = p.xp;
+        if (rank) rank.textContent = getRank(p.xp);
+        if (played) played.textContent = p.played;
+
+        if (badges) {
+            badges.innerHTML = p.badges.length
+                ? p.badges.map(function (b) {
+                    return '<span class="arcade-badge">🏅 ' +
+                        arcadeEscape(b) + '</span>';
+                }).join("")
+                : "Chưa có huy hiệu. Hãy chơi để mở khóa!";
+        }
+    }
+
+    function finishGame(title, points, badge, detail) {
+        var p = getProfile();
+        p.name = getPlayerName();
+        p.xp += points;
+        p.played++;
+
+        if (badge && p.badges.indexOf(badge) === -1) {
+            p.badges.push(badge);
+        }
+
+        saveProfile(p);
+
+        var arena = getArena();
+        if (arena) {
+            arena.innerHTML =
+                '<div class="arcade-finish">' +
+                    '<div class="arcade-trophy">🏆</div>' +
+                    '<h3>' + arcadeEscape(title) + '</h3>' +
+                    '<p>' + arcadeEscape(detail || "Bạn đã hoàn thành trò chơi!") + '</p>' +
+                    '<div class="arcade-earned">+' + points + ' XP</div>' +
+                    '<p>Cấp bậc: <strong>' + arcadeEscape(getRank(p.xp)) + '</strong></p>' +
+                    '<p>Tổng kinh nghiệm: ' + p.xp + ' XP</p>' +
+                    '<button class="game-primary-btn" onclick="bbb11StartExtra(\'' +
+                        currentGame + '\')">CHƠI LẠI ↻</button>' +
+                '</div>';
+        }
+
+        renderProfile();
+    }
+
+    var extraMarkup = `
+        <section class="game-panel bbb11-arcade-extra">
+            <div class="game-section-heading">
+                <span class="game-section-icon">🕹️</span>
+                <div>
+                    <h3>ARCADE BBB11 — TRÒ CHƠI MỞ RỘNG</h3>
+                    <p>Thử thách kiến thức, tích lũy kinh nghiệm và nhận huy hiệu.</p>
+                </div>
+            </div>
+
+            <div class="arcade-game-grid">
+                <button class="arcade-game-card" onclick="bbb11StartExtra('memory')">
+                    <span>🃏</span><strong>LẬT THẺ GHI NHỚ</strong>
+                    <small>Ghép câu hỏi với đáp án đúng.</small>
+                    <em>CHƠI NGAY →</em>
+                </button>
+
+                <button class="arcade-game-card" onclick="bbb11StartExtra('crossword')">
+                    <span>🔐</span><strong>GIẢI MÃ Ô CHỮ</strong>
+                    <small>Giải đáp án từ ngân hàng câu hỏi.</small>
+                    <em>GIẢI MÃ →</em>
+                </button>
+
+                <button class="arcade-game-card" onclick="bbb11StartExtra('timeline')">
+                    <span>⏳</span><strong>DÒNG THỜI GIAN</strong>
+                    <small>Xác định năm của các mốc lịch sử.</small>
+                    <em>THỬ THÁCH →</em>
+                </button>
+
+                <button class="arcade-game-card" onclick="bbb11StartExtra('situation')">
+                    <span>🎯</span><strong>TÌNH HUỐNG CHIẾN SĨ</strong>
+                    <small>Lựa chọn cách xử lý phù hợp.</small>
+                    <em>VÀO TRẬN →</em>
+                </button>
+
+                <button class="arcade-game-card" onclick="bbb11StartExtra('journey')">
+                    <span>🗺️</span><strong>HÀNH TRÌNH LỊCH SỬ</strong>
+                    <small>Vượt qua các chặng kiến thức.</small>
+                    <em>BẮT ĐẦU →</em>
+                </button>
+            </div>
+
+            <div id="bbb11ExtraArena" class="arcade-extra-arena">
+                <h3>🎮 SẴN SÀNG CHƯA?</h3>
+                <p>Chọn một trò chơi ở phía trên để bắt đầu.</p>
+            </div>
+        </section>
+
+        <section class="game-panel bbb11-arcade-profile">
+            <div class="game-section-heading">
+                <span class="game-section-icon">🏆</span>
+                <div>
+                    <h3>HỒ SƠ THÀNH TÍCH</h3>
+                    <p>Điểm kinh nghiệm, cấp bậc và huy hiệu trên thiết bị này.</p>
+                </div>
+            </div>
+            <div class="arcade-profile-grid">
+                <div><small>KINH NGHIỆM</small><strong id="bbb11ArcadeXP">0</strong><span>XP</span></div>
+                <div><small>CẤP BẬC</small><strong id="bbb11ArcadeRank">🎖️ TÂN BINH</strong></div>
+                <div><small>LƯỢT CHƠI</small><strong id="bbb11ArcadePlayed">0</strong></div>
+            </div>
+            <h4>Huy hiệu đã đạt</h4>
+            <div id="bbb11ArcadeBadges" class="arcade-badges"></div>
+            <button class="game-primary-btn" onclick="bbb11PrintCertificate()">
+                📜 TẠO BẰNG KHEN
+            </button>
+        </section>
+    `;
+
+    function installArcade() {
+        if (typeof window.quizPage !== "function" ||
+            window.quizPage.__bbb11ArcadeWrapped) return;
+
+        var oldQuizPage = window.quizPage;
+
+        var newQuizPage = function () {
+            var html = oldQuizPage.apply(this, arguments);
+
+            if (typeof html !== "string" ||
+                html.indexOf("bbb11ExtraArena") !== -1) {
+                return html;
+            }
+
+            var marker = '<details class="game-panel game-management">';
+            var position = html.indexOf(marker);
+
+            if (position !== -1) {
+                return html.slice(0, position) +
+                    extraMarkup + html.slice(position);
+            }
+
+            var end = html.lastIndexOf("</div>");
+            if (end !== -1) {
+                return html.slice(0, end) + extraMarkup + html.slice(end);
+            }
+
+            return html;
+        };
+
+        newQuizPage.__bbb11ArcadeWrapped = true;
+        window.quizPage = newQuizPage;
+    }
+
+    window.bbb11StartExtra = function (type) {
+        currentGame = type;
+        var arena = getArena();
+        if (!arena) {
+            alert("Không tìm thấy khu vực game. Hãy mở lại Đấu trường tri thức.");
+            return;
+        }
+
+        if (type === "memory") startMemory();
+        else if (type === "crossword") startCrossword();
+        else if (type === "timeline") startTimeline();
+        else if (type === "situation") startSituation();
+        else if (type === "journey") startJourney();
+    };
+
+    /* 1. LẬT THẺ GHI NHỚ */
+    function startMemory() {
+        var bank = getBank().filter(function (q) {
+            return q && q.question && q.answers && q.answers[q.correct];
+        });
+
+        if (bank.length < 2) {
+            getArena().innerHTML =
+                "<h3>Chưa đủ câu hỏi!</h3><p>Hãy thêm ít nhất 2 câu trong Ngân hàng câu hỏi.</p>";
+            return;
+        }
+
+        var chosen = bank.slice().sort(function () {
+            return Math.random() - 0.5;
+        }).slice(0, Math.min(4, bank.length));
+
+        memoryCards = [];
+        chosen.forEach(function (q, i) {
+            memoryCards.push({ pair: i, kind: "CÂU HỎI", text: q.question });
+            memoryCards.push({ pair: i, kind: "ĐÁP ÁN", text: q.answers[q.correct] });
+        });
+
+        memoryCards.sort(function () { return Math.random() - 0.5; });
+        memoryOpen = [];
+        memoryMatched = [];
+
+        getArena().innerHTML =
+            '<h3>🃏 LẬT THẺ GHI NHỚ</h3>' +
+            '<p>Lật hai thẻ để ghép câu hỏi với đáp án đúng.</p>' +
+            '<div class="arcade-memory-grid">' +
+            memoryCards.map(function (c, i) {
+                return '<button class="arcade-memory-card" id="bbbMem' + i +
+                    '" onclick="bbb11FlipMemory(' + i + ')">' +
+                    '<span class="mem-back">?</span><span class="mem-face">' +
+                    '<small>' + c.kind + '</small>' + arcadeEscape(c.text) +
+                    '</span></button>';
+            }).join("") + '</div>' +
+            '<p id="bbbMemoryStatus">Đã ghép 0/' + chosen.length + ' cặp</p>';
+    }
+
+    window.bbb11FlipMemory = function (i) {
+        if (memoryOpen.length >= 2 || memoryMatched.indexOf(i) !== -1) return;
+
+        var el = document.getElementById("bbbMem" + i);
+        if (!el) return;
+
+        el.classList.add("is-flipped");
+        memoryOpen.push(i);
+
+        if (memoryOpen.length === 2) {
+            var a = memoryOpen[0];
+            var b = memoryOpen[1];
+
+            if (memoryCards[a].pair === memoryCards[b].pair &&
+                memoryCards[a].kind !== memoryCards[b].kind) {
+                memoryMatched.push(a, b);
+                memoryOpen = [];
+
+                var status = document.getElementById("bbbMemoryStatus");
+                if (status) status.textContent =
+                    "Đã ghép " + (memoryMatched.length / 2) +
+                    "/" + (memoryCards.length / 2) + " cặp";
+
+                if (memoryMatched.length === memoryCards.length) {
+                    finishGame("Bậc thầy ghi nhớ!", 80, "Bậc thầy ghi nhớ",
+                        "Bạn đã ghép chính xác tất cả các cặp thẻ.");
+                }
+            } else {
+                var first = a, second = b;
+                setTimeout(function () {
+                    [first, second].forEach(function (index) {
+                        var card = document.getElementById("bbbMem" + index);
+                        if (card && memoryMatched.indexOf(index) === -1) {
+                            card.classList.remove("is-flipped");
+                        }
+                    });
+                    memoryOpen = [];
+                }, 800);
+            }
+        }
+    };
+
+    /* 2. GIẢI MÃ Ô CHỮ */
+    function normalizeAnswer(s) {
+        return String(s || "").normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/đ/gi, "d")
+            .toUpperCase().replace(/[^A-Z0-9]/g, "");
+    }
+
+    function startCrossword() {
+        var bank = getBank().filter(function (q) {
+            return q && q.question && q.answers && q.answers[q.correct];
+        }).sort(function () {
+            return Math.random() - 0.5;
+        }).slice(0, 5);
+
+        if (!bank.length) {
+            getArena().innerHTML =
+                "<h3>Ngân hàng câu hỏi đang trống</h3><p>Thêm câu hỏi rồi chơi lại nhé.</p>";
+            return;
+        }
+
+        getArena().innerHTML =
+            '<h3>🔐 GIẢI MÃ Ô CHỮ</h3>' +
+            '<p>Nhập đáp án đúng cho từng gợi ý. Có thể nhập không dấu.</p>' +
+            '<form id="bbbCrossForm" onsubmit="event.preventDefault();bbb11CheckCrossword()">' +
+            bank.map(function (q, i) {
+                return '<label class="arcade-clue"><strong>GỢI Ý ' +
+                    (i + 1) + '</strong><span>' + arcadeEscape(q.question) +
+                    '</span><input class="game-input" id="bbbCross' + i +
+                    '" data-answer="' + arcadeEscape(q.answers[q.correct]) +
+                    '" placeholder="Nhập đáp án..."></label>';
+            }).join("") +
+            '<button class="game-primary-btn" type="submit">KIỂM TRA ĐÁP ÁN</button>' +
+            '</form><div id="bbbCrossResult"></div>';
+    }
+
+    window.bbb11CheckCrossword = function () {
+        var inputs = document.querySelectorAll("#bbbCrossForm input[data-answer]");
+        var correct = 0;
+
+        inputs.forEach(function (input) {
+            var ok = normalizeAnswer(input.value) ===
+                normalizeAnswer(input.getAttribute("data-answer"));
+            input.classList.toggle("arcade-input-correct", ok);
+            input.classList.toggle("arcade-input-wrong", !ok);
+            if (ok) correct++;
+        });
+
+        var result = document.getElementById("bbbCrossResult");
+        if (correct === inputs.length && inputs.length > 0) {
+            result.innerHTML = "<p class='arcade-success'>🎉 Giải mã thành công!</p>";
+            finishGame("Chuyên gia giải mã!", 70, "Chuyên gia giải mã",
+                "Bạn đã giải đúng tất cả gợi ý.");
+        } else {
+            result.innerHTML = "<p class='arcade-warning'>Bạn đúng " +
+                correct + "/" + inputs.length +
+                ". Hãy sửa đáp án chưa đúng rồi kiểm tra lại.</p>";
+        }
+    };
+
+    /* 3. DÒNG THỜI GIAN */
+    var events = [
+        {year:"1930", text:"Thành lập Đảng Cộng sản Việt Nam"},
+        {year:"1945", text:"Cách mạng Tháng Tám thành công"},
+        {year:"1954", text:"Chiến thắng Điện Biên Phủ"},
+        {year:"1975", text:"Giải phóng miền Nam, thống nhất đất nước"}
+    ];
+
+    function startTimeline() {
+        var shuffled = events.slice().sort(function () {
+            return Math.random() - 0.5;
+        });
+
+        getArena().innerHTML =
+            '<h3>⏳ SẮP XẾP DÒNG THỜI GIAN</h3>' +
+            '<p>Chọn năm đúng cho từng sự kiện.</p>' +
+            '<div id="bbbTimelineList">' +
+            shuffled.map(function (e, i) {
+                return '<div class="arcade-timeline-row"><span>' +
+                    (i + 1) + '</span><p>' + arcadeEscape(e.text) +
+                    '</p><select class="game-input" data-year="' + e.year +
+                    '"><option value="">Chọn năm...</option>' +
+                    events.map(function (y) {
+                        return '<option value="' + y.year + '">' + y.year + '</option>';
+                    }).join("") + '</select></div>';
+            }).join("") +
+            '</div><button class="game-primary-btn" onclick="bbb11CheckTimeline()">' +
+            'XÁC NHẬN</button><div id="bbbTimelineResult"></div>';
+    }
+
+    window.bbb11CheckTimeline = function () {
+        var selects = document.querySelectorAll("#bbbTimelineList select");
+        var ok = selects.length > 0;
+
+        selects.forEach(function (s) {
+            if (s.value !== s.getAttribute("data-year")) ok = false;
+        });
+
+        var result = document.getElementById("bbbTimelineResult");
+        if (ok) {
+            result.innerHTML = "<p class='arcade-success'>Chính xác tất cả các mốc!</p>";
+            finishGame("Nhà du hành thời gian!", 80, "Nhà du hành thời gian",
+                "Bạn đã xác định đúng các mốc lịch sử.");
+        } else {
+            result.innerHTML = "<p class='arcade-warning'>Chưa chính xác. Hãy kiểm tra lại các năm.</p>";
+        }
+    };
+
+    /* 4. TÌNH HUỐNG CHIẾN SĨ */
+    var situations = [
+        {
+            q: "Khi đồng đội có ý kiến khác với mình, bạn nên làm gì?",
+            a: ["Lắng nghe và trao đổi bình tĩnh", "Ngắt lời đồng đội",
+                "Bỏ sinh hoạt", "Tranh cãi gay gắt"],
+            correct: 0,
+            explain: "Lắng nghe và tôn trọng ý kiến giúp giữ đoàn kết tập thể."
+        },
+        {
+            q: "Khi chưa hiểu rõ nhiệm vụ được giao, bạn nên làm gì?",
+            a: ["Tự đoán rồi làm", "Hỏi lại người giao nhiệm vụ",
+                "Trì hoãn", "Nhờ người khác làm thay"],
+            correct: 1,
+            explain: "Cần xác nhận yêu cầu để thực hiện nhiệm vụ chính xác."
+        },
+        {
+            q: "Khi phát hiện tài liệu công việc bị để quên, bạn nên làm gì?",
+            a: ["Chụp và chia sẻ", "Bỏ qua", "Bảo quản và báo người phụ trách",
+                "Đưa cho người không liên quan"],
+            correct: 2,
+            explain: "Bảo quản tài liệu và báo người có trách nhiệm là cách xử lý phù hợp."
+        }
+    ];
+
+    function startSituation() {
+        var s = situations[Math.floor(Math.random() * situations.length)];
+        window.__bbb11Situation = s;
+
+        getArena().innerHTML =
+            '<h3>🎯 TÌNH HUỐNG CHIẾN SĨ</h3><div class="arcade-scenario">' +
+            '<p>' + arcadeEscape(s.q) + '</p><div class="arcade-choices">' +
+            s.a.map(function (a, i) {
+                return '<button class="game-choice" onclick="bbb11AnswerSituation(' +
+                    i + ')"><strong>' + String.fromCharCode(65 + i) +
+                    '.</strong> ' + arcadeEscape(a) + '</button>';
+            }).join("") + '</div><div id="bbbSituationResult"></div></div>';
+    }
+
+    window.bbb11AnswerSituation = function (i) {
+        var s = window.__bbb11Situation;
+        var result = document.getElementById("bbbSituationResult");
+        if (!s || !result) return;
+
+        document.querySelectorAll(".arcade-choices button").forEach(function (b) {
+            b.disabled = true;
+        });
+
+        if (i === s.correct) {
+            result.innerHTML = "<p class='arcade-success'>✓ Lựa chọn phù hợp!</p><p>" +
+                arcadeEscape(s.explain) + "</p>";
+            finishGame("Xử lý tình huống tốt!", 30, "Người xử lý tình huống",
+                "Bạn đã lựa chọn cách xử lý phù hợp.");
+        } else {
+            result.innerHTML = "<p class='arcade-warning'>Đáp án gợi ý: " +
+                arcadeEscape(s.a[s.correct]) + "</p><p>" +
+                arcadeEscape(s.explain) + "</p>" +
+                '<button class="game-primary-btn" onclick="bbb11StartExtra(\'situation\')">THỬ LẠI</button>';
+        }
+    };
+
+    /* 5. HÀNH TRÌNH LỊCH SỬ */
+    var journey = [
+        {q:"Đảng Cộng sản Việt Nam được thành lập năm nào?",
+         a:["1925","1930","1941","1945"], c:1},
+        {q:"Cách mạng Tháng Tám thành công năm nào?",
+         a:["1930","1945","1954","1975"], c:1},
+        {q:"Chiến thắng Điện Biên Phủ diễn ra năm nào?",
+         a:["1945","1950","1954","1975"], c:2},
+        {q:"Đại thắng mùa Xuân giải phóng miền Nam năm nào?",
+         a:["1954","1968","1972","1975"], c:3}
+    ];
+
+    function startJourney() {
+        journeyIndex = 0;
+        journeyScore = 0;
+        renderJourney();
+    }
+
+    function renderJourney() {
+        var q = journey[journeyIndex];
+        getArena().innerHTML =
+            '<h3>🗺️ HÀNH TRÌNH LỊCH SỬ</h3><p>Chặng ' +
+            (journeyIndex + 1) + '/' + journey.length + '</p>' +
+            '<div class="arcade-journey-track">' +
+            journey.map(function (x, i) {
+                return '<span class="' + (i <= journeyIndex ? "current" : "") +
+                    '">' + (i + 1) + '</span>';
+            }).join("") + '</div><div class="arcade-scenario"><h4>' +
+            arcadeEscape(q.q) + '</h4><div class="arcade-choices">' +
+            q.a.map(function (a, i) {
+                return '<button class="game-choice" onclick="bbb11AnswerJourney(' +
+                    i + ')">' + String.fromCharCode(65 + i) + '. ' +
+                    arcadeEscape(a) + '</button>';
+            }).join("") + '</div><div id="bbbJourneyResult"></div></div>';
+    }
+
+    window.bbb11AnswerJourney = function (i) {
+        var q = journey[journeyIndex];
+        var result = document.getElementById("bbbJourneyResult");
+        if (!q || !result) return;
+
+        document.querySelectorAll(".arcade-choices button").forEach(function (b) {
+            b.disabled = true;
+        });
+
+        if (i === q.c) {
+            journeyScore++;
+            result.innerHTML = "<p class='arcade-success'>✓ Chính xác!</p>";
+        } else {
+            result.innerHTML = "<p class='arcade-warning'>Đáp án đúng: " +
+                arcadeEscape(q.a[q.c]) + "</p>";
+        }
+
+        var btn = document.createElement("button");
+        btn.className = "game-primary-btn";
+        btn.textContent = journeyIndex === journey.length - 1
+            ? "TỔNG KẾT HÀNH TRÌNH" : "ĐI CHẶNG TIẾP →";
+
+        btn.onclick = function () {
+            if (journeyIndex < journey.length - 1) {
+                journeyIndex++;
+                renderJourney();
+            } else {
+                finishGame("Hoàn thành hành trình!", 20 + journeyScore * 15,
+                    "Nhà khám phá lịch sử",
+                    "Bạn trả lời đúng " + journeyScore + "/" +
+                    journey.length + " câu.");
+            }
+        };
+        result.appendChild(btn);
+    };
+
+    /* BẰNG KHEN ĐIỆN TỬ */
+    window.bbb11PrintCertificate = function () {
+        var p = getProfile();
+        var name = getPlayerName();
+        var w = window.open("", "_blank");
+
+        if (!w) {
+            alert("Trình duyệt đã chặn cửa sổ bằng khen. Hãy cho phép cửa sổ bật lên.");
+            return;
+        }
+
+        w.document.write(
+            '<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">' +
+            '<title>Bằng khen BBB11</title><style>' +
+            'body{font-family:Georgia,serif;background:#f5f0dc;padding:30px;color:#173c27}' +
+            '.cert{max-width:800px;margin:auto;text-align:center;background:#fffdf4;' +
+            'border:8px double #b08a2c;padding:40px}' +
+            'h1{color:#a31d24;font-size:36px}.name{font-size:30px;font-weight:bold;' +
+            'color:#173c27;padding:15px}p{line-height:1.8;font-size:17px}' +
+            'button{padding:12px 24px;background:#173c27;color:white;border:0;cursor:pointer}' +
+            '@media print{button{display:none}body{padding:0}}' +
+            '</style></head><body><div class="cert">' +
+            '<h2>TIỂU ĐOÀN 3 · ĐẠI ĐỘI 11</h2>' +
+            '<h1>BẰNG KHEN THÀNH TÍCH</h1>' +
+            '<p>Ghi nhận sự nỗ lực trong các trò chơi học tập trên hệ thống BBB11.</p>' +
+            '<div class="name">' + arcadeEscape(name) + '</div>' +
+            '<p>Cấp bậc: <b>' + arcadeEscape(getRank(p.xp)) + '</b></p>' +
+            '<p>Kinh nghiệm: <b>' + p.xp + ' XP</b></p>' +
+            '<p>Huy hiệu: ' + arcadeEscape(p.badges.join(", ") || "Chưa có") + '</p>' +
+            '<p>Ngày lập: ' + new Date().toLocaleDateString("vi-VN") + '</p>' +
+            '<button onclick="window.print()">IN / LƯU PDF</button>' +
+            '<p style="font-size:12px">Bằng khen điện tử tự tạo, không thay thế văn bản khen thưởng chính thức.</p>' +
+            '</div></body></html>'
+        );
+        w.document.close();
+    };
+
+    installArcade();
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", installArcade);
+    }
+    setTimeout(function () {
+        installArcade();
+        renderProfile();
+    }, 0);
+})();
 let danhSachBaiHocTuSupabase = [];
 
 window.educationPage = function () {
