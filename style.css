@@ -13058,4 +13058,365 @@ body .manual-app #manualReader {
     opacity: 0.65;
     cursor: wait;
 }
+/* ==========================================
+   GIAO DIỆN ARCADE BBB11
+========================================== */
+
+.bbb11-arcade-extra,
+.bbb11-arcade-profile {
+    margin-top: 22px;
+    padding: 20px;
+    color: #f3f7ff;
+    background: linear-gradient(145deg, #101f34, #07111f);
+    border: 1px solid rgba(49, 199, 255, 0.25);
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.arcade-game-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 20px 0;
+}
+
+.arcade-game-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    min-height: 155px;
+    padding: 18px;
+    color: #ffffff;
+    text-align: left;
+    background: linear-gradient(145deg, #183757, #0c1b30);
+    border: 1px solid rgba(49, 199, 255, 0.3);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.arcade-game-card:hover {
+    transform: translateY(-4px);
+    border-color: #ffd166;
+    box-shadow: 0 8px 24px rgba(49, 199, 255, 0.15);
+}
+
+.arcade-game-card > span {
+    font-size: 32px;
+}
+
+.arcade-game-card strong {
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.arcade-game-card small {
+    color: #b8c8dc;
+    line-height: 1.6;
+}
+
+.arcade-game-card em {
+    margin-top: auto;
+    color: #31c7ff;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.arcade-extra-arena {
+    min-height: 100px;
+    margin-top: 20px;
+    padding: 20px;
+    overflow-wrap: anywhere;
+    background: rgba(3, 10, 22, 0.65);
+    border: 1px solid rgba(167, 123, 255, 0.3);
+    border-radius: 15px;
+}
+
+.arcade-extra-arena h3 {
+    color: #ffd166;
+}
+
+.arcade-extra-arena p {
+    line-height: 1.7;
+}
+
+.arcade-memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.arcade-memory-card {
+    min-width: 0;
+    min-height: 120px;
+    padding: 12px;
+    color: #ffffff;
+    background: linear-gradient(145deg, #214b73, #10213a);
+    border: 1px solid #3c6388;
+    border-radius: 12px;
+    cursor: pointer;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+}
+
+.arcade-memory-card .mem-back {
+    display: grid;
+    min-height: 90px;
+    place-items: center;
+    color: #31c7ff;
+    font-size: 35px;
+    font-weight: 900;
+}
+
+.arcade-memory-card .mem-face {
+    display: none;
+}
+
+.arcade-memory-card.is-flipped .mem-back {
+    display: none;
+}
+
+.arcade-memory-card.is-flipped .mem-face {
+    display: block;
+}
+
+.arcade-memory-card .mem-face small {
+    display: block;
+    margin-bottom: 8px;
+    color: #ffd166;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.arcade-memory-card.is-flipped {
+    border-color: #ffd166;
+    background: #172b45;
+}
+
+.arcade-clue {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 12px 0;
+    padding: 15px;
+    background: #101e31;
+    border: 1px solid #34465f;
+    border-radius: 12px;
+}
+
+.arcade-clue strong {
+    color: #31c7ff;
+    font-size: 11px;
+}
+
+.arcade-clue span {
+    line-height: 1.7;
+}
+
+.arcade-input-correct {
+    border: 2px solid #39e6a5 !important;
+}
+
+.arcade-input-wrong {
+    border: 2px solid #ff5874 !important;
+}
+
+.arcade-success,
+.arcade-warning {
+    margin: 15px 0;
+    padding: 13px;
+    border-radius: 10px;
+    line-height: 1.7;
+}
+
+.arcade-success {
+    color: #39e6a5;
+    background: rgba(57, 230, 165, 0.1);
+}
+
+.arcade-warning {
+    color: #ff9aaa;
+    background: rgba(255, 88, 116, 0.1);
+}
+
+.arcade-timeline-row {
+    display: grid;
+    grid-template-columns: 35px minmax(0, 1fr) minmax(110px, 150px);
+    align-items: center;
+    gap: 12px;
+    margin: 10px 0;
+    padding: 12px;
+    background: #102039;
+    border-radius: 10px;
+}
+
+.arcade-timeline-row p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.arcade-scenario {
+    padding: 18px;
+    background: #101e31;
+    border: 1px solid rgba(167, 123, 255, 0.35);
+    border-radius: 14px;
+}
+
+.arcade-choices {
+    display: grid;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.arcade-choices .game-choice {
+    width: 100%;
+    padding: 14px;
+    color: #f3f7ff;
+    text-align: left;
+    background: #172c46;
+    border: 1px solid #38516f;
+    border-radius: 10px;
+    cursor: pointer;
+    line-height: 1.6;
+}
+
+.arcade-choices .game-choice:hover {
+    border-color: #31c7ff;
+}
+
+.arcade-choices .game-choice:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.arcade-journey-track {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.arcade-journey-track span {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    color: #9eb2ca;
+    background: #15243a;
+    border: 1px solid #42536a;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+.arcade-journey-track span.current {
+    color: #071525;
+    background: #31c7ff;
+    border-color: #31c7ff;
+}
+
+.arcade-finish {
+    padding: 25px 10px;
+    text-align: center;
+}
+
+.arcade-trophy {
+    font-size: 60px;
+}
+
+.arcade-finish h3 {
+    color: #ffd166;
+    font-size: 25px;
+}
+
+.arcade-earned {
+    margin: 18px 0;
+    color: #31c7ff;
+    font-size: 42px;
+    font-weight: 900;
+}
+
+.arcade-profile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.arcade-profile-grid > div {
+    min-width: 0;
+    padding: 15px;
+    background: #0b1829;
+    border: 1px solid rgba(49, 199, 255, 0.2);
+    border-radius: 12px;
+}
+
+.arcade-profile-grid small {
+    display: block;
+    margin-bottom: 10px;
+    color: #9eb2ca;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.arcade-profile-grid strong {
+    display: block;
+    color: #ffd166;
+    font-size: 19px;
+    overflow-wrap: anywhere;
+}
+
+.arcade-profile-grid span {
+    color: #9eb2ca;
+    font-size: 11px;
+}
+
+.arcade-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin: 15px 0;
+    line-height: 1.8;
+}
+
+.arcade-badge {
+    display: inline-block;
+    padding: 8px 12px;
+    color: #ffe5a0;
+    background: rgba(255, 209, 102, 0.1);
+    border: 1px solid rgba(255, 209, 102, 0.4);
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+@media (max-width: 650px) {
+    .arcade-game-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .arcade-memory-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .arcade-profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .arcade-timeline-row {
+        grid-template-columns: 30px minmax(0, 1fr);
+    }
+
+    .arcade-timeline-row select {
+        grid-column: 2;
+    }
+
+    .bbb11-arcade-extra,
+    .bbb11-arcade-profile,
+    .arcade-extra-arena {
+        padding: 13px;
+    }
+}
 
