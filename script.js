@@ -2170,142 +2170,181 @@ function xuatBaoCaoCSV() {
     // GIAO DIỆN
     // ========================================
 
-    window.manualPage = function () {
-        return `
-        <div class="page-box manual-app">
+    
+window.manualPage = function () {
+    return `
+    <div class="page-box manual-app manual-modern">
 
-            <h2>📚 CẨM NANG NGƯỜI LÍNH</h2>
+       
+<section class="manual-hero-banner">
+    <img
+        src="https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/cam-nang-nguoi-linh.png"
+        alt="Cẩm nang người lính - Đại đội 11"
+        class="manual-banner-image"
+    >
+</section>
 
-            <p>
-                Kho tài liệu kiến thức và kỹ năng
-                dành cho cán bộ, chiến sĩ Đại đội 11.
-            </p>
 
-            <div class="news-tabs">
-                
-<button class="action-button"
-    onclick="chonDanhMucCamNang('tatca')">
-    <i class="fa-solid fa-layer-group"></i> TẤT CẢ
-</button>
+        <section class="manual-welcome">
+            <div>
+                <span class="manual-kicker">TRI THỨC • KỶ LUẬT • BẢN LĨNH</span>
+                <h2>HÀNH TRANG NGƯỜI CHIẾN SĨ</h2>
+                <p>
+                    Tra cứu kiến thức, rèn luyện kỹ năng và phát huy
+                    truyền thống vẻ vang của đơn vị.
+                </p>
+            </div>
+            <div class="manual-welcome-icon">
+                <i class="fa-solid fa-book-open-reader"></i>
+            </div>
+        </section>
 
-<button class="action-button"
-    onclick="chonDanhMucCamNang('dieulenh')">
-    <i class="fa-solid fa-person-military-rifle"></i> ĐIỀU LỆNH
-</button>
-
-<button class="action-button"
-    onclick="chonDanhMucCamNang('kyluat')">
-    <i class="fa-solid fa-shield-halved"></i> KỶ LUẬT
-</button>
-
-<button class="action-button"
-    onclick="chonDanhMucCamNang('kynang')">
-    <i class="fa-solid fa-compass"></i> KỸ NĂNG
-</button>
-
-<button class="action-button"
-    onclick="chonDanhMucCamNang('kienthuc')">
-    <i class="fa-solid fa-book-open"></i> KIẾN THỨC
-</button>
-
-<button class="action-button"
-    onclick="chonDanhMucCamNang('khac')">
-    <i class="fa-solid fa-folder-open"></i> KHÁC
-</button>
-
+        <section class="manual-library">
+            <div class="manual-section-heading">
+                <div>
+                    <h2><i class="fa-solid fa-book-open"></i>
+                        TÀI LIỆU CẨM NANG
+                    </h2>
+                    <p>Chọn danh mục hoặc tìm kiếm nội dung cần tra cứu</p>
+                </div>
             </div>
 
-            <div class="list-item">
-                <h3 id="tenDanhMucCamNang">
-                    📖 TẤT CẢ TÀI LIỆU
-                </h3>
-
+            <div class="manual-search-wrap">
+                <i class="fa-solid fa-magnifying-glass"></i>
                 <input
                     id="manualSearch"
                     type="search"
-                    placeholder="🔎 Tìm kiếm tài liệu..."
+                    placeholder="Tìm tên tài liệu..."
                     oninput="hienThiCamNang()"
-                    style="width:100%;box-sizing:border-box"
                 >
-
-                <div id="manualList">
-                    Đang tải tài liệu...
-                </div>
             </div>
 
-            <div class="list-item">
-                <h3 id="manualReaderTitle">
-                    📖 KHUNG ĐỌC TÀI LIỆU
+            <div class="manual-category-grid">
+                <button class="manual-category active"
+                    onclick="chonDanhMucCamNang('tatca')">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Tất cả tài liệu</span>
+                </button>
+
+                <button class="manual-category"
+                    onclick="chonDanhMucCamNang('dieulenh')">
+                    <i class="fa-solid fa-flag"></i>
+                    <span>Điều lệnh</span>
+                </button>
+
+                <button class="manual-category"
+                    onclick="chonDanhMucCamNang('kyluat')">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Kỷ luật</span>
+                </button>
+
+                <button class="manual-category"
+                    onclick="chonDanhMucCamNang('kynang')">
+                    <i class="fa-solid fa-compass"></i>
+                    <span>Kỹ năng quân nhân</span>
+                </button>
+
+                <button class="manual-category"
+                    onclick="chonDanhMucCamNang('kienthuc')">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Kiến thức</span>
+                </button>
+
+                <button class="manual-category"
+                    onclick="chonDanhMucCamNang('khac')">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <span>Tài liệu khác</span>
+                </button>
+            </div>
+
+            <div class="manual-list-heading">
+                <h3 id="tenDanhMucCamNang">
+                    <i class="fa-solid fa-book"></i> TẤT CẢ TÀI LIỆU
                 </h3>
-
-                <div style="display:flex;gap:8px;flex-wrap:wrap">
-                    <button class="action-button"
-                        onclick="taiLaiCamNang()">
-                        ↻ TẢI LẠI
-                    </button>
-
-                    <button class="action-button"
-                        onclick="moCamNangNgoai()">
-                        ↗ MỞ BÊN NGOÀI
-                    </button>
-                </div>
-
-                <iframe
-                    id="manualReader"
-                    title="Khung đọc tài liệu"
-                    src="about:blank"
-                    style="width:100%;height:650px;
-                    border:1px solid #ccc;border-radius:8px;
-                    background:white;margin-top:12px"
-                    loading="lazy">
-                </iframe>
-
-                <p style="font-size:13px;color:#777">
-                    Nếu website không hiển thị trong khung đọc,
-                    hãy chọn MỞ BÊN NGOÀI.
-                </p>
             </div>
 
-            <div class="list-item">
-                <h3>➕ THÊM TÀI LIỆU CẨM NANG</h3>
+            <div id="manualList" class="manual-document-grid">
+                <p>Đang tải tài liệu...</p>
+            </div>
+        </section>
 
+        <section class="manual-reader-panel">
+            <div class="manual-panel-heading">
+                <div class="manual-panel-icon">
+                    <i class="fa-solid fa-book-reader"></i>
+                </div>
+                <div>
+                    <h3 id="manualReaderTitle">KHUNG ĐỌC TÀI LIỆU</h3>
+                    <p>Nội dung tài liệu được hiển thị tại đây nếu website hỗ trợ</p>
+                </div>
+            </div>
+
+            <div class="manual-reader-actions">
+                <button class="manual-btn manual-btn-gold"
+                    onclick="taiLaiCamNang()">
+                    <i class="fa-solid fa-rotate"></i> Tải lại
+                </button>
+                <button class="manual-btn manual-btn-outline"
+                    onclick="moCamNangNgoai()">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    Mở bên ngoài
+                </button>
+            </div>
+
+            <iframe
+                id="manualReader"
+                title="Khung đọc tài liệu cẩm nang"
+                src="about:blank"
+                loading="lazy"
+                style="width:100%;height:620px;border:0;border-radius:12px;background:#fff;margin-top:16px">
+            </iframe>
+
+            <p class="manual-reader-note">
+                <i class="fa-solid fa-circle-info"></i>
+                Một số website không cho phép nhúng trực tiếp.
+                Hãy chọn “Mở bên ngoài” nếu nội dung không hiển thị.
+            </p>
+        </section>
+
+        <details class="manual-add-panel">
+            <summary>
+                <i class="fa-solid fa-circle-plus"></i>
+                THÊM TÀI LIỆU CẨM NANG
+                <i class="fa-solid fa-chevron-down manual-summary-arrow"></i>
+            </summary>
+
+            <div class="manual-form">
                 <label for="manualTitle">Tên tài liệu</label>
-                <input
-                    id="manualTitle"
-                    type="text"
-                    placeholder="Nhập tên tài liệu..."
-                    style="width:100%;box-sizing:border-box"
-                >
+                <input id="manualTitle" type="text"
+                    placeholder="Nhập tên tài liệu...">
 
                 <label for="manualCategory">Danh mục</label>
-                <select
-                    id="manualCategory"
-                    style="width:100%;box-sizing:border-box"
-                >
+                <select id="manualCategory">
                     <option value="Điều lệnh">Điều lệnh</option>
                     <option value="Kỷ luật">Kỷ luật</option>
-                    <option value="Kỹ năng quân nhân">
-                        Kỹ năng quân nhân
-                    </option>
+                    <option value="Kỹ năng quân nhân">Kỹ năng quân nhân</option>
                     <option value="Kiến thức">Kiến thức</option>
                     <option value="Khác">Khác</option>
                 </select>
 
-                <label for="manualUrl">Link PDF hoặc website</label>
-                <input
-                    id="manualUrl"
-                    type="url"
-                    placeholder="https://..."
-                    style="width:100%;box-sizing:border-box"
-                >
+                <label for="manualUrl">Đường dẫn tài liệu</label>
+                <input id="manualUrl" type="url"
+                    placeholder="https://...">
 
-                <button class="action-button"
+                <button class="manual-btn manual-btn-gold"
                     onclick="themCamNang()">
-                    ➕ THÊM TÀI LIỆU
+                    <i class="fa-solid fa-plus"></i> Lưu tài liệu
                 </button>
             </div>
-        </div>`;
-    };
+        </details>
+
+        <footer class="manual-footer">
+            <i class="fa-solid fa-star"></i>
+            KỶ LUẬT - TRÁCH NHIỆM - ĐOÀN KẾT - QUYẾT THẮNG
+            <i class="fa-solid fa-star"></i>
+        </footer>
+    </div>`;
+};
 
     // ========================================
     // ĐỌC DỮ LIỆU
@@ -2400,23 +2439,54 @@ function layDanhSach() {
     // CHỌN DANH MỤC
     // ========================================
 
-    window.chonDanhMucCamNang = function (ma) {
-        if (!Object.prototype.hasOwnProperty.call(danhMuc, ma)) {
-            return;
-        }
+    
+window.chonDanhMucCamNang = function (ma) {
+    if (!Object.prototype.hasOwnProperty.call(danhMuc, ma)) {
+        return;
+    }
 
-        danhMucDangChon = ma;
+    // Giữ nguyên chức năng lọc tài liệu
+    danhMucDangChon = ma;
 
-        const title = document.getElementById(
-            "tenDanhMucCamNang"
-        );
+    // Cập nhật trạng thái được chọn của nút
+    document.querySelectorAll(
+        ".manual-modern .manual-category"
+    ).forEach(function (button) {
+        button.classList.remove("active");
+    });
 
-        if (title) {
-            title.textContent = "📖 " + danhMuc[ma];
-        }
+    const cacMaDanhMuc = [
+        "tatca",
+        "dieulenh",
+        "kyluat",
+        "kynang",
+        "kienthuc",
+        "khac"
+    ];
 
+    const viTri = cacMaDanhMuc.indexOf(ma);
+    const cacNut = document.querySelectorAll(
+        ".manual-modern .manual-category"
+    );
+
+    if (viTri >= 0 && cacNut[viTri]) {
+        cacNut[viTri].classList.add("active");
+    }
+
+    // Cập nhật tiêu đề danh mục
+    const title = document.getElementById(
+        "tenDanhMucCamNang"
+    );
+
+    if (title) {
+        title.textContent = "📖 " + danhMuc[ma];
+    }
+
+    // Hiển thị lại tài liệu theo danh mục đã chọn
+    if (typeof window.hienThiCamNang === "function") {
         window.hienThiCamNang();
-    };
+    }
+};
 
     // ========================================
     // THÊM TÀI LIỆU
@@ -2937,390 +3007,1914 @@ function moTrangBaoNgoai() {
         "noopener,noreferrer"
     );
 }
-function quizPage() {
-    return `
-        <div class="page-box">
-            <h2>KIỂM TRA TRẮC NGHIỆM BBB11</h2>
 
-            <p>
-                Hệ thống kiểm tra kiến thức dành cho
-                cán bộ, chiến sĩ Đại đội 11.
-            </p>
+/* =====================================================
+   MINI GAME ĐẤU TRƯỜNG TRI THỨC BBB11
+===================================================== */
 
-            <div class="list-item">
-                <h3>THÊM CÂU HỎI</h3>
+var bbb11QuizGameState = {
+    questions: [],
+    index: 0,
+    score: 0,
+    correct: 0,
+    streak: 0,
+    bestStreak: 0,
+    timeLeft: 30,
+    timer: null,
+    mode: "quick",
+    player: "Chiến sĩ",
+    locked: false,
+    doublePoints: false,
+    level: 1,
+    sessionId: 0
+};
 
-                <textarea id="quizQuestion"
-                    placeholder="Nhập nội dung câu hỏi..."></textarea>
-
-                <input id="quizA" placeholder="Đáp án A">
-                <input id="quizB" placeholder="Đáp án B">
-                <input id="quizC" placeholder="Đáp án C">
-                <input id="quizD" placeholder="Đáp án D">
-
-                <label>Chọn đáp án đúng:</label>
-
-                <select id="quizCorrect">
-                    <option value="A">Đáp án A</option>
-                    <option value="B">Đáp án B</option>
-                    <option value="C">Đáp án C</option>
-                    <option value="D">Đáp án D</option>
-                </select>
-
-                <button class="action-button"
-                    onclick="themCauHoiQuiz()">
-                    THÊM CÂU HỎI
-                </button>
-            </div>
-
-            <div class="list-item">
-                <h3>NGÂN HÀNG CÂU HỎI</h3>
-                <div id="quizQuestionList"></div>
-            </div>
-
-            <div class="list-item">
-                <h3>BÀI KIỂM TRA</h3>
-
-                <p id="quizCount"></p>
-
-                <button class="action-button"
-                    onclick="batDauQuiz()">
-                    BẮT ĐẦU KIỂM TRA
-                </button>
-
-                <div id="quizExam"></div>
-                <div id="quizResult"></div>
-            </div>
-
-            <div class="list-item">
-                <h3>LỊCH SỬ KẾT QUẢ</h3>
-                <div id="quizHistory"></div>
-            </div>
-        </div>
-    `;
+function quizEscapeHTML(value) {
+    return String(value == null ? "" : value).replace(
+        /[&<>"']/g,
+        function (char) {
+            return {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            }[char];
+        }
+    );
 }
 
-// LẤY NGÂN HÀNG CÂU HỎI
 function layNganHangQuiz() {
     try {
-        const data = JSON.parse(
+        var data = JSON.parse(
             localStorage.getItem("bbb11_quiz") || "[]"
         );
 
-        return Array.isArray(data) ? data : [];
-    } catch {
+        if (!Array.isArray(data)) return [];
+
+        return data.filter(function (item) {
+            return item &&
+                typeof item.question === "string" &&
+                item.answers &&
+                ["A", "B", "C", "D"].every(function (key) {
+                    return typeof item.answers[key] === "string";
+                }) &&
+                ["A", "B", "C", "D"].includes(item.correct);
+        });
+    } catch (error) {
+        console.error("Lỗi đọc ngân hàng BBB11:", error);
         return [];
     }
 }
 
-// LƯU NGÂN HÀNG
 function luuNganHangQuiz(data) {
-    localStorage.setItem(
-        "bbb11_quiz",
-        JSON.stringify(data)
-    );
+    localStorage.setItem("bbb11_quiz", JSON.stringify(data));
+}
+
+function layLichSuQuizBBB11() {
+    try {
+        var data = JSON.parse(
+            localStorage.getItem("bbb11_quiz_history") || "[]"
+        );
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function layBangXepHangQuiz() {
+    try {
+        var data = JSON.parse(
+            localStorage.getItem("bbb11_quiz_leaderboard") || "[]"
+        );
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function quizPage() {
+    setTimeout(function () {
+        hienThiNganHangQuiz();
+        hienThiLichSuQuiz();
+        hienThiBangXepHangQuiz();
+        capNhatThongKeQuizBBB11();
+    }, 0);
+
+    return `
+        <div class="page-box bbb11-game">
+
+            <section class="game-hero">
+                <div class="game-hero-content">
+                    <span class="game-eyebrow">
+                        TIỂU ĐOÀN 3 • ĐẠI ĐỘI 11
+                    </span>
+
+                    <h2>ĐẤU TRƯỜNG TRI THỨC</h2>
+
+                    <p>
+                        Thử thách kiến thức. Bứt phá giới hạn.
+                        Chinh phục mọi cấp độ!
+                    </p>
+
+                    <div class="game-hero-stats">
+                        <div>
+                            <strong id="gameTotalQuestions">0</strong>
+                            <span>CÂU HỎI</span>
+                        </div>
+                        <div>
+                            <strong id="gameBestScore">0</strong>
+                            <span>ĐIỂM KỶ LỤC</span>
+                        </div>
+                        <div>
+                            <strong id="gamePlayedCount">0</strong>
+                            <span>LƯỢT CHƠI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-hero-emblem">★</div>
+            </section>
+
+            <section class="game-panel">
+                <div class="game-section-heading">
+                    <span class="game-section-icon">⚡</span>
+                    <div>
+                        <h3>CHỌN CHẾ ĐỘ CHƠI</h3>
+                        <p>Mỗi lượt chơi là một thử thách mới</p>
+                    </div>
+                </div>
+
+                <label class="game-label" for="quizPlayerName">
+                    TÊN CHIẾN SĨ / BIỆT DANH
+                </label>
+
+                <input
+                    id="quizPlayerName"
+                    class="game-input"
+                    maxlength="30"
+                    placeholder="Nhập tên trước khi thi đấu..."
+                >
+
+                <div class="game-mode-grid">
+
+                    <button class="game-mode-card"
+                        onclick="batDauGameBBB11('quick')">
+                        <span class="mode-symbol">⚡</span>
+                        <strong>ĐẤU NHANH</strong>
+                        <small>10 câu hỏi • 30 giây/câu</small>
+                        <span class="mode-action">VÀO TRẬN →</span>
+                    </button>
+
+                    <button class="game-mode-card"
+                        onclick="quayThuongBBB11()">
+                        <span class="mode-symbol">🎡</span>
+                        <strong>VÒNG QUAY</strong>
+                        <small>May mắn quyết định thử thách</small>
+                        <span class="mode-action">QUAY NGAY →</span>
+                    </button>
+
+                    <button class="game-mode-card"
+                        onclick="batDauGameBBB11('level')">
+                        <span class="mode-symbol">🏆</span>
+                        <strong>VƯỢT CẤP ĐỘ</strong>
+                        <small>Chinh phục từng vòng chơi</small>
+                        <span class="mode-action">CHINH PHỤC →</span>
+                    </button>
+
+                    <button class="game-mode-card"
+                        onclick="batDauGameBBB11('marathon')">
+                        <span class="mode-symbol">🔥</span>
+                        <strong>SINH TỒN KIẾN THỨC</strong>
+                        <small>Trả lời liên tục để lập kỷ lục</small>
+                        <span class="mode-action">THỬ SỨC →</span>
+                    </button>
+
+                    <button class="game-mode-card"
+                        onclick="batDauGameBBB11('speed')">
+                        <span class="mode-symbol">🚀</span>
+                        <strong>THỬ THÁCH TỐC ĐỘ</strong>
+                        <small>5 câu • thưởng điểm tốc độ</small>
+                        <span class="mode-action">BỨT PHÁ →</span>
+                    </button>
+
+                    <button class="game-mode-card"
+                        onclick="batDauGameBBB11('memory')">
+                        <span class="mode-symbol">🧠</span>
+                        <strong>TRÍ NHỚ SIÊU TỐC</strong>
+                        <small>Đáp án được xáo trộn mỗi lượt</small>
+                        <span class="mode-action">KIỂM TRA →</span>
+                    </button>
+
+                    <button class="game-mode-card"
+                        onclick="batDauGameBBB11('challenge')">
+                        <span class="mode-symbol">🎯</span>
+                        <strong>THỬ THÁCH TỔNG HỢP</strong>
+                        <small>15 câu hỏi ngẫu nhiên</small>
+                        <span class="mode-action">VÀO THI →</span>
+                    </button>
+
+<button class="game-mode-card"
+    onclick="window.bbb11GameBanBia()">
+    <span class="mode-symbol">🎯</span>
+    <strong>BẮN SÚNG AK</strong>
+    <small>4 bia đáp án • 5 cột mốc • 30 giây/câu</small>
+    <span class="mode-action">VÀO CHIẾN TRƯỜNG →</span>
+</button>
+
+                </div>
+
+                <div id="quizWheelResult"
+                    class="game-wheel-result"
+                    aria-live="polite"></div>
+            </section>
+
+            <section class="game-panel game-arena" id="quizArena">
+                <div class="game-empty">
+                    <div class="game-empty-icon">🎮</div>
+                    <h3>SẴN SÀNG CHƯA, CHIẾN SĨ?</h3>
+                    <p>Chọn chế độ ở trên để bắt đầu cuộc chơi.</p>
+                </div>
+            </section>
+
+            <section class="game-panel">
+                <div class="game-section-heading">
+                    <span class="game-section-icon">🥇</span>
+                    <div>
+                        <h3>BẢNG XẾP HẠNG</h3>
+                        <p>Top thành tích lưu trên thiết bị này</p>
+                    </div>
+                </div>
+
+                <div id="quizLeaderboard"></div>
+            </section>
+
+            <details class="game-panel game-management">
+                <summary>
+                    <span>🛠️ QUẢN LÝ CÂU HỎI</span>
+                    <span class="game-summary-note">
+                        Thêm hoặc xóa câu hỏi
+                    </span>
+                </summary>
+
+                <div class="game-form">
+                    <label class="game-label">NỘI DUNG CÂU HỎI</label>
+
+                    <textarea id="quizQuestion"
+                        class="game-input"
+                        placeholder="Nhập nội dung câu hỏi..."></textarea>
+
+                    <div class="game-answer-grid">
+                        <input id="quizA" class="game-input"
+                            placeholder="Đáp án A">
+                        <input id="quizB" class="game-input"
+                            placeholder="Đáp án B">
+                        <input id="quizC" class="game-input"
+                            placeholder="Đáp án C">
+                        <input id="quizD" class="game-input"
+                            placeholder="Đáp án D">
+                    </div>
+
+                    <label class="game-label" for="quizCorrect">
+                        ĐÁP ÁN CHÍNH XÁC
+                    </label>
+
+                    <select id="quizCorrect" class="game-input">
+                        <option value="A">Đáp án A</option>
+                        <option value="B">Đáp án B</option>
+                        <option value="C">Đáp án C</option>
+                        <option value="D">Đáp án D</option>
+                    </select>
+
+                    <button class="game-primary-btn"
+                        onclick="themCauHoiQuiz()">
+                        + THÊM CÂU HỎI
+                    </button>
+                </div>
+
+                <div class="game-section-heading">
+                    <span class="game-section-icon">📚</span>
+                    <div>
+                        <h3>NGÂN HÀNG CÂU HỎI</h3>
+                        <p id="quizCount">Đang tải...</p>
+                    </div>
+                </div>
+
+                <div id="quizQuestionList"></div>
+            </details>
+
+            <section class="game-panel">
+                <div class="game-section-heading">
+                    <span class="game-section-icon">📜</span>
+                    <div>
+                        <h3>LỊCH SỬ THÀNH TÍCH</h3>
+                        <p>Các lượt chơi gần đây trên thiết bị</p>
+                    </div>
+                </div>
+
+                <div id="quizHistory"></div>
+            </section>
+        </div>
+    `;
+}
+/* =====================================================
+   PHẦN 2: THỐNG KÊ VÀ QUẢN LÝ NGÂN HÀNG CÂU HỎI
+===================================================== */
+
+function capNhatThongKeQuizBBB11() {
+    var bank = layNganHangQuiz();
+    var history = layLichSuQuizBBB11();
+    var board = layBangXepHangQuiz();
+
+    var total = document.getElementById("gameTotalQuestions");
+    var best = document.getElementById("gameBestScore");
+    var played = document.getElementById("gamePlayedCount");
+
+    if (total) total.textContent = bank.length;
+
+    var bestScore = board.reduce(function (max, item) {
+        return Math.max(max, Number(item.score) || 0);
+    }, 0);
+
+    if (best) best.textContent = bestScore;
+    if (played) played.textContent = history.length;
 }
 
 // THÊM CÂU HỎI
 function themCauHoiQuiz() {
-    const question = document
-        .getElementById("quizQuestion").value.trim();
+    var questionEl = document.getElementById("quizQuestion");
+    var aEl = document.getElementById("quizA");
+    var bEl = document.getElementById("quizB");
+    var cEl = document.getElementById("quizC");
+    var dEl = document.getElementById("quizD");
+    var correctEl = document.getElementById("quizCorrect");
 
-    const answers = {
-        A: document.getElementById("quizA").value.trim(),
-        B: document.getElementById("quizB").value.trim(),
-        C: document.getElementById("quizC").value.trim(),
-        D: document.getElementById("quizD").value.trim()
+    if (!questionEl || !aEl || !bEl || !cEl || !dEl || !correctEl) {
+        alert("Không tìm thấy biểu mẫu thêm câu hỏi!");
+        return;
+    }
+
+    var question = questionEl.value.trim();
+
+    var answers = {
+        A: aEl.value.trim(),
+        B: bEl.value.trim(),
+        C: cEl.value.trim(),
+        D: dEl.value.trim()
     };
 
-    const correct = document
-        .getElementById("quizCorrect").value;
-
-    if (!question || Object.values(answers).some(x => !x)) {
-        alert("Vui lòng nhập đầy đủ câu hỏi và 4 đáp án!");
+    if (!question || Object.values(answers).some(function (value) {
+        return !value;
+    })) {
+        alert("Vui lòng nhập câu hỏi và đầy đủ 4 đáp án!");
         return;
     }
 
-    const danhSach = layNganHangQuiz();
+    var bank = layNganHangQuiz();
 
-    danhSach.push({
+    bank.push({
         id: Date.now().toString(),
-        question,
-        answers,
-        correct
+        question: question,
+        answers: answers,
+        correct: correctEl.value
     });
 
-    luuNganHangQuiz(danhSach);
-
-    alert("Đã thêm câu hỏi!");
-
-    showPage("quiz");
-}
-
-// HIỂN THỊ NGÂN HÀNG
-function hienThiNganHangQuiz() {
-    const khung = document.getElementById("quizQuestionList");
-
-    if (!khung) return;
-
-    const danhSach = layNganHangQuiz();
-
-    document.getElementById("quizCount").textContent =
-        "Tổng số câu hỏi: " + danhSach.length;
-
-    if (!danhSach.length) {
-        khung.innerHTML = "<p>Chưa có câu hỏi.</p>";
+    try {
+        luuNganHangQuiz(bank);
+    } catch (error) {
+        alert("Không lưu được câu hỏi. Hãy kiểm tra bộ nhớ trình duyệt!");
         return;
     }
 
-    khung.innerHTML = danhSach.map((item, index) => `
-        <div class="list-item">
-            <strong>Câu ${index + 1}: 
-                ${escapeHTML(item.question)}
-            </strong>
+    questionEl.value = "";
+    aEl.value = "";
+    bEl.value = "";
+    cEl.value = "";
+    dEl.value = "";
 
-            <p>A. ${escapeHTML(item.answers.A)}</p>
-            <p>B. ${escapeHTML(item.answers.B)}</p>
-            <p>C. ${escapeHTML(item.answers.C)}</p>
-            <p>D. ${escapeHTML(item.answers.D)}</p>
+    hienThiNganHangQuiz();
+    capNhatThongKeQuizBBB11();
 
-            <button class="btn-delete"
-                onclick="xoaCauHoiQuiz('${item.id}')">
-                XÓA CÂU HỎI
-            </button>
-        </div>
-    `).join("");
+    alert("Đã thêm câu hỏi vào ngân hàng BBB11!");
+}
+
+// HIỂN THỊ DANH SÁCH CÂU HỎI
+function hienThiNganHangQuiz() {
+    var khung = document.getElementById("quizQuestionList");
+    if (!khung) return;
+
+    var bank = layNganHangQuiz();
+    var count = document.getElementById("quizCount");
+
+    if (count) {
+        count.textContent = "Tổng số câu hỏi: " + bank.length;
+    }
+
+    if (!bank.length) {
+        khung.innerHTML =
+            '<div class="game-empty"><p>Chưa có câu hỏi. Hãy thêm câu hỏi để bắt đầu!</p></div>';
+        return;
+    }
+
+    khung.innerHTML = bank.map(function (item, index) {
+        return `
+            <div class="game-bank-item">
+                <strong>CÂU ${index + 1}</strong>
+
+                <p>${quizEscapeHTML(item.question)}</p>
+
+                <div class="game-bank-options">
+                    <span>A. ${quizEscapeHTML(item.answers.A)}</span>
+                    <span>B. ${quizEscapeHTML(item.answers.B)}</span>
+                    <span>C. ${quizEscapeHTML(item.answers.C)}</span>
+                    <span>D. ${quizEscapeHTML(item.answers.D)}</span>
+                </div>
+
+                <button class="game-delete-btn"
+                    onclick="xoaCauHoiQuiz('${quizEscapeHTML(item.id)}')">
+                    XÓA CÂU HỎI
+                </button>
+            </div>
+        `;
+    }).join("");
 }
 
 // XÓA CÂU HỎI
 function xoaCauHoiQuiz(id) {
     if (!confirm("Bạn có chắc muốn xóa câu hỏi này?")) return;
 
-    const danhSach = layNganHangQuiz().filter(
-        item => item.id !== id
-    );
+    var bank = layNganHangQuiz().filter(function (item) {
+        return String(item.id) !== String(id);
+    });
 
-    luuNganHangQuiz(danhSach);
-
-    showPage("quiz");
-}
-
-// BẮT ĐẦU KIỂM TRA
-function batDauQuiz() {
-    const danhSach = layNganHangQuiz();
-
-    if (!danhSach.length) {
-        alert("Bạn cần thêm câu hỏi trước khi kiểm tra!");
+    try {
+        luuNganHangQuiz(bank);
+    } catch (error) {
+        alert("Không thể cập nhật ngân hàng câu hỏi!");
         return;
     }
 
-    const cauHoi = [...danhSach]
-        .sort(() => Math.random() - 0.5);
+    hienThiNganHangQuiz();
+    capNhatThongKeQuizBBB11();
+}
+/* =====================================================
+   PHẦN 3: ĐIỀU KHIỂN TRÒ CHƠI
+===================================================== */
 
-    const khung = document.getElementById("quizExam");
-    const ketQua = document.getElementById("quizResult");
-
-    ketQua.innerHTML = "";
-
-    khung.innerHTML = `
-        <h3>BÀI KIỂM TRA KIẾN THỨC</h3>
-
-        <form id="quizForm">
-            ${cauHoi.map((item, index) => `
-                <div class="question">
-                    <strong>
-                        Câu ${index + 1}:
-                        ${escapeHTML(item.question)}
-                    </strong>
-
-                    ${["A","B","C","D"].map(key => `
-                        <label>
-                            <input type="radio"
-                                name="answer_${index}"
-                                value="${key}"
-                                required>
-                            ${key}. ${escapeHTML(item.answers[key])}
-                        </label>
-                    `).join("")}
-                </div>
-            `).join("")}
-
-            <button type="submit" class="action-button">
-                NỘP BÀI VÀ CHẤM ĐIỂM
-            </button>
-        </form>
-    `;
-
-    document.getElementById("quizForm")
-        .addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            chamDiemQuiz(cauHoi);
-        });
+// DỪNG ĐỒNG HỒ
+function dungDongHoQuizBBB11() {
+    if (bbb11QuizGameState.timer) {
+        clearInterval(bbb11QuizGameState.timer);
+        bbb11QuizGameState.timer = null;
+    }
 }
 
-// CHẤM ĐIỂM
-function chamDiemQuiz(cauHoi) {
-    const form = document.getElementById("quizForm");
+// TRỘN DANH SÁCH CÂU HỎI
+function tronDanhSachQuizBBB11(list) {
+    var result = list.slice();
 
-    if (!form || form.dataset.submitted === "true") return;
+    for (var i = result.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = result[i];
+        result[i] = result[j];
+        result[j] = temp;
+    }
 
-    const data = new FormData(form);
+    return result;
+}
 
-    let dung = 0;
+// BẮT ĐẦU GAME
+function batDauGameBBB11(mode, doublePoints) {
+    dungDongHoQuizBBB11();
 
-    cauHoi.forEach((item, index) => {
-        if (data.get("answer_" + index) === item.correct) {
-            dung++;
+    var bank = layNganHangQuiz();
+
+    if (!bank.length) {
+        alert("Ngân hàng chưa có câu hỏi. Hãy thêm câu hỏi trước!");
+        return;
+    }
+
+    var nameEl = document.getElementById("quizPlayerName");
+    var player = nameEl && nameEl.value.trim()
+        ? nameEl.value.trim()
+        : "Chiến sĩ";
+
+    var questions = tronDanhSachQuizBBB11(bank);
+
+    // Giới hạn số câu theo chế độ
+    if (mode === "quick") {
+        questions = questions.slice(0, 10);
+    } else if (mode === "level") {
+        questions = questions.slice(0, 5);
+    } else if (mode === "speed") {
+        questions = questions.slice(0, 5);
+    } else if (mode === "memory") {
+        questions = questions.slice(0, 5);
+    } else if (mode === "challenge") {
+        questions = questions.slice(0, 15);
+    }
+
+    bbb11QuizGameState = {
+        questions: questions,
+        index: 0,
+        score: 0,
+        correct: 0,
+        streak: 0,
+        bestStreak: 0,
+        timeLeft: 30,
+        timer: null,
+        mode: mode || "quick",
+        player: player.slice(0, 30),
+        locked: false,
+        doublePoints: Boolean(doublePoints),
+        level: 1,
+        sessionId: Date.now()
+    };
+
+    hienThiCauHoiGameBBB11();
+}
+
+// HIỂN THỊ CÂU HỎI
+function hienThiCauHoiGameBBB11() {
+    dungDongHoQuizBBB11();
+
+    var state = bbb11QuizGameState;
+    var arena = document.getElementById("quizArena");
+
+    if (!arena) return;
+
+    if (state.index >= state.questions.length) {
+        ketThucGameBBB11();
+        return;
+    }
+
+    state.locked = false;
+    state.timeLeft = 30;
+
+    var item = state.questions[state.index];
+    var total = state.questions.length;
+    var progress = (state.index / total) * 100;
+
+    var modeNames = {
+        quick: "⚡ ĐẤU NHANH",
+        level: "🏆 VƯỢT CẤP ĐỘ",
+        marathon: "🔥 SINH TỒN KIẾN THỨC",
+        speed: "🚀 THỬ THÁCH TỐC ĐỘ",
+        memory: "🧠 TRÍ NHỚ SIÊU TỐC",
+        challenge: "🎯 THỬ THÁCH TỔNG HỢP"
+    };
+
+    arena.innerHTML = `
+        <div class="game-live-header">
+            <span class="game-live-tag">● ĐANG THI ĐẤU</span>
+            <span class="game-live-mode">
+                ${modeNames[state.mode] || "🎮 THỬ THÁCH"}
+            </span>
+        </div>
+
+        <div class="game-progress-track">
+            <div class="game-progress-fill"
+                style="width:${progress}%"></div>
+        </div>
+
+        <div class="game-score-strip">
+            <div>
+                <small>CÂU HỎI</small>
+                <strong>${state.index + 1}/${total}</strong>
+            </div>
+            <div>
+                <small>ĐIỂM</small>
+                <strong id="gameLiveScore">${state.score}</strong>
+            </div>
+            <div>
+                <small>LIÊN TIẾP</small>
+                <strong id="gameLiveStreak">${state.streak} 🔥</strong>
+            </div>
+        </div>
+
+        <div class="game-timer-wrap">
+            <div class="game-timer" id="gameTimer">30</div>
+            <span>GIÂY CÒN LẠI</span>
+        </div>
+
+        <div class="game-question-card">
+            <span class="game-question-number">
+                THỬ THÁCH ${String(state.index + 1).padStart(2, "0")}
+            </span>
+
+            <h3>${quizEscapeHTML(item.question)}</h3>
+
+            <div class="game-choice-grid">
+                ${["A", "B", "C", "D"].map(function (key) {
+                    return `
+                        <button class="game-choice"
+                            onclick="chonDapAnGameBBB11('${key}')">
+                            <span class="game-choice-letter">${key}</span>
+                            <span>${quizEscapeHTML(item.answers[key])}</span>
+                        </button>
+                    `;
+                }).join("")}
+            </div>
+
+            <div id="gameFeedback"
+                class="game-feedback"
+                aria-live="polite"></div>
+        </div>
+    `;
+
+    var sessionId = state.sessionId;
+
+    state.timer = setInterval(function () {
+        if (sessionId !== bbb11QuizGameState.sessionId) {
+            dungDongHoQuizBBB11();
+            return;
+        }
+
+        state.timeLeft--;
+
+        var timerEl = document.getElementById("gameTimer");
+
+        if (timerEl) {
+            timerEl.textContent = Math.max(0, state.timeLeft);
+
+            timerEl.classList.toggle(
+                "timer-danger",
+                state.timeLeft <= 10
+            );
+        }
+
+        if (state.timeLeft <= 0) {
+            chonDapAnGameBBB11(null);
+        }
+    }, 1000);
+}
+
+// CHỌN ĐÁP ÁN VÀ CHẤM ĐIỂM
+function chonDapAnGameBBB11(answer) {
+    var state = bbb11QuizGameState;
+
+    if (state.locked) return;
+
+    state.locked = true;
+    dungDongHoQuizBBB11();
+
+    var item = state.questions[state.index];
+
+    if (!item) return;
+
+    var correct = answer === item.correct;
+    var points = 0;
+
+    var buttons = document.querySelectorAll(
+        "#quizArena .game-choice"
+    );
+
+    buttons.forEach(function (button) {
+        button.disabled = true;
+
+        var letter = button.querySelector(".game-choice-letter");
+
+        if (!letter) return;
+
+        if (letter.textContent === item.correct) {
+            button.classList.add("choice-correct");
+        } else if (letter.textContent === answer) {
+            button.classList.add("choice-wrong");
         }
     });
 
-    const tong = cauHoi.length;
-    const diem = Number((dung / tong * 10).toFixed(2));
+    if (correct) {
+        state.correct++;
+        state.streak++;
 
-    form.dataset.submitted = "true";
+        state.bestStreak = Math.max(
+            state.bestStreak,
+            state.streak
+        );
 
-    form.querySelectorAll("input, button").forEach(el => {
-        el.disabled = true;
+        points = 100 + state.timeLeft * 5;
+
+        if (state.streak >= 3) {
+            points += 50;
+        }
+
+        // Thưởng thêm điểm ở chế độ tốc độ
+        if (state.mode === "speed") {
+            points += 100;
+        }
+
+        if (state.doublePoints) {
+            points *= 2;
+        }
+
+        state.score += points;
+    } else {
+        state.streak = 0;
+    }
+
+    var feedback = document.getElementById("gameFeedback");
+
+    if (feedback) {
+        feedback.innerHTML = correct
+            ? `
+                <div class="feedback-correct">
+                    ✓ CHÍNH XÁC! +${points} ĐIỂM
+                </div>
+            `
+            : `
+                <div class="feedback-wrong">
+                    ${answer === null
+                        ? "⌛ HẾT THỜI GIAN!"
+                        : "✕ CHƯA CHÍNH XÁC!"}
+                    <p>
+                        Đáp án đúng:
+                        <strong>${item.correct}</strong>
+                    </p>
+                </div>
+            `;
+    }
+
+    var liveScore = document.getElementById("gameLiveScore");
+    var liveStreak = document.getElementById("gameLiveStreak");
+
+    if (liveScore) {
+        liveScore.textContent = state.score;
+    }
+
+    if (liveStreak) {
+        liveStreak.textContent = state.streak + " 🔥";
+    }
+
+    if (feedback) {
+        var nextButton = document.createElement("button");
+
+        nextButton.className = "game-primary-btn game-next-btn";
+
+        nextButton.textContent =
+            state.index + 1 >= state.questions.length
+                ? "XEM KẾT QUẢ 🏆"
+                : "CÂU TIẾP THEO →";
+
+        nextButton.onclick = function () {
+            state.index++;
+            hienThiCauHoiGameBBB11();
+        };
+
+        feedback.appendChild(nextButton);
+    }
+}
+
+/* =====================================================
+   PHẦN 4: KẾT QUẢ, LỊCH SỬ VÀ BẢNG XẾP HẠNG
+===================================================== */
+
+// KẾT THÚC TRẬN ĐẤU
+function ketThucGameBBB11() {
+    dungDongHoQuizBBB11();
+
+    var state = bbb11QuizGameState;
+    var arena = document.getElementById("quizArena");
+
+    if (!arena || !state.questions.length) return;
+
+    var total = state.questions.length;
+    var accuracy = Math.round(state.correct / total * 100);
+
+    var result = {
+        id: Date.now().toString(),
+        player: state.player,
+        mode: state.mode,
+        score: state.score,
+        correct: state.correct,
+        total: total,
+        accuracy: accuracy,
+        bestStreak: state.bestStreak,
+        date: new Date().toLocaleString("vi-VN")
+    };
+
+    // LƯU LỊCH SỬ
+    var history = layLichSuQuizBBB11();
+    history.unshift(result);
+
+    try {
+        localStorage.setItem(
+            "bbb11_quiz_history",
+            JSON.stringify(history.slice(0, 100))
+        );
+    } catch (error) {
+        console.warn("Không lưu được lịch sử game:", error);
+    }
+
+    // LƯU BẢNG XẾP HẠNG
+    var board = layBangXepHangQuiz();
+    board.push(result);
+
+    board.sort(function (a, b) {
+        return (Number(b.score) || 0) - (Number(a.score) || 0);
     });
 
-    const ketQua = document.getElementById("quizResult");
+    try {
+        localStorage.setItem(
+            "bbb11_quiz_leaderboard",
+            JSON.stringify(board.slice(0, 50))
+        );
+    } catch (error) {
+        console.warn("Không lưu được bảng xếp hạng:", error);
+    }
 
-    ketQua.innerHTML = `
-        <div class="result">
-            <h3>KẾT QUẢ KIỂM TRA</h3>
-            <p>Số câu đúng: ${dung}/${tong}</p>
-            <p>Số câu sai: ${tong - dung}</p>
-            <p>Điểm số: ${diem}/10</p>
-            <p>
-                ${diem >= 8 ? "Hoàn thành tốt!" :
-                  diem >= 5 ? "Đã hoàn thành bài kiểm tra." :
-                  "Cần tiếp tục ôn tập!"}
+    var message = accuracy >= 80
+        ? "XUẤT SẮC! BẠN ĐÃ CHINH PHỤC ĐẤU TRƯỜNG!"
+        : accuracy >= 50
+            ? "LÀM TỐT LẮM! HÃY TIẾP TỤC LUYỆN TẬP!"
+            : "ĐỪNG BỎ CUỘC! HÃY THỬ LẠI!";
+
+    arena.innerHTML = `
+        <div class="game-result">
+            <div class="game-result-medal">
+                ${accuracy >= 80 ? "🏆" : accuracy >= 50 ? "🥈" : "🎯"}
+            </div>
+
+            <span class="game-live-tag">ĐÃ HOÀN THÀNH</span>
+
+            <h2>${quizEscapeHTML(message)}</h2>
+
+            <p class="game-result-player">
+                Chiến sĩ: ${quizEscapeHTML(state.player)}
             </p>
+
+            <div class="game-result-score">
+                <small>TỔNG ĐIỂM</small>
+                <strong>${state.score}</strong>
+            </div>
+
+            <div class="game-result-stats">
+                <div>
+                    <strong>${state.correct}/${total}</strong>
+                    <span>CÂU ĐÚNG</span>
+                </div>
+
+                <div>
+                    <strong>${accuracy}%</strong>
+                    <span>CHÍNH XÁC</span>
+                </div>
+
+                <div>
+                    <strong>${state.bestStreak}</strong>
+                    <span>CHUỖI ĐÚNG</span>
+                </div>
+            </div>
+
+            <button type="button"
+                class="game-primary-btn"
+                onclick="batDauGameBBB11('${state.mode}', ${state.doublePoints})">
+                🔄 CHƠI LẠI
+            </button>
+
+            <button type="button"
+                class="game-secondary-btn"
+                onclick="quayLaiMenuGameBBB11()">
+                ↩ CHỌN CHẾ ĐỘ KHÁC
+            </button>
         </div>
     `;
 
-    luuLichSuQuiz({
-        id: Date.now().toString(),
-        dung,
-        tong,
-        diem,
-        ngay: new Date().toLocaleString("vi-VN")
+    hienThiLichSuQuiz();
+    hienThiBangXepHangQuiz();
+    capNhatThongKeQuizBBB11();
+}
+
+// QUAY LẠI KHU VỰC CHỌN CHẾ ĐỘ
+function quayLaiMenuGameBBB11() {
+    dungDongHoQuizBBB11();
+
+    var arena = document.getElementById("quizArena");
+
+    if (arena) {
+        arena.innerHTML = `
+            <div class="game-empty">
+                <div class="game-empty-icon">🎮</div>
+                <h3>SẴN SÀNG CHƯA, CHIẾN SĨ?</h3>
+                <p>Chọn một chế độ phía trên để bắt đầu.</p>
+            </div>
+        `;
+    }
+}
+
+// HIỂN THỊ BẢNG XẾP HẠNG
+function hienThiBangXepHangQuiz() {
+    var container = document.getElementById("quizLeaderboard");
+
+    if (!container) return;
+
+    var board = layBangXepHangQuiz();
+
+    board.sort(function (a, b) {
+        return (Number(b.score) || 0) - (Number(a.score) || 0);
     });
 
-    hienThiLichSuQuiz();
-}
-
-// LƯU LỊCH SỬ
-function luuLichSuQuiz(item) {
-    let history = [];
-
-    try {
-        history = JSON.parse(
-            localStorage.getItem("bbb11_quiz_history") || "[]"
-        );
-
-        if (!Array.isArray(history)) history = [];
-    } catch {
-        history = [];
-    }
-
-    history.unshift(item);
-
-    localStorage.setItem(
-        "bbb11_quiz_history",
-        JSON.stringify(history)
-    );
-}
-
-// HIỂN THỊ LỊCH SỬ
-function hienThiLichSuQuiz() {
-    const khung = document.getElementById("quizHistory");
-
-    if (!khung) return;
-
-    let history = [];
-
-    try {
-        history = JSON.parse(
-            localStorage.getItem("bbb11_quiz_history") || "[]"
-        );
-
-        if (!Array.isArray(history)) history = [];
-    } catch {
-        history = [];
-    }
-
-    if (!history.length) {
-        khung.innerHTML = "<p>Chưa có kết quả kiểm tra.</p>";
+    if (!board.length) {
+        container.innerHTML = `
+            <div class="game-empty">
+                <p>🏅 Chưa có thành tích. Hãy là người đầu tiên!</p>
+            </div>
+        `;
         return;
     }
 
-    khung.innerHTML = history.map(item => `
-        <div class="list-item">
-            <p>Ngày kiểm tra: ${escapeHTML(item.ngay)}</p>
-            <p>Số câu đúng: ${item.dung}/${item.tong}</p>
-            <p>Điểm: ${item.diem}/10</p>
-        </div>
-    `).join("");
-}
-
-let danhSachBaiHocTuSupabase = [];
-
-function educationPage() {
-    return `
-        <div class="page-box education-page">
-            <h2>📚 GIÁO DỤC CHÍNH TRỊ BBB11</h2>
-            <p>
-                Kho bài học dành cho cán bộ, chiến sĩ Đại đội 11.
-                Chọn từng bài để đọc nội dung trực tiếp.
-            </p>
-
-            <div class="notice-card">
-                <h3>🎖️ MỤC ĐÍCH HỌC TẬP</h3>
-                <p>
-                    Nâng cao nhận thức, trách nhiệm, ý thức chấp hành
-                    kỷ luật và tinh thần tự học, tự rèn luyện.
-                </p>
+    container.innerHTML = `
+        <div class="game-table">
+            <div class="game-table-row game-table-head">
+                <span>HẠNG</span>
+                <span>CHIẾN SĨ</span>
+                <span>ĐIỂM</span>
+                <span>CHÍNH XÁC</span>
             </div>
-             
-            <div id="educationList">
-        
-                ${taoDanhSachBaiHocChinhTri()}
-            </div>
+
+            ${board.slice(0, 10).map(function (item, index) {
+                var medal = index === 0
+                    ? "🥇"
+                    : index === 1
+                        ? "🥈"
+                        : index === 2
+                            ? "🥉"
+                            : String(index + 1);
+
+                return `
+                    <div class="game-table-row">
+                        <span>${medal}</span>
+                        <span>${quizEscapeHTML(item.player || "Chiến sĩ")}</span>
+                        <strong>${Number(item.score) || 0}</strong>
+                        <span>${Number(item.accuracy) || 0}%</span>
+                    </div>
+                `;
+            }).join("")}
         </div>
     `;
 }
 
-window.educationPage = educationPage;
+// HIỂN THỊ LỊCH SỬ THI ĐẤU
+function hienThiLichSuQuiz() {
+    var container = document.getElementById("quizHistory");
 
-/* Mã hóa nội dung để tránh lỗi HTML */
+    if (!container) return;
+
+    var history = layLichSuQuizBBB11();
+
+    if (!history.length) {
+        container.innerHTML = `
+            <div class="game-empty">
+                <p>📜 Lịch sử sẽ xuất hiện sau trận đấu đầu tiên.</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = history.slice(0, 10).map(function (item) {
+        return `
+            <div class="game-history-item">
+                <div>
+                    <strong>${quizEscapeHTML(item.player || "Chiến sĩ")}</strong>
+                    <small>${quizEscapeHTML(item.date || "")}</small>
+                </div>
+
+                <div class="game-history-score">
+                    <strong>${Number(item.score) || 0} điểm</strong>
+                    <small>
+                        ${Number(item.correct) || 0}/${Number(item.total) || 0}
+                        câu đúng
+                    </small>
+                </div>
+            </div>
+        `;
+    }).join("");
+}
+
+/* =====================================================
+   PHẦN 5: VÒNG QUAY MAY MẮN BBB11
+===================================================== */
+
+// VÒNG QUAY CHỌN CHẾ ĐỘ
+function quayThuongBBB11() {
+    var arena = document.getElementById("quizArena");
+
+    if (!arena) return;
+
+    if (!layNganHangQuiz().length) {
+        alert("Bạn hãy thêm câu hỏi trước khi quay thưởng!");
+        return;
+    }
+
+    dungDongHoQuizBBB11();
+
+    var prizes = [
+        {
+            name: "⚡ ĐẤU NHANH",
+            mode: "quick",
+            description: "10 câu hỏi để khởi động"
+        },
+        {
+            name: "🏆 VƯỢT CẤP ĐỘ",
+            mode: "level",
+            description: "Chinh phục 5 câu hỏi"
+        },
+        {
+            name: "🔥 SINH TỒN KIẾN THỨC",
+            mode: "marathon",
+            description: "Thử sức với toàn bộ ngân hàng câu hỏi"
+        },
+        {
+            name: "🚀 THỬ THÁCH TỐC ĐỘ",
+            mode: "speed",
+            description: "5 câu hỏi tốc độ"
+        },
+        {
+            name: "🧠 TRÍ NHỚ SIÊU TỐC",
+            mode: "memory",
+            description: "5 câu hỏi với đáp án đảo vị trí"
+        },
+        {
+            name: "💎 THỬ THÁCH TỔNG HỢP",
+            mode: "challenge",
+            description: "15 câu hỏi tổng hợp"
+        }
+    ];
+
+    arena.innerHTML = `
+        <div class="game-wheel-screen">
+            <div class="game-wheel-icon" id="gameWheelIcon">🎡</div>
+
+            <h2>VÒNG QUAY MAY MẮN</h2>
+
+            <p id="gameWheelMessage">
+                Vận may sẽ quyết định thử thách của bạn!
+            </p>
+
+            <button type="button"
+                class="game-primary-btn"
+                id="gameSpinButton"
+                onclick="batDauQuayBBB11()">
+                🎯 QUAY NGAY
+            </button>
+
+            <div id="gameWheelResult"></div>
+        </div>
+    `;
+}
+
+// XỬ LÝ QUAY
+function batDauQuayBBB11() {
+    var button = document.getElementById("gameSpinButton");
+    var icon = document.getElementById("gameWheelIcon");
+    var message = document.getElementById("gameWheelMessage");
+    var result = document.getElementById("gameWheelResult");
+
+    if (!button || !icon || !message || !result) return;
+
+    if (button.disabled) return;
+
+    button.disabled = true;
+    button.textContent = "⏳ ĐANG QUAY...";
+
+    icon.classList.add("game-wheel-spinning");
+    message.textContent = "Đang chọn thử thách của bạn...";
+
+    var prizes = [
+        {
+            name: "⚡ ĐẤU NHANH",
+            mode: "quick",
+            description: "10 câu hỏi để khởi động"
+        },
+        {
+            name: "🏆 VƯỢT CẤP ĐỘ",
+            mode: "level",
+            description: "Chinh phục 5 câu hỏi"
+        },
+        {
+            name: "🔥 SINH TỒN KIẾN THỨC",
+            mode: "marathon",
+            description: "Thử sức với toàn bộ ngân hàng câu hỏi"
+        },
+        {
+            name: "🚀 THỬ THÁCH TỐC ĐỘ",
+            mode: "speed",
+            description: "5 câu hỏi tốc độ"
+        },
+        {
+            name: "🧠 TRÍ NHỚ SIÊU TỐC",
+            mode: "memory",
+            description: "5 câu hỏi đảo vị trí đáp án"
+        },
+        {
+            name: "💎 THỬ THÁCH TỔNG HỢP",
+            mode: "challenge",
+            description: "15 câu hỏi tổng hợp"
+        }
+    ];
+
+    var prize = prizes[Math.floor(Math.random() * prizes.length)];
+
+    // Hiệu ứng quay được tạo bằng CSS.
+    // Dùng setTimeout để người chơi thấy hiệu ứng.
+    setTimeout(function () {
+        icon.classList.remove("game-wheel-spinning");
+
+        message.textContent = "🎉 THỬ THÁCH ĐÃ ĐƯỢC CHỌN!";
+
+        result.innerHTML = `
+            <div class="game-wheel-prize">
+                <h3>${quizEscapeHTML(prize.name)}</h3>
+                <p>${quizEscapeHTML(prize.description)}</p>
+
+                <button type="button"
+                    class="game-primary-btn"
+                    onclick="batDauGameBBB11('${prize.mode}')">
+                    BẮT ĐẦU THỬ THÁCH →
+                </button>
+
+                <button type="button"
+                    class="game-secondary-btn"
+                    onclick="quayThuongBBB11()">
+                    QUAY LẠI
+                </button>
+            </div>
+        `;
+
+        button.textContent = "✓ ĐÃ QUAY XONG";
+    }, 1400);
+}
+
+// THỬ THÁCH NHÂN ĐÔI ĐIỂM
+function batDauGameNhanDoiBBB11(mode) {
+    batDauGameBBB11(mode || "challenge", true);
+}
+
+/* =========================================
+   PHẦN 6: KẾT THÚC LƯỢT CHƠI BBB11
+   Đồng hồ - tính điểm - lưu lịch sử
+========================================= */
+
+window.bbb11KetThucLuotChoi = function (lyDo = "completed") {
+    const game = window.bbb11QuizGameState;
+
+    if (!game || game.daKetThuc) return;
+
+    game.daKetThuc = true;
+
+    if (game.timer) {
+        clearInterval(game.timer);
+        game.timer = null;
+    }
+
+    const diem = Number(game.diem || 0);
+    const tenNguoiChoi =
+        localStorage.getItem("bbb11CurrentUser") ||
+        window.bbb11CurrentUser ||
+        "Người chơi";
+
+    const ketQua = {
+        ten: tenNguoiChoi,
+        diem: diem,
+        soCauDung: Number(game.soCauDung || 0),
+        soCauSai: Number(game.soCauSai || 0),
+        thoiGian: new Date().toLocaleString("vi-VN"),
+        cheDo: game.cheDo || "quick",
+        lyDo: lyDo
+    };
+
+    // Lưu lịch sử chơi riêng
+    try {
+        const lichSu = JSON.parse(
+            localStorage.getItem("bbb11_quiz_history") || "[]"
+        );
+
+        lichSu.unshift(ketQua);
+
+        localStorage.setItem(
+            "bbb11_quiz_history",
+            JSON.stringify(lichSu.slice(0, 200))
+        );
+    } catch (e) {
+        console.error("Không thể lưu lịch sử BBB11:", e);
+    }
+
+    // Lưu bảng xếp hạng riêng
+    try {
+        const bangXepHang = JSON.parse(
+            localStorage.getItem("bbb11_quiz_ranking") || "[]"
+        );
+
+        bangXepHang.push(ketQua);
+
+        bangXepHang.sort((a, b) => Number(b.diem) - Number(a.diem));
+
+        localStorage.setItem(
+            "bbb11_quiz_ranking",
+            JSON.stringify(bangXepHang.slice(0, 100))
+        );
+    } catch (e) {
+        console.error("Không thể lưu bảng xếp hạng BBB11:", e);
+    }
+
+    const ketQuaEl = document.getElementById("bbb11KetQua");
+
+    if (ketQuaEl) {
+        ketQuaEl.innerHTML = `
+            <div class="bbb11-result-card">
+                <h2>🏆 KẾT THÚC TRÒ CHƠI</h2>
+                <p>Người chơi: ${String(ketQua.ten)
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")}</p>
+                <h1>${diem} điểm</h1>
+                <p>✅ Số câu đúng: ${ketQua.soCauDung}</p>
+                <p>❌ Số câu sai: ${ketQua.soCauSai}</p>
+                <button onclick="bbb11BatDauLai()">
+                    🔄 Chơi lại
+                </button>
+            </div>
+        `;
+    }
+
+    document.dispatchEvent(
+        new CustomEvent("bbb11QuizFinished", { detail: ketQua })
+    );
+};
+
+
+/* Xem lịch sử chơi */
+window.bbb11LayLichSu = function () {
+    try {
+        return JSON.parse(
+            localStorage.getItem("bbb11_quiz_history") || "[]"
+        );
+    } catch (e) {
+        return [];
+    }
+};
+
+
+/* Xem bảng xếp hạng */
+window.bbb11LayBangXepHang = function () {
+    try {
+        return JSON.parse(
+            localStorage.getItem("bbb11_quiz_ranking") || "[]"
+        ).sort((a, b) => Number(b.diem) - Number(a.diem));
+    } catch (e) {
+        return [];
+    }
+};
+
+
+/* Bắt đầu lại - dùng lại hàm khởi động ở phần trước */
+window.bbb11BatDauLai = function () {
+    const game = window.bbb11QuizGameState;
+
+    if (game && game.timer) {
+        clearInterval(game.timer);
+    }
+
+    if (typeof window.bbb11KhoiDongGame === "function") {
+        window.bbb11KhoiDongGame();
+    } else {
+        alert(
+            "Chưa tìm thấy hàm khởi động game. " +
+            "Hãy kiểm tra tên hàm bắt đầu ở các phần trước."
+        );
+    }
+};
+
+/* =========================================
+   PHẦN 7: BẢNG XẾP HẠNG VÀ LỊCH SỬ BBB11
+========================================= */
+
+window.bbb11HienThiBangXepHang = function () {
+    const danhSach = window.bbb11LayBangXepHang();
+    const noiDung = document.getElementById("bbb11BangXepHang");
+
+    if (!noiDung) {
+        alert("Không tìm thấy khu vực bảng xếp hạng!");
+        return;
+    }
+
+    if (!danhSach.length) {
+        noiDung.innerHTML = "<p>Chưa có dữ liệu xếp hạng.</p>";
+        return;
+    }
+
+    noiDung.innerHTML = `
+        <h2>🏆 BẢNG XẾP HẠNG BBB11</h2>
+        <div class="bbb11-ranking-list">
+            ${danhSach.slice(0, 20).map((item, index) => `
+                <div class="bbb11-ranking-item">
+                    <span>${index === 0 ? "🥇" :
+                        index === 1 ? "🥈" :
+                        index === 2 ? "🥉" : index + 1}</span>
+                    <strong>${String(item.ten || "Người chơi")
+                        .replace(/&/g, "&amp;")
+                        .replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;")}</strong>
+                    <b>${Number(item.diem) || 0} điểm</b>
+                </div>
+            `).join("")}
+        </div>
+    `;
+};
+
+
+window.bbb11HienThiLichSu = function () {
+    const danhSach = window.bbb11LayLichSu();
+    const noiDung = document.getElementById("bbb11LichSu");
+
+    if (!noiDung) {
+        alert("Không tìm thấy khu vực lịch sử chơi!");
+        return;
+    }
+
+    if (!danhSach.length) {
+        noiDung.innerHTML = "<p>Bạn chưa có lịch sử chơi.</p>";
+        return;
+    }
+
+    noiDung.innerHTML = `
+        <h2>📜 LỊCH SỬ CHƠI</h2>
+        ${danhSach.slice(0, 30).map(item => `
+            <div class="bbb11-history-item">
+                <strong>${String(item.ten || "Người chơi")
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")}</strong>
+                <span>${Number(item.diem) || 0} điểm</span>
+                <small>${String(item.thoiGian || "")}</small>
+            </div>
+        `).join("")}
+    `;
+};
+
+/* ==========================================
+   BBB11 - BẮN SÚNG AK CHINH PHỤC CỘT MỐC
+   Trò chơi trắc nghiệm dạng bắn 4 bia
+========================================== */
+
+window.bbb11GameBanBia = function () {
+   const root = document.getElementById("quizArena");
+
+    if (!root) {
+        alert("Chưa tìm thấy khu vực trò chơi bbb11BanBia!");
+        return;
+    }
+
+    const cauHoi = [
+        {
+            q: "Pháo đài Láng nổ súng mở đầu Toàn quốc kháng chiến vào ngày nào?",
+            a: ["19/12/1946", "02/09/1945", "07/05/1954", "10/10/1954"],
+            d: 0,
+            gt: "Ngày 19/12/1946, quân và dân Hà Nội mở đầu Toàn quốc kháng chiến."
+        },
+        {
+            q: "Ngày Quốc khánh nước Việt Nam là ngày nào?",
+            a: ["30/04/1975", "02/09/1945", "19/08/1945", "07/05/1954"],
+            d: 1,
+            gt: "Ngày 02/09/1945, Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập."
+        },
+        {
+            q: "Chiến thắng Điện Biên Phủ diễn ra vào năm nào?",
+            a: ["1945", "1946", "1954", "1975"],
+            d: 2,
+            gt: "Chiến thắng Điện Biên Phủ diễn ra ngày 07/05/1954."
+        },
+        {
+            q: "Ngày giải phóng miền Nam, thống nhất đất nước là ngày nào?",
+            a: ["02/09/1945", "07/05/1954", "19/08/1945", "30/04/1975"],
+            d: 3,
+            gt: "Ngày 30/04/1975 đánh dấu giải phóng miền Nam, thống nhất đất nước."
+        },
+        {
+            q: "Quân đội nhân dân Việt Nam thành lập ngày nào?",
+            a: ["22/12/1944", "22/12/1945", "19/12/1946", "02/09/1945"],
+            d: 0,
+            gt: "Ngày 22/12/1944 là ngày thành lập Quân đội nhân dân Việt Nam."
+        },
+        {
+            q: "Ai là người đọc Tuyên ngôn Độc lập ngày 02/09/1945?",
+            a: ["Võ Nguyên Giáp", "Hồ Chí Minh", "Phạm Văn Đồng", "Trường Chinh"],
+            d: 1,
+            gt: "Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập tại Quảng trường Ba Đình."
+        },
+        {
+            q: "Chiến dịch Điện Biên Phủ kết thúc thắng lợi vào ngày nào?",
+            a: ["30/04/1975", "22/12/1944", "07/05/1954", "02/09/1945"],
+            d: 2,
+            gt: "Chiến dịch Điện Biên Phủ kết thúc thắng lợi ngày 07/05/1954."
+        },
+        {
+            q: "Ngày truyền thống của Quân đội nhân dân Việt Nam là ngày nào?",
+            a: ["01/05", "02/09", "19/08", "22/12"],
+            d: 3,
+            gt: "Ngày 22/12 hằng năm là ngày thành lập và ngày hội Quốc phòng toàn dân."
+        },
+        {
+            q: "Cách làm nào thể hiện tinh thần đoàn kết trong tập thể?",
+            a: ["Hỗ trợ đồng đội, cùng hoàn thành nhiệm vụ", "Chỉ quan tâm bản thân", "Đùn đẩy trách nhiệm", "Không phối hợp"],
+            d: 0,
+            gt: "Đoàn kết và hỗ trợ đồng đội góp phần hoàn thành nhiệm vụ chung."
+        },
+        {
+            q: "Khi phát hiện sai sót trong nhiệm vụ, cần làm gì?",
+            a: ["Che giấu", "Báo cáo và chủ động khắc phục", "Đổ lỗi", "Bỏ qua"],
+            d: 1,
+            gt: "Cần trung thực báo cáo, nhận trách nhiệm và khắc phục sai sót."
+        }
+    ];
+
+    let viTri = 0;
+    let diem = 0;
+    let dung = 0;
+    let sai = 0;
+    let daChon = false;
+    let timer = null;
+    let giay = 30;
+    let daKetThuc = false;
+
+    const thoatTimer = () => {
+        if (timer) clearInterval(timer);
+        timer = null;
+    };
+
+    function anToan(s) {
+        return String(s).replace(/[&<>"']/g, c => ({
+            "&": "&amp;", "<": "&lt;", ">": "&gt;",
+            '"': "&quot;", "'": "&#39;"
+        })[c]);
+    }
+
+    function hienThi() {
+        thoatTimer();
+
+        if (viTri >= cauHoi.length) {
+            ketThuc();
+            return;
+        }
+
+        daChon = false;
+        giay = 30;
+
+        const c = cauHoi[viTri];
+        const cotMoc = Math.floor(viTri / 2) + 1;
+
+        root.innerHTML = `
+            <div class="bb11-arena">
+                <header class="bb11-hud">
+                    <div class="bb11-player">🎖️ CHIẾN SĨ BBB11</div>
+                    <div>CÂU ${viTri + 1}/${cauHoi.length}</div>
+                    <div class="bb11-clock" id="bb11Clock">30</div>
+                    <div>⭐ <span id="bb11Score">${diem}</span></div>
+                </header>
+
+                <div class="bb11-map">
+                    <div class="bb11-checkpoints">
+                        ${[1,2,3,4,5].map(n => `
+                            <div class="bb11-checkpoint
+                                ${n <= cotMoc ? "passed" : ""}">
+                                <span>${n < cotMoc ? "✓" : "★"}</span>
+                                <small>MỐC ${n}</small>
+                            </div>
+                        `).join("")}
+                    </div>
+
+                    <div class="bb11-question">
+                        <span class="bb11-label">NHIỆM VỤ ${viTri + 1}</span>
+                        <h3>${anToan(c.q)}</h3>
+                        <p>🎯 Chọn một trong bốn bia đáp án!</p>
+                    </div>
+
+                    <div class="bb11-targets" id="bb11Targets">
+                        ${c.a.map((a, i) => `
+                            <button class="bb11-target"
+                                data-answer="${i}"
+                                aria-label="Bia ${String.fromCharCode(65+i)}">
+                                <span class="bb11-target-ring">
+                                    <span class="bb11-target-letter">
+                                        ${String.fromCharCode(65+i)}
+                                    </span>
+                                </span>
+                                <span class="bb11-target-text">
+                                    ${anToan(a)}
+                                </span>
+                            </button>
+                        `).join("")}
+                    </div>
+
+                 
+<div class="bb11-aim-layer" id="bb11AimLayer">
+    <div class="bb11-crosshair" id="bb11Crosshair">
+        <span></span>
+    </div>
+    <div class="bb11-bullet" id="bb11Bullet"></div>
+</div>
+
+<div class="bb11-weapon-area">
+    <div class="bb11-rifle" aria-label="Súng trong trò chơi">
+        
+<span class="bb11-rifle-icon">🔫</span>
+
+
+
+        <span class="bb11-rifle-label">AK • BBB11</span>
+    </div>
+    <button type="button" class="bb11-fire-button"
+        id="bb11FireButton">
+        🔥 BẮN
+    </button>
+    <p class="bb11-aim-hint">
+        Di chuyển tâm ngắm vào bia rồi nhấn BẮN
+    </p>
+</div>
+
+
+                    <div class="bb11-feedback" id="bb11Feedback">
+                        Chọn bia để trả lời câu hỏi
+                    </div>
+
+                    <div class="bb11-bottom">
+                        <span>🎯 ĐÚNG: ${dung}</span>
+                        <span>❌ SAI: ${sai}</span>
+                        <span>🏁 MỐC ${cotMoc}/5</span>
+                    </div>
+                </div>
+            </div>
+        `;
+
+       
+const map = root.querySelector(".bb11-map");
+const aimLayer = root.querySelector("#bb11AimLayer");
+const crosshair = root.querySelector("#bb11Crosshair");
+const bullet = root.querySelector("#bb11Bullet");
+const fireButton = root.querySelector("#bb11FireButton");
+
+let aimX = map.clientWidth / 2;
+let aimY = map.clientHeight * 0.48;
+let selectedTarget = null;
+
+function capNhatTamNgam(x, y) {
+    const rect = map.getBoundingClientRect();
+
+    aimX = Math.max(0, Math.min(map.clientWidth, x));
+    aimY = Math.max(0, Math.min(map.clientHeight, y));
+
+    crosshair.style.left = aimX + "px";
+    crosshair.style.top = aimY + "px";
+
+    const element = document.elementFromPoint(
+        rect.left + aimX,
+        rect.top + aimY
+    );
+
+    selectedTarget = element
+        ? element.closest("[data-answer]")
+        : null;
+
+    if (selectedTarget && !map.contains(selectedTarget)) {
+        selectedTarget = null;
+    }
+}
+
+map.addEventListener("pointermove", function (event) {
+    const rect = map.getBoundingClientRect();
+
+    capNhatTamNgam(
+        event.clientX - rect.left,
+        event.clientY - rect.top
+    );
+});
+
+root.querySelectorAll("[data-answer]").forEach(btn => {
+    btn.addEventListener("click", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const rect = map.getBoundingClientRect();
+        const targetRect = btn.getBoundingClientRect();
+
+        capNhatTamNgam(
+            targetRect.left + targetRect.width / 2 - rect.left,
+            targetRect.top + targetRect.height / 2 - rect.top
+        );
+
+        selectedTarget = btn;
+        btn.classList.add("bb11-aimed");
+    });
+});
+
+fireButton.onclick = function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (fireButton.disabled) return;
+
+    const rifle = root.querySelector(".bb11-rifle");
+    const map = root.querySelector(".bb11-map");
+    const bullet = root.querySelector("#bb11Bullet");
+    const crosshair = root.querySelector("#bb11Crosshair");
+
+    if (!map || !bullet || !crosshair) {
+        console.error("BBB11: Thiếu khu vực ngắm hoặc viên đạn.");
+        return;
+    }
+
+    // Hiệu ứng giật súng
+    if (rifle) {
+        rifle.classList.remove("bb11-recoil");
+        void rifle.offsetWidth;
+        rifle.classList.add("bb11-recoil");
+    }
+
+    // Lấy vị trí tâm ngắm
+    const mapRect = map.getBoundingClientRect();
+    const aimRect = crosshair.getBoundingClientRect();
+
+    const startX = map.clientWidth / 2;
+    const startY = map.clientHeight - 25;
+
+    const endX =
+        aimRect.left + aimRect.width / 2 - mapRect.left;
+
+    const endY =
+        aimRect.top + aimRect.height / 2 - mapRect.top;
+
+    // Khởi tạo viên đạn
+    bullet.style.transition = "none";
+    bullet.style.opacity = "1";
+    bullet.style.left = startX + "px";
+    bullet.style.top = startY + "px";
+    bullet.style.transform = "translate(0, 0)";
+
+    void bullet.offsetWidth;
+
+    // Bắn viên đạn về phía tâm ngắm
+    bullet.style.transition =
+        "transform 250ms linear, opacity 100ms 200ms";
+
+    bullet.style.transform =
+        `translate(${endX - startX}px, ${endY - startY}px)`;
+
+    bullet.style.opacity = "0";
+
+    // Phản hồi khi bắn
+    fireButton.disabled = true;
+
+    setTimeout(function () {
+        const target = document.elementFromPoint(
+            mapRect.left + endX,
+            mapRect.top + endY
+        );
+
+        const bia = target
+            ? target.closest("[data-answer]")
+            : null;
+
+        if (bia && map.contains(bia)) {
+            bia.click();
+        } else {
+            const feedback =
+                root.querySelector("#bb11Feedback");
+
+            if (feedback) {
+                feedback.textContent =
+                    "🎯 Chưa trúng bia! Hãy điều chỉnh tâm ngắm.";
+            }
+        }
+
+        fireButton.disabled = false;
+    }, 260);
+};
+
+
+        timer = setInterval(() => {
+            giay--;
+
+            const clock = root.querySelector("#bb11Clock");
+            if (clock) {
+                clock.textContent = giay;
+                if (giay <= 10) clock.classList.add("urgent");
+            }
+
+            if (giay <= 0) traLoi(-1, null);
+        }, 1000);
+    }
+
+    function traLoi(chon, btn) {
+        if (daChon || daKetThuc) return;
+
+        daChon = true;
+        thoatTimer();
+
+        const c = cauHoi[viTri];
+        const chinhXac = chon === c.d;
+        const feedback = root.querySelector("#bb11Feedback");
+        const shot = root.querySelector("#bb11Shot");
+
+        if (btn) {
+            btn.classList.add("fired");
+            shot.textContent = "💥";
+            shot.classList.remove("bb11-boom");
+            void shot.offsetWidth;
+            shot.classList.add("bb11-boom");
+        }
+
+        if (chinhXac) {
+            dung++;
+            diem += 100 + giay * 2;
+            feedback.innerHTML = `
+                <strong class="bb11-correct">🎯 BẮN TRÚNG ĐÁP ÁN!</strong>
+                <p>${anToan(c.gt)}</p>
+            `;
+        } else {
+            sai++;
+            feedback.innerHTML = `
+                <strong class="bb11-wrong">
+                    ${chon === -1 ? "⏰ HẾT GIỜ!" : "❌ CHƯA CHÍNH XÁC"}
+                </strong>
+                <p>Đáp án đúng: ${"ABCD"[c.d]} — ${anToan(c.a[c.d])}</p>
+                <p>${anToan(c.gt)}</p>
+            `;
+        }
+
+        root.querySelectorAll("[data-answer]").forEach(b => {
+            b.disabled = true;
+            const n = Number(b.dataset.answer);
+
+            if (n === c.d) b.classList.add("right-answer");
+            else if (n === chon) b.classList.add("wrong-answer");
+        });
+
+        const nut = document.createElement("button");
+        nut.className = "bb11-next";
+        nut.textContent = (viTri % 2 === 1 && viTri < 9)
+            ? "🏁 VƯỢT CỘT MỐC TIẾP THEO"
+            : viTri === 9 ? "🏆 XEM KẾT QUẢ" : "➡️ CÂU TIẾP THEO";
+
+        nut.onclick = () => {
+            viTri++;
+            hienThi();
+        };
+
+        feedback.appendChild(nut);
+        const scoreEl = root.querySelector("#bb11Score");
+        if (scoreEl) scoreEl.textContent = diem;
+    }
+
+    function ketThuc() {
+        daKetThuc = true;
+        thoatTimer();
+
+        const ketQua = {
+            ten: window.bbb11CurrentUser || "Người chơi",
+            diem,
+            soCauDung: dung,
+            soCauSai: sai,
+            cheDo: "ban-bia-5-cot-moc",
+            thoiGian: new Date().toLocaleString("vi-VN")
+        };
+
+        try {
+            const key = "bbb11_quiz_history";
+            const history = JSON.parse(localStorage.getItem(key) || "[]");
+            history.unshift(ketQua);
+            localStorage.setItem(key, JSON.stringify(history.slice(0, 200)));
+
+            const rankKey = "bbb11_quiz_ranking";
+            const rank = JSON.parse(localStorage.getItem(rankKey) || "[]");
+            rank.push(ketQua);
+            rank.sort((a, b) => Number(b.diem) - Number(a.diem));
+            localStorage.setItem(rankKey, JSON.stringify(rank.slice(0, 100)));
+        } catch (e) {
+            console.warn("Không lưu được kết quả trên thiết bị.", e);
+        }
+
+        root.innerHTML = `
+            <div class="bb11-finish">
+                <h1>🏆 HOÀN THÀNH NHIỆM VỤ!</h1>
+                <p class="bb11-final-score">${diem} ĐIỂM</p>
+                <p>🎯 Trả lời đúng: ${dung}/10 câu</p>
+                <p>❌ Trả lời sai hoặc hết giờ: ${sai} câu</p>
+                <p>⭐ Đã vượt qua 5 cột mốc!</p>
+                <button class="bb11-next" id="bb11Replay">
+                    🔄 CHƠI LẠI
+                </button>
+            </div>
+        `;
+
+        root.querySelector("#bb11Replay").onclick = window.bbb11GameBanBia;
+    }
+
+    hienThi();
+};
+
+let danhSachBaiHocTuSupabase = [];
+
+window.educationPage = function () {
+    return `
+        <div class="page-box education-page education-unit-theme">
+
+            <section class="education-hero">
+                <img
+                    src="https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/giao-duc-chinh-tri.png"
+                    alt="Giáo dục chính trị BBB11"
+                    class="education-hero-image"
+                >
+            </section>
+
+            <p class="education-intro">
+                Kho học tập chính trị, tài liệu giáo dục và nội dung
+                rèn luyện phục vụ cán bộ, chiến sĩ Đại đội 11.
+            </p>
+
+            <section class="education-content">
+                <div class="education-heading">
+                    <span class="education-heading-icon">📚</span>
+                    <div>
+                        <h2>GIÁO DỤC CHÍNH TRỊ BBB11</h2>
+                        <p>Chủ động học tập – Nâng cao nhận thức – Hoàn thành nhiệm vụ</p>
+                    </div>
+                </div>
+
+        
+
+
+<div class="education-search">
+    <input
+        type="text"
+        id="educationSearch"
+        placeholder="🔍 Tìm kiếm bài học, tài liệu..."
+        oninput="capNhatDanhSachBaiHocChinhTri()"
+    >
+</div>
+
+<!-- KHUNG XEM TÀI LIỆU TRỰC TIẾP -->
+<div class="education-viewer" id="educationViewer"
+     style="display:none;">
+
+    <div class="education-viewer-header">
+        <strong id="educationViewerTitle">
+            📖 NỘI DUNG ĐANG XEM
+        </strong>
+
+        <button onclick="dongKhungXem()">
+            ✕ Đóng
+        </button>
+    </div>
+
+    <div class="education-viewer-body">
+        <iframe
+            id="educationViewerFrame"
+            src="about:blank"
+            title="Xem tài liệu trực tiếp"
+            allowfullscreen>
+        </iframe>
+    </div>
+
+    <p class="education-open-link">
+        Không xem được?
+        <a id="educationOpenNewTab"
+           href="#"
+           target="_blank"
+           rel="noopener noreferrer">
+            Mở liên kết trong tab mới
+        </a>
+    </p>
+</div>
+
+<!-- DANH SÁCH BÀI HỌC -->
+<div id="educationList">
+    ${taoDanhSachBaiHocChinhTri()}
+</div>
+
+</section>
+
+</div>
+`;
+};
+
+window.educationPage = window.educationPage;
+
 function educationEscapeHTML(value) {
     return String(value ?? "").replace(/[&<>"']/g, function (char) {
-        const entities = {
+        return {
             "&": "&amp;",
             "<": "&lt;",
             ">": "&gt;",
             '"': "&quot;",
             "'": "&#39;"
-        };
-        return entities[char];
+        }[char];
     });
 }
 
-/* Cập nhật danh sách bài học */
 function capNhatDanhSachBaiHocChinhTri() {
     const khung = document.getElementById("educationList");
-
-    if (!khung) {
-        console.warn(
-            "Chưa tìm thấy educationList. Hãy mở trang Giáo dục chính trị trước."
-        );
-        return;
-    }
+    if (!khung) return;
 
     const keyword =
-        document.getElementById("educationSearch")?.value?.trim() || "";
+        document.getElementById("educationSearch")?.value || "";
 
     khung.innerHTML = taoDanhSachBaiHocChinhTri(keyword);
 }
@@ -3328,9 +4922,6 @@ function capNhatDanhSachBaiHocChinhTri() {
 window.capNhatDanhSachBaiHocChinhTri =
     capNhatDanhSachBaiHocChinhTri;
 
-/* Hiển thị bài học mẫu và bài học từ Supabase */
-
-/* Hiển thị bài học mẫu và bài học từ Supabase */
 function taoDanhSachBaiHocChinhTri(keyword = "") {
     const baiHocMau =
         Array.isArray(danhSachBaiHocChinhTriMacDinh)
@@ -3343,12 +4934,9 @@ function taoDanhSachBaiHocChinhTri(keyword = "") {
             : [];
 
     const danhSach = [...baiHocMau, ...baiHocSupabase];
+    const tuKhoa = String(keyword).toLocaleLowerCase("vi").trim();
 
-    const tuKhoa = String(keyword)
-        .toLocaleLowerCase("vi")
-        .trim();
-
-    const ketQua = danhSach.filter(function (item) {
+    const ketQua = danhSach.filter(item => {
         const noiDung = [
             item.title,
             item.category,
@@ -3359,14 +4947,20 @@ function taoDanhSachBaiHocChinhTri(keyword = "") {
         return !tuKhoa || noiDung.includes(tuKhoa);
     });
 
-    if (ketQua.length === 0) {
-        return tuKhoa
-            ? "<p>Không tìm thấy bài học phù hợp.</p>"
-            : "<p>Chưa có bài học nào.</p>";
+    if (!ketQua.length) {
+        return `
+            <div class="education-empty">
+                <i class="fa-solid fa-book-open"></i>
+                <h4>${tuKhoa ? "Không tìm thấy bài học" : "Chưa có bài học"}</h4>
+                <p>${
+                    tuKhoa
+                        ? "Thử tìm bằng từ khóa khác."
+                        : "Các bài học sẽ hiển thị tại đây."
+                }</p>
+            </div>`;
     }
 
-    return ketQua.map(function (item, index) {
-        // Lấy đường dẫn tham khảo nếu bài học đã có URL.
+    return ketQua.map((item, index) => {
         const urlThamKhao =
             item.reference_url ||
             item.referenceUrl ||
@@ -3375,18 +4969,14 @@ function taoDanhSachBaiHocChinhTri(keyword = "") {
             item.reference ||
             "";
 
-        // Chỉ chấp nhận đường dẫn HTTP/HTTPS hợp lệ.
-        let  = "https://www.qdnd.vn/quoc-phong-an-ninh/xay-dung-quan-doi/giao-duc-chinh-tri-di-vao-chieu-sau-hieu-qua-thiet-thuc-1049182";
+        let linkThamKhao = "";
 
         try {
-            const url = new URL(
-                urlThamKhao,
-                window.location.origin
-            );
+            const url = new URL(urlThamKhao, window.location.origin);
 
             if (
-                url.protocol === "https:" ||
-                url.protocol === "http:"
+                urlThamKhao &&
+                ["https:", "http:"].includes(url.protocol)
             ) {
                 linkThamKhao = url.href;
             }
@@ -3394,7 +4984,6 @@ function taoDanhSachBaiHocChinhTri(keyword = "") {
             linkThamKhao = "";
         }
 
-        // Nếu chưa có URL, tìm tài liệu theo tiêu đề bài học.
         if (!linkThamKhao) {
             linkThamKhao =
                 "https://www.google.com/search?q=" +
@@ -3405,49 +4994,73 @@ function taoDanhSachBaiHocChinhTri(keyword = "") {
         }
 
         return `
-            <div class="list-item education-card">
-                <h3>
-                    ${index + 1}. 📘
-                    ${educationEscapeHTML(
+        <article class="education-card">
+            <div class="education-card-top">
+                <div class="education-card-number">
+                    ${String(index + 1).padStart(2, "0")}
+                </div>
+
+                <div class="education-card-title">
+                    <span class="education-category">
+                        <i class="fa-solid fa-folder-open"></i>
+                        ${educationEscapeHTML(
+                            item.category || "Tài liệu khác"
+                        )}
+                    </span>
+                    <h4>${educationEscapeHTML(
                         item.title || "Chưa có tiêu đề"
-                    )}
-                </h3>
-
-                <p>
-                    <strong>Chuyên mục:</strong>
-                    ${educationEscapeHTML(
-                        item.category || "Tài liệu khác"
-                    )}
-                </p>
-
-                ${item.description ? `
-                    <p>
-                        <strong>Trích yếu:</strong>
-                        ${educationEscapeHTML(item.description)}
-                    </p>
-                ` : ""}
-
-                <details class="education-detail">
-                    <summary>📖 XEM NỘI DUNG BÀI HỌC</summary>
-                    <div class="education-content">
-                        <pre>${educationEscapeHTML(
-                            item.content || ""
-                        )}</pre>
-                    </div>
-                </details>
-
-                <div class="education-reference">
-                    <a
-                        class="btn-education-reference"
-                        href="${educationEscapeHTML(linkThamKhao)}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        🔗 Xem tài liệu tham khảo
-                    </a>
+                    )}</h4>
                 </div>
             </div>
-        `;
+
+            ${item.description ? `
+                <p class="education-description">
+                    ${educationEscapeHTML(item.description)}
+                </p>
+            ` : ""}
+
+            <details class="education-detail">
+                <summary>
+                    <span>
+                        <i class="fa-solid fa-book-open"></i>
+                        XEM NỘI DUNG BÀI HỌC
+                    </span>
+                    <i class="fa-solid fa-chevron-down education-chevron"></i>
+                </summary>
+
+                <div class="education-content">
+                    <pre>${educationEscapeHTML(
+                        item.content || "Chưa cập nhật nội dung bài học."
+                    )}</pre>
+                </div>
+            </details>
+
+            <div class="education-reference">
+
+ <button
+    type="button"
+    class="btn-education-reference"
+    onclick="moKhungXem(this)"
+    data-url="${educationEscapeHTML(linkThamKhao)}"
+    data-title="${educationEscapeHTML(item.title || "Tài liệu giáo dục chính trị")}">
+
+    <i class="fa-solid fa-eye"></i>
+    XEM TÀI LIỆU TRỰC TIẾP
+</button>
+
+
+    <a
+        class="btn-education-reference"
+        href="${educationEscapeHTML(linkThamKhao)}"
+        target="_blank"
+        rel="noopener noreferrer">
+
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        MỞ TAB MỚI
+    </a>
+
+</div>
+        </article>`;
     }).join("");
 }
 
@@ -3744,9 +5357,6 @@ IV. CÂU HỎI ÔN TẬP
         builtin: true
     }
 ];
-function layTatCaBaiHocChinhTri() {
-    return [...danhSachBaiHocChinhTriMacDinh];
-}
 
 
 
@@ -5211,38 +6821,70 @@ function resolutionPage() {
 
     const cacChuDe = [...new Set(danhSachGop.map(item => item.chuDe))];
 
-    return `
-        <div class="page-box">
-            <h2>📚 HỌC TẬP NGHỊ QUYẾT BBB11</h2>
+ 
+return `
+    <div class="page-box resolution-modern">
 
-            <p>
-                Tra cứu tài liệu theo năm ban hành
-                và chủ đề học tập chính trị.
-            </p>
-
-            <div class="notice-card">
-                <h3>🎖️ MỤC ĐÍCH HỌC TẬP</h3>
-                <p>
-                    Nâng cao nhận thức chính trị, tư tưởng,
-                    trách nhiệm và ý thức chấp hành nhiệm vụ.
-                </p>
+        <section class="resolution-hero">
+            <div class="resolution-eyebrow">
+                TIỂU ĐOÀN 3 • ĐẠI ĐỘI 11
             </div>
 
-            <h3>🔎 PHÂN LOẠI TÀI LIỆU</h3>
+            <h1>
+                <i class="fa-solid fa-book-open"></i>
+                HỌC TẬP NGHỊ QUYẾT
+            </h1>
 
-            <div style="display:flex;gap:12px;flex-wrap:wrap;margin:15px 0">
+            <p>
+                Nâng cao nhận thức chính trị, phát huy trách nhiệm,
+                giữ vững kỷ luật và quyết tâm hoàn thành nhiệm vụ.
+            </p>
+
+            <div class="resolution-hero-line"></div>
+        </section>
+
+        <section class="resolution-purpose">
+            <div class="resolution-purpose-icon">
+                <i class="fa-solid fa-medal"></i>
+            </div>
+
+            <div>
+                <h2>MỤC ĐÍCH HỌC TẬP</h2>
+                <p>
+                    Chủ động nghiên cứu, nắm vững nội dung nghị quyết,
+                    liên hệ thực tiễn và vận dụng vào quá trình công tác,
+                    học tập, rèn luyện tại đơn vị.
+                </p>
+            </div>
+        </section>
+
+        <section class="resolution-filter-panel">
+            <h2 class="resolution-section-title">
+                <i class="fa-solid fa-layer-group"></i>
+                PHÂN LOẠI TÀI LIỆU
+            </h2>
+
+            <div class="resolution-filters">
+                <label for="locNamNQ">
+                    <i class="fa-regular fa-calendar"></i>
+                    Năm ban hành
+                </label>
+
                 <select id="locNamNQ"
-                    onchange="locHienThiNghiQuyetBBB11()"
-                    style="padding:10px;max-width:100%">
+                    onchange="locHienThiNghiQuyetBBB11()">
                     <option value="Tất cả">Tất cả các năm</option>
                     ${cacNam.map(nam =>
                         `<option value="${escapeHTML(nam)}">${escapeHTML(nam)}</option>`
                     ).join("")}
                 </select>
 
+                <label for="locChuDeNQ">
+                    <i class="fa-solid fa-folder-open"></i>
+                    Chủ đề nghị quyết
+                </label>
+
                 <select id="locChuDeNQ"
-                    onchange="locHienThiNghiQuyetBBB11()"
-                    style="padding:10px;max-width:100%">
+                    onchange="locHienThiNghiQuyetBBB11()">
                     <option value="Tất cả">Tất cả chủ đề</option>
                     ${cacChuDe.map(chuDe =>
                         `<option value="${escapeHTML(chuDe)}">${escapeHTML(chuDe)}</option>`
@@ -5250,10 +6892,30 @@ function resolutionPage() {
                 </select>
             </div>
 
-            <p id="demNghiQuyetBBB11"></p>
-            <div id="resolutionList"></div>
-        </div>
-    `;
+            <div class="resolution-count">
+                <i class="fa-solid fa-book-bookmark"></i>
+                <span id="demNghiQuyetBBB11">
+                    Danh sách tài liệu nghị quyết
+                </span>
+            </div>
+        </section>
+
+        <section class="resolution-results">
+            <h2 class="resolution-section-title">
+                <i class="fa-solid fa-book-open-reader"></i>
+                DANH SÁCH NGHỊ QUYẾT
+            </h2>
+
+            <div id="resolutionList" class="resolution-list"></div>
+        </section>
+
+        <footer class="resolution-footer">
+            HỌC TẬP NGHIÊM TÚC • NHẬN THỨC ĐÚNG • HÀNH ĐỘNG ĐÚNG
+        </footer>
+
+    </div>
+`;
+
 }
 
 function locHienThiNghiQuyetBBB11() {
@@ -5930,27 +7592,33 @@ function locNghiQuyetBBB11(nam, chuDe) {
  // GIAO DIỆN TRANG NGHỊ QUYẾT
  // =============================================
 
-
-
-
 /* =========================================
    HỌC TẬP NGHỊ QUYẾT BBB11
 ========================================= */
+
 
 let nghiQuyetDangXemBBB11 = 0;
 
 window.resolutionPage = function () {
     return `
-        <div class="page-box resolution-app">
+        <div class="page-box resolution-app resolution-unit-theme">
 
-            <h2>📚 HỌC TẬP NGHỊ QUYẾT BBB11</h2>
+            <!-- BANNER HỌC TẬP NGHỊ QUYẾT -->
+            <section class="res-hero-banner manual-hero-banner">
+                <img
+                    src="https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/hoc-tap-nghi-quyet2.png"
+                    alt="Giáo dục chính trị - Học tập nghị quyết"
+                    class="manual-banner-image"
+                >
 
-            <p>
-                Kho học tập nghị quyết, chỉ thị và văn kiện
-                phục vụ giáo dục chính trị tại đơn vị.
-            </p>
+                <p class="res-hero-desc">
+                    Kho học tập nghị quyết, chỉ thị và văn kiện
+                    phục vụ giáo dục chính trị tại đơn vị.
+                </p>
+            </section>
 
-            <div class="notice-card">
+            <!-- MỤC ĐÍCH HỌC TẬP -->
+            <div class="notice-card res-purpose-box">
                 <h3>🎖️ MỤC ĐÍCH HỌC TẬP</h3>
                 <p>
                     Nâng cao nhận thức chính trị, trách nhiệm,
@@ -5958,32 +7626,36 @@ window.resolutionPage = function () {
                 </p>
             </div>
 
-            <h3>📖 DANH SÁCH NGHỊ QUYẾT</h3>
+            <div class="res-section-bar">
+                <h3>📖 DANH SÁCH NGHỊ QUYẾT</h3>
+            </div>
 
-            <div id="resolutionList"></div>
+            <div id="resolutionList" class="res-list-grid"></div>
 
-            <div class="resolution-reader-card">
+            <div class="resolution-reader-card res-panel">
 
-                <h3 id="resolutionReaderTitle">
-                    📖 KHUNG ĐỌC TÀI LIỆU
-                </h3>
+                <div class="res-panel-head">
+                    <h3 id="resolutionReaderTitle">
+                        📖 KHUNG ĐỌC TÀI LIỆU
+                    </h3>
+                </div>
 
-                <p id="resolutionReaderDescription">
+                <p id="resolutionReaderDescription" class="res-reader-desc">
                     Chọn nghị quyết để xem nội dung học tập.
                 </p>
 
-                <div id="resolutionReaderContent">
+                <div id="resolutionReaderContent" class="res-reader-summary">
                     <p>Vui lòng chọn một tài liệu ở danh sách bên trên.</p>
                 </div>
 
-                <div class="resolution-reader-actions">
+                <div class="resolution-reader-actions res-actions">
 
-                    <button class="action-button"
+                    <button class="action-button res-btn-primary"
                         onclick="taiLaiNghiQuyet()">
                         🔄 TẢI LẠI
                     </button>
 
-                    <button class="action-button"
+                    <button class="action-button res-btn-secondary"
                         onclick="moNghiQuyetBenNgoai()">
                         🌐 MỞ VĂN BẢN GỐC
                     </button>
@@ -5992,45 +7664,40 @@ window.resolutionPage = function () {
 
                 <iframe
                     id="resolutionReader"
+                    class="res-iframe"
                     title="Khung đọc nghị quyết"
                     src="about:blank"
-                    loading="lazy"
-                    style="width:100%;height:650px;border:1px solid #ddd;border-radius:8px;margin-top:15px;">
+                    loading="lazy">
                 </iframe>
 
-                <p id="resolutionReaderNote">
+                <p id="resolutionReaderNote" class="res-note">
                     Nếu website nguồn chặn nhúng, bạn vẫn có thể
                     đọc phần nội dung học tập tóm tắt ở phía trên.
                 </p>
 
             </div>
+
+            <div class="resolution-web-box res-panel">
+                <div class="res-panel-head">
+                    <h3>🌐 XEM TÀI LIỆU TRỰC TIẾP</h3>
+                </div>
+
+                <iframe
+                    id="resolutionWebFrame"
+                    class="res-iframe"
+                    src="about:blank"
+                    title="Nội dung nghị quyết"
+                    loading="lazy">
+                </iframe>
+
+                <p id="resolutionWebNote" class="res-note">
+                    Chọn nghị quyết để xem tài liệu tại đây.
+                </p>
+            </div>
+
         </div>
-    
-    <div class="resolution-web-box">
-    <h3>🌐 XEM TÀI LIỆU TRỰC TIẾP</h3>
-
-    <iframe
-        id="resolutionWebFrame"
-        src="about:blank"
-        title="Nội dung nghị quyết"
-        style="
-            width: 100%;
-            height: 650px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background: white;
-        "
-        loading="lazy">
-    </iframe>
-
-    <p id="resolutionWebNote">
-        Chọn nghị quyết để xem tài liệu tại đây.
-    </p>
-</div>
-`;
+    `;
 };
-
-
 /* =========================================
    HIỂN THỊ DANH SÁCH NGHỊ QUYẾT
 ========================================= */
@@ -6367,90 +8034,198 @@ function membersPage() {
         }
     }
 
-    let baiDangPhat = -1;
+    
+let baiDangPhat = -1;
 
-    window.musicPage = function () {
-         
-        const cards = BAI_HAT_QUAN_DOI.map((bai, index) => `
-            <article class="bbb11-music-item"
-                data-search="${escapeHTML((bai.ten + " " + bai.nhom).toLocaleLowerCase("vi"))}">
-                <div class="bbb11-track-number">${String(index + 1).padStart(2, "0")}</div>
-                <div class="bbb11-track-icon">♫</div>
-                <div class="bbb11-track-info">
-                    <h4>${escapeHTML(bai.ten)}</h4>
-                    <p>${escapeHTML(bai.nhom)}</p>
-                </div>
-                <button class="bbb11-play-btn"
-                    onclick="window.phatBaiHatBBB11(${index})">
-                    ▶ NGHE NGAY
-                </button>
-            </article>
-        `).join("");
+window.musicPage = function () {
+    const danhSach = Array.isArray(BAI_HAT_QUAN_DOI)
+        ? BAI_HAT_QUAN_DOI
+        : [];
 
-        return `
-        <div class="page-box bbb11-music-app">
-          
-<div class="tt-page">
-    <header class="hero hero-image tradition-banner-fix">
-        <img
-            src="https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/truyen-thong-banner.png"
-            alt="Truyền thống đơn vị - Giáo dục chính trị"
-        >
-    </header>
-</div>
+    const cards = danhSach.map((bai, index) => `
+        <article class="bbb11-music-item"
+            data-search="${escapeHTML(
+                (bai.ten + " " + bai.nhom).toLocaleLowerCase("vi")
+            )}">
 
+            <div class="bbb11-track-number">
+                ${String(index + 1).padStart(2, "0")}
+            </div>
 
-            <section class="bbb11-player-panel">
-                <div class="bbb11-player-heading">
-                    <div>
-                        <span class="bbb11-small-label">TRÌNH PHÁT ÂM NHẠC</span>
-                        <h3>🎧 Đang phát</h3>
-                        <p id="bbb11NowPlaying">Chọn một bài hát bên dưới để bắt đầu</p>
-                    </div>
-                    <span class="bbb11-live-indicator">● BBB11</span>
-                </div>
+            <div class="bbb11-track-icon">
+                <i class="fa-solid fa-music"></i>
+            </div>
 
-                <div class="bbb11-video-wrap">
-                    <iframe id="bbb11MusicPlayer"
-                        src="about:blank"
-                        title="Trình phát âm nhạc BBB11"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <div class="bbb11-player-footer">
-                    <span>♫ Âm nhạc truyền thống và cách mạng</span>
-                    <button onclick="window.xoaNhacBBB11()">■ DỪNG NHẠC</button>
-                </div>
-            </section>
-
-            <section class="bbb11-library">
-                <div class="bbb11-library-heading">
-                    <div>
-                        <span class="bbb11-small-label">THƯ VIỆN ÂM NHẠC</span>
-                        <h3>🎖️ Danh sách bài hát</h3>
-                        <p>Chọn bài hát để nghe trực tiếp trên trang</p>
-                    </div>
-                    <span class="bbb11-song-count">${BAI_HAT_QUAN_DOI.length} BÀI HÁT</span>
-                </div>
-
-                <div class="bbb11-library-search">
-                    <span>⌕</span>
-                    <input id="bbb11MusicSearch" type="search"
-                        placeholder="Tìm tên bài hát, thể loại..."
-                        oninput="window.locBaiHatBBB11()">
-                </div>
-
-                <div id="bbb11MusicList" class="bbb11-music-list">
-                    ${cards}
-                </div>
-                <p id="bbb11NoMusic" class="bbb11-no-music" hidden>
-                    Không tìm thấy bài hát phù hợp.
+            <div class="bbb11-track-info">
+                <h4>${escapeHTML(bai.ten)}</h4>
+                <p>
+                    <i class="fa-solid fa-microphone-lines"></i>
+                    ${escapeHTML(bai.nhom)}
                 </p>
-            </section>
-        </div>`;
-    };
+            </div>
+
+            <button class="bbb11-play-btn"
+                type="button"
+                onclick="window.phatBaiHatBBB11(${index})"
+                aria-label="Nghe ${escapeHTML(bai.ten)}">
+                <i class="fa-solid fa-play"></i>
+                <span>NGHE NGAY</span>
+            </button>
+        </article>
+    `).join("");
+
+    return `
+    <div class="page-box bbb11-music-app">
+
+        <header class="bbb11-music-hero">
+            <img
+                src="https://etbczslniaqsivyogdpw.supabase.co/storage/v1/object/public/admin@gmali.com/kho-tan-am-nhac.png"
+                alt="Kho tàng âm nhạc quân đội"
+                class="bbb11-music-banner">
+
+            <div class="bbb11-hero-overlay"></div>
+
+            <div class="bbb11-hero-content">
+                <span class="bbb11-hero-tag">
+                    <i class="fa-solid fa-star"></i>
+                    TIỂU ĐOÀN 3 · ĐẠI ĐỘI 11
+                </span>
+
+                <h2>KHO TÀNG<br>
+                    <span>ÂM NHẠC QUÂN ĐỘI</span>
+                </h2>
+
+                <p>
+                    Giai điệu truyền thống · Khúc hát người lính
+                </p>
+
+                <div class="bbb11-hero-stats">
+                    <div>
+                        <i class="fa-solid fa-compact-disc"></i>
+                        <span>
+                            <strong>${danhSach.length}</strong>
+                            <small>BÀI HÁT</small>
+                        </span>
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-headphones"></i>
+                        <span>
+                            <strong>BBB11</strong>
+                            <small>TRỰC TUYẾN</small>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="bbb11-player-panel">
+            <div class="bbb11-section-heading">
+                <div class="bbb11-heading-icon">
+                    <i class="fa-solid fa-circle-play"></i>
+                </div>
+                <div>
+                    <span class="bbb11-eyebrow">MUSIC PLAYER</span>
+                    <h3>Trình phát âm nhạc</h3>
+                </div>
+                <span class="bbb11-live-indicator">
+                    <span></span> BBB11
+                </span>
+            </div>
+
+            <div class="bbb11-now-playing">
+                <div class="bbb11-disc">
+                    <i class="fa-solid fa-music"></i>
+                </div>
+
+                <div class="bbb11-now-info">
+                    <span>ĐANG PHÁT</span>
+                    <h4 id="bbb11NowPlaying">
+                        Chưa chọn bài hát
+                    </h4>
+                    <p>Chọn một giai điệu để bắt đầu</p>
+                </div>
+            </div>
+
+            <div class="bbb11-video-wrap">
+                <iframe
+                    id="bbb11MusicPlayer"
+                    src="about:blank"
+                    title="Trình phát âm nhạc BBB11"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <div class="bb11-player-footer">
+                <div>
+                    <i class="fa-solid fa-shield-halved"></i>
+                    Âm vang truyền thống
+                </div>
+
+                <button type="button"
+                    onclick="window.xoaNhacBB11()">
+                    <i class="fa-solid fa-stop"></i>
+                    DỪNG NHẠC
+                </button>
+            </div>
+        </section>
+
+        <section class="bb11-library">
+            <div class="bb11-section-heading">
+                <div class="bb11-heading-icon">
+                    <i class="fa-solid fa-list-music"></i>
+                </div>
+                <div>
+                    <span class="bb11-eyebrow">Giai điệu truyền thống · Khúc hát người lính</span>
+                    <h3>Thư viện bài hát</h3>
+                    <p>Khám phá những ca khúc cách mạng bất hủ</p>
+                </div>
+            </div>
+
+            <div class="bb11-library-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input
+                    id="bbb11MusicSearch"
+                    type="search"
+                    placeholder="Tìm tên bài hát, nhạc sĩ..."
+                    oninput="window.locBaiHat C11()">
+                <span class="bb11-search-shortcut">
+                    <i class="fa-solid fa-sliders"></i>
+                </span>
+            </div>
+
+            <div class="bb11-library-meta">
+                <span>
+                    <i class="fa-solid fa-layer-group"></i>
+                    DANH SÁCH PHÁT
+                </span>
+                <span class="bb11-song-count">
+                    ${danhSach.length} BÀI HÁT
+                </span>
+            </div>
+
+            <div id="bbb11MusicList" class="bbb11-music-list">
+                ${cards}
+            </div>
+
+            <div id="bb11NoMusic" class="bbb11-no-music" hidden>
+                <i class="fa-solid fa-music"></i>
+                <h4>Không tìm thấy bài hát</h4>
+                <p>Thử nhập tên bài hát khác nhé.</p>
+            </div>
+        </section>
+
+        <footer class="bb11-music-bottom">
+            <i class="fa-solid fa-star"></i>
+            TIỂU ĐOÀN 3 · ĐẠI ĐỘI 11
+            <span>•</span>
+            ÂM NHẠC TRUYỀN THỐNG
+        </footer>
+    </div>`;
+};
 
     window.phatBaiHatBBB11 = function (index) {
         const bai = BAI_HAT_QUAN_DOI[index];
@@ -7424,4 +9199,91 @@ window.initTetEffects = function () {
 };
 
 
+// ========================================
+// CHỨC NĂNG XEM NỘI DUNG TRỰC TIẾP BBB11
+// ========================================
+
+function moKhungXemNoiDung(tieuDe, duongLink) {
+
+    const viewer = document.getElementById("educationViewer");
+    const frame = document.getElementById("educationViewerFrame");
+    const title = document.getElementById("educationViewerTitle");
+
+    if (!viewer || !frame || !title) return;
+
+    title.textContent = "📖 " + tieuDe;
+    frame.src = duongLink;
+
+    viewer.style.display = "block";
+
+    viewer.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+// ĐÓNG KHUNG XEM
+function dongKhungXem() {
+
+    const viewer = document.getElementById("educationViewer");
+    const frame = document.getElementById("educationViewerFrame");
+
+    if (!viewer || !frame) return;
+
+    viewer.style.display = "none";
+    frame.src = "about:blank";
+}
+// MỞ KHUNG XEM TÀI LIỆU
+window.moKhungXem = function (link, tenTaiLieu) {
+
+    const viewer = document.getElementById("educationViewer");
+    const frame = document.getElementById("educationViewerFrame");
+    const title = document.getElementById("educationViewerTitle");
+    const openLink = document.getElementById("educationOpenNewTab");
+
+    if (!viewer || !frame) {
+        alert("Không tìm thấy khung xem tài liệu!");
+        return;
+    }
+
+    try {
+        const url = new URL(link);
+
+        if (!["http:", "https:"].includes(url.protocol)) {
+            alert("Đường dẫn tài liệu không hợp lệ!");
+            return;
+        }
+
+        frame.src = url.href;
+        openLink.href = url.href;
+
+        title.textContent = "📖 " + tenTaiLieu;
+
+        viewer.style.display = "block";
+
+        viewer.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    } catch (error) {
+        alert("Đường dẫn tài liệu không hợp lệ!");
+    }
+};
+
+
+// ĐÓNG KHUNG XEM
+window.dongKhungXem = function () {
+
+    const viewer = document.getElementById("educationViewer");
+    const frame = document.getElementById("educationViewerFrame");
+
+    if (viewer) {
+        viewer.style.display = "none";
+    }
+
+    if (frame) {
+        frame.src = "about:blank";
+    }
+};
 })();
